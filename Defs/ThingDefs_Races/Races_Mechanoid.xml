@@ -18,7 +18,7 @@
       <li>ITab_Pawn_Needs</li>
       <li>ITab_Pawn_Character</li>
       <li>ITab_Pawn_Training</li>
-      <li>Combat_Realism.ITab_Inventory</li>
+      <li>CombatExtended.ITab_Inventory</li>
       <li>ITab_Pawn_Guest</li>
       <li>ITab_Pawn_Prisoner</li>
       <li>ITab_Pawn_Social</li>
@@ -28,13 +28,10 @@
         <compClass>CompAttachBase</compClass>
       </li>
       <li>
-        <compClass>Combat_Realism.CompPawnGizmo</compClass>
+        <compClass>CombatExtended.CompPawnGizmo</compClass>
       </li>
       <li>
-        <compClass>Combat_Realism.CompSuppressable</compClass>
-      </li>
-      <li>
-        <compClass>Combat_Realism.CompInventory</compClass>
+        <compClass>CombatExtended.CompInventory</compClass>
       </li>
     </comps>
     <drawGUIOverlay>true</drawGUIOverlay>
@@ -69,17 +66,18 @@
       <ArmorRating_Blunt>0.40</ArmorRating_Blunt>
       <ArmorRating_Sharp>0.95</ArmorRating_Sharp>
       <MeatAmount>0</MeatAmount>
-      <CarryWeight>130</CarryWeight>
-      <CarryBulk>40</CarryBulk>
+      <CarryWeight>400</CarryWeight>
+      <CarryBulk>80</CarryBulk>
       <AimingAccuracy>0.9</AimingAccuracy>
     </statBases>
     <verbs>
-      <li>
+      <li Class="CombatExtended.VerbPropertiesCE">
         <verbClass>Verb_MeleeAttack</verbClass>
         <defaultCooldownTime>2.0</defaultCooldownTime>
-        <meleeDamageBaseAmount>35</meleeDamageBaseAmount>
+        <meleeDamageBaseAmount>50</meleeDamageBaseAmount>
         <meleeDamageDef>Blunt</meleeDamageDef>
         <linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+        <meleeArmorPenetration>0.3</meleeArmorPenetration>
       </li>
     </verbs>
     <race>
@@ -126,24 +124,26 @@
       <ArmorRating_Blunt>0.2</ArmorRating_Blunt>
       <ArmorRating_Sharp>0.45</ArmorRating_Sharp>
       <MeatAmount>30</MeatAmount>
-      <CarryWeight>15</CarryWeight>
-      <CarryBulk>0</CarryBulk>
+      <CarryWeight>50</CarryWeight>
+      <CarryBulk>20</CarryBulk>
       <AimingAccuracy>0.9</AimingAccuracy>
     </statBases>
     <verbs>
-      <li>
+      <li Class="CombatExtended.VerbPropertiesCE">
         <verbClass>Verb_MeleeAttack</verbClass>
         <defaultCooldownTime>1.65</defaultCooldownTime>
         <meleeDamageBaseAmount>24</meleeDamageBaseAmount>
         <meleeDamageDef>Cut</meleeDamageDef>
         <linkedBodyPartsGroup>LeftBlade</linkedBodyPartsGroup>
+        <meleeArmorPenetration>0.4</meleeArmorPenetration>
       </li>
-      <li>
+      <li Class="CombatExtended.VerbPropertiesCE">
         <verbClass>Verb_MeleeAttack</verbClass>
         <defaultCooldownTime>1.65</defaultCooldownTime>
         <meleeDamageBaseAmount>24</meleeDamageBaseAmount>
         <meleeDamageDef>Cut</meleeDamageDef>
         <linkedBodyPartsGroup>RightBlade</linkedBodyPartsGroup>
+        <meleeArmorPenetration>0.4</meleeArmorPenetration>
       </li>
     </verbs>
     <race>
