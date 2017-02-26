@@ -213,10 +213,7 @@ namespace CombatExtended
         /// <summary>
         /// Shifts the original target position in accordance with target leading, range estimation and weather/lighting effects
         /// </summary>
-        protected virtual Vector3 ShiftTarget(ShiftVecReport report) {
-        	return ShiftTarget(report, false);
-        }
-        protected virtual Vector3 ShiftTarget(ShiftVecReport report, bool calculateMechanicalOnly)
+        protected virtual Vector3 ShiftTarget(ShiftVecReport report, bool calculateMechanicalOnly = false)
         {
 	        Vector3 sourceLoc = this.CasterPawn != null ? Vector3.Scale(this.CasterPawn.DrawPos, new Vector3(1, 0, 1)) : this.caster.Position.ToVector3Shifted();
 	        
@@ -269,7 +266,7 @@ namespace CombatExtended
 	           			//TODO : It is possible for targetVertical.max < coverVertical.max, technically, in which case the shooter will never hit until the cover is gone.
 	           			targetVertical.min = coverVertical.max;
 	           		}
-                    else if(currentTarget.Thing is Pawn)
+                    else if (currentTarget.Thing is Pawn)
                     {
                         // Aim for center of mass on an exposed target
                         targetVertical.min += CE_Utility.bodyRegionBottomHeight * targetVertical.max;

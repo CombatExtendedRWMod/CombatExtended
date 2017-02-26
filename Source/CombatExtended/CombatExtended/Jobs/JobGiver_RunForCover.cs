@@ -37,6 +37,7 @@ namespace CombatExtended
 
             //Tell pawn to move to position
             pawn.Map.pawnDestinationManager.ReserveDestinationFor(pawn, coverPosition);
+            
             return new Job(CE_JobDefOf.RunForCover, coverPosition)
             {
                 locomotionUrgency = LocomotionUrgency.Sprint,
@@ -55,10 +56,11 @@ namespace CombatExtended
                 // Go through each cell in radius around the pawn
                 Region pawnRegion = pawn.Position.GetRegion(pawn.Map);
                 List<Region> adjacentRegions = pawnRegion.NonPortalNeighbors.ToList();
-                foreach (IntVec3 cell in cellList)
+                // Make sure only cells within bounds are evaluated
+                foreach (IntVec3 cell in cellList.Where(x => x.InBounds(pawn.Map)))
                 {
                     // Check for adjacency so we don't path to the other side of a wall or some such
-                    if (adjacentRegions.Contains(cell.GetRegion(pawn.Map)))
+                    if (cell.InBounds(pawn.Map) && adjacentRegions.Contains(cell.GetRegion(pawn.Map)))
                     {
                         float cellRating = GetCellCoverRatingForPawn(pawn, cell, fromPosition);
                         if (cellRating > bestRating)

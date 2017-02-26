@@ -324,15 +324,14 @@ namespace CombatExtended
             }
             return null;
         }
-
-
+        
         private void DoOutOfAmmoAction()
         {
             if (Props.throwMote)
             {
                 MoteMaker.ThrowText(position.ToVector3Shifted(), Find.VisibleMap, "CE_OutOfAmmo".Translate() + "!");
             }
-            if (wielder != null && compInventory != null && (wielder.jobs == null || wielder.CurJob.def != JobDefOf.Hunt)) compInventory.SwitchToNextViableWeapon();
+            if (wielder != null && compInventory != null && (wielder.CurJob == null || wielder.CurJob.def != JobDefOf.Hunt)) compInventory.SwitchToNextViableWeapon();
         }
 
         public void LoadAmmo(Thing ammo = null)
