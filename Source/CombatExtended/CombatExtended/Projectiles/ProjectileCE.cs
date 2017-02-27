@@ -23,7 +23,7 @@ namespace CombatExtended
         private Sustainer ambientSustainer;
         private static List<IntVec3> checkedCells = new List<IntVec3>();
         
-        private const float ticksPerSecond = 100f;
+        //private const float ticksPerSecond = 100f;
 
         public Thing AssignedMissTarget
         {
@@ -49,7 +49,7 @@ namespace CombatExtended
             		if (shotHeight < 0.001f)
             		{
             			//Multiplied by ticksPerSecond since the calculated time is actually in seconds.
-            			startingTicksToImpactInt = (float)((origin - destination).magnitude / (Mathf.Cos(shotAngle) * shotSpeed)) * ticksPerSecond;
+            			startingTicksToImpactInt = (float)((origin - destination).magnitude / (Mathf.Cos(shotAngle) * shotSpeed)) * GenTicks.TicksPerRealSecond;
             		}
             		else
             		{
@@ -58,7 +58,7 @@ namespace CombatExtended
 	            		float vSin = (float)(Mathf.Sin(shotAngle) * shotSpeed);
 	            		
             			//Calculates quadratic formula (g/2)t^2 + (-v_0y)t + (y-y0) for {g -> gravity, v_0y -> vSin, y -> 0, y0 -> shotHeight} to find t in fractional ticks where height equals zero.
-	            		startingTicksToImpactInt = (float)((vSin + Mathf.Sqrt(Mathf.Pow(vSin, 2) + 2 * gravity * shotHeight)) / gravity) * ticksPerSecond;
+	            		startingTicksToImpactInt = (float)((vSin + Mathf.Sqrt(Mathf.Pow(vSin, 2) + 2 * gravity * shotHeight)) / gravity) * GenTicks.TicksPerRealSecond;
             		}
             	}
                 return startingTicksToImpactInt;
@@ -122,7 +122,7 @@ namespace CombatExtended
         {
         	get
         	{
-        		return (ticksToImpact == 0 ? StartingTicksToImpact : (float)Ticks) / ticksPerSecond;
+        		return (ticksToImpact == 0 ? StartingTicksToImpact : (float)Ticks) / GenTicks.TicksPerRealSecond;
         	}
         }
 
