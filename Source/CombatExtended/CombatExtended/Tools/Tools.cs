@@ -16,21 +16,23 @@ namespace CombatExtended
             float num = -3.40282347E+38f;
             ThingWithComps thingWithComps = null;
             CompInventory compInventory = pawn.TryGetComp<CompInventory>();
-            using (IEnumerator<Thing> enumerator = compInventory.container.AsEnumerable<Thing>().GetEnumerator())
-            {
-                while (enumerator.MoveNext())
+            if(compInventory != null) {
+                using (IEnumerator<Thing> enumerator = compInventory.container.AsEnumerable<Thing>().GetEnumerator())
                 {
-                    ThingWithComps thingWithComps2 = (ThingWithComps)enumerator.Current;
-                    if (thingWithComps2.def.equippedStatOffsets != null)
+                    while (enumerator.MoveNext())
                     {
-                        foreach (StatModifier current in thingWithComps2.def.equippedStatOffsets)
+                        ThingWithComps thingWithComps2 = (ThingWithComps)enumerator.Current;
+                        if (thingWithComps2.def.equippedStatOffsets != null)
                         {
-                            if (current.stat == def)
+                            foreach (StatModifier current in thingWithComps2.def.equippedStatOffsets)
                             {
-                                if (current.value > num)
+                                if (current.stat == def)
                                 {
-                                    num = current.value;
-                                    thingWithComps = thingWithComps2;
+                                    if (current.value > num)
+                                    {
+                                        num = current.value;
+                                        thingWithComps = thingWithComps2;
+                                    }
                                 }
                             }
                         }
