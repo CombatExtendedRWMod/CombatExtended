@@ -69,7 +69,7 @@ namespace CombatExtended.AI
 		public SquadPath GetSquadPathFromTo(Region startRegion, Region targetRegion, Faction fac, float fortLimit)
 		{
 			// TODO Calculate most efficient region-wise path for squad to reach their objective without exceeding the fortification limit
-			return null; //GetPathFromTo(startRegion, targetRegion, fac, fortLimit);
+			return GetPathFromTo(startRegion, targetRegion, fac, fortLimit);
 		}
 
 		private float GetSquadPathScoreFor(Region region, out float fortStrength)
