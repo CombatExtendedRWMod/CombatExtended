@@ -127,7 +127,8 @@ namespace CombatExtended
             // top buttons
             Rect selectRect = new Rect(0f, 0f, canvas.width * .2f, _topAreaHeight);
             Rect newRect = new Rect(selectRect.xMax + _margin, 0f, canvas.width * .2f, _topAreaHeight);
-            Rect deleteRect = new Rect(newRect.xMax + _margin, 0f, canvas.width * .2f, _topAreaHeight);
+            Rect copyRect = new Rect(newRect.xMax + _margin, 0f, canvas.width * .2f, _topAreaHeight);
+            Rect deleteRect = new Rect(copyRect.xMax + _margin, 0f, canvas.width * .2f, _topAreaHeight);
 
             // main areas
             Rect nameRect = new Rect(
@@ -186,6 +187,12 @@ namespace CombatExtended
                 Loadout loadout = new Loadout();
                 LoadoutManager.AddLoadout(loadout);
                 CurrentLoadout = loadout;
+            }
+            // copy loadout
+            if (CurrentLoadout != null && Widgets.ButtonText(copyRect, "CE_CopyLoadout".Translate()))
+            {
+            	CurrentLoadout = CurrentLoadout.Copy();
+            	LoadoutManager.AddLoadout(CurrentLoadout);
             }
             // delete loadout
             if (loadouts.Any(l => l.canBeDeleted) && Widgets.ButtonText(deleteRect, "CE_DeleteLoadout".Translate()))
