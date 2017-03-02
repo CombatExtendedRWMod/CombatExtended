@@ -1,17 +1,18 @@
 ﻿<Properties StartupConfiguration="{AABEDCF4-2B5E-450E-B855-89595E67DC8D}|Default">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debugger" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.CombatExtended PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Catchpoint exceptionName="System.NullReferenceException" includeSubclasses="True" />
+      <Breakpoint file="D:\Games\RimWorld1393Win\Mods\CombatExtended\Source\CombatExtended\CombatExtended\Loadouts\Dialog_ManageLoadouts.cs" line="126" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="CombatExtended\CombatExtended\Projectiles\ProjectileCE.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CombatExtended\CombatExtended\Loadouts\Dialog_ManageLoadouts.cs">
     <Files>
-      <File FileName="CombatExtended\CombatExtended\Projectiles\BulletCE.cs" Line="1" Column="1" />
-      <File FileName="CombatExtended\CombatExtended\Projectiles\ProjectileCE.cs" Line="398" Column="1" />
-      <File FileName="CombatExtended\CombatExtended\CE_Utility.cs" Line="178" Column="1" />
+      <File FileName="CombatExtended\CombatExtended\Loadouts\Dialog_ManageLoadouts.cs" Line="158" Column="44" />
+      <File FileName="CombatExtended\CombatExtended\Loadouts\MapComp_LoadoutManager.cs" Line="27" Column="82" />
+      <File FileName="CombatExtended\CombatExtended\Loadouts\Loadout.cs" Line="16" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
 </Properties>

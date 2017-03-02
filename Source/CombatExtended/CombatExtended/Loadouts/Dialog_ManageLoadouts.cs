@@ -62,7 +62,9 @@ namespace CombatExtended
 
         public Dialog_ManageLoadouts(Loadout loadout)
         {
-            CurrentLoadout = loadout;
+        	CurrentLoadout = null;
+        	if (!loadout.defaultLoadout)
+            	CurrentLoadout = loadout;
             SetSource(SourceSelection.Ranged);
             doCloseX = true;
             closeOnClickedOutside = true;
@@ -155,7 +157,7 @@ namespace CombatExtended
                 (canvas.width - _margin) / 2f,
                 canvas.height - 24f - _topAreaHeight - _margin * 3);
 
-            List<Loadout> loadouts = LoadoutManager.Loadouts;
+            List<Loadout> loadouts = LoadoutManager.Loadouts.Where(l => !l.defaultLoadout).ToList();
 
             // DRAW CONTENTS
             // buttons
@@ -171,8 +173,8 @@ namespace CombatExtended
                     for (int i = 0; i < loadouts.Count; i++)
                     {
                         int local_i = i;
-                        options.Add(new FloatMenuOption(loadouts[i].LabelCap, delegate
-                        { CurrentLoadout = loadouts[local_i]; }));
+                    	options.Add(new FloatMenuOption(loadouts[i].LabelCap, delegate
+                    	{ CurrentLoadout = loadouts[local_i]; }));
                     }
                 }
 
@@ -202,6 +204,7 @@ namespace CombatExtended
                         {
                             if (CurrentLoadout == loadouts[local_i])
                                 CurrentLoadout = null;
+                            LoadoutManager.RemoveLoadout(loadouts[local_i]);
                             loadouts.Remove(loadouts[local_i]);
                         }));
                 }
@@ -221,7 +224,7 @@ namespace CombatExtended
                 // and stop further drawing
                 return;
             }
-
+            
             // name
             DrawNameField(nameRect);
 

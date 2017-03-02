@@ -108,15 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\CombatRole.cs" />
     <Compile Include="AI\Defs\RaidGoalDef.cs" />
-    <Compile Include="AI\RaidGoalFinder.cs" />
-    <Compile Include="AI\RaidGoalFinder_HostilePawns.cs" />
-    <Compile Include="AI\SquadBrain.cs" />
-    <Compile Include="AI\SquadBrainManager.cs" />
-    <Compile Include="AI\SquadObjective.cs" />
-    <Compile Include="AI\SquadPath.cs" />
-    <Compile Include="AI\SquadPather.cs" />
     <Compile Include="CombatExtended\ArmorUtilityCE.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_SquadBrain.cs" />
     <Compile Include="CombatExtended\Comps\CompSquadBrain.cs" />

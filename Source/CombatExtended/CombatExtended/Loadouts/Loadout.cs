@@ -13,7 +13,7 @@ namespace CombatExtended
         #region Fields
 
         public bool canBeDeleted = true;
-        public bool defaultLoadout = false;
+        public bool defaultLoadout = false; //NOTE: assumed that there is only ever one loadout which is marked default.
         public string label;
         internal int uniqueID;
         private List<LoadoutSlot> _slots = new List<LoadoutSlot>();
@@ -32,7 +32,7 @@ namespace CombatExtended
             // create a unique ID.
             uniqueID = LoadoutManager.GetUniqueID();
         }
-
+        
         public Loadout(string label)
         {
             this.label = label;
