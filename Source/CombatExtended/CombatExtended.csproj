@@ -109,6 +109,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\Defs\RaidGoalDef.cs" />
+    <Compile Include="AI\FactionBrain\FactionBrain.cs" />
+    <Compile Include="AI\FactionBrain\FactionBrainManager.cs" />
+    <Compile Include="AI\Objectives\RaidGoalFinder.cs" />
+    <Compile Include="AI\Objectives\RaidGoalFinder_Targets.cs" />
+    <Compile Include="AI\Objectives\SquadObjective.cs" />
+    <Compile Include="AI\PathFinding\SquadPath.cs" />
+    <Compile Include="AI\PathFinding\SquadPathBrainPlus.cs" />
+    <Compile Include="AI\PathFinding\SquadPather.cs" />
+    <Compile Include="AI\PathFinding\SquadPathKMBetterPQueue.cs" />
+    <Compile Include="AI\PathFinding\SquadPathRegionAStar.cs" />
+    <Compile Include="AI\SquadBrain\CombatRole.cs" />
+    <Compile Include="AI\SquadBrain\SquadBrain.cs" />
+    <Compile Include="AI\SquadBrain\SquadBrainManager.cs" />
     <Compile Include="CombatExtended\ArmorUtilityCE.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_SquadBrain.cs" />
     <Compile Include="CombatExtended\Comps\CompSquadBrain.cs" />
@@ -126,6 +139,7 @@
     <Compile Include="CombatExtended\Enums\BodyType.cs" />
     <Compile Include="CombatExtended\Hediff_InjuryCE.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_Hunt.cs" />
+    <Compile Include="CombatExtended\Jobs\JobDriver_UnloadInventory.cs" />
     <Compile Include="CombatExtended\Jobs\JobGiver_ConfigurableHostilityResponse.cs" />
     <Compile Include="CombatExtended\Jobs\JobGiver_TakeAndEquip.cs" />
     <Compile Include="CombatExtended\Projectiles\ProjectileCE_Explosive_RL.cs" />
@@ -179,6 +193,10 @@
     <Compile Include="CombatExtended\DamageWorkers\DamageWorker_AddInjuryCE.cs" />
     <Compile Include="CombatExtended\Defs\AmmoCategoryDef.cs" />
     <Compile Include="CombatExtended\Loadouts\Utility_Loadouts.cs" />
+    <None Include="AI\Objectives\RaidGoalFinder.cs~" />
+    <None Include="AI\Objectives\RaidGoalFinder_Targets.cs~" />
+    <None Include="AI\PathFinding\SquadPathBrainPlus.cs~" />
+    <None Include="AI\PathFinding\SquadPathRegionAStar.cs~" />
     <None Include="CombatExtended\ThinkNodes\ThinkNode_ConditionalNoJob.cs" />
     <Compile Include="CombatExtended\TurretTopCE.cs" />
     <Compile Include="CombatExtended\Comps_CCL\CompMilkableRenameable.cs" />
@@ -241,7 +259,12 @@
     <Compile Include="Detours\Detours_MassUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AI\DefOfs\" />
+    <Folder Include="AI" />
+    <Folder Include="AI\Defs" />
+    <Folder Include="AI\FactionBrain" />
+    <Folder Include="AI\Objectives" />
+    <Folder Include="AI\PathFinding" />
+    <Folder Include="AI\SquadBrain" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
