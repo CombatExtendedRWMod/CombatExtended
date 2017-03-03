@@ -15,5 +15,6 @@ namespace CombatExtended
         public static readonly JobDef ReloadTurret = DefDatabase<JobDef>.GetNamed("ReloadTurret");
         public static readonly JobDef HunkerDown = DefDatabase<JobDef>.GetNamed("HunkerDown");
         public static readonly JobDef RunForCover = DefDatabase<JobDef>.GetNamed("RunForCover");
+        public static readonly JobDef TakeFromOther = DefDatabase<JobDef>.GetNamed("TakeFromOther");
     }
 }
