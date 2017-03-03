@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{AABEDCF4-2B5E-450E-B855-89595E67DC8D}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debugger" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.CombatExtended PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="CombatExtended\CombatExtended\Jobs\JobDriver_TakeFromOther.cs">
+    <Files>
+      <File FileName="CombatExtended\CombatExtended\Jobs\JobGiver_UpdateLoadout.cs" Line="259" Column="1" />
+      <File FileName="CombatExtended\CombatExtended\Jobs\JobDriver_TakeFromOther.cs" Line="64" Column="1" />
+      <File FileName="CombatExtended\CombatExtended\DefOfs\CE_JobDefOf.cs" Line="12" Column="25" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
