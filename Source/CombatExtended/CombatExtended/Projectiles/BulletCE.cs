@@ -30,10 +30,13 @@ namespace CombatExtended
                     launcher,
                     null,
                     def);
-
+                
+                /*
                 // Set impact height
                 BodyPartDepth depth = damDefCE != null && damDefCE.harmOnlyOutsideLayers ? BodyPartDepth.Outside : BodyPartDepth.Undefined;
                 dinfo.SetBodyRegion(CE_Utility.GetCollisionBodyHeight(hitThing, Height), depth);
+                */
+                if (damDefCE != null && damDefCE.harmOnlyOutsideLayers) dinfo.SetBodyRegion(BodyPartHeight.Undefined, BodyPartDepth.Outside);
 
                 ProjectilePropertiesCE propsCE = def.projectile as ProjectilePropertiesCE;
                 if (propsCE != null && !propsCE.secondaryDamage.NullOrEmpty())
@@ -42,13 +45,13 @@ namespace CombatExtended
                     Pawn pawn = hitThing as Pawn;
                     if (pawn != null && def.projectile.damageDef.workerClass == typeof(DamageWorker_AddInjuryCE))
                     {
-                        BodyPartRecord exactPartFromDamageInfo = DamageWorker_AddInjuryCE.GetExactPartFromDamageInfo(dinfo, pawn);
+                        //BodyPartRecord exactPartFromDamageInfo = DamageWorker_AddInjuryCE.GetExactPartFromDamageInfo(dinfo, pawn);
                         dinfo = new DamageInfo(
                             dinfo.Def,
                             dinfo.Amount,
                             dinfo.Angle,
                             dinfo.Instigator,
-                            exactPartFromDamageInfo = (DamageWorker_AddInjuryCE.GetExactPartFromDamageInfo(dinfo, pawn)),
+                            DamageWorker_AddInjuryCE.GetExactPartFromDamageInfo(dinfo, pawn),
                             dinfo.WeaponGear);
                     }
                     List<DamageInfo> dinfoList = new List<DamageInfo>() { dinfo };

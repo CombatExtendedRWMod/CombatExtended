@@ -71,6 +71,11 @@ namespace CombatExtended
             }
             return 60 / movePerTick;
         }
+        
+        public static float ClosestDistBetween(Vector2 origin, Vector2 destination, Vector2 target)
+        {
+        	return Mathf.Abs((destination.y - origin.y) * target.x - (destination.x - origin.x) * target.y + destination.x * origin.y - destination.y * origin.x) / (destination - origin).magnitude;
+        }
 
         /// <summary>
         /// Attempts to find a turret operator. Accepts any Thing as input and does a sanity check to make sure it is an actual turret.
@@ -113,33 +118,72 @@ namespace CombatExtended
         #endregion
 
         #region Physics
-
         public const float gravityConst = 9.8f;
-        public const float collisionHeightFactor = 1.0f;
-        public const float bodyRegionBottomHeight = 0.45f;
+        public const float collisionHeightFactor = 1.0f;    // Global collision height multiplier
+        public const float treeCollisionHeight = 5f;        // Trees are this tall
+        public const float bodyRegionBottomHeight = 0.45f;  // Hits below this percentage will impact the corresponding body region
         public const float bodyRegionMiddleHeight = 0.85f;
-        /*public static float GetCollisionHeight(Thing thing)
+        
+        /// <summary>
+        /// Calculates the range reachable with a projectile of speed <i>velocity</i> fired at <i>angle</i> from height <i>shotHeight</i>. Does not take into account air resistance.
+        /// </summary>
+        /// <param name="velocity">Projectile velocity in cells per second.</param>
+        /// <param name="angle">Shot angle in radians off the ground.</param>
+        /// <param name="shotHeight">Height from which the projectile is fired in vertical cells.</param>
+        /// <returns>Distance in cells that the projectile will fly at the given arc.</returns>
+        public static float GetDistanceTraveled(float velocity, float angle, float shotHeight)
         {
-            if (thing == null)
-            {
-                return 0;
-            }
-            Pawn pawn = thing as Pawn;
-            if (pawn != null)
-            {
-                float collisionHeight = pawn.BodySize;
-                if (!humanoidBodyList.Contains(pawn.def.race.body.defName)) collisionHeight *= 0.5f;
-                if (pawn.GetPosture() != PawnPosture.Standing)
-                {
-                    collisionHeight = pawn.BodySize > 1 ? pawn.BodySize - 0.8f : 0.2f * pawn.BodySize;
-                }
-                return collisionHeight * collisionHeightFactor;
-            }
-            return thing.def.fillPercent * collisionHeightFactor;
-        }*/
+        	if (shotHeight < 0.001f)
+        	{
+        		return (Mathf.Pow(velocity, 2f) / gravityConst) * Mathf.Sin(2f * angle);
+        	}
+        	return ((velocity * Mathf.Cos(angle)) / gravityConst) * (velocity * Mathf.Sin(angle) + Mathf.Sqrt(Mathf.Pow(velocity * Mathf.Sin(angle), 2f) + 2f * gravityConst * shotHeight));
+        }
+        
+        /// <summary>
+        /// Calculates the destination reached with a projectile of speed <i>velocity</i> fired at <i>angle</i> from height <i>shotHeight</i> starting from <i>origin</i>. Does not take into account air resistance.
+        /// </summary>
+        /// <param name="origin">Vector2 source of the projectile.</param>
+        /// <param name="angle">Shot angle in radians off the ground.</param>
+        /// <param name="rotation">Shot angle in degrees between source/target.</param>
+        /// <param name="velocity">Projectile velocity in cells per second.</param>
+        /// <param name="shotHeight">Height from which the projectile is fired in vertical cells.</param>
+        /// <returns>The Vector2 destination of the projectile, e.g the Vector2 when it hits the ground at height = 0f.</returns>
+        public static Vector2 GetDestination(Vector2 origin, float angle, float rotation, float velocity, float shotHeight)
+        {
+        	return origin + Vector2.up.RotatedBy(rotation) * GetDistanceTraveled(velocity, angle, shotHeight);
+        }
+        
+        /// <summary>
+        /// Calculates the time in seconds the arc characterized by <i>angle</i>, <i>shotHeight</i> takes to traverse at speed <i>velocity</i> - e.g until the height reaches zero. Does not take into account air resistance.
+        /// </summary>
+        /// <param name="velocity">Projectile velocity in cells per second.</param>
+        /// <param name="angle">Shot angle in radians off the ground.</param>
+        /// <param name="shotHeight">Height from which the projectile is fired in vertical cells.</param>
+        /// <returns>Time in seconds that the projectile will take to traverse the given arc.</returns>
+        public static float GetFlightTime(float velocity, float angle, float shotHeight)
+        {
+			//Calculates quadratic formula (g/2)t^2 + (-v_0y)t + (y-y0) for {g -> gravity, v_0y -> vSin, y -> 0, y0 -> shotHeight} to find t in fractional ticks where height equals zero.
+			return (Mathf.Sin(angle) * velocity + Mathf.Sqrt(Mathf.Pow(Mathf.Sin(angle) * velocity, 2f) + 2f * gravityConst * shotHeight)) / gravityConst;
+        }
+        
+        /// <summary>
+        /// Calculates the shot angle necessary to reach <i>range</i> with a projectile of speed <i>velocity</i> at a height difference of <i>heightDifference</i>, returning either the upper or lower arc in radians. Does not take into account air resistance.
+        /// </summary>
+        /// <param name="velocity">Projectile velocity in cells per second.</param>
+        /// <param name="range">Cells between shooter and target.</param>
+        /// <param name="heightDifference">Difference between initial shot height and target height in vertical cells.</param>
+        /// <param name="flyOverhead">Whether to take the lower (False) or upper (True) arc angle.</param>
+        /// <returns>Arc angle in radians off the ground.</returns>
+        public static float GetShotAngle(float velocity, float range, float heightDifference, bool flyOverhead)
+        {
+            return Mathf.Atan((Mathf.Pow(velocity, 2f) + (flyOverhead ? 1f : -1f) * Mathf.Sqrt(Mathf.Pow(velocity, 4f) - gravityConst * (gravityConst * Mathf.Pow(range, 2f) + 2f * heightDifference * Mathf.Pow(velocity, 2f)))) / (gravityConst * range));
+        }
+        
         /// <summary>
         /// Returns the vertical collision box of a Thing
         /// </summary>
+        /// <param name="thing">Thing (can be null) to have its collision vertical height returned.</param>
         /// <param name="isEdifice">False by default. Set to true if thing is the edifice at the location thing.Position.</param>
         public static FloatRange GetCollisionVertical(Thing thing, bool isEdifice = false)
         {
@@ -149,6 +193,10 @@ namespace CombatExtended
             }
             if (isEdifice)
             {
+                if (thing.def.category == ThingCategory.Plant && thing.def.altitudeLayer == AltitudeLayer.Building)
+                {
+                	return new FloatRange(0, treeCollisionHeight * collisionHeightFactor);    // Check for trees
+                }
             	return new FloatRange(0f, thing.def.fillPercent * collisionHeightFactor);
             }
             float collisionHeight = 0f;
@@ -174,7 +222,8 @@ namespace CombatExtended
                     edificeHeight = GetCollisionVertical(edifice, true).max;
                 }
             }
-            return new FloatRange(edificeHeight, edificeHeight + collisionHeight * collisionHeightFactor);
+            FloatRange floatRange = new FloatRange(edificeHeight, edificeHeight + collisionHeight * collisionHeightFactor);
+            return floatRange;
         }
 
         /// <summary>
@@ -254,193 +303,6 @@ namespace CombatExtended
 
         #endregion Physics
 
-        #region Armor
-
-        public static readonly DamageDef absorbDamageDef = DamageDefOf.Blunt;   //The damage def to convert absorbed shots into
-
-        /// <summary>
-        /// Calculates deflection chance and damage through armor
-        /// </summary>
-        public static int GetAfterArmorDamage(Pawn pawn, int dmgAmountInt, BodyPartRecord part, DamageInfo dinfo, bool damageArmor, ref bool deflected)
-        {
-            DamageDef dmgDef = dinfo.Def;
-            if (dmgDef.armorCategory == DamageArmorCategory.IgnoreArmor)
-            {
-                return dmgAmountInt;
-            }
-            float dmgAmount = dmgAmountInt;
-            StatDef deflectionStat = dmgDef.armorCategory.DeflectionStat();
-            float pierceAmount = GetPenetrationValue(dinfo);
-            
-            // Run armor calculations on all apparel
-            if (pawn.apparel != null)
-            {
-                List<Apparel> wornApparel = new List<Apparel>(pawn.apparel.WornApparel);
-                for (int i = wornApparel.Count - 1; i >= 0; i--)
-                {
-                    if (wornApparel[i].def.apparel.CoversBodyPart(part))
-                    {
-                        Thing armorThing = damageArmor ? wornApparel[i] : null;
-                        //Check for deflection
-                        if (ApplyArmor(ref dmgAmount, ref pierceAmount, wornApparel[i].GetStatValue(deflectionStat, true), armorThing, dmgDef))
-                        {
-                            deflected = true;
-                            if (dmgDef != absorbDamageDef)
-                            {
-                                dmgDef = absorbDamageDef;
-                                deflectionStat = dmgDef.armorCategory.DeflectionStat();
-                                i++;
-                            }
-                        }
-                        if (dmgAmount < 0.001)
-                        {
-                            return 0;
-                        }
-                    }
-                }
-            }
-
-            float pawnArmorAmount = 0f;
-
-            BodyPartRecord outerPart = part;
-            while (outerPart.parent != null && outerPart.depth != BodyPartDepth.Outside)
-            {
-                outerPart = outerPart.parent;
-            }
-
-            if (outerPart.IsInGroup(DefDatabase<BodyPartGroupDef>.GetNamed("CoveredByNaturalArmor")))
-            {
-                pawnArmorAmount = pawn.GetStatValue(deflectionStat);
-            }
-
-            if (pawnArmorAmount > 0 && ApplyArmor(ref dmgAmount, ref pierceAmount, pawnArmorAmount, null, dmgDef))
-            {
-
-                deflected = true;
-                if (dmgAmount < 0.001)
-                {
-                    return 0;
-                }
-                dmgDef = absorbDamageDef;
-                deflectionStat = dmgDef.armorCategory.DeflectionStat();
-                ApplyArmor(ref dmgAmount, ref pierceAmount, pawn.GetStatValue(deflectionStat, true), pawn, dmgDef);
-            }
-            return Mathf.RoundToInt(dmgAmount);
-        }
-
-        private static float GetPenetrationValue(DamageInfo dinfo)
-        {
-            if(dinfo.WeaponGear != null)
-            {
-                // Case 1: projectile attack
-                ProjectilePropertiesCE projectileProps = dinfo.WeaponGear.projectile as ProjectilePropertiesCE;
-                if (projectileProps != null)
-                {
-                    return projectileProps.armorPenetration;
-                }
-
-                // Case 2: melee attack
-                Pawn instigatorPawn = dinfo.Instigator as Pawn;
-                if(instigatorPawn != null)
-                {
-                    // Pawn is using melee weapon
-                    if (dinfo.WeaponGear.IsMeleeWeapon)
-                    {
-                        if (instigatorPawn.equipment == null
-                            || instigatorPawn.equipment.Primary == null
-                            || instigatorPawn.equipment.Primary.def != dinfo.WeaponGear)
-                        {
-                            Log.Error("CE tried getting armor penetration from melee weapon " + dinfo.WeaponGear.defName + " but instigator " + dinfo.Instigator.ToString() + " equipment does not match");
-                            return 0;
-                        }
-                        return instigatorPawn.equipment.Primary.GetStatValue(CE_StatDefOf.ArmorPenetration);
-                    }
-
-                    // Pawn is using body parts
-                    if (instigatorPawn.def == dinfo.WeaponGear)
-                    {
-                        // Pawn is augmented
-                        if(dinfo.WeaponLinkedHediff != null)
-                        {
-                            HediffCompProperties_VerbGiver compProps = dinfo.WeaponLinkedHediff.CompPropsFor(typeof(HediffComp_VerbGiver)) as HediffCompProperties_VerbGiver;
-                            if(compProps != null)
-                            {
-                                VerbPropertiesCE verbProps = compProps.verbs.FirstOrDefault(v => v as VerbPropertiesCE != null) as VerbPropertiesCE;
-                                if (verbProps != null) return verbProps.meleeArmorPenetration;
-                            }
-                            return 0;
-                        }
-
-                        // Regular pawn melee
-                        if(dinfo.WeaponBodyPartGroup != null
-                        && instigatorPawn.verbTracker != null
-                        && !instigatorPawn.verbTracker.AllVerbs.NullOrEmpty())
-                        {
-                            Verb verb = instigatorPawn.verbTracker.AllVerbs.FirstOrDefault(v => v.verbProps.linkedBodyPartsGroup == dinfo.WeaponBodyPartGroup);
-                            if (verb == null)
-                            {
-                                Log.Error("CE could not find matching verb on Pawn " + instigatorPawn.ToString() + " for BodyPartGroup " + dinfo.WeaponBodyPartGroup.ToString());
-                                return 0;
-                            }
-                            VerbPropertiesCE verbProps = verb.verbProps as VerbPropertiesCE;
-                            if (verbProps != null) return verbProps.meleeArmorPenetration;
-                        }
-                    }
-                }
-            }
-
-            return 0;
-        }
-
-        private static bool ApplyArmor(ref float damAmount, ref float pierceAmount, float armorRating, Thing armorThing, DamageDef damageDef)
-        {
-            float originalDamage = damAmount;
-            bool deflected = false;
-            DamageDef_CE damageDefCE = damageDef as DamageDef_CE;
-            float penetrationChance = 1;
-            if (damageDefCE != null && damageDefCE.deflectable)
-                penetrationChance = Mathf.Clamp01((pierceAmount - armorRating) * 6);
-            //Shot is deflected
-            if (penetrationChance == 0 || Rand.Value > penetrationChance)
-            {
-                deflected = true;
-            }
-            //Damage calculations
-            float dMult = 1;
-            if (damageDefCE != null)
-            {
-                if (damageDefCE.absorbable && deflected)
-                {
-                    dMult = 0;
-                }
-                else if (damageDefCE.deflectable)
-                {
-                    dMult = Mathf.Clamp01(0.5f + (pierceAmount - armorRating) * 3);
-                }
-            }
-            else
-            {
-                dMult = Mathf.Clamp01(1 - armorRating);
-            }
-            damAmount *= dMult;
-
-            //Damage armor
-            if (armorThing != null && armorThing as Pawn == null)
-            {
-                float absorbedDamage = (originalDamage - damAmount) * Mathf.Min(pierceAmount, 1f);
-                if (deflected)
-                {
-                    absorbedDamage *= 0.5f;
-                }
-                armorThing.TakeDamage(new DamageInfo(damageDef, Mathf.CeilToInt(absorbedDamage), -1, null, null, null));
-            }
-
-            pierceAmount *= dMult;
-            return deflected;
-        }
-
-        #endregion Armor
-
         #region Inventory
 
         public static void TryUpdateInventory(Pawn pawn)
@@ -462,7 +324,65 @@ namespace CombatExtended
                 TryUpdateInventory(tracker.pawn);
             }
         }
+        
+        private const int ticksBeforeDropRaw = 40000;
 
+        public static Thing RandomNonLoadoutNonEquipment(this Pawn pawn, out int stackSizeToBeRemoved)
+        {
+        	var loadout = pawn.GetLoadout();
+        	
+            CompInventory inventory = pawn.TryGetComp<CompInventory>();
+            ThingContainer container = (inventory == null)
+            	? pawn.inventory.innerContainer
+            	: inventory.container;
+            
+            if (loadout != null)
+            {
+                bool allowDropRaw = Find.TickManager.TicksGame > pawn.mindState?.lastInventoryRawFoodUseTick + ticksBeforeDropRaw;
+                Thing thingToRemove = container.FirstOrDefault(t => 
+                    (allowDropRaw || !t.def.IsNutritionGivingIngestible || t.def.ingestible.preferability > FoodPreferability.RawTasty)
+                    && !loadout.Slots.Any(s => s.Def == t.GetInnerIfMinified().def));
+                if (thingToRemove != null)
+                {
+                	stackSizeToBeRemoved = -2;
+                	return thingToRemove;
+                }
+                
+                // Find and drop excess items
+                foreach (LoadoutSlot slot in loadout.Slots)
+                {
+                    int numContained = container.TotalStackCountOfDef(slot.Def);
+
+                    // Add currently equipped gun
+                    if (pawn.equipment != null && pawn.equipment.Primary != null)
+                    {
+                        if (pawn.equipment.Primary.def == slot.Def)
+                        {
+                            numContained++;
+                        }
+                    }
+                    // Drop excess items
+                    if(numContained > slot.Count)
+                    {
+                    	Thing thing = container.FirstOrDefault(x => x.GetInnerIfMinified().def == slot.Def);
+                        if (thing != null)
+                        {
+                        	stackSizeToBeRemoved = numContained - slot.Count;
+                        	return thing;
+                        }
+                    }
+                }
+            }
+            else if (container.Count > 0)
+            {
+            	stackSizeToBeRemoved = -2;
+            	return container.RandomElement();
+            }
+            
+            stackSizeToBeRemoved = -1;
+            return null;
+        }
+        
         #endregion Inventory
     }
 }

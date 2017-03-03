@@ -9,6 +9,7 @@
       <PsychicSensitivity>0</PsychicSensitivity>
       <ToxicSensitivity>0</ToxicSensitivity>
       <Flammability>0</Flammability>
+      <ArmorRating_Heat>1</ArmorRating_Heat>
       <ComfyTemperatureMin>-100</ComfyTemperatureMin>
       <ComfyTemperatureMax>250</ComfyTemperatureMax>
     </statBases>
@@ -22,9 +23,6 @@
       <li>
         <compClass>CombatExtended.CompPawnGizmo</compClass>
       </li>
-      <li>
-        <compClass>CombatExtended.CompInventory</compClass>
-      </li>
     </comps>
   </ThingDef>
 
@@ -36,7 +34,7 @@
     <statBases>
       <MoveSpeed>1.33</MoveSpeed>
       <ArmorRating_Blunt>0.40</ArmorRating_Blunt>
-      <ArmorRating_Sharp>0.95</ArmorRating_Sharp>
+      <ArmorRating_Sharp>0.90</ArmorRating_Sharp>
       <MeatAmount>0</MeatAmount>
       <CarryWeight>400</CarryWeight>
       <CarryBulk>80</CarryBulk>
@@ -53,6 +51,7 @@
       </li>
     </verbs>
     <race>
+      <bodyType>Quadruped</bodyType>
       <intelligence>ToolUser</intelligence>
       <thinkTreeMain>Mechanoid</thinkTreeMain>
       <body>MechanicalCentipede</body>
@@ -119,6 +118,7 @@
       </li>
     </verbs>
     <race>
+      <bodyType>Humanoid</bodyType>
       <intelligence>ToolUser</intelligence>
       <thinkTreeMain>Mechanoid</thinkTreeMain>
       <body>Scyther</body>

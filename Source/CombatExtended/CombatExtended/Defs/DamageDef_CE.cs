@@ -10,8 +10,7 @@ namespace CombatExtended
 {
     public class DamageDef_CE : DamageDef
     {
-        public bool deflectable = false;
-        public bool absorbable = false;
+        public bool noDamageOnDeflect = false;
         public bool harmOnlyOutsideLayers = false;
     }
 }
