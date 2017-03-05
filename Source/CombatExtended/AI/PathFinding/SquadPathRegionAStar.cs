@@ -40,7 +40,7 @@ namespace CombatExtended.AI
 			List<Pawn> RemoverList =
 				new List<Pawn>();
 
-			foreach(Pawn pawn in pawns)
+			foreach (Pawn pawn in pawns)
 			{
 				try
 				{
@@ -153,14 +153,14 @@ namespace CombatExtended.AI
 								 t => t.loc.GetRegion(t.map).Equals(region)
 								).Count;
 
-			if (Math.Abs(temp) <= 5)
-				return 0f;
-			
-			var speed =
-				+StudyWalkSpeedRegion(region);
-
 			var density =
 				StudyObjectsCount(region);
+
+			if (Math.Abs(temp) <= 5)
+				return density;
+
+			var speed =
+				+StudyWalkSpeedRegion(region);
 
 			if (temp > 50f)
 			{
@@ -173,7 +173,7 @@ namespace CombatExtended.AI
 
 		private float StudyWalkSpeedRegion(Region region)
 		{
-			return (float) ( region.Cells.Count() -  region.ListerThings.AllThings.Count ) ;
+			return (float)(region.Cells.Count() - region.ListerThings.AllThings.Count);
 		}
 
 		private float StudyObjectsCount(Region region)
@@ -269,8 +269,6 @@ namespace CombatExtended.AI
 							j++;
 
 							count++;
-
-							break;
 						}
 					}
 				}
@@ -278,7 +276,6 @@ namespace CombatExtended.AI
 
 			return sum;
 		}
-
 
 		private IEnumerable<Region> GetPathAStar(Region startRegion, Region targetRegion, Faction fac, float fortLimit)
 		{
@@ -322,7 +319,7 @@ namespace CombatExtended.AI
 
 				if (node.CurrentRegion.links.Count == 2)
 				{
-					List<Region> temp = 
+					List<Region> temp =
 						new List<Region>();
 
 					var region = node.CurrentRegion;
@@ -353,17 +350,18 @@ namespace CombatExtended.AI
 
 						if (breaK)
 							break;
+
 						DoneRegion.Add(region.id, 1);
 
 						if (!DoneRegion.ContainsKey(GetRegionLink(region, region.links.ToList()[0]).id))
 						{
-							temp.Add(GetRegionLink(region, region.links.ToList()[0]));
-							region = GetRegionLink(region, region.links.ToList()[0]);
+							temp.Add(GetRegionLink(region, region.links.First()));
+							region = GetRegionLink(region, region.links.First());
 						}
 						else if (!DoneRegion.ContainsKey(GetRegionLink(region, region.links.ToList()[1]).id))
 						{
-							temp.Add(GetRegionLink(region, region.links.ToList()[1]));
-							region = GetRegionLink(region, region.links.ToList()[1]);
+							temp.Add(GetRegionLink(region, region.links.First()));
+							region = GetRegionLink(region, region.links.First());
 						}
 						else
 						{
@@ -375,7 +373,7 @@ namespace CombatExtended.AI
 					{
 						if (region.links.Count > 2)
 						{
-							var sumSight =  (float) pawns.FindAll((obj) => temp.Contains(obj.GetRegion())).Count * 100;
+							var sumSight = (float)pawns.FindAll((obj) => temp.Contains(obj.GetRegion())).Count * 100;
 
 							foreach (Region r in temp)
 							{
@@ -384,9 +382,9 @@ namespace CombatExtended.AI
 
 							var Rtemp = RegionNode.CreateNode(temp[0],
 															  sumSight
-							                                  + (float)GetOclicdianDistanceRegionAtoB(temp[0], targetRegion)
+															  + (float)GetOclicdianDistanceRegionAtoB(temp[0], targetRegion)
 														 + (float)GetOclicdianDistanceRegionAtoB(temp[0], node.CurrentRegion)
-							                                  , node);
+															  , node);
 
 							temp.RemoveAt(0);
 
@@ -401,7 +399,7 @@ namespace CombatExtended.AI
 								temp.RemoveAt(0);
 							}
 
-							Queue.Push(Rtemp,Rtemp.Score);
+							Queue.Push(Rtemp, Rtemp.Score);
 						}
 						else if (region.links.Count == 1)
 						{
@@ -426,7 +424,44 @@ namespace CombatExtended.AI
 															 fortLimit)
 														 + node.Score
 														 + (float)GetOclicdianDistanceRegionAtoB(newregion, targetRegion)
-														 + (float)GetOclicdianDistanceRegionAtoB(newregion, node.CurrentRegion)
+														 + (float)GetOclicdianDistanceRegionAtoB(newregion, node.CurrentRegion) + 10f
+														 , node);
+
+						Queue.Push(temp, temp.Score);
+					}
+
+
+					foreach (IntVec3 cell in new IntVec3[]{
+							//node.CurrentRegion.extentsLimit.TopRight
+							//,node.CurrentRegion.extentsLimit.BottomLeft
+							//,node.CurrentRegion.extentsLimit.Cells.First()
+							//,node.CurrentRegion.extentsLimit.Cells.Last(),
+						//TODO Need to be Tested for which one is right LOL
+							node.CurrentRegion.extentsClose.TopRight
+							,node.CurrentRegion.extentsClose.BottomLeft
+							,node.CurrentRegion.extentsClose.Cells.First()
+							,node.CurrentRegion.extentsClose.Cells.Last()})
+					{
+						if (cell.IsValid)
+							continue;
+
+						if (!cell.Walkable(map))
+							continue;
+
+						if (cell.GetRegion(map) == null)
+							continue;
+
+						if (DoneRegion.ContainsKey(cell.GetRegion(map).id))
+							continue;
+
+						var temp = RegionNode.CreateNode(cell.GetRegion(map),
+														  StudyRegion(
+															 cell.GetRegion(map),
+															 fac,
+															 fortLimit)
+														 + node.Score
+														 + (float)GetOclicdianDistanceRegionAtoB(cell.GetRegion(map), targetRegion)
+														 + (float)GetOclicdianDistanceRegionAtoB(cell.GetRegion(map), node.CurrentRegion)
 														 , node);
 
 						Queue.Push(temp, temp.Score);
