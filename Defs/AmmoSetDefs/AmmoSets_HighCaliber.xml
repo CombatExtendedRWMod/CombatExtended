@@ -1,9 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+	
+  <!-- ==================== .338 Lapua Magnum ========================== -->
+
+  <CombatExtended.AmmoSetDef>
+    <defName>AmmoSet_338Lapua</defName>
+    <label>.338 Lapua Magnum</label>
+	<ammoTypes>
+	  <li>Ammo_338Lapua_FMJ</li>
+	  <li>Ammo_338Lapua_HE</li>
+	  <li>Ammo_338Lapua_Incendiary</li>
+	</ammoTypes>
+  </CombatExtended.AmmoSetDef>
   
   <!-- ==================== .50 BMG ========================== -->
 
-  <Combat_Realism.AmmoSetDef>
+  <CombatExtended.AmmoSetDef>
     <defName>AmmoSet_50BMG</defName>
     <label>.50 BMG</label>
 	<ammoTypes>
@@ -12,11 +24,11 @@
 	  <li>Ammo_50BMG_HE</li>
 	  <li>Ammo_50BMG_Incendiary</li>
 	</ammoTypes>
-  </Combat_Realism.AmmoSetDef>
+  </CombatExtended.AmmoSetDef>
   
   <!-- ==================== 14.5x114mm ========================== -->
 
-  <Combat_Realism.AmmoSetDef>
+  <CombatExtended.AmmoSetDef>
     <defName>AmmoSet_145x114mm</defName>
     <label>14.5x114mm</label>
 	<ammoTypes>
@@ -24,6 +36,6 @@
 	  <li>Ammo_145x114mm_HE</li>
 	  <li>Ammo_145x114mm_Incendiary</li>
 	</ammoTypes>
-  </Combat_Realism.AmmoSetDef>
+  </CombatExtended.AmmoSetDef>
   
 </Defs>
