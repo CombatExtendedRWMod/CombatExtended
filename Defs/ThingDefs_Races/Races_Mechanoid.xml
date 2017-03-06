@@ -9,7 +9,6 @@
       <PsychicSensitivity>0</PsychicSensitivity>
       <ToxicSensitivity>0</ToxicSensitivity>
       <Flammability>0</Flammability>
-      <ArmorRating_Heat>1</ArmorRating_Heat>
       <ComfyTemperatureMin>-100</ComfyTemperatureMin>
       <ComfyTemperatureMax>250</ComfyTemperatureMax>
     </statBases>
@@ -54,7 +53,6 @@
       </li>
     </verbs>
     <race>
-      <bodyType>Quadruped</bodyType>
       <intelligence>ToolUser</intelligence>
       <thinkTreeMain>Mechanoid</thinkTreeMain>
       <body>MechanicalCentipede</body>
@@ -121,7 +119,6 @@
       </li>
     </verbs>
     <race>
-      <bodyType>Humanoid</bodyType>
       <intelligence>ToolUser</intelligence>
       <thinkTreeMain>Mechanoid</thinkTreeMain>
       <body>Scyther</body>

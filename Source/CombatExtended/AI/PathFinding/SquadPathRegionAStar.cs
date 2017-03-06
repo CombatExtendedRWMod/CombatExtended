@@ -221,7 +221,7 @@ namespace CombatExtended.AI
 												 , map
 												 , true))
 						{
-							sum += 100f;
+							sum += 12;
 
 							j++;
 
@@ -350,6 +350,11 @@ namespace CombatExtended.AI
 
 						if (breaK)
 							break;
+
+						if (DoneRegion.ContainsKey(region.id))
+						{
+							break;
+						}
 
 						DoneRegion.Add(region.id, 1);
 
