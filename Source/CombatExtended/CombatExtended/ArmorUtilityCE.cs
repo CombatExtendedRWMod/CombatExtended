@@ -45,8 +45,10 @@ namespace CombatExtended
             {
                 // Apparel is arranged in draw order, we run through reverse to go from Shell -> OnSkin
                 List<Apparel> apparel = pawn.apparel.WornApparel;
-                for (int i = apparel.Count - 1; i >= 0; i--)
+				for (int i = apparel.Count - 1; i >= 0 && i < apparel.Count; i--)
                 {
+					//Log.Message(string.Concat(pawn.LabelShort, " apparel index: ", i.ToString(), " of ", apparel.Count.ToString()));
+					//Log.Message(string.Concat("label: ", apparel.ElementAt(i).Label));
                     if (apparel[i].def.apparel.CoversBodyPart(hitPart) 
                         && !TryPenetrateArmor(dinfo.Def, apparel[i].GetStatValue(dinfo.Def.armorCategory.DeflectionStat()), ref penAmount, ref dmgAmount, apparel[i]))
                     {
