@@ -52,13 +52,7 @@ namespace CombatExtended
 
         #region Properties
 
-        public float Bulk
-        {
-            get
-            {
-                return _slots.Select(slot => slot.Def.GetStatValueAbstract(CE_StatDefOf.Bulk) * slot.Count).Sum();
-            }
-        }
+        public float Bulk { get { return _slots.Sum(slot => slot.bulk * slot.count); } }
 
         public string LabelCap { get { return label.CapitalizeFirst(); } }
 
@@ -66,14 +60,7 @@ namespace CombatExtended
 
         public List<LoadoutSlot> Slots { get { return _slots; } }
 
-        public float Weight
-        {
-            get
-            {
-                return _slots.Select(slot => slot.Def.GetStatValueAbstract(StatDefOf.Mass) * slot.Count).Sum();
-                //old return _slots.Select(slot => slot.Def.GetStatValueAbstract(CE_StatDefOf.Weight) * slot.Count).Sum();
-            }
-        }
+        public float Weight { get { return _slots.Sum(slot => slot.mass * slot.count); } }
 
         #endregion Properties
 
@@ -104,9 +91,9 @@ namespace CombatExtended
 
         public void AddSlot(LoadoutSlot slot)
         {
-        	LoadoutSlot old = _slots.FirstOrDefault(s => s.Def == slot.Def);
+        	LoadoutSlot old = _slots.FirstOrDefault(s => s.def == slot.def);
         	if (old != null)
-        		old.Count++;
+        		old.count++;
         	else
             	_slots.Add(slot);
         }
