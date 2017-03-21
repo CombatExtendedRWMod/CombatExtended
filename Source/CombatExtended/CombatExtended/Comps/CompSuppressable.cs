@@ -152,7 +152,7 @@ namespace CombatExtended
             }
 
             // Add suppression to global suppression counter
-            currentSuppression += amount;
+            currentSuppression += amount * pawn.GetStatValue(CE_StatDefOf.Suppressability);
             if (currentSuppression > maxSuppression)
             {
                 currentSuppression = maxSuppression;
