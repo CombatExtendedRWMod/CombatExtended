@@ -5,7 +5,6 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 
-// TODO: Need to add an additional Float menu to inventory interface to clear the HoldRecord of that item on that pawn.
 namespace CombatExtended
 {
 	/// <summary>
@@ -53,6 +52,23 @@ namespace CombatExtended
 			HoldRecord rec = new HoldRecord(job.targetA.Thing.def, job.count);
 			recs.Add(job.targetA.Thing.def, rec);
 			Log.Message(string.Concat("Job was issued to pickup this record: ", rec));
+		}
+		
+		/// <summary>
+		/// Simply reports back if the pawn is tracking a held item.
+		/// </summary>
+		/// <param name="pawn">Pawn to check tracking on.</param>
+		/// <param name="thing">Thing who's def should be checked if being held.</param>
+		/// <returns></returns>
+		public static bool HoldTrackerIsHeld(this Pawn pawn, Thing thing)
+		{
+			Dictionary<ThingDef, HoldRecord> recs;
+			if (tracker.TryGetValue(pawn, out recs))
+			{
+				if (recs.ContainsKey(thing.def))
+				    return true;
+			}
+			return false;
 		}
 		
 		/// <summary>
@@ -234,6 +250,14 @@ namespace CombatExtended
         		}
 				listing.Add(thing.def, new number(inventory.container.TotalStackCountOfDef(thing.def)));
         	}
+        	// collect the equipment.
+        	if (pawn.equipment?.Primary != null)
+        	{
+        		if (listing.ContainsKey(pawn.equipment.Primary.def))
+        			listing[pawn.equipment.Primary.def].value++;
+        		else
+        			listing.Add(pawn.equipment.Primary.def, new number(1));
+        	}
         	
         	// iterate over specifics and generics and Chip away at the dictionary.
 			List<ThingDef> killKeys = new List<ThingDef>(listing.Keys.Count);
@@ -249,10 +273,8 @@ namespace CombatExtended
         		{
         			int desiredCount = slot.count;
 					// find dictionary entries which corespond to covered slot.
-					foreach (ThingDef def in listing.Keys)//.Where(td => slot.genericDef.lambda(td)))
+					foreach (ThingDef def in listing.Keys.Where(td => slot.genericDef.lambda(td)))
         			{
-						if (!slot.genericDef.lambda(def))
-							continue;
 						if (listing[def].value > 0)
 						{
 	        				listing[def].value -= desiredCount;

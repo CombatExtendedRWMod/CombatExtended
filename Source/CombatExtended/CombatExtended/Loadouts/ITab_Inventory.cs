@@ -272,6 +272,15 @@ namespace CombatExtended
                     }
                     floatOptionList.Add(new FloatMenuOption("DropThing".Translate(), dropApparel));
                     floatOptionList.Add(new FloatMenuOption("CE_DropThingHaul".Translate(), dropApparelHaul));
+                    if (this.CanControl && SelPawnForGear.HoldTrackerIsHeld(thing))
+                    {
+                    	Action forgetHoldTracker = delegate
+                    	{
+                    		SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                    		SelPawnForGear.HoldTrackerForget(thing);
+                    	};
+                    	floatOptionList.Add(new FloatMenuOption("CE_HoldTrackerForget".Translate(), forgetHoldTracker));
+                    }
                 }
                 FloatMenu window = new FloatMenu(floatOptionList, thing.LabelCap, false);
                 Find.WindowStack.Add(window);

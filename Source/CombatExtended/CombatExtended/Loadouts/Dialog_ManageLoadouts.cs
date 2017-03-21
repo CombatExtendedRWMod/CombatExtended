@@ -452,7 +452,7 @@ namespace CombatExtended
 
             // label
             Text.Anchor = TextAnchor.MiddleLeft;
-            Widgets.Label(labelRect, slot.def.LabelCap);
+            Widgets.Label(labelRect, slot.LabelCap);
             Text.Anchor = TextAnchor.UpperLeft;
 
             // easy ammo adder, ranged weapons only
