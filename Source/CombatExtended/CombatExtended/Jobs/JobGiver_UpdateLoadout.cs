@@ -65,18 +65,6 @@ namespace CombatExtended
         }
         
         /// <summary>
-        /// Used so that I can have an int value inside of a dictionary that I can modify while iterating over dictionary keys.
-        /// </summary>
-        private class number
-        {
-        	public int value = 0;
-        	public number(int num)
-        	{
-        		value = num;
-        	}
-        }
-        
-        /// <summary>
         /// This starts the work of finding something lacking that the pawn should pickup.
         /// </summary>
         /// <param name="pawn">Pawn who's inventory and loadout should be considered.</param>
@@ -102,15 +90,7 @@ namespace CombatExtended
                 if (loadout != null && !loadout.Slots.NullOrEmpty())
                 {
 	            	// Need to generate a dictionary and nibble like when dropping in order to allow for conflicting loadouts to work properly.
-            		Dictionary<ThingDef, number> listing = new Dictionary<ThingDef, number>();
-            		if (pawn.equipment?.Primary != null)
-            			listing.Add(pawn.equipment.Primary.def, new number(1));
-            		foreach (Thing thing in inventory.container)
-            		{
-            			if (!listing.ContainsKey(thing.def))
-            				listing.Add(thing.def, new number(0));
-            			listing[thing.def].value += thing.stackCount;
-            		}
+            		Dictionary<ThingDef, ThingDefCounter> listing = new Dictionary<ThingDef, ThingDefCounter>();
             		
             		// process each loadout slot...
                 	foreach (LoadoutSlot curSlot in loadout.Slots)
@@ -126,10 +106,10 @@ namespace CombatExtended
                     			continue;
                     		foreach(ThingDef def in listing.Keys.Where(td => curSlot.genericDef.lambda(td)))
                     		{
-                    			if (listing[def].value > 0)
+                    			if (listing[def].count > 0)
                     			{
-                    				int amount = wantCount > listing[def].value ? listing[def].value : wantCount - listing[def].value;
-                    				listing[def].value -= amount;
+                    				int amount = wantCount > listing[def].count ? listing[def].count : wantCount - listing[def].count;
+                    				listing[def].count -= amount;
                     				wantCount -= amount;
                     				if (wantCount <= 0)
                     					break; // stop enumerating if the loadout has been satisfied.
@@ -138,8 +118,8 @@ namespace CombatExtended
                     	} else { // if (curSlot.thingDef != null)
                     		if (listing.ContainsKey(curSlot.thingDef))
                     		{
-                    			int amount = wantCount > listing[curSlot.thingDef].value ? listing[curSlot.thingDef].value : wantCount - listing[curSlot.thingDef].value;
-                    			listing[curSlot.thingDef].value -= amount;
+                    			int amount = wantCount > listing[curSlot.thingDef].count ? listing[curSlot.thingDef].count : wantCount - listing[curSlot.thingDef].count;
+                    			listing[curSlot.thingDef].count -= amount;
                     			wantCount -= amount;
                     		}
                     	}

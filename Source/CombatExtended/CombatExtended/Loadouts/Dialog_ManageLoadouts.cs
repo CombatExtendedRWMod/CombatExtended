@@ -190,6 +190,7 @@ namespace CombatExtended
             if (Widgets.ButtonText(newRect, "CE_NewLoadout".Translate()))
             {
                 Loadout loadout = new Loadout();
+                loadout.AddBasicSlots();
                 LoadoutManager.AddLoadout(loadout);
                 CurrentLoadout = loadout;
             }

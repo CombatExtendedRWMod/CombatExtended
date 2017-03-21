@@ -36,8 +36,6 @@ namespace CombatExtended
 
             // create a unique ID.
             uniqueID = LoadoutManager.GetUniqueID();
-            
-            AddBasicSlots();
         }
         
         public Loadout(string label)
@@ -46,8 +44,6 @@ namespace CombatExtended
 
             // create a unique ID.
             uniqueID = LoadoutManager.GetUniqueID();
-            
-            AddBasicSlots();
         }
 
         /// <summary>
@@ -59,13 +55,12 @@ namespace CombatExtended
         {
             this.label = label;
             this.uniqueID = uniqueID;
-            AddBasicSlots();
         }
         
         /// <summary>
         /// Handles adding any LoadoutGenercDef as LoadoutSlots if they are flagged as basic.
         /// </summary>
-        private void AddBasicSlots()
+        public void AddBasicSlots()
         {
         	IEnumerable<LoadoutGenericDef> defs = DefDatabase<LoadoutGenericDef>.AllDefs.Where(d => d.isBasic);
         	foreach (LoadoutGenericDef def in defs)
@@ -113,8 +108,6 @@ namespace CombatExtended
         	dest.defaultLoadout = source.defaultLoadout;
         	dest.canBeDeleted = source.canBeDeleted;
         	dest.Slots.RemoveAll(s => true); // since a new Loadout has some default slots, drop them during the copy.
-        	foreach(LoadoutSlot slot in source._slots)
-        		dest.AddSlot(slot.Copy());
         	return dest;
         }
         
@@ -135,7 +128,7 @@ namespace CombatExtended
         {
         	LoadoutSlot old = _slots.FirstOrDefault(slot.isSameDef);
         	if (old != null)
-        		old.count++;
+        		old.count += slot.count;
         	else
             	_slots.Add(slot);
         }

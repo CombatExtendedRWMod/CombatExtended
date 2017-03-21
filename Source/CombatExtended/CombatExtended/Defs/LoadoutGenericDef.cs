@@ -56,6 +56,8 @@ namespace CombatExtended
 		//TODO: Need to define sane defaults for Food and Drug generics.  The defaults for Ammo come from the defs.
 		static LoadoutGenericDef()
 		{
+			IEnumerable<ThingDef> everything = DefDatabase<ThingDef>.AllDefs;
+			
 			List<LoadoutGenericDef> defs = new List<LoadoutGenericDef>();
 			
 			LoadoutGenericDef generic = new LoadoutGenericDef();
@@ -68,17 +70,20 @@ namespace CombatExtended
 			defs.Add(generic);
 			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			
+			float targetNutrition = 0.85f;
 			generic = new LoadoutGenericDef();
 			generic.defName = "GenericRawFood";
 			generic.description = "Generic Loadout for Raw Food.  Intended for compatibility with pawns automatically picking up raw food to train animals.";
 			generic.label = "CE_Generic_RawFood".Translate();
-			generic.defaultCount = 20; // not really sure what this should be so setting to 20.  Ideally would be a bit larger than typical pickup.
-			generic._lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability <= FoodPreferability.RawTasty && td.plant == null && !td.IsDrug && !td.IsCorpse;
+			// Exclude drugs and corpses.  Also exclude any food worse than RawBad as in testing the pawns would not even pick it up for training.
+			generic._lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability <= FoodPreferability.RawTasty && td.ingestible.HumanEdible && td.plant == null && !td.IsDrug && !td.IsCorpse;
+			//generic.defaultCount = Convert.ToInt32(Math.Floor(targetNutrition / everything.Where(td => generic.lambda(td)).Average(td => td.ingestible.nutrition)));
+			generic.defaultCount = 1;
 			generic.isBasic = true;
 			
 			defs.Add(generic);
-			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
-			
+			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label + " B(" + t.GetStatValueAbstract(CE_StatDefOf.Bulk) + ") M(" + t.GetStatValueAbstract(StatDefOf.Mass) + ")").ToArray())));
+
 			generic = new LoadoutGenericDef();
 			generic.defName = "GenericDrugs";
 			generic.description = "Generic Loadout for Drugs.  Intended for compatibility with pawns automatically picking up drugs in compliance with drug policies.";
@@ -108,10 +113,11 @@ namespace CombatExtended
 				generic.description = string.Format(ammoDescription, gun.LabelCap);
 				generic.label = string.Format(ammoLabel, gun.LabelCap);
 				generic.itemString = gun.LabelCap;
+				generic.defaultCount = gun.GetCompProperties<CompProperties_AmmoUser>().magazineSize;
 				//Consider all ammos that the gun can fire, take the average.  Could also use the min or max...  //TODO: Decide if max or average is apt.
-				generic.defaultCount = Convert.ToInt32(Math.Floor(DefDatabase<AmmoDef>.AllDefs
-				                                                  .Where(ad => gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Contains(ad))
-				                                                  .Average(ad => ad.defaultAmmoCount)));
+				//generic.defaultCount = Convert.ToInt32(Math.Floor(DefDatabase<AmmoDef>.AllDefs
+				//                                                  .Where(ad => gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Contains(ad))
+				//                                                  .Average(ad => ad.defaultAmmoCount)));
 				generic.defaultCountType = LoadoutCountType.pickupDrop; // we want ammo to get picked up.
 				generic._lambda = td => td is AmmoDef && gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Contains(td);
 				generic.isAmmo = true;
@@ -119,10 +125,8 @@ namespace CombatExtended
 				//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			}
 			
-			// check for overlapping case and issue a warning if there is one... (yeah this is horribly inefficient but only happens once per game.)
-			IEnumerable<ThingDef> everything = DefDatabase<ThingDef>.AllDefs;
-			
 			/* // (ProfoundDarkness) The methodology I'm using for LoadoutSlots allows for duplicates and partial overlaps (technically) so this code is less useful.
+			// check for overlapping case and issue a warning if there is one... (yeah this is horribly inefficient but only happens once per game.)
 			// First iteration looks for a merge-able perfect conflict and merges them when found.
 			for (int i = 0; i <= defs.Count - 1; i++)
 			{
