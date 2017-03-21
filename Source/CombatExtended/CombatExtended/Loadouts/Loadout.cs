@@ -7,6 +7,9 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
+//TODO: Cause new loadouts to automatically include reasonable generics for Meals, Drugs, and Raw Food (for animal training).
+//TODO: Cause new loadouts to use the pawn's current equipment (on top of above)?
+
 namespace CombatExtended
 {
     public class Loadout : IExposable, ILoadReferenceable

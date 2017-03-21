@@ -8,8 +8,18 @@ using Verse.AI;
 
 namespace CombatExtended
 {
+	/* Note (ProfoundDarkness):
+	 * The concept with Loadouts now includes both Specifics (LoadoutSlot.thingDef != null) and Generics (LoadoutSlot.genericDef != null).
+	 * As I was unable to handle an edge case (not currently present in CombatExtended) Generics do not define an upper bound for items to
+	 * carry and are instead filled out ON TOP OF Specifics rather than what was the case before of only picking up an item for a Generic
+	 * if the sum of all fulfilled Specifics were < the amount Generics wanted.
+	 * 
+	 * Pickup code is still in JobGiver_UpdateLoadout but drop code is now in HoldTracker since there are more than just Loadouts at play
+	 * when dropping. HoldTracker should be consulted for ANY dropping activities related to pawn inventory.
+	 */
     public class JobGiver_UpdateLoadout : ThinkNode_JobGiver
     {
+    	#region InnerClasses
         private enum ItemPriority : byte
         {
             None,
@@ -17,14 +27,23 @@ namespace CombatExtended
             LowStock,
             Proximity
         }
-
+        #endregion
+        
+		#region Fields        
         private const int proximitySearchRadius = 20;
         private const int maximumSearchRadius = 80;
         private const int ticksBeforeDropRaw = 40000;
-
+        #endregion
+        
+        #region Methods
+        /// <summary>
+        /// Gets a priority value of how important it is for a pawn to do pickup/drop activities.
+        /// </summary>
+        /// <param name="pawn">Pawn to fetch priority for</param>
+        /// <returns>float indicating priority of pickup/drop job</returns>
         public override float GetPriority(Pawn pawn)
         {
-        	if (pawn.HasExcessItem())
+        	if (pawn.HasExcessThing())
             {
                 return 9.2f;
             }
@@ -44,18 +63,16 @@ namespace CombatExtended
 
             return 9.2f;
         }
-
-        /* GetPrioritySlot
-         * Serves 2 purposes, 1: To figure out how important the job should be and 2: to figure out what the item is and how many to pickup.
-         * To be specific, this is figuring out if something should be picked up and what to pickup.
-         * 
-         * With the addition of Generics, Specific (ThingDef) LoadoutSlots take precidence over Generic (LoadoutGenericDef) LoadoutSlots.
-         * 
-         * An easier route is to pickup all specifics first and where there is overlap we will often have things taken care of.
-         * 
-         * The better route is when we consider a Generic we should look to see if we have a Specific loadoutslot covering the same item.
-		 * If there is a Specific fill it out instead of the Generic... we may end up coming back to Generic if there wasn't enough Thing picked up.
-         */
+		
+        /// <summary>
+        /// This starts the work of finding something lacking that the pawn should pickup.
+        /// </summary>
+        /// <param name="pawn">Pawn who's inventory and loadout should be considered.</param>
+        /// <param name="priority">Priority value for how important doing this job is.</param>
+        /// <param name="closestThing">The thing found to be picked up.</param>
+        /// <param name="count">The amount of closestThing to pickup.  Already checked if inventory can hold it.</param>
+        /// <param name="carriedBy">If unable to find something on the ground to pickup, the pawn (pack animal/prisoner) which has the item to take.</param>
+        /// <returns></returns>
         private LoadoutSlot GetPrioritySlot(Pawn pawn, out ItemPriority priority, out Thing closestThing, out int count, out Pawn carriedBy)
         {
             priority = ItemPriority.None;
@@ -63,6 +80,7 @@ namespace CombatExtended
             closestThing = null;
             count = 0;
 			carriedBy = null;
+            int want = 0;
 			List<LoadoutSlot> processed = new List<LoadoutSlot>();  // not sure if this is worth it, probably.
 
             CompInventory inventory = pawn.TryGetComp<CompInventory>();
@@ -71,8 +89,8 @@ namespace CombatExtended
             	Loadout loadout = pawn.GetLoadout();
                 if (loadout != null && !loadout.Slots.NullOrEmpty())
                 {
-                    foreach(LoadoutSlot curSlot in loadout.Slots)
-                    {
+                	foreach (LoadoutSlot curSlot in loadout.Slots)
+                	{
                     	Thing curThing = null;
                     	ItemPriority curPriority = ItemPriority.None;
                     	Pawn curCarrier = null;
@@ -80,6 +98,7 @@ namespace CombatExtended
                     	if (curSlot.genericDef != null)
                     	{
                     		int genCount = 0;
+                    		bool doSpecific = false;
                     		if (curSlot.countType == LoadoutCountType.dropExcess)
 	                    		continue;	// Pickup code doesn't need to see if we need to pickup something that for a drop only slot.
                     		
@@ -90,30 +109,38 @@ namespace CombatExtended
                     			if (loadout.Slots.IndexOf(specific) > loadout.Slots.IndexOf(curSlot))
                     			{
                     				// process the Specific
-                    				FindPickup(pawn, inventory.container, curSlot, out curPriority, out curThing, out curCarrier);
+                    				FindPickup(pawn, inventory.container, specific, out curPriority, out curThing, out curCarrier);
+                    				want = specific.count;
                     				processed.Add(specific);
-                    				if (curPriority > priority)
+                    				if (curPriority > priority && curThing != null && inventory.CanFitInInventory(curThing, out count)) // copied from near end...
+                    				{
+                    					doSpecific = true;
                     					break;
+                    				}
                     			}
                     			// find out how much the specific satisfies the generic count.
-                    			genCount += inventory.container.TotalStackCountOfDef(specific.thingDef);
+                    			int invCount = inventory.container.TotalStackCountOfDef(specific.thingDef);  
+                    			genCount += invCount > specific.count ? specific.count : invCount;
                     		}
-                    		if (curPriority <= priority)
+                    		if (!doSpecific)
                     		{
-	                    		if (genCount >= curSlot.count)
-	                    			continue;
-	                    		FindPickup(pawn, inventory.container, curSlot, out curPriority, out curThing, out curCarrier, curSlot.count);
+	                    		//if (genCount >= curSlot.count)
+	                    		//	continue;
+	                    		want = curSlot.count + genCount;
+	                    		FindPickup(pawn, inventory.container, curSlot, out curPriority, out curThing, out curCarrier, want);
                     		}
                     	} else { // if (curSlot.thingDef != null)
                     		if (processed.Contains(curSlot))
                     			continue;
                     		FindPickup(pawn, inventory.container, curSlot, out curPriority, out curThing, out curCarrier);
+                    		want = curSlot.count;
                     	}
-                    	
+                	
                         if (curPriority > priority && curThing != null && inventory.CanFitInInventory(curThing, out count))
                         {
                             priority = curPriority;
                             slot = curSlot;
+                            count = count >= want ? want : count;
                             closestThing = curThing;
                             if (curCarrier != null)
                             	carriedBy = curCarrier;
@@ -129,6 +156,16 @@ namespace CombatExtended
             return slot;
         }
         
+        /// <summary>
+        /// Used by GetPrioritySlot as this section of code could get run in multiple places and isn't small it seemed apt to split it into a method.  The workhorse of finding items.
+        /// </summary>
+        /// <param name="pawn">Pawn to be considered.  Used in checking equipment and position when looking for nearby things.</param>
+        /// <param name="container">Pawn's inventory.  Error checking was already handled by caller.</param>
+        /// <param name="curSlot">Pawn's LoadoutSlot being considered.</param>
+        /// <param name="curPriority">Priority of the job.</param>
+        /// <param name="curThing">Thing found near pawn for potential pickup.</param>
+        /// <param name="curCarrier">Pawn that is holding the curThing that 'pawn' wants.</param>
+        /// <param name="wantCount">Amount of a Thing (defined by curSlot) that is desired.</param>
         private void FindPickup(Pawn pawn, ThingContainer container, LoadoutSlot curSlot, out ItemPriority curPriority, out Thing curThing, out Pawn curCarrier, int wantCount = -1)
         {
         	curPriority = ItemPriority.None;
@@ -214,63 +251,12 @@ namespace CombatExtended
                 }
             }
         }
-
-        private bool CheckForExcessItems(Pawn pawn)
-        {
-            //if (pawn.CurJob != null && pawn.CurJob.def == JobDefOf.Tame) return false;
-            CompInventory inventory = pawn.TryGetComp<CompInventory>();
-            Loadout loadout = pawn.GetLoadout();
-            if (inventory == null || inventory.container == null || loadout == null || loadout.Slots.NullOrEmpty())
-            {
-                return false;
-            }
-            if (inventory.container.Count > loadout.SlotCount + 1)
-            {
-                return true;
-            }
-            // Check to see if there is at least one loadout slot specifying currently equipped weapon
-            ThingWithComps equipment = ((pawn.equipment == null) ? null : pawn.equipment.Primary) ?? null;
-            if (equipment != null && !loadout.Slots.Any(slot => 
-                                                        (slot.thingDef != null && slot.thingDef == equipment.GetInnerIfMinified().def && slot.count >= 1) ||
-                                                        (slot.genericDef != null && slot.countType == LoadoutCountType.pickupDrop && slot.count >=1
-                                                         && slot.genericDef.lambda(equipment.GetInnerIfMinified().def))))
-            {
-                return true;
-            }
-
-            // Go through each item in the inventory and see if its part of our loadout
-            bool allowDropRaw = Find.TickManager.TicksGame > pawn.mindState?.lastInventoryRawFoodUseTick + ticksBeforeDropRaw;
-            foreach (Thing thing in inventory.container)
-            {
-                if(allowDropRaw || !thing.def.IsNutritionGivingIngestible || thing.def.ingestible.preferability > FoodPreferability.RawTasty)
-                {
-                    //TODO: Incomplete handling.
-                	LoadoutSlot slot = loadout.Slots.FirstOrDefault(x => x.thingDef == thing.def);
-                    if (slot == null)
-                    {
-                        return true;
-                    }
-                    int numContained = inventory.container.TotalStackCountOfDef(thing.def);
-
-                    // Add currently equipped gun
-                    if (pawn.equipment != null && pawn.equipment.Primary != null)
-                    {
-                        //TODO: Incomplete handling.
-                    	if (pawn.equipment.Primary.def == slot.thingDef)
-                        {
-                            numContained++;
-                        }
-                    }
-                    //TODO: Incomplete handling.
-                    if (slot.count < numContained)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
+		
+        /// <summary>
+        /// Tries to give the pawn a job related to picking up or dropping an item from their inventory.
+        /// </summary>
+        /// <param name="pawn">Pawn to which the job is given.</param>
+        /// <returns>Job that the pawn was instructed to do, be it hauling a dropped Thing or going and getting a Thing.</returns>
         protected override Job TryGiveJob(Pawn pawn)
         {
             // Get inventory
@@ -280,97 +266,32 @@ namespace CombatExtended
             Loadout loadout = pawn.GetLoadout();
             if (loadout != null)
             {
+            	ThingWithComps dropEq;
+            	if (pawn.GetExcessEquipment(out dropEq))
+            	{
+	            	ThingWithComps droppedEq;
+	                if (pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedEq, pawn.Position, false))
+	                {
+	                	if (droppedEq != null)
+		                    return HaulAIUtility.HaulToStorageJob(pawn, droppedEq);
+	                	Log.Error(string.Concat(pawn, " tried dropping ", dropEq, " from loadout but resulting thing is null"));
+	                }
+            	}
             	Thing dropThing;
             	int dropCount;
-            	bool isEquipment;
-            	if (pawn.GetExcessItem(out dropThing, out dropCount, out isEquipment))
+            	if (pawn.GetExcessThing(out dropThing, out dropCount))
             	{
-            		if (isEquipment)
+            		Thing droppedThing;
+            		if (inventory.container.TryDrop(dropThing, pawn.Position, pawn.Map, ThingPlaceMode.Near, dropCount, out droppedThing))
             		{
-	                    ThingWithComps droppedEq;
-	                    if (pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedEq, pawn.Position, false))
-	                    {
-	                        return HaulAIUtility.HaulToStorageJob(pawn, droppedEq);
-	                    }
-            		} else {
-	            		Thing droppedThing;
-	            		if (inventory.container.TryDrop(dropThing, pawn.Position, pawn.Map, ThingPlaceMode.Near, dropCount, out droppedThing))
-	            		{
-	            			if (droppedThing != null)
-	            			{
-	            				return HaulAIUtility.HaulToStorageJob(pawn, droppedThing);
-	            			}
-	            			Log.Error(string.Concat(pawn, " tried dropping " + dropThing + " from loadout but resulting thing is null"));
-	            		}
+            			if (droppedThing != null)
+            			{
+            				return HaulAIUtility.HaulToStorageJob(pawn, droppedThing);
+            			}
+            			Log.Error(string.Concat(pawn, " tried dropping ", dropThing, " from loadout but resulting thing is null"));
             		}
             	}
-            	/*
-				//new handling for dropping stuff in another file.  Keeping this as reference for now.
-
-                // Find and drop excess items
-                foreach (LoadoutSlot slot in loadout.Slots)
-                {
-                    //TODO: Incomplete handling.
-                	int numContained = inventory.container.TotalStackCountOfDef(slot.thingDef);
-
-                    // Add currently equipped gun
-                    if (pawn.equipment != null && pawn.equipment.Primary != null)
-                    {
-                        //TODO: Incomplete handling.
-                    	if (pawn.equipment.Primary.def == slot.thingDef)
-                        {
-                            numContained++;
-                        }
-                    }
-                    // Drop excess items
-                    if(numContained > slot.count)
-                    {
-                    	//TODO: Incomplete handling.
-                    	Thing thing = inventory.container.FirstOrDefault(x => x.GetInnerIfMinified().def == slot.thingDef);
-                        if (thing != null)
-                        {
-                            Thing droppedThing;
-                            //TODO: Incomplete handling.
-                            if (inventory.container.TryDrop(thing, pawn.Position, pawn.Map, ThingPlaceMode.Near, numContained - slot.count, out droppedThing))
-                            {
-                                if (droppedThing != null)
-                                {
-                                    return HaulAIUtility.HaulToStorageJob(pawn, droppedThing);
-                                }
-                                Log.Error(pawn + " tried dropping " + thing + " from loadout but resulting thing is null");
-                            }
-                        }
-                    }
-                }
-
-                // Try drop currently equipped weapon
-                //TODO: Incomplete handling.
-                if (pawn.equipment != null && pawn.equipment.Primary != null && !loadout.Slots.Any(slot => slot.thingDef == pawn.equipment.Primary.def && slot.count >= 1))
-                {
-                    ThingWithComps droppedEq;
-                    if (pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedEq, pawn.Position, false))
-                    {
-                        return HaulAIUtility.HaulToStorageJob(pawn, droppedEq);
-                    }
-                }
-
-                // Find excess items in inventory that are not part of our loadout
-                bool allowDropRaw = Find.TickManager.TicksGame > pawn.mindState?.lastInventoryRawFoodUseTick + ticksBeforeDropRaw;
-                //TODO: Incomplete handling.
-                Thing thingToRemove = inventory.container.FirstOrDefault(t =>
-                    (allowDropRaw || !t.def.IsNutritionGivingIngestible || t.def.ingestible.preferability > FoodPreferability.RawTasty)
-                    && !loadout.Slots.Any(s => s.thingDef == t.GetInnerIfMinified().def));
-                if (thingToRemove != null)
-                {
-                    Thing droppedThing;
-                    if (inventory.container.TryDrop(thingToRemove, pawn.Position, pawn.Map, ThingPlaceMode.Near, thingToRemove.stackCount, out droppedThing))
-                    {
-                        return HaulAIUtility.HaulToStorageJob(pawn, droppedThing);
-                    }
-                    Log.Error(pawn + " tried dropping " + thingToRemove + " from inventory but resulting thing is null");
-                }
-*/
-
+            	
                 // Find missing items
                 ItemPriority priority;
                 Thing closestThing;
@@ -396,17 +317,17 @@ namespace CombatExtended
 	                    }
 	                    // Take items into inventory if needed
 	                    int numContained = inventory.container.TotalStackCountOfDef(closestThing.def);
-	                    return new Job(JobDefOf.TakeInventory, closestThing) { count = Mathf.Min(closestThing.stackCount, prioritySlot.count - numContained, count) };
+	                    return new Job(JobDefOf.TakeInventory, closestThing) { count = Mathf.Min(closestThing.stackCount, count - numContained) };
 	                } else
 	                {
 	                	return new Job(CE_JobDefOf.TakeFromOther, closestThing, carriedBy, doEquip ? pawn : null) {
-	                		//TODO: Incomplete handling.
-	                		count = doEquip ? 1 : Mathf.Min(closestThing.stackCount, prioritySlot.count - inventory.container.TotalStackCountOfDef(closestThing.def), count)
+	                		count = doEquip ? 1 : Mathf.Min(closestThing.stackCount, count - inventory.container.TotalStackCountOfDef(closestThing.def))
 	                	};
 	                }
                 }
             }
             return null;
         }
+        #endregion
     }
 }

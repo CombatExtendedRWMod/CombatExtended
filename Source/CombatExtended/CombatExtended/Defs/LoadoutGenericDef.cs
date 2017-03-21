@@ -28,6 +28,8 @@ namespace CombatExtended
 		private float _bulk;
 		private float _mass;
 		private bool _cachedVars = false;
+		// Having a key but a false value indicates that it's a perfect conflict.  True indicates imperfect conflict.  No key means no conflict.
+		public readonly Dictionary<LoadoutGenericDef, bool> conflicts = new Dictionary<LoadoutGenericDef, bool>();
 		#endregion
 		
 		#region Constructors
@@ -43,7 +45,7 @@ namespace CombatExtended
 			
 			defs.Add(generic);
 			
-			Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
+			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			
 			generic = new LoadoutGenericDef();
 			generic.defName = "GenericRawFood";
@@ -54,7 +56,7 @@ namespace CombatExtended
 			
 			defs.Add(generic);
 			
-			Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
+			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			
 			generic = new LoadoutGenericDef();
 			generic.defName = "GenericDrugs";
@@ -65,7 +67,7 @@ namespace CombatExtended
 			
 			defs.Add(generic);
 			
-			Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
+			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			
 			// now for the guns and ammo...
 			
@@ -90,6 +92,33 @@ namespace CombatExtended
 				generic.defaultCountType = LoadoutCountType.pickupDrop; // we want ammo to get picked up.
 				generic._lambda = td => td is AmmoDef && gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Contains(td);
 				defs.Add(generic);
+				//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
+			}
+			
+			// check for overlappi127.0.0.112345ng case and issue a warning if there is one... (yeah this is horribly inefficient but only happens once per game.)
+			IEnumerable<ThingDef> everything = DefDatabase<ThingDef>.AllDefs;
+			for (int i = 0; i <= defs.Count - 1; i++)
+			{
+				IEnumerable<ThingDef> a = everything.Where(t => defs[i].lambda(t));
+				for (int j = i+1; j <= defs.Count - 1; j++)
+				{
+					IEnumerable<ThingDef> b = everything.Where(t => defs[j].lambda(t));
+					IEnumerable<ThingDef> c = a.Intersect(b);
+					if (c.Any())
+					{
+						if (a.Count() != c.Count() && b.Count() != c.Count())
+						{
+							defs[i].conflicts.Add(defs[j], true);
+							defs[j].conflicts.Add(defs[i], true);
+							Log.Warning(string.Concat("CombatExtended :: LoadoutGenericDef :: ", defs[i].LabelCap, " and ", defs[j].LabelCap, 
+								" share some members but are not identical and thus may cause problems with loadouts.  The following items are contained in both: ",
+								string.Join(", ", c.Select(td => td.defName).ToArray())));
+						} else {
+							defs[i].conflicts.Add(defs[j], false);
+							defs[j].conflicts.Add(defs[i], false);
+						}
+					}
+				}
 			}
 			
 			DefDatabase<LoadoutGenericDef>.Add(defs);

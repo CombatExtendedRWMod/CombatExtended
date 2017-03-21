@@ -583,6 +583,7 @@ namespace CombatExtended.Detours
                                     Job job = new Job(JobDefOf.TakeInventory, item);
                                     job.count = 1;
                                     job.playerForced = true;
+                                    pawn.Notify_HoldTrackerJob(job);
                                     pawn.jobs.TryTakeOrderedJob(job);
                                 }));
                         }
@@ -600,6 +601,7 @@ namespace CombatExtended.Detours
                                        Job job = new Job(JobDefOf.TakeInventory, item);
                                        job.count = countHalf;
                                        job.playerForced = true;
+                                       pawn.Notify_HoldTrackerJob(job);
                                        pawn.jobs.TryTakeOrderedJob(job);
                                    }));
                                 opts.Add(pickUpHalfStackOption);
@@ -613,6 +615,7 @@ namespace CombatExtended.Detours
                                     Job job = new Job(JobDefOf.TakeInventory, item);
                                     job.count = count;
                                     job.playerForced = true;
+                                    pawn.Notify_HoldTrackerJob(job);
                                     pawn.jobs.TryTakeOrderedJob(job);
                                 }));
                             opts.Add(pickUpStackOption);
@@ -662,6 +665,7 @@ namespace CombatExtended.Detours
                             item.SetForbidden(false, false);
                             Job job = new Job(JobDefOf.TakeInventory, item);
                             job.count = 1;
+                            pawn.Notify_HoldTrackerJob(job);
                             pawn.jobs.TryTakeOrderedJob(job);
                         }, MenuOptionPriority.High, null, null, 0f, null, null));
                     }
@@ -684,6 +688,7 @@ namespace CombatExtended.Detours
                                 item.SetForbidden(false, false);
                                 Job job = new Job(JobDefOf.TakeInventory, item);
                                 job.count = item.stackCount;
+	                            pawn.Notify_HoldTrackerJob(job);
                                 pawn.jobs.TryTakeOrderedJob(job);
                             }, MenuOptionPriority.High, null, null, 0f, null, null));
                         }
@@ -701,6 +706,7 @@ namespace CombatExtended.Detours
                                 item.SetForbidden(false, false);
                                 Job job = new Job(JobDefOf.TakeInventory, item);
                                 job.count = count;
+                                pawn.Notify_HoldTrackerJob(job);
                                 pawn.jobs.TryTakeOrderedJob(job);
                             }, -2147483648);
                             Find.WindowStack.Add(window);

@@ -331,6 +331,7 @@ namespace CombatExtended
         // RimWorld.ITab_Pawn_Gear
         private void InterfaceDrop(Thing t)
         {
+        	SelPawnForGear.HoldTrackerForget(t);
             ThingWithComps thingWithComps = t as ThingWithComps;
             Apparel apparel = t as Apparel;
             if (apparel != null && this.SelPawnForGear.apparel != null && this.SelPawnForGear.apparel.WornApparel.Contains(apparel))
@@ -353,6 +354,7 @@ namespace CombatExtended
 
         private void InterfaceDropHaul(Thing t)
         {
+        	SelPawnForGear.HoldTrackerForget(t);
             ThingWithComps thingWithComps = t as ThingWithComps;
             Apparel apparel = t as Apparel;
             if (apparel != null && this.SelPawnForGear.apparel != null && this.SelPawnForGear.apparel.WornApparel.Contains(apparel))
