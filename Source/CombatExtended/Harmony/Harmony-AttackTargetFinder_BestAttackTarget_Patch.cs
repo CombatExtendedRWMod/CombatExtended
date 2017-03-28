@@ -35,8 +35,6 @@ namespace CombatExtended.Harmony
 	{
 		static readonly string logPrefix = Assembly.GetExecutingAssembly().GetName().Name + " :: " + typeof(AttackTargetFinder_BestAttackTarget_Patch).Name + " :: ";
 		
-		static DynamicMethod modifiedCode;
-		
 		static AttackTargetFinder_BestAttackTarget_Patch()
 		{
 			// the method we want to copy from.
@@ -55,7 +53,6 @@ namespace CombatExtended.Harmony
 			// get the patched original method (after the below line the original code will have the new stuff we want added to it).
 			var replacement = MethodPatcher.CreatePatchedMethod(oldMethod, empty, empty, transpilers);
 			if (replacement == null) throw new MissingMethodException("Cannot create dynamic replacement for " + oldMethod);
-			modifiedCode = replacement;
 			
 			// get the new method to instanciate it's IL.  Otherwise the memory call and WriteJump don't have something to work with...
 			newMethod.GetMethodBody().GetILAsByteArray();
