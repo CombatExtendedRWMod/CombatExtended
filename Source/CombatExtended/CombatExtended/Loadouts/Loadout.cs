@@ -129,6 +129,7 @@ namespace CombatExtended
         public void AddSlot(LoadoutSlot slot)
         {
         	LoadoutSlot old = _slots.FirstOrDefault(slot.isSameDef);
+        	Log.Message(string.Concat("Adding ThingDef ", slot.thingDef == null ? "Null" : slot.thingDef.LabelCap, " added, count: ", slot.count));
         	if (old != null)
         		old.count += slot.count;
         	else

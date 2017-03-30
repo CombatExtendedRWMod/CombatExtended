@@ -472,18 +472,18 @@ namespace CombatExtended
                     if (Widgets.ButtonImage(ammoRect, _iconAmmoAdd))
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
+                        int magazineSize = (slot.thingDef.GetCompProperties<CompProperties_AmmoUser>() == null) ? 0 : slot.thingDef.GetCompProperties<CompProperties_AmmoUser>().magazineSize;
 
                         foreach (AmmoLink link in ((ammoSet == null) ? null : ammoSet.ammoTypes))
                         {
                             options.Add(new FloatMenuOption(link.ammo.LabelCap, delegate
                             {
-                                CurrentLoadout.AddSlot(new LoadoutSlot(link.ammo));
+		                        CurrentLoadout.AddSlot(new LoadoutSlot(link.ammo, (magazineSize <= 1 ? link.ammo.defaultAmmoCount : magazineSize)));
                             }));
                         }
                         // Add in the generic for this gun.
                         LoadoutGenericDef generic = DefDatabase<LoadoutGenericDef>.GetNamed("GenericAmmo-" + slot.thingDef.defName);
                         if (generic != null)
-                        	Log.Message(generic.LabelCap);
                         	options.Add(new FloatMenuOption(generic.LabelCap, delegate
 							{
                         		CurrentLoadout.AddSlot(new LoadoutSlot(generic));
