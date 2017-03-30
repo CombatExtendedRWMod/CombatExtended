@@ -110,6 +110,14 @@ namespace CombatExtended
                 AssignedLoadouts[id] = DefaultLoadout;
             }
         }
+        
+        /// <summary>
+        /// Used to ensure that future retrievals of loadouts are sorted.  Doesn't need to be called often, just right before fetching and only when it matters.
+        /// </summary>
+        public static void SortLoadouts()
+        {
+        	Instance._loadouts.Sort();
+        }
 
         /// <summary>
         /// Load/Save handler.

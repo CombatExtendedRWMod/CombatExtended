@@ -163,6 +163,7 @@ namespace CombatExtended
                 (canvas.width - _margin) / 2f,
                 canvas.height - 24f - _topAreaHeight - _margin * 3);
 
+        	LoadoutManager.SortLoadouts();
             List<Loadout> loadouts = LoadoutManager.Loadouts.Where(l => !l.defaultLoadout).ToList();
 
             // DRAW CONTENTS
@@ -170,6 +171,7 @@ namespace CombatExtended
             // select loadout
             if (Widgets.ButtonText(selectRect, "CE_SelectLoadout".Translate()))
             {
+            	
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
 
                 if (loadouts.Count == 0)

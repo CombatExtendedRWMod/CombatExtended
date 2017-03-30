@@ -271,8 +271,7 @@ namespace CombatExtended
             else
                 return ys[Mathf.FloorToInt(ys.Length / 2)];
         }
-
-
+        
         #endregion Methods
     }
 }
