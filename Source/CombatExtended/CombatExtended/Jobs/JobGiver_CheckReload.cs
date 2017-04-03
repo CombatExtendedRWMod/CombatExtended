@@ -104,12 +104,6 @@ namespace CombatExtended
 					comp.selectedAmmo = ammo;
 				}
 				
-	            // Throw mote
-	            if (comp.Props.throwMote) // TODO shouldn't this be in the JobDriver? (init action).  (possibly because the mote only throws when pawn is reloading own ammo.)
-	            {
-	                MoteMaker.ThrowText(pawn.Position.ToVector3Shifted(), Find.VisibleMap, "CE_ReloadingMote".Translate());
-	            }
-	            
 	            // Issue reload job
 	            reloadJob = new Job(CE_JobDefOf.ReloadWeapon, pawn, gun);
 			}

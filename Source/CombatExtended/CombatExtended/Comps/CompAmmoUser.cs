@@ -238,17 +238,8 @@ namespace CombatExtended
             {
                 return;
             }
-            IntVec3 position;
-            if (wielder == null)
-            {
-                if (turret == null) return;
-                turret.isReloading = true;
-                position = turret.Position;
-            }
-            else
-            {
-                position = wielder.Position;
-            }
+            if (wielder == null && turret == null)
+            	return;
 
             if (useAmmo)
             {
@@ -278,12 +269,6 @@ namespace CombatExtended
                     DoOutOfAmmoAction();
                     return;
                 }
-            }
-
-            // Throw mote
-            if (Props.throwMote)
-            {
-                MoteMaker.ThrowText(position.ToVector3Shifted(), Find.VisibleMap, "CE_ReloadingMote".Translate());
             }
 
             // Issue reload job

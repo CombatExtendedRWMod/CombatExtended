@@ -35,7 +35,13 @@ namespace CombatExtended
 		
 		#region Constructors
 		//UNDONE This doesn't define weapons as yet and the code might not handle that well.  Want to get various things stable first RE inventory.
-		//       But we can define generics for short range, assault, pistol, melee.  (Unfortunately can't control quality atm...)
+		//       But we can define generics for short range, assault, pistol, melee.
+		/*       (ProfoundDarkness) Some issues with weapons is that they have durability, quality, and often made of stuffs.
+		 *                          Also could use a super-generic which fetches x clips for each weapon on the pawn (working on that for something else).
+		 *                          I'm thinking we could add another button (more clutter) to each loadout slot which is only displayed if the item
+		 *                           has key properties.  Clicking that button would show a new window which lets the user configure parameters like
+		 *                           a range slider for durability, range slider for quality, and a checklist for stuffs (assuming is made of stuffs).
+		 */
 		
 		/// <summary>
 		/// This constructor gets run on startup of RimWorld and generates the various LoadoutGenericDef instance objects akin to having been loaded from xml.

@@ -7,7 +7,6 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
-//TODO: Cause new loadouts to use the pawn's current equipment (on top of above)?
 namespace CombatExtended
 {
 	/// <summary>

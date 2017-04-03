@@ -39,6 +39,26 @@ namespace CombatExtended
             this.FailOnDespawnedOrNull(TargetIndex.A);
             this.FailOnMentalState(TargetIndex.A);
             this.FailOn(HasNoGunOrAmmo);
+            
+            // moved from JobDriver_Reload...
+            IntVec3 position;
+            if (compReloader.wielder == null)
+            {
+                if (compReloader.turret == null)
+                	throw new System.ArgumentException("JobDriver_Reload :: Both compReloader.wielder and compReloader.turret are null.  Either a Pawn held weapon or a Turret are required for this job.");
+                compReloader.turret.isReloading = true;
+                position = compReloader.turret.Position;
+            }
+            else
+            {
+                position = compReloader.wielder.Position;
+            }
+            
+            // Throw mote
+            if (compReloader.Props.throwMote)
+            {
+                MoteMaker.ThrowText(position.ToVector3Shifted(), Find.VisibleMap, "CE_ReloadingMote".Translate());
+            }
 
             //Toil of do-nothing		
             Toil waitToil = new Toil();
