@@ -35,6 +35,7 @@ namespace CombatExtended
 		
 		#region Constructors
 		//UNDONE This doesn't define weapons as yet and the code might not handle that well.  Want to get various things stable first RE inventory.
+		//       But we can define generics for short range, assault, pistol, melee.  (Unfortunately can't control quality atm...)
 		
 		/// <summary>
 		/// This constructor gets run on startup of RimWorld and generates the various LoadoutGenericDef instance objects akin to having been loaded from xml.
