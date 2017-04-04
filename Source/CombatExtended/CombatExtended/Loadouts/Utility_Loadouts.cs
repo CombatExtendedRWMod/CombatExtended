@@ -273,6 +273,11 @@ namespace CombatExtended
                 return ys[Mathf.FloorToInt(ys.Length / 2)];
         }
         
+        /// <summary>
+        /// Generates a loadout from a pawn's current equipment and inventory.  Attempts to put items which fit in Generics that are default/DropExcess into said Generic.
+        /// </summary>
+        /// <param name="pawn">Pawn to check equipment/inventory on and generate a Loadout from.</param>
+        /// <returns>Loadout which was generated based on Pawn's inventory.</returns>
         public static Loadout GenerateLoadoutFromPawn(this Pawn pawn)
         {
         	// generate the name for this new pawn based loadout.

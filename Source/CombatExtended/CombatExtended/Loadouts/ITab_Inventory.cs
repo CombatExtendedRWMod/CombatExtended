@@ -157,8 +157,9 @@ namespace CombatExtended
 	                	
 	                	// UNDONE ideally we'd open the assign (MainTabWindow_OutfitsAndLoadouts) tab as if the user clicked on it here.
 	                	// (ProfoundDarkness) But I have no idea how to do that just yet.  The attempts I made seem to put the RimWorld UI into a bit of a bad state.
-	                	// ie opening the tab like the dialog below.
-	                	// Need to understand how RimWorld switches tabs and see if something similar can be done here (or just remove the unfinished marker).
+	                	//                     ie opening the tab like the dialog below.
+	                	//                    Need to understand how RimWorld switches tabs and see if something similar can be done here
+	                	//                     (or just remove the unfinished marker).
 	                	
 	                	// Opening this window is the same way as if from the assign tab so should be correct.
 	                	Find.WindowStack.Add(new Dialog_ManageLoadouts(SelPawnForGear.GetLoadout()));

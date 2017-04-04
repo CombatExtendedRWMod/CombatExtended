@@ -68,7 +68,7 @@ namespace CombatExtended
         public Dialog_ManageLoadouts(Loadout loadout)
         {
         	CurrentLoadout = null;
-        	if (!loadout.defaultLoadout)
+        	if (loadout != null && !loadout.defaultLoadout)
             	CurrentLoadout = loadout;
             SetSource(SourceSelection.Ranged);
             doCloseX = true;
@@ -218,9 +218,8 @@ namespace CombatExtended
                         delegate
                         {
                             if (CurrentLoadout == loadouts[local_i])
-                                CurrentLoadout = null;
+								CurrentLoadout = LoadoutManager.DefaultLoadout;
                             LoadoutManager.RemoveLoadout(loadouts[local_i]);
-                            loadouts.Remove(loadouts[local_i]);
                         }));
                 }
 

@@ -88,12 +88,12 @@ namespace CombatExtended
 				if (comp.curMagCount > 0)
 				{
 					Thing ammoThing = ThingMaker.MakeThing(comp.currentAmmo);
-					ammoThing.stackCount = comp.curMagCount;
+					int unloadCount = comp.curMagCount;
+					ammoThing.stackCount = unloadCount;
 					comp.TryStartReload(true); // comp.curMagCount = 0;
-					int remaining = compInventory.container.TryAdd(ammoThing, ammoThing.stackCount);
-					if (remaining > 0)
+					if (unloadCount != compInventory.container.TryAdd(ammoThing, ammoThing.stackCount))
 					{
-						ammoThing.stackCount = remaining;
+						// TryAdd tells us how much was added, if there wasn't enough room it spits out a different value than expected and decriments our thing, ready for drop.
 						Thing outThing = null;
 						GenThing.TryDropAndSetForbidden(ammoThing, pawn.Position, Find.VisibleMap, ThingPlaceMode.Near, out outThing, pawn.Faction != Faction.OfPlayer);
 					}
