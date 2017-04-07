@@ -28,6 +28,14 @@ using Verse.AI;
  * 
  * If either of the above are true, trigger a reload.
  */
+ 
+ /*
+  * Goal: To utilize the cache system in CompInventory.
+  * Inspecting the cache, it doesn't cache equipment so need to check that still.
+  * 
+  * Goal2: To modify CompAmmoUser.TryReload() so that I can ask CompAmmoUser for a job... TryReload ideally should still be functionally the same even if code
+  *  is relocated.
+  */
 
 namespace CombatExtended
 {
@@ -71,9 +79,6 @@ namespace CombatExtended
 		/// <returns>Job that the pawn is to be working on.</returns>
 		protected override Job TryGiveJob(Pawn pawn)
 		{
-			// Basically a clone of CompAmmoUser.TryStartReload()
-			// Ideally we would ask the comp for the job instead of letting the comp apply it to the pawn.
-			
 			ThingWithComps gun;
 			AmmoDef ammo;
 			Job reloadJob = null;
@@ -84,28 +89,14 @@ namespace CombatExtended
 				CompInventory compInventory = pawn.TryGetComp<CompInventory>();
 				// we relied on DoReloadCheck() to do error checking of many variables.
 				
-				// Add remaining ammo back to inventory
-				if (comp.curMagCount > 0)
-				{
-					Thing ammoThing = ThingMaker.MakeThing(comp.currentAmmo);
-					int unloadCount = comp.curMagCount;
-					ammoThing.stackCount = unloadCount;
-					comp.TryStartReload(true); // comp.curMagCount = 0;
-					if (unloadCount != compInventory.container.TryAdd(ammoThing, ammoThing.stackCount))
-					{
-						// TryAdd tells us how much was added, if there wasn't enough room it spits out a different value than expected and decriments our thing, ready for drop.
-						Thing outThing = null;
-						GenThing.TryDropAndSetForbidden(ammoThing, pawn.Position, Find.VisibleMap, ThingPlaceMode.Near, out outThing, pawn.Faction != Faction.OfPlayer);
-					}
-				}
+				comp.Unload(); // unload the weapon.
 				
+				// change ammo type if necessary.
 				if (comp.currentAmmo != ammo)
-				{
 					comp.selectedAmmo = ammo;
-				}
 				
-	            // Issue reload job
-	            reloadJob = new Job(CE_JobDefOf.ReloadWeapon, pawn, gun);
+	            // Get the reload job from the comp.
+	            reloadJob = comp.GetReloadJob();
 			}
 			return reloadJob;
 		}
