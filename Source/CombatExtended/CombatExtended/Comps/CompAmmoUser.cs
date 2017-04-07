@@ -231,8 +231,11 @@ namespace CombatExtended
             if (curMagCountInt < 0) TryStartReload();
             return true;
         }
-
-        public void TryStartReload(bool unload = false)
+		
+        /// <summary>
+        /// Overrides a Pawn's current activities to start reloading a gun or turret.  Has a code path to resume the interrupted job.
+        /// </summary>
+        public void TryStartReload()
         {
             if (!hasMagazine)
             {
@@ -243,10 +246,8 @@ namespace CombatExtended
 
             if (useAmmo)
             {
-            	Unload();
+            	TryUnload();
             	
-                if (unload) return;
-
                 // Check for ammo
                 if (wielder != null && !hasAmmo)
                 {
@@ -258,7 +259,9 @@ namespace CombatExtended
             // Issue reload job
             if (wielder != null)
             {
-            	Job reloadJob = GetReloadJob(true);
+            	Job reloadJob = TryGetReloadJob(true);
+            	if (reloadJob == null)
+            		return;
 
                 // Store the current job so we can reassign it later
                 if (wielder.Faction == Faction.OfPlayer
@@ -274,50 +277,60 @@ namespace CombatExtended
         }
         
         /// <summary>
-        /// Used to unload the weapon.  Ammo will be dumped to the unloading Pawn's inventory or the ground if insufficient space.
+        /// Used to unload the weapon.  Ammo will be dumped to the unloading Pawn's inventory or the ground if insufficient space.  Any ammo that can't be dropped
+        /// on the ground is destroyed (with a warning).
         /// </summary>
-        public void Unload()
+        /// <returns>bool, true indicates the weapon was already in an unloaded state or the unload was successful.  False indicates an error state.</returns>
+        /// <remarks>
+        /// Failure to unload occurs if the weapon doesn't use a magazine, user setting for useAmmo is false, wielder and turret are both null,
+        /// or the weapon is already empty.  Up to caller to do error checking to determine which of those is the problem.
+        /// </remarks>
+        public bool TryUnload()
         {
         	if (!hasMagazine || (wielder == null && turret == null))
-        		throw new ArgumentException(string.Concat(this.GetType().Assembly.GetName().Name + " :: " + this.GetType().Name + " :: ",
-        		                            "Unload() was called on a weapon that doesn't use magazines or where neither wielder nor turret were non-null."));
+        		return false; // nothing to do as we are in a bad state;
         	
-        	if (useAmmo)
-        	{
-	            // Add remaining ammo back to inventory
-	            if (curMagCountInt > 0)
-	            {
-	                Thing ammoThing = ThingMaker.MakeThing(currentAmmoInt);
-	                ammoThing.stackCount = curMagCountInt;
-	                bool doDrop = false;
-	
-	                if (compInventory != null)
-	                	doDrop = (curMagCountInt != compInventory.container.TryAdd(ammoThing, ammoThing.stackCount)); // TryAdd should report how many ammoThing.stackCount it stored.
-	                else
-	                	doDrop = true;
-	                
-	                if (doDrop)
-	                {
-	                	// NOTE: If we get here from ThingContainer.TryAdd() it will have modified the ammoThing.stackCount to what it couldn't take.
-	                    Thing outThing;
-	                    GenThing.TryDropAndSetForbidden(ammoThing, position, Find.VisibleMap, ThingPlaceMode.Near, out outThing, turret.Faction != Faction.OfPlayer);
-	                }
-	                curMagCountInt = 0;
-	            }
-        	}
+        	if (!useAmmo || curMagCountInt == 0)
+        		return true; // nothing to do but we aren't in a bad state either.  Claim success.
+        		
+            // Add remaining ammo back to inventory
+            Thing ammoThing = ThingMaker.MakeThing(currentAmmoInt);
+            ammoThing.stackCount = curMagCountInt;
+            bool doDrop = false;
+
+            if (compInventory != null)
+            	doDrop = (curMagCountInt != compInventory.container.TryAdd(ammoThing, ammoThing.stackCount)); // TryAdd should report how many ammoThing.stackCount it stored.
+            else
+            	doDrop = true; // Inventory was null so no place to shift the ammo besides the ground.
+            
+            if (doDrop)
+            {
+            	// NOTE: If we get here from ThingContainer.TryAdd() it will have modified the ammoThing.stackCount to what it couldn't take.
+                Thing outThing;
+                if (!GenThing.TryDropAndSetForbidden(ammoThing, position, Find.VisibleMap, ThingPlaceMode.Near, out outThing, turret.Faction != Faction.OfPlayer))
+                {
+                	Log.Warning(String.Concat(this.GetType().Assembly.GetName().Name + " :: " + this.GetType().Name + " :: ",
+                	                         "Unable to drop ", ammoThing.LabelCap, " on the ground, thing was destroyed."));
+                }
+            }
+            
+            // don't forget to set the clip to empty...
+            curMagCountInt = 0;
+            
+            return true;
         }
         
         /// <summary>
         /// Used to fetch a reload job for the weapon this comp is on.  Sets storedInfo to null (as if no job being replaced).
         /// </summary>
         /// <returns>Job using JobDriver_Reload</returns>
-        public Job GetReloadJob(bool forced = false)
+        /// <remarks>TryUnload() should be called before this in most cases.</remarks>
+        public Job TryGetReloadJob(bool forced = false)
         {
         	if (!hasMagazine || (wielder == null && turret == null))
-        		throw new ArgumentException(string.Concat(this.GetType().Assembly.GetName().Name + " :: " + this.GetType().Name + " :: ",
-        		                            "Unload() was called on a weapon that doesn't use magazines or where neither wielder nor turret were non-null."));
+        		return null; // the job couldn't be created.
         	
-            // blank the stored job details so JobDriver_Reload doesn't try to start another job.
+            // blank the stored job details so we don't try to start another job after reloading.  Up to caller to set these after getting the reload job from us.
         	storedTarget = null;
             storedJobDef = null;
             

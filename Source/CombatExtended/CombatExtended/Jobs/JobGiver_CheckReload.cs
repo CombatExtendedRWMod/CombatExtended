@@ -89,14 +89,14 @@ namespace CombatExtended
 				CompInventory compInventory = pawn.TryGetComp<CompInventory>();
 				// we relied on DoReloadCheck() to do error checking of many variables.
 				
-				comp.Unload(); // unload the weapon.
+				if (!comp.TryUnload()) return null; // unload the weapon or stop trying if there was a problem.
 				
 				// change ammo type if necessary.
 				if (comp.currentAmmo != ammo)
 					comp.selectedAmmo = ammo;
 				
 	            // Get the reload job from the comp.
-	            reloadJob = comp.GetReloadJob();
+	            reloadJob = comp.TryGetReloadJob();
 			}
 			return reloadJob;
 		}
