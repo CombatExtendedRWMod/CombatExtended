@@ -119,8 +119,7 @@ namespace CombatExtended
 			
 			// First need to create the collections that will be searched.
 			List<ThingWithComps> guns = new List<ThingWithComps>();
-			List<AmmoDef> ammo = new List<AmmoDef>(); // may be unnecessary.  Should be able to ask the pawn's inventory for a thing of def.
-			ThingContainer inventory = pawn.TryGetComp<CompInventory>()?.container;
+			CompInventory inventory = pawn.TryGetComp<CompInventory>();
 			Loadout loadout = pawn.GetLoadout();
 			CompAmmoUser tmpComp;
 			
@@ -130,11 +129,8 @@ namespace CombatExtended
 			if ((tmpComp = pawn.equipment?.Primary?.TryGetComp<CompAmmoUser>()) != null && tmpComp.hasMagazine && tmpComp.useAmmo)
 				guns.Add(pawn.equipment.Primary);
 			
-			foreach (Thing thing in pawn.inventory.innerContainer)
-			{
-				if (thing is ThingWithComps && (tmpComp = thing.TryGetComp<CompAmmoUser>()) != null && tmpComp.hasMagazine && tmpComp.useAmmo)
-					guns.Add(thing as ThingWithComps);
-			}
+			// CompInventory doesn't track equipment and it's desired to check the pawn's equipped weapon before inventory items so need to copy stuff from Inventory Cache.
+			guns.AddRange(inventory.rangedWeaponList.Where(t => t.GetComp<CompAmmoUser>().hasMagazine && t.GetComp<CompAmmoUser>().useAmmo));
 			
 			if (guns.NullOrEmpty())
 				return false; // There isn't any work to do since the pawn doesn't have any ammo using guns.
@@ -156,7 +152,7 @@ namespace CombatExtended
 						.Where(al => al.ammo != ammoType)
 						.Select(al => al.ammo)
 						.FirstOrDefault(ad => TrackingSatisfied(pawn, ad, magazineSize) 
-						                && inventory.TotalStackCountOfDef(ad) >= magazineSize);
+						                && inventory.AmmoCountOfDef(ad) >= magazineSize);
 					
 					if (matchAmmo != null)
 					{
@@ -170,7 +166,7 @@ namespace CombatExtended
 				if (tmpComp.curMagCount < magazineSize)
 				{
 					// Do we have enough ammo in the inventory to top it off?
-					if (inventory.TotalStackCountOfDef(ammoType) >= (magazineSize - tmpComp.curMagCount))
+					if (inventory.AmmoCountOfDef(ammoType) >= (magazineSize - tmpComp.curMagCount))
 					{
 						reloadWeapon = gun;
 						reloadAmmo = ammoType;

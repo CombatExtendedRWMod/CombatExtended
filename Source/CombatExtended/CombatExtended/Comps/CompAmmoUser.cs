@@ -119,7 +119,7 @@ namespace CombatExtended
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -508,6 +508,6 @@ namespace CombatExtended
             return stringBuilder.ToString();
         }
 
-        #endregion
+        #endregion Methods
     }
 }
