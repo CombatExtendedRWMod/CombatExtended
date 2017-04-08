@@ -7,36 +7,6 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 
-/* Concept:
- * to have the pawn check it's currently equipped and inventory weapons for if they need a reload.
- * Should also try and check if any weapons have ammo which doesn't have a loadout defined and reload.
- */
-
-/* List of things that need to be checked:
- * Does any gun have a low ammo state?
- * -Do we have ammo in the inventory to fill it up?
- * Is any gun loaded with ammo that we don't have a loadout for?
- * -Do we have ammo in inventory for that gun and have a loadout?
- */
-
-/* Rough Algorithm
- * Need Things so the collection of ammo users that use magazines.  Also need a collection of ammo (ThingDef is OK here).
- * For each weapon (that fits above),
- * -If we have no ammo in inventory that the gun is loaded with, check loadouts/holdtracker for a clip's worth of ammo that the gun contains.
- * --Find ammo the gun uses that we have a clip's worth in inventory (should check it against loadout/holdtracker as well)
- * -If weapon is low on ammo and we have enough in inventory to fill it up.
- * 
- * If either of the above are true, trigger a reload.
- */
- 
- /*
-  * Goal: To utilize the cache system in CompInventory.
-  * Inspecting the cache, it doesn't cache equipment so need to check that still.
-  * 
-  * Goal2: To modify CompAmmoUser.TryReload() so that I can ask CompAmmoUser for a job... TryReload ideally should still be functionally the same even if code
-  *  is relocated.
-  */
-
 namespace CombatExtended
 {
 	public class JobGiver_CheckReload : ThinkNode_JobGiver
@@ -105,6 +75,15 @@ namespace CombatExtended
 		
 		#region Methods
 		
+		/* Rough Algorithm
+		 * Need Things so the collection of ammo users that use magazines.  Also need a collection of ammo (ThingDef is OK here).
+		 * For each weapon (that fits above),
+		 * -If we have no ammo in inventory that the gun is loaded with, check loadouts/holdtracker for a clip's worth of ammo that the gun contains.
+		 * --Find ammo the gun uses that we have a clip's worth in inventory (should check it against loadout/holdtracker as well)
+		 * -If weapon is low on ammo and we have enough in inventory to fill it up.
+		 * 
+		 * If either of the above are true, trigger a reload.
+		 */
 		/// <summary>
 		/// Check's the pawn's equipment and inventory for weapons that could use a reload.
 		/// </summary>
