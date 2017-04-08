@@ -66,7 +66,7 @@ namespace CombatExtended
 					comp.selectedAmmo = ammo;
 				
 	            // Get the reload job from the comp.
-	            reloadJob = comp.TryGetReloadJob();
+	            reloadJob = comp.TryMakeReloadJob();
 			}
 			return reloadJob;
 		}

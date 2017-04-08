@@ -266,7 +266,12 @@ namespace CombatExtended
 				storage[thing.def].value += thing.stackCount;
 				gun = thing.TryGetComp<CompAmmoUser>();
 				if (gun != null)
-					storage.Add(gun.currentAmmo, new Integer(gun.curMagCount));
+				{
+					if (storage.ContainsKey(gun.currentAmmo))
+						storage[gun.currentAmmo].value += gun.curMagCount;
+					else
+						storage.Add(gun.currentAmmo, new Integer(gun.curMagCount));
+				}
 			}
         	
 			return storage;

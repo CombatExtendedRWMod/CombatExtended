@@ -58,6 +58,13 @@ namespace CombatExtended
                 return compEquippable.PrimaryVerb.CasterPawn;
             }
         }
+		public Pawn holder
+		{
+			get
+			{
+				return wielder ?? (compEquippable.parent.holdingContainer?.owner as Pawn_InventoryTracker)?.pawn;
+			}
+		}
         public bool useAmmo
         {
             get
@@ -106,7 +113,7 @@ namespace CombatExtended
         {
             get
             {
-                return wielder.TryGetComp<CompInventory>();
+                return holder.TryGetComp<CompInventory>();
             }
         }
         private IntVec3 position
@@ -115,6 +122,7 @@ namespace CombatExtended
             {
                 if (wielder != null) return wielder.Position;
                 else if (turret != null) return turret.Position;
+                else if (holder != null) return holder.Position;
                 else return parent.Position;
             }
         }
@@ -232,6 +240,7 @@ namespace CombatExtended
             return true;
         }
 		
+        // really only used by pawns (JobDriver_Reload) at this point... TODO: Finish making sure this is only used by pawns and fix up the error checking.
         /// <summary>
         /// Overrides a Pawn's current activities to start reloading a gun or turret.  Has a code path to resume the interrupted job.
         /// </summary>
@@ -259,9 +268,10 @@ namespace CombatExtended
             // Issue reload job
             if (wielder != null)
             {
-            	Job reloadJob = TryGetReloadJob(true);
+            	Job reloadJob = TryMakeReloadJob();
             	if (reloadJob == null)
             		return;
+            	reloadJob.playerForced = true;
 
                 // Store the current job so we can reassign it later
                 if (wielder.Faction == Faction.OfPlayer
@@ -276,18 +286,18 @@ namespace CombatExtended
             }
         }
         
+        // used by both turrets (JobDriver_ReloadTurret) and pawns (JobDriver_Reload).
         /// <summary>
         /// Used to unload the weapon.  Ammo will be dumped to the unloading Pawn's inventory or the ground if insufficient space.  Any ammo that can't be dropped
         /// on the ground is destroyed (with a warning).
         /// </summary>
         /// <returns>bool, true indicates the weapon was already in an unloaded state or the unload was successful.  False indicates an error state.</returns>
         /// <remarks>
-        /// Failure to unload occurs if the weapon doesn't use a magazine, user setting for useAmmo is false, wielder and turret are both null,
-        /// or the weapon is already empty.  Up to caller to do error checking to determine which of those is the problem.
+        /// Failure to unload occurs if the weapon doesn't use a magazine.
         /// </remarks>
         public bool TryUnload()
         {
-        	if (!hasMagazine || (wielder == null && turret == null))
+        	if (!hasMagazine || (holder == null && turret == null))
         		return false; // nothing to do as we are in a bad state;
         	
         	if (!useAmmo || curMagCountInt == 0)
@@ -325,19 +335,16 @@ namespace CombatExtended
         /// </summary>
         /// <returns>Job using JobDriver_Reload</returns>
         /// <remarks>TryUnload() should be called before this in most cases.</remarks>
-        public Job TryGetReloadJob(bool forced = false)
+        public Job TryMakeReloadJob()
         {
-        	if (!hasMagazine || (wielder == null && turret == null))
+        	if (!hasMagazine || (holder == null && turret == null))
         		return null; // the job couldn't be created.
         	
             // blank the stored job details so we don't try to start another job after reloading.  Up to caller to set these after getting the reload job from us.
         	storedTarget = null;
             storedJobDef = null;
             
-            return new Job(CE_JobDefOf.ReloadWeapon, wielder, parent)
-	            {
-	            	playerForced = forced
-	            };
+            return new Job(CE_JobDefOf.ReloadWeapon, holder, parent);
         }
         
         private void DoOutOfAmmoAction()
@@ -351,8 +358,8 @@ namespace CombatExtended
 
         public void LoadAmmo(Thing ammo = null)
         {
-            if (wielder == null && turret == null)
-            {
+            if (holder == null && turret == null)
+			{
                 Log.Error(parent.ToString() + " tried loading ammo with no owner");
                 return;
             }
