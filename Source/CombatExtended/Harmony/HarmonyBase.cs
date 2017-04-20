@@ -12,7 +12,7 @@ namespace CombatExtended.Harmony
 		static HarmonyBase()
 		{
 			// Unremark the following when developing new Harmony patches.  The file "harmony.log.txt" on your desktop and is always appended.  Will cause ALL patches to be debugged.
-			//HarmonyInstance.DEBUG = true;
+			HarmonyInstance.DEBUG = true;
 			
 			// The following line will cause all properly formatted and annotated classes to patch the target code.
 			instance.PatchAll(Assembly.GetExecutingAssembly());

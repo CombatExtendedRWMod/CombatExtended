@@ -9,6 +9,11 @@ using Harmony.ILCopying;
 using Verse;
 using Verse.AI;
 
+// Disabled due to some bugs (if a target has ANY cover it's considered invalid target) and turns out this was the wrong approach as AttackTargetFinder.BestShootTargetFromCurrentPosition
+// accepts a predicate and Verb_LaunchProjectileCE already has a CanHitTargetFrom() function.  Should just insert a predicate into the call to AttackTargetFinder.BestShootTargetFromCurrentPosition
+// from Verse.AI.JobDriver_Wait.
+// Didn't delete as it might still be useful to do this way but trying another way first.
+
 namespace CombatExtended.Harmony
 {
 	/* Two part target.
@@ -50,7 +55,8 @@ namespace CombatExtended.Harmony
             //HarmonyInstance.DEBUG = true;
             // get the patched original method (after the below line the original code will have the new stuff we want added to it).
             Patched_ClosestThingTarget_Global = MethodPatcher.CreatePatchedMethod(oldMethod, empty, empty, transpilers);
-			if (Patched_ClosestThingTarget_Global == null) throw new MissingMethodException("Cannot create dynamic replacement for " + oldMethod);
+            //HarmonyInstance.DEBUG = false;
+            if (Patched_ClosestThingTarget_Global == null) throw new MissingMethodException("Cannot create dynamic replacement for " + oldMethod);
 			
 			// get the new method to instanciate it's IL.  Otherwise the memory call and WriteJump don't have something to work with...
 			newMethod.GetMethodBody().GetILAsByteArray();

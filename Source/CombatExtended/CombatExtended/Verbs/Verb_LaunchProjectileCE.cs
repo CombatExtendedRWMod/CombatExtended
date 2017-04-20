@@ -357,7 +357,7 @@ namespace CombatExtended
             float numSegments = distToCheck / segmentLength;
 
             //Raycast accross all segments to check for cover
-            List<IntVec3> checkedCells = new List<IntVec3>();
+            HashSet<IntVec3> checkedCells = new HashSet<IntVec3>();
             Thing thingAtTargetLoc = targetLoc.ToIntVec3().GetEdifice(map);
             Thing newCover = null;
             for (int i = 0; i <= numSegments; i++)
