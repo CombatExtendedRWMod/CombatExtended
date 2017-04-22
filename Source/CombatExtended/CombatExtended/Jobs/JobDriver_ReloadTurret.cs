@@ -66,6 +66,7 @@ namespace CombatExtended
                 }
 
                 // Haul ammo
+                yield return Toils_Reserve.Reserve(TargetIndex.A, 1);
                 yield return Toils_Reserve.Reserve(TargetIndex.B, 1);
                 yield return Toils_Goto.GotoCell(ammo.Position, PathEndMode.ClosestTouch);
                 yield return Toils_Haul.StartCarryThing(TargetIndex.B);
