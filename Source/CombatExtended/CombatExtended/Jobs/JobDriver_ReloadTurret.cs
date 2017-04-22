@@ -52,6 +52,9 @@ namespace CombatExtended
             else
                 this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
 
+            // Reserve the turret
+            yield return Toils_Reserve.Reserve(TargetIndex.A, 1);
+
             if (compReloader.useAmmo)
             {
                 // Perform ammo system specific activities, failure condition and hauling
@@ -66,7 +69,6 @@ namespace CombatExtended
                 }
 
                 // Haul ammo
-                yield return Toils_Reserve.Reserve(TargetIndex.A, 1);
                 yield return Toils_Reserve.Reserve(TargetIndex.B, 1);
                 yield return Toils_Goto.GotoCell(ammo.Position, PathEndMode.ClosestTouch);
                 yield return Toils_Haul.StartCarryThing(TargetIndex.B);
@@ -75,7 +77,6 @@ namespace CombatExtended
             } else
             {
                 // If ammo system is turned off we just need to go to the turret.
-                yield return Toils_Reserve.Reserve(TargetIndex.A, 1);
                 yield return Toils_Goto.GotoCell(turret.Position, PathEndMode.ClosestTouch);
             }
 
