@@ -8,44 +8,28 @@ namespace CombatExtended
 {
     public class JobDriver_ReloadTurret : JobDriver
     {
-        private Building_TurretGunCE _turret;
-        private Building_TurretGunCE turret
-        {
-            get
-            {
-                if (_turret == null)
-                    _turret = TargetThingA as Building_TurretGunCE;
-                return _turret;
-            }
-        }
+        #region Properties
+        private string errorBase => this.GetType().Assembly.GetName().Name + " :: " + this.GetType().Name + " :: ";
 
-        private AmmoThing _ammo;
-        private AmmoThing ammo
-        {
-            get
-            {
-                if (_ammo == null)
-                    _ammo = TargetThingB as AmmoThing;
-                return _ammo;
-            }
-        }
+        private Building_TurretGunCE turret => TargetThingA as Building_TurretGunCE;
+        private AmmoThing ammo => TargetThingB as AmmoThing;
 
         private CompAmmoUser _compReloader;
         private CompAmmoUser compReloader
         {
             get
             {
-                if (_compReloader == null)
-                    _compReloader = turret.compAmmo; // assumes turret has been error checked already...
+                if (_compReloader == null && turret != null)
+                    _compReloader = turret.compAmmo;
                 return _compReloader;
             }
         }
+        #endregion
 
-        private string errorBase { get { return this.GetType().Assembly.GetName().Name + " :: " + this.GetType().Name + " :: "; } }
-
+        #region Methods
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            // order of these errors matters some...
+            // Error checking/input validation.
             if (turret == null)
             {
                 Log.Error(string.Concat(errorBase, "TargetThingA isn't a Building_TurretGunCE"));
@@ -62,17 +46,15 @@ namespace CombatExtended
                 yield return null;
             }
 
+            // Set fail condition on turret.
             if (pawn.Faction != Faction.OfPlayer)
                 this.FailOnDestroyedOrNull(TargetIndex.A);
             else
                 this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
 
-            // get the turret's interaction cell and set it to TargetIndex.C
-            
-            turret.isReloading = true;
-
             if (compReloader.useAmmo)
             {
+                // Perform ammo system specific activities, failure condition and hauling
                 if (pawn.Faction != Faction.OfPlayer)
                 {
                     ammo.SetForbidden(false, false);
@@ -84,19 +66,25 @@ namespace CombatExtended
                 }
 
                 // Haul ammo
-                yield return Toils_Reserve.Reserve(TargetIndex.A, 1);
                 yield return Toils_Reserve.Reserve(TargetIndex.B, 1);
                 yield return Toils_Goto.GotoCell(ammo.Position, PathEndMode.ClosestTouch);
                 yield return Toils_Haul.StartCarryThing(TargetIndex.B);
                 yield return Toils_Goto.GotoCell(turret.Position, PathEndMode.ClosestTouch);
                 yield return Toils_Haul.PlaceHauledThingInCell(TargetIndex.A, null, false);
+            } else
+            {
+                // If ammo system is turned off we just need to go to the turret.
+                yield return Toils_Reserve.Reserve(TargetIndex.A, 1);
+                yield return Toils_Goto.GotoCell(turret.Position, PathEndMode.ClosestTouch);
             }
 
             // Wait in place
             Toil waitToil = new Toil() { actor = pawn };
             waitToil.initAction = delegate
             {
+                // Initial relaod process activities.
                 waitToil.actor.pather.StopDead();
+                turret.isReloading = true;
                 if (compReloader.Props.throwMote)
                     MoteMaker.ThrowText(turret.Position.ToVector3Shifted(), Find.VisibleMap, "CE_ReloadingMote".Translate());
                 compReloader.TryUnload();
@@ -115,5 +103,6 @@ namespace CombatExtended
             if (compReloader.useAmmo) reloadToil.EndOnDespawnedOrNull(TargetIndex.B);
             yield return reloadToil;
         }
+        #endregion Methods
     }
 }
