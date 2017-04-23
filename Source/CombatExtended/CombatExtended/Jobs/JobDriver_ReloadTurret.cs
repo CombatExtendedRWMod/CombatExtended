@@ -36,11 +36,11 @@ namespace CombatExtended
             string text = CE_JobDefOf.ReloadTurret.reportString;
             string turretType = (turret.def.hasInteractionCell ? "CE_MannedTurret" : "CE_AutoTurret").Translate();
             text = text.Replace("TurretType", turretType);
-            text = text.Replace("TargetA", TargetThingA.def.LabelCap);
+            text = text.Replace("TargetA", TargetThingA.def.label);
             if (compReloader.useAmmo)
-                text = text.Replace("TargetB", TargetThingB.def.LabelCap);
+                text = text.Replace("TargetB", TargetThingB.def.label);
             else
-                text = text.Replace("TargetB", compReloader.currentAmmo.LabelCap);
+                text = text.Replace("TargetB", compReloader.currentAmmo.label);
             return text;
         }
 

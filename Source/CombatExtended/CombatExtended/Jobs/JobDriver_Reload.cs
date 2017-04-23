@@ -36,8 +36,8 @@ namespace CombatExtended
             if (inEquipment) flagSource = "CE_ReloadingEquipment".Translate();
             if (inInventory) flagSource = "CE_ReloadingInventory".Translate();
             text = text.Replace("FlagSource", flagSource);
-            text = text.Replace("TargetB", TargetThingB.def.LabelCap);
-            text = text.Replace("AmmoType", compReloader.currentAmmo.LabelCap);
+            text = text.Replace("TargetB", TargetThingB.def.label);
+            text = text.Replace("AmmoType", compReloader.currentAmmo.label);
             return text;
         }
 
