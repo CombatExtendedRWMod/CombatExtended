@@ -288,7 +288,7 @@ namespace CombatExtended
         //  Probably not efficient but was easier to handle atm.
         static public bool GetExcessThing(this Pawn pawn, out Thing dropThing, out int dropCount)
         {
-	        //ProfoundDarkness: Thanks to erdelf on the RimWorldMod discord for helping me figure out some dictionary stuff and C# concepts related to 'Primitives' (pass by Value).
+	        //(ProfoundDarkness) Thanks to erdelf on the RimWorldMod discord for helping me figure out some dictionary stuff and C# concepts related to 'Primitives' (pass by Value).
         	CompInventory inventory = pawn.TryGetComp<CompInventory>();
         	Loadout loadout = pawn.GetLoadout();
         	List<HoldRecord> records = LoadoutManager.GetHoldRecords(pawn);
