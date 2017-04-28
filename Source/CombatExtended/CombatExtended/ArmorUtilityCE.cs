@@ -87,7 +87,6 @@ namespace CombatExtended
                         // Hit was deflected, convert damage type
                         dinfo = GetDeflectDamageInfo(dinfo, hitPart);
                         i++;    // We apply this piece of apparel twice on conversion, this means we can't use deflection on Blunt or else we get an infinite loop of eternal deflection
-                        TutorUtility.DoModalDialogIfNotKnown(CE_ConceptDefOf.CE_ArmorSystem);   // Inform the player about armor deflection
                     }
                     if (dmgAmount <= 0)
                     {
@@ -113,16 +112,23 @@ namespace CombatExtended
                 BodyPartRecord curPart = partsToHit[i];
                 bool coveredByArmor = curPart.IsInGroup(CE_BodyPartGroupDefOf.CoveredByNaturalArmor);
                 float partArmor = pawn.HealthScale * 0.05f;   // How much armor is provided by sheer meat
-                if (coveredByArmor) partArmor += pawn.GetStatValue(dinfo.Def.armorCategory.DeflectionStat());  // Get natural armor
-                if (!TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref dmgAmount))
+                if (coveredByArmor)
+                    partArmor += pawn.GetStatValue(dinfo.Def.armorCategory.DeflectionStat());
+                float unused = dmgAmount;
+
+                // Only apply damage reduction when penetrating armored body parts
+                if (coveredByArmor ? !TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref dmgAmount) : !TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref unused))
                 {
                     dinfo.SetForcedHitPart(curPart);
-                    if (!coveredByArmor || pawn.RaceProps.IsFlesh)
+                    /*
+                    if(coveredByArmor && pawn.RaceProps.IsMechanoid)
                     {
-                        break;  // On body part deflection only convert damage if the hit part is covered by Mechanoid armor
+                        // For Mechanoid natural armor, apply deflection and blunt armor
+                        dinfo = GetDeflectDamageInfo(dinfo, curPart);
+                        TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref dmgAmount);
                     }
-                    dinfo = GetDeflectDamageInfo(dinfo, curPart);
-                    i++;
+                    */
+                    break;
                 }
                 if (dmgAmount <= 0)
                 {
@@ -298,6 +304,9 @@ namespace CombatExtended
             newDinfo.SetWeaponHediff(dinfo.WeaponLinkedHediff);
             newDinfo.SetInstantOldInjury(dinfo.InstantOldInjury);
             newDinfo.SetAllowDamagePropagation(dinfo.AllowDamagePropagation);
+
+            TutorUtility.DoModalDialogIfNotKnown(CE_ConceptDefOf.CE_ArmorSystem);   // Inform the player about armor deflection
+
             return newDinfo;
         }
 

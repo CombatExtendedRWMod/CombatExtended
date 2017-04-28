@@ -18,7 +18,7 @@
   </ThingDef>
 
   <ThingDef ParentName="ShieldBase">
-    <defName>MeleeShield</defName>
+    <defName>Apparel_MeleeShield</defName>
     <label>melee shield</label>
     <description>Simple shield that can block simple projectiles and hits with melee weapons.</description>
     <techLevel>Industrial</techLevel>
@@ -31,11 +31,11 @@
     <stuffCategories>
       <li>Steeled</li>
       <li>Woody</li>
-      <li>Leathery</li>
+      <!--<li>Leathery</li>-->
     </stuffCategories>
     <recipeMaker>
       <recipeUsers>
-        <li>CraftingSpot</li>
+        <!--<li>CraftingSpot</li>-->
         <li>FueledSmithy</li>
         <li>ElectricSmithy</li>
       </recipeUsers>
@@ -59,15 +59,14 @@
     <apparel>
       <commonality>1</commonality>
       <tags>
-        <li>Tribal</li>
-        <li>Military</li>
+        <li>TribalShield</li>
         <li>CE_Shield</li>
       </tags>
     </apparel>
   </ThingDef>
 
   <ThingDef ParentName="ShieldBase">
-    <defName>BallisticShield</defName>
+    <defName>Apparel_BallisticShield</defName>
     <label>ballistic shield</label>
     <description>A heavy shield designed to protect against gunfire. It can cover most of the wearer's body but restricts use of two-handed weapons. Its heavy weight and bulk make it unwieldy in combat.</description>
     <techLevel>Industrial</techLevel>
@@ -98,8 +97,7 @@
     <apparel>
       <commonality>1</commonality>
       <tags>
-        <li>Outlander</li>
-        <li>Military</li>
+        <li>OutlanderShield</li>
         <li>CE_BallisticShield</li>
       </tags>
     </apparel>
