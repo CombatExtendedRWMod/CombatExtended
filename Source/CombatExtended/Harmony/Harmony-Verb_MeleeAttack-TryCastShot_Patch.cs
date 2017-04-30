@@ -42,10 +42,10 @@ namespace CombatExtended.Harmony
                 casterPawn.skills.Learn(SkillDefOf.Melee, 250f, false);
             }
             SoundDef soundDef;
-            if (Rand.Value < verb_MeleeAttack.Method("GetHitChance", thing).GetValue<float>())
+            if (Rand.Value < verb_MeleeAttack.Method("GetHitChance", (LocalTargetInfo)thing).GetValue<float>())
             {
                 __result = true;
-                verb_MeleeAttack.Method("ApplyMeleeDamageToTarget", currentTarget);
+                verb_MeleeAttack.Method("ApplyMeleeDamageToTarget", currentTarget).GetValue();
                 if (thing.def.category == ThingCategory.Building)
                 {
                     soundDef = verb_MeleeAttack.Method("SoundHitBuilding").GetValue<SoundDef>();
