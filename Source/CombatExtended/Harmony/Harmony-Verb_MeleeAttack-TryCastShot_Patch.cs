@@ -21,6 +21,7 @@ namespace CombatExtended.Harmony
             Pawn casterPawn = __instance.CasterPawn;
             if (casterPawn.stances.FullBodyBusy)
             {
+                __result = false;
                 return false;
             }
             LocalTargetInfo currentTarget = verb_MeleeAttack.Field("currentTarget").GetValue<LocalTargetInfo>();
@@ -40,11 +41,10 @@ namespace CombatExtended.Harmony
             {
                 casterPawn.skills.Learn(SkillDefOf.Melee, 250f, false);
             }
-            bool result;
             SoundDef soundDef;
             if (Rand.Value < verb_MeleeAttack.Method("GetHitChance", thing).GetValue<float>())
             {
-                result = true;
+                __result = true;
                 verb_MeleeAttack.Method("ApplyMeleeDamageToTarget", currentTarget);
                 if (thing.def.category == ThingCategory.Building)
                 {
@@ -57,7 +57,7 @@ namespace CombatExtended.Harmony
             }
             else
             {
-                result = false;
+                __result = false;
                 soundDef = verb_MeleeAttack.Method("SoundMiss").GetValue<SoundDef>();
             }
             soundDef.PlayOneShot(new TargetInfo(thing.Position, casterPawn.Map, false));
@@ -77,7 +77,7 @@ namespace CombatExtended.Harmony
             {
                 casterPawn.caller.Notify_DidMeleeAttack();
             }
-            return result;
+            return false;
         }
     }
 }
