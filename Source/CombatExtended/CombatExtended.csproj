@@ -161,6 +161,7 @@
     <Compile Include="CombatExtended\Loadouts\HoldRecord.cs" />
     <Compile Include="CombatExtended\Loadouts\HoldTrackerAssignment.cs" />
     <Compile Include="CombatExtended\Loadouts\Utility_HoldTracker.cs" />
+    <Compile Include="CombatExtended\ParryTracker.cs" />
     <Compile Include="CombatExtended\Projectiles\ProjectileCE_Explosive_RL.cs" />
     <Compile Include="CombatExtended\ModSettings.cs" />
     <Compile Include="CombatExtended\Recipe_RemoveOldHediff.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Harmony\Harmony-GenRadial_RadialPatternCount_Patch.cs" />
     <Compile Include="Harmony\Harmony-HediffComp_TendDuration_CompTended_Patch.cs" />
     <Compile Include="Harmony\Harmony-JobDriverWait-CheckForAutoAttack_Patch.cs" />
+    <Compile Include="Harmony\Harmony-Verb_MeleeAttack-TryCastShot_Patch.cs" />
     <Compile Include="Harmony\Harmony-Verb_TryStartCastOn_Patch.cs" />
     <Compile Include="Harmony\HarmonyBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
