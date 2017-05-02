@@ -10,12 +10,23 @@ namespace CombatExtended
 {
     public static class ArmorUtilityCE
     {
+        #region Constants
+
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
         public const string ShieldTag = "CE_Shield";  // Identify shields by this apparel tag
         public const string BallisticShieldTag = "CE_BallisticShield";
+
+        #endregion
+
+        #region Properties
+
         private static readonly SimpleCurve dmgMultCurve = new SimpleCurve { new CurvePoint(0.5f, 0), new CurvePoint(1, 0.5f), new CurvePoint(2, 1) };    // Used to calculate the damage reduction from the penetration / armor ratio
         private static readonly StuffCategoryDef[] softStuffs = { StuffCategoryDefOf.Fabric, DefDatabase<StuffCategoryDef>.GetNamed("Leathery") };
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Calculates damage through armor, depending on damage type, target and natural resistance. Also calculates deflection and adjusts damage type and impacted body part accordingly.
@@ -31,7 +42,7 @@ namespace CombatExtended
             DamageInfo dinfo = new DamageInfo(originalDinfo);
             float dmgAmount = dinfo.Amount;
             bool involveArmor = dinfo.Def.harmAllLayersUntilOutside;
-            bool isAmbientDamage = dinfo.Def.armorCategory == DamageArmorCategory.Electric || dinfo.Def.armorCategory == DamageArmorCategory.Heat;
+            bool isAmbientDamage = dinfo.IsAmbientDamage();
 
             // In case of ambient damage (fire, electricity) we apply a percentage reduction formula based on the sum of all applicable armor
             if (isAmbientDamage)
@@ -53,11 +64,7 @@ namespace CombatExtended
                 {
                     // Determine whether the hit is blocked by the shield
                     bool blockedByShield = false;
-                    if (dinfo.WeaponGear?.IsMeleeWeapon ?? false)
-                    {
-                        blockedByShield = Rand.Chance(0.5f);  // TODO Come up with a better formula
-                    }
-                    else
+                    if (!(dinfo.WeaponGear?.IsMeleeWeapon ?? false))
                     {
                         if (hitPart.height == BodyPartHeight.Middle)
                         {
@@ -176,7 +183,7 @@ namespace CombatExtended
                             Log.Error("CE tried getting armor penetration from melee weapon " + dinfo.WeaponGear.defName + " but instigator " + dinfo.Instigator.ToString() + " equipment does not match");
                             return 0;
                         }
-                        return instigatorPawn.equipment.Primary.GetStatValue(CE_StatDefOf.ArmorPenetration);
+                        return instigatorPawn.equipment.Primary.GetStatValue(CE_StatDefOf.MeleeWeapon_Penetration);
                     }
 
                     // Pawn is using body parts
@@ -324,5 +331,45 @@ namespace CombatExtended
             }
             return curPart;
         }
+
+        /// <summary>
+        /// Determines whether a dinfo is of an ambient (i.e. heat, electric) damage type and should apply percentage reduction, as opposed to deflection-based reduction
+        /// </summary>
+        /// <param name="dinfo"></param>
+        /// <returns>True if dinfo armor category is Heat or Electric, false otherwise</returns>
+        private static bool IsAmbientDamage(this DamageInfo dinfo)
+        {
+            return dinfo.Def.armorCategory == DamageArmorCategory.Electric || dinfo.Def.armorCategory == DamageArmorCategory.Heat;
+        }
+
+        /// <summary>
+        /// Applies damage to a parry object based on its armor values. For ambient damage, percentage reduction is applied, direct damage uses deflection formulas.
+        /// </summary>
+        /// <param name="dinfo">DamageInfo to apply to parryThing</param>
+        /// <param name="parryThing">Thing taking the damage</param>
+        public static void ApplyParryDamage(DamageInfo dinfo, Thing parryThing)
+        {
+            Pawn pawn = parryThing as Pawn;
+            if (pawn != null)
+            {
+                // Pawns run their own armor calculations
+                dinfo.SetAmount(Mathf.CeilToInt(dinfo.Amount * Rand.Range(0f, 0.5f)));
+                pawn.TakeDamage(dinfo);
+            }
+            else if (dinfo.IsAmbientDamage())
+            {
+                int dmgAmount = Mathf.CeilToInt(dinfo.Amount * Mathf.Clamp01(parryThing.GetStatValue(dinfo.Def.armorCategory.DeflectionStat())));
+                dinfo.SetAmount(dmgAmount);
+                parryThing.TakeDamage(dinfo);
+            }
+            else
+            {
+                float dmgAmount = dinfo.Amount;
+                float penAmount = GetPenetrationValue(dinfo);
+                TryPenetrateArmor(dinfo.Def, parryThing.GetStatValue(dinfo.Def.armorCategory.DeflectionStat()), ref penAmount, ref dmgAmount, parryThing);
+            }
+        }
+
+        #endregion
     }
 }

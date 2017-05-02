@@ -13,11 +13,17 @@ namespace CombatExtended
         private struct ParryCounter
         {
             public int parries;
-            public int ticks;
+            private int timeoutTick;
 
-            public static ParryCounter MakeNew()
+            public ParryCounter(int timeoutTicks)
             {
-                return new ParryCounter { parries = 0, ticks = Find.TickManager.TicksGame };
+                parries = 0;
+                timeoutTick = Find.TickManager.TicksGame + timeoutTicks;
+            }
+
+            public bool ShouldTimeout()
+            {
+                return Find.TickManager.TicksGame >= timeoutTick;
             }
         }
 
@@ -48,23 +54,17 @@ namespace CombatExtended
                 return false;
             }
 
-            // Check if our target is immobile
-            if (!pawn.RaceProps.Humanlike || pawn.Downed || pawn.GetPosture() != PawnPosture.Standing || pawn.stances.stunner.Stunned || pawn.story.WorkTagIsDisabled(WorkTags.Violent))
-            {
-                return false;
-            }
-
             int parriesLeft = Mathf.RoundToInt(pawn.skills.GetSkill(SkillDefOf.Melee).Level / SkillPerParry) - GetUsedParriesFor(pawn);
             return parriesLeft > 0;
         }
 
-        public void RegisterParryFor(Pawn pawn)
+        public void RegisterParryFor(Pawn pawn, int timeoutTicks)
         {
             ParryCounter counter;
             if (!parryTracker.TryGetValue(pawn, out counter))
             {
                 // Register new pawn in tracker
-                counter = ParryCounter.MakeNew();
+                counter = new ParryCounter(timeoutTicks);
                 parryTracker.Add(pawn, counter);
             }
             counter.parries++;
@@ -79,7 +79,7 @@ namespace CombatExtended
         {
             if (Find.TickManager.TicksGame % 10 == 0)
             {
-                foreach (var entry in parryTracker.Where(kvp => Find.TickManager.TicksGame - kvp.Value.ticks >= TicksToTimeout).ToArray())
+                foreach (var entry in parryTracker.Where(kvp => kvp.Value.ShouldTimeout()).ToArray())
                 {
                     parryTracker.Remove(entry.Key);
                 }
