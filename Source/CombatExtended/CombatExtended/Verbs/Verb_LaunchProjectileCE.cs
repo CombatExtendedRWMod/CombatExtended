@@ -106,7 +106,7 @@ namespace CombatExtended
         protected float ShootingAccuracy => CasterPawn?.GetStatValue(StatDefOf.ShootingAccuracy) ?? 2f;
         protected float AimingAccuracy => ShooterPawn?.GetStatValue(CE_StatDefOf.AimingAccuracy) ?? 0.75f;
         protected float SightsEfficiency => (3 - ownerEquipment.GetStatValue(CE_StatDefOf.SightsEfficiency));
-        protected virtual float SwayAmplitude => (4.5f - ShootingAccuracy) * this.ownerEquipment.GetStatValue(StatDef.Named("SwayFactor"));
+        protected virtual float SwayAmplitude => Mathf.Max(0, (4.5f - ShootingAccuracy * ownerEquipment.GetStatValue(CE_StatDefOf.SightsEfficiency)) * ownerEquipment.GetStatValue(StatDef.Named("SwayFactor")));
 
         // Ammo variables
         protected CompAmmoUser CompAmmo
@@ -327,7 +327,7 @@ namespace CombatExtended
             report.swayDegrees = this.SwayAmplitude;
             report.spreadDegrees = this.ownerEquipment.GetStatValue(StatDef.Named("ShotSpread")) * this.projectilePropsCE.spreadMult;
             Thing cover;
-            this.GetHighestCoverBetween(this.caster.Position.ToVector3Shifted(), targetCell.ToVector3Shifted(), out cover);
+            this.GetHighestCoverBetween(this.caster.Position.ToVector3Shifted(), target, out cover);
             report.cover = cover;
 
             return report;
@@ -340,8 +340,9 @@ namespace CombatExtended
         /// <param name="targetLoc">The position of the target</param>
         /// <param name="cover">Output parameter, filled with the highest cover object found</param>
         /// <returns>True if cover was found, false otherwise</returns>
-        private bool GetHighestCoverBetween(Vector3 sourceLoc, Vector3 targetLoc, out Thing cover)
+        private bool GetHighestCoverBetween(Vector3 sourceLoc, LocalTargetInfo target, out Thing cover)
         {
+            Vector3 targetLoc = target.Cell.ToVector3Shifted();
             sourceLoc.Scale(new Vector3(1, 0, 1));
             targetLoc.Scale(new Vector3(1, 0, 1));
             Map map = caster.Map;
@@ -353,8 +354,8 @@ namespace CombatExtended
             float numSegments = distToCheck / segmentLength;
 
             //Raycast accross all segments to check for cover
-            HashSet<IntVec3> checkedCells = new HashSet<IntVec3>() { sourceLoc.ToIntVec3(), targetLoc.ToIntVec3() };
-            Thing thingAtTargetLoc = targetLoc.ToIntVec3().GetEdifice(map);
+            HashSet<IntVec3> checkedCells = new HashSet<IntVec3>();
+            Thing targetThing = target.Thing;
             Thing highestCover = null;
             float highestCoverHeight = 0f;
             for (int i = 0; i <= numSegments; i++)
@@ -362,13 +363,13 @@ namespace CombatExtended
                 IntVec3 cell = (targetLoc + segmentVec * i).ToIntVec3();
                 if (!checkedCells.Contains(cell))
                 {
-                    Thing newCover = cell.GetFirstPawn(map);
-                    if (newCover == null) newCover = cell.GetEdifice(map);
+                    Pawn pawn = cell.GetFirstPawn(map);
+                    Thing newCover = pawn == null ? cell.GetCover(map) : pawn;
                     float newCoverHeight = CE_Utility.GetCollisionVertical(newCover).max;
 
                     //Cover check, if cell has cover compare collision height and get the highest piece of cover, ignore if cover is the target (e.g. solar panels, crashed ship, etc)
                     if (newCover != null
-                        && (thingAtTargetLoc == null || !newCover.Equals(thingAtTargetLoc))
+                        && (targetThing == null || !newCover.Equals(targetThing))
                         && (highestCover == null || highestCoverHeight < newCoverHeight)
                         && newCover.def.Fillage != FillCategory.Full
                         && newCover.def.category != ThingCategory.Plant)
@@ -501,7 +502,7 @@ namespace CombatExtended
             }
             //Check if target is obstructed behind cover
             Thing coverTarg;
-            if (GetHighestCoverBetween(root.ToVector3Shifted(), targ.Cell.ToVector3Shifted(), out coverTarg))
+            if (GetHighestCoverBetween(root.ToVector3Shifted(), targ, out coverTarg))
             {
                 if (CE_Utility.GetCollisionVertical(targ.Thing).max < CE_Utility.GetCollisionVertical(coverTarg).max)
                 {
@@ -511,7 +512,7 @@ namespace CombatExtended
             }
             //Check if shooter is obstructed by cover
             Thing coverShoot;
-            if (GetHighestCoverBetween(targ.Cell.ToVector3Shifted(), root.ToVector3Shifted(), out coverShoot))
+            if (GetHighestCoverBetween(targ.Cell.ToVector3Shifted(), caster, out coverShoot))
             {
                 if (ShotHeight < CE_Utility.GetCollisionVertical(coverShoot).max)
                 {
