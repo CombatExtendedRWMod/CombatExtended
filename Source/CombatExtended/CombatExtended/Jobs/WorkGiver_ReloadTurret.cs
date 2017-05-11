@@ -19,12 +19,14 @@ namespace CombatExtended
             }
         }
 
-        public override bool HasJobOnThingForced(Pawn pawn, Thing t)
+        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Building_TurretGunCE turret = t as Building_TurretGunCE;
-            if (turret == null 
-                || !turret.needsReload 
-                || !pawn.CanReserveAndReach(turret, PathEndMode.ClosestTouch, Danger.Deadly) 
+            if (!forced && (turret == null || !turret.allowAutomaticReload)) return false;
+            
+            if (turret == null
+                || !turret.needsReload
+                || !pawn.CanReserveAndReach(turret, PathEndMode.ClosestTouch, Danger.Deadly)
                 || turret.IsForbidden(pawn.Faction))
             {
                 return false;
@@ -38,14 +40,7 @@ namespace CombatExtended
             return ammo != null;
         }
 
-        public override bool HasJobOnThing(Pawn pawn, Thing t)
-        {
-            Building_TurretGunCE turret = t as Building_TurretGunCE;
-            if (turret == null || !turret.allowAutomaticReload) return false;
-            return HasJobOnThingForced(pawn, t);
-        }
-
-        public override Job JobOnThing(Pawn pawn, Thing t)
+        public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Building_TurretGunCE turret = t as Building_TurretGunCE;
             if (turret == null || turret.compAmmo == null) return null;

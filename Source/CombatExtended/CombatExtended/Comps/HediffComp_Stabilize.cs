@@ -43,15 +43,15 @@ namespace CombatExtended
                 Log.Error("CE tried to stabilize without medicine");
                 return;
             }
-            float bleedReduction = 2f * medic.GetStatValue(StatDefOf.HealingQuality) * medicine.GetStatValue(StatDefOf.MedicalPotency);
+            float bleedReduction = 2f * medic.GetStatValue(StatDefOf.MedicalTendQuality) * medicine.GetStatValue(StatDefOf.MedicalPotency);
             bleedModifier = 1 - bleedReduction; // Especially high treatment quality extends time at 0% bleed by setting bleedModifier to a negative number
             stabilized = true;
         }
 
         public override void CompExposeData()
         {
-            Scribe_Values.LookValue(ref stabilized, "stabilized", false);
-            Scribe_Values.LookValue(ref bleedModifier, "bleedModifier", 1);
+            Scribe_Values.Look(ref stabilized, "stabilized", false);
+            Scribe_Values.Look(ref bleedModifier, "bleedModifier", 1);
         }
 
         public override void CompPostTick()

@@ -62,7 +62,7 @@ namespace CombatExtended
 		{
 			get
 			{
-				return wielder ?? (compEquippable.parent.holdingContainer?.owner as Pawn_InventoryTracker)?.pawn;
+				return wielder ?? (compEquippable.parent.ParentHolder as Pawn_InventoryTracker)?.pawn;
 			}
 		}
         public bool useAmmo
@@ -157,9 +157,9 @@ namespace CombatExtended
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.LookValue(ref curMagCountInt, "count", 0);
-            Scribe_Defs.LookDef(ref currentAmmoInt, "currentAmmo");
-            Scribe_Defs.LookDef(ref selectedAmmo, "selectedAmmo");
+            Scribe_Values.Look(ref curMagCountInt, "count", 0);
+            Scribe_Defs.Look(ref currentAmmoInt, "currentAmmo");
+            Scribe_Defs.Look(ref selectedAmmo, "selectedAmmo");
         }
 
         private void AssignJobToWielder(Job job)

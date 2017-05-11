@@ -159,13 +159,13 @@ namespace CombatExtended
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.burstCooldownTicksLeft, "burstCooldownTicksLeft", 0, false);
-            Scribe_Values.LookValue<bool>(ref this.loaded, "loaded", false, false);
+            Scribe_Values.Look(ref this.burstCooldownTicksLeft, "burstCooldownTicksLeft", 0, false);
+            Scribe_Values.Look(ref this.loaded, "loaded", false, false);
 
             // Look new variables
-            Scribe_Values.LookValue(ref burstWarmupTicksLeft, "burstWarmupTicksLeft", 0);
-            Scribe_Values.LookValue(ref isReloading, "isReloading", false);
-            Scribe_Deep.LookDeep(ref gun, "gun");
+            Scribe_Values.Look(ref burstWarmupTicksLeft, "burstWarmupTicksLeft", 0);
+            Scribe_Values.Look(ref isReloading, "isReloading", false);
+            Scribe_Deep.Look(ref gun, "gun");
         }
 
         public override string GetInspectString()
@@ -188,7 +188,7 @@ namespace CombatExtended
             }
             else if (this.burstCooldownTicksLeft > 0)
             {
-                stringBuilder.AppendLine("CanFireIn".Translate() + ": " + this.burstCooldownTicksLeft.TickstoSecondsString());
+                stringBuilder.AppendLine("CanFireIn".Translate() + ": " + this.burstCooldownTicksLeft.TicksToSecondsString());
             }
 
             if (compAmmo != null && compAmmo.Props.ammoSet != null)
@@ -247,9 +247,9 @@ namespace CombatExtended
             this.forcedTarget = targ;
         }
 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.powerComp = base.GetComp<CompPowerTrader>();
             this.mannableComp = base.GetComp<CompMannable>();
             if (gun == null)

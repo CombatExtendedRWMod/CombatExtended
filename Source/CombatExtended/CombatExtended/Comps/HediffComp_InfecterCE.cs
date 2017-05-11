@@ -53,9 +53,9 @@ namespace CombatExtended
 
         public override void CompExposeData()
         {
-            Scribe_Values.LookValue(ref alreadyCausedInfection, "alreadyCausedInfection", false);
-            Scribe_Values.LookValue(ref ticksUntilInfect, "ticksUntilInfect", -1);
-            Scribe_Values.LookValue(ref infectionModifier, "infectionModifier", 1);
+            Scribe_Values.Look(ref alreadyCausedInfection, "alreadyCausedInfection", false);
+            Scribe_Values.Look(ref ticksUntilInfect, "ticksUntilInfect", -1);
+            Scribe_Values.Look(ref infectionModifier, "infectionModifier", 1);
         }
 
         public override void CompPostPostAdd(DamageInfo? dinfo)

@@ -89,7 +89,7 @@
       <HintPath>..\..\Assemblies\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\RimWorld1393Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="HugsLib">
@@ -107,7 +107,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\RimWorld1393Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -205,10 +205,8 @@
     <Compile Include="CombatExtended\Projectiles\ArtilleryMarker.cs" />
     <Compile Include="CombatExtended\Comps\CompExplosiveCE.cs" />
     <Compile Include="CombatExtended\Comps\CompInventory.cs" />
-    <Compile Include="CombatExtended\Comps\CompJamming.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_ExplosiveCE.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_FireModes.cs" />
-    <Compile Include="CombatExtended\Comps\CompProperties_Jamming.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_Suppressable.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_TurretInit.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_Inventory.cs" />

@@ -129,9 +129,9 @@ namespace CombatExtended
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.LookValue<float>(ref currentSuppression, "currentSuppression", 0f);
-            Scribe_Values.LookValue<IntVec3>(ref suppressorLoc, "suppressorLoc");
-            Scribe_Values.LookValue<float>(ref locSuppressionAmount, "locSuppression", 0f);
+            Scribe_Values.Look(ref currentSuppression, "currentSuppression", 0f);
+            Scribe_Values.Look(ref suppressorLoc, "suppressorLoc");
+            Scribe_Values.Look(ref locSuppressionAmount, "locSuppression", 0f);
         }
 
         public void AddSuppression(float amount, IntVec3 origin)
