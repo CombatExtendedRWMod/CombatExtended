@@ -365,11 +365,12 @@ namespace CombatExtended
             }
         }
 
-        public static void TryUpdateInventory(Pawn_InventoryTracker tracker)
+        public static void TryUpdateInventory(ThingOwner owner)
         {
-            if (tracker != null && tracker.pawn != null)
+            Pawn pawn = owner?.Owner?.ParentHolder as Pawn;
+            if (pawn != null)
             {
-                TryUpdateInventory(tracker.pawn);
+                TryUpdateInventory(pawn);
             }
         }
         

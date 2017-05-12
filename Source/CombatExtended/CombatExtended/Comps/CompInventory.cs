@@ -414,10 +414,7 @@ namespace CombatExtended
 	            parentPawn.HoldTrackerCleanUp();
 	            ticksToNextCleanUp = GenTicks.TicksAbs + CLEANUPTICKINTERVAL;
             }
-            
-            //Log.Message("CE-RD :: pre-base.comptick");
             base.CompTick();
-            //Log.Message("CE-RD :: post-base.comptick");
             // Remove items from inventory if we're over the bulk limit
             /*
             while (availableBulk < 0 && container.Count > 0)
@@ -437,6 +434,22 @@ namespace CombatExtended
                 }
             }
             */
+
+            ValidateCache();
+        }
+
+        /// <summary>
+        /// Debug method to catch cases where inventory cache isn't being updated properly on pawn inventory change. ONLY FOR DEBUGGING, DON'T CALL THIS IN ANY KIND OF RELEASE BUILD.
+        /// </summary>
+        private void ValidateCache()
+        {
+            float oldWeight = currentWeight;
+            float oldBulk = currentBulk;
+            UpdateInventory();
+            if (oldWeight != currentWeight || oldBulk != currentBulk)
+            {
+                Log.Error("CE :: CompInventory :: " + parent.ToString() + " failed inventory validation");
+            }
         }
 
         #endregion Methods
