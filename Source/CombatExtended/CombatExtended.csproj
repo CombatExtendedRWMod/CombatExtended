@@ -146,7 +146,7 @@
     <Compile Include="CombatExtended\DefOfs\CE_StatDefOf.cs" />
     <Compile Include="CombatExtended\Defs\Apparel_VisibleAccessoryDef.cs" />
     <Compile Include="CombatExtended\Defs\LoadoutGenericDef.cs" />
-    <Compile Include="CombatExtended\Defs\RaceProperties_CE.cs" />
+    <Compile Include="CombatExtended\Defs\RacePropertiesExtensionCE.cs" />
     <Compile Include="CombatExtended\Enums\BodyType.cs" />
     <Compile Include="CombatExtended\Enums\LoadoutCountType.cs" />
     <Compile Include="CombatExtended\Hediff_InjuryCE.cs" />
@@ -174,7 +174,7 @@
     <Compile Include="CombatExtended\WorkGivers\WorkGiver_HunterHuntCE.cs" />
     <Compile Include="CombatExtended\AmmoInjector.cs" />
     <Compile Include="CombatExtended\DamageWorkers\DamageWorker_FlameCE.cs" />
-    <Compile Include="CombatExtended\Defs\DamageDef_CE.cs" />
+    <Compile Include="CombatExtended\Defs\DamageDefExtensionCE.cs" />
     <Compile Include="CombatExtended\Defs\LoadoutGeneratorDef.cs" />
     <Compile Include="CombatExtended\Gizmos\Command_VerbTarget.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_ReloadTurret.cs" />

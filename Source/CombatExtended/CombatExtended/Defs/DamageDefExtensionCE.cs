@@ -8,9 +8,10 @@ using UnityEngine;
 
 namespace CombatExtended
 {
-    public class DamageDef_CE : DamageDef
+    public class DamageDefExtensionCE : DefModExtension
     {
         public bool noDamageOnDeflect = false;
         public bool harmOnlyOutsideLayers = false;
+        public bool isAmbientDamage = false;
     }
 }

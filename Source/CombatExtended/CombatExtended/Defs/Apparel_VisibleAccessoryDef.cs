@@ -2,32 +2,22 @@
 
 namespace CombatExtended
 {
-	public class Apparel_VisibleAccessoryDef : ThingDef
+	public class VisibleAccessoryDefExtension : DefModExtension
 	{
 		public int order = 1;
-		private bool _Valid = false;
-		
-		public void validate()
-		{
-			if (order < 1 || order > 4)
-			{
-				int clamped;
-				if (order < 1)
-					clamped = 1;
-				else
-					clamped = 4;
-				Log.Error(string.Concat(GetType().ToString(), " :: Order value ", order, " is out of bounds for Apparel '", label, "'.  Should be between 1 and 4 inclusive.  Value will be clamped to ", clamped, "."));
-				order = clamped;
-			}
-			_Valid = true;
-		}
-		
-		public bool isValid
-		{
-			get
-			{
-				return _Valid;
-			}
-		}
+
+        public VisibleAccessoryDefExtension()
+        {
+            if (order < 1)
+            {
+                Log.Error("CE detected VisibleAccessoryDefExtension with order lower than 1, viable values are 1-4. Clamping to 1");
+                order = 1;
+            }
+            else if (order > 4)
+            {
+                Log.Error("CE detected VisibleAccessoryDefExtension with order higher than 4, viable values are 1-4. Clamping to 4");
+                order = 4;
+            }
+        }
 	}
 }

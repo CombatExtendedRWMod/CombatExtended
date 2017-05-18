@@ -37,7 +37,7 @@ namespace CombatExtended
         /// <returns>If shot is deflected returns a new dinfo cloned from the original with damage amount, Def and ForceHitPart adjusted for deflection, otherwise a clone with only the damage adjusted</returns>
         public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart)
         {
-            if (originalDinfo.Def.armorCategory == DamageArmorCategory.IgnoreArmor) return originalDinfo;
+            if (originalDinfo.Def.armorCategory == null) return originalDinfo;
 
             DamageInfo dinfo = new DamageInfo(originalDinfo);
             float dmgAmount = dinfo.Amount;
@@ -242,7 +242,7 @@ namespace CombatExtended
 
             // Apply damage reduction
             float dmgMult = 1;
-            DamageDef_CE defCE = def as DamageDef_CE;
+            DamageDefExtensionCE defCE = def.GetModExtension<DamageDefExtensionCE>() ?? new DamageDefExtensionCE();
             if (deflected && defCE != null && defCE.noDamageOnDeflect) dmgMult = 0;
             else dmgMult = dmgMultCurve.Evaluate(penAmount / armorAmount);
             float newDmgAmount = dmgAmount * dmgMult;
@@ -339,7 +339,7 @@ namespace CombatExtended
         /// <returns>True if dinfo armor category is Heat or Electric, false otherwise</returns>
         private static bool IsAmbientDamage(this DamageInfo dinfo)
         {
-            return dinfo.Def.armorCategory == DamageArmorCategory.Electric || dinfo.Def.armorCategory == DamageArmorCategory.Heat;
+            return (dinfo.Def.GetModExtension<DamageDefExtensionCE>() ?? new DamageDefExtensionCE()).isAmbientDamage;
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace CombatExtended
             }
             else if (dinfo.IsAmbientDamage())
             {
-                int dmgAmount = Mathf.CeilToInt(dinfo.Amount * Mathf.Clamp01(parryThing.GetStatValue(dinfo.Def.armorCategory.DeflectionStat())));
+                int dmgAmount = Mathf.CeilToInt(dinfo.Amount * Mathf.Clamp01(parryThing.GetStatValue(dinfo.Def.armorCategory.deflectionStat)));
                 dinfo.SetAmount(dmgAmount);
                 parryThing.TakeDamage(dinfo);
             }
@@ -366,7 +366,7 @@ namespace CombatExtended
             {
                 float dmgAmount = dinfo.Amount;
                 float penAmount = GetPenetrationValue(dinfo);
-                TryPenetrateArmor(dinfo.Def, parryThing.GetStatValue(dinfo.Def.armorCategory.DeflectionStat()), ref penAmount, ref dmgAmount, parryThing);
+                TryPenetrateArmor(dinfo.Def, parryThing.GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref penAmount, ref dmgAmount, parryThing);
             }
         }
 

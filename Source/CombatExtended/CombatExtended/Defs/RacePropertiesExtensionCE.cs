@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CombatExtended
 {
-    public class RaceProperties_CE : RaceProperties
+    public class RacePropertiesExtensionCE : DefModExtension
     {
         public BodyType bodyType = BodyType.Undefined;
     }

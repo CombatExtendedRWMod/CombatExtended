@@ -293,14 +293,12 @@ namespace CombatExtended
                 Log.Error("CE calling GetCollisionBodyHeightFactor with nullPawn");
                 return new Pair<float, float>(1, 1);
             }
-            BodyType type = BodyType.Undefined;
-            RaceProperties_CE props = pawn.def.race as RaceProperties_CE;
-            if (props != null)
-            {
-                type = props.bodyType;
-            }
+            RacePropertiesExtensionCE props = pawn.def.GetModExtension<RacePropertiesExtensionCE>() ?? new RacePropertiesExtensionCE();
+            BodyType type = props.bodyType;
 #if DEBUG
             if (type == BodyType.Undefined) Log.ErrorOnce("CE returning BodyType Undefined for pawn " + pawn.ToString(),  35000198 + pawn.GetHashCode());
+#else
+            if (type == BodyType.Undefined) Log.Warning("CE returning BodyType Undefined for pawn " + pawn.ToString());
 #endif
             switch (type)
             {
@@ -349,9 +347,9 @@ namespace CombatExtended
             return pawn.RaceProps.Humanlike && crouchJobs.Contains(pawn.CurJob?.def);
         }
 
-        #endregion Physics
+#endregion Physics
 
-        #region Inventory
+#region Inventory
 
         public static void TryUpdateInventory(Pawn pawn)
         {
@@ -374,6 +372,6 @@ namespace CombatExtended
             }
         }
         
-        #endregion
+#endregion
     }
 }
