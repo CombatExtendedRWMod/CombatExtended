@@ -23,7 +23,7 @@ namespace CombatExtended
             get
             {
                 if (_compReloader == null && turret != null)
-                    _compReloader = turret.compAmmo;
+                    _compReloader = turret.CompAmmo;
                 return _compReloader;
             }
         }

@@ -6,7 +6,6 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 using UnityEngine;
-using CombatExtended.Detours;
 
 namespace CombatExtended
 {

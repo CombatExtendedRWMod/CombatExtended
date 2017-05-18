@@ -69,7 +69,7 @@ namespace CombatExtended
                 {
                     AmmoDef ammoDef = (AmmoDef)curDef;
                     floatOptionList.Add(new FloatMenuOption(ammoDef.ammoClass.LabelCap, new Action(delegate {
-                        bool shouldReload = ModSettings.autoReloadOnChangeAmmo && (compAmmo.selectedAmmo != ammoDef || compAmmo.curMagCount < compAmmo.Props.magazineSize) && compAmmo.turret?.GetMannableComp() == null;
+                        bool shouldReload = ModSettings.autoReloadOnChangeAmmo && (compAmmo.selectedAmmo != ammoDef || compAmmo.curMagCount < compAmmo.Props.magazineSize) && compAmmo.turret?.MannableComp == null;
 		               	compAmmo.selectedAmmo = ammoDef;
 		               	if (shouldReload)
 		               	{
@@ -86,7 +86,7 @@ namespace CombatExtended
                 }
             }
             // Append unload command
-            if (compAmmo.turret?.GetMannableComp() != null)
+            if (compAmmo.turret?.MannableComp != null)
             {
                 if (compAmmo.useAmmo && compAmmo.wielder != null && compAmmo.hasMagazine && compAmmo.curMagCount > 0)
                 {

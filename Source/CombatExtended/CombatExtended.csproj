@@ -172,7 +172,7 @@
     <Compile Include="CombatExtended\ThinkNodes\ThinkNode_ConditionalHasSquad.cs" />
     <Compile Include="CombatExtended\Verbs\Verb_MeleeAttackCE.cs" />
     <Compile Include="CombatExtended\WorkGivers\WorkGiver_HunterHuntCE.cs" />
-    <Compile Include="Detours\AmmoInjector.cs" />
+    <Compile Include="CombatExtended\AmmoInjector.cs" />
     <Compile Include="CombatExtended\DamageWorkers\DamageWorker_FlameCE.cs" />
     <Compile Include="CombatExtended\Defs\DamageDef_CE.cs" />
     <Compile Include="CombatExtended\Defs\LoadoutGeneratorDef.cs" />
@@ -225,11 +225,6 @@
     <Compile Include="CombatExtended\Comps_CCL\CompProperties_ShearableRenameable.cs" />
     <Compile Include="CombatExtended\Comps_CCL\Def_Extensions.cs" />
     <Compile Include="CombatExtended\Comps_CCL\CompShearableRenameable.cs" />
-    <Compile Include="DetoursCore\SpecialInjector.cs" />
-    <Compile Include="DetoursCore\Detours.cs" />
-    <Compile Include="DetoursCore\Initializer.cs" />
-    <Compile Include="DetoursCore\InitializerBehaviour.cs" />
-    <Compile Include="Detours\DetourInjector.cs" />
     <Compile Include="CombatExtended\Enums\FireMode.cs" />
     <Compile Include="CombatExtended\Projectiles\BulletCE.cs" />
     <Compile Include="CombatExtended\Comps\CompFireModes.cs" />
@@ -250,23 +245,12 @@
     <Compile Include="CombatExtended\ThinkNodes\ThinkNode_ConditionalHunkering.cs" />
     <Compile Include="CombatExtended\ThinkNodes\ThinkNode_ConditionalSuppressed.cs" />
     <Compile Include="CombatExtended\ThoughtWorkers\ThoughtWorker_Suppressed.cs" />
-    <Compile Include="Detours\Detours_FloatMenuMakerMap.cs" />
-    <Compile Include="Detours\Detours_HediffComp_GetsOld.cs" />
-    <Compile Include="Detours\Detours_Pawn_HealthTracker.cs" />
-    <Compile Include="Detours\Detours_TooltipUtility.cs" />
     <Compile Include="CombatExtended\CE_Utility.cs" />
     <Compile Include="CombatExtended\Verbs\VerbPropertiesCE.cs" />
     <Compile Include="CombatExtended\Verbs\Verb_LaunchProjectileCE.cs" />
     <Compile Include="CombatExtended\Verbs\Verb_MarkForArtilleryCE.cs" />
     <Compile Include="CombatExtended\Verbs\Verb_ShootMortarCE.cs" />
     <Compile Include="CombatExtended\Verbs\Verb_ShootCEOneUse.cs" />
-    <Compile Include="Detours\Detours_Pawn_ApparelTracker.cs" />
-    <Compile Include="Detours\Detours_Pawn_EquipmentTracker.cs" />
-    <Compile Include="Detours\Detours_ThingContainer.cs" />
-    <Compile Include="Detours\Detours_TradeDeal.cs" />
-    <Compile Include="Detours\Detours_VerbTracker.cs" />
-    <Compile Include="Detours\Detours_WorkGiver_HunterHunt.cs" />
-    <Compile Include="Detours\Detours_WorkGiver_InteractAnimal.cs" />
     <Compile Include="Harmony\Harmony-GenRadial_RadialPatternCount_Patch.cs" />
     <Compile Include="Harmony\Harmony-HediffComp_TendDuration_CompTended_Patch.cs" />
     <Compile Include="Harmony\Harmony-Hediff_MissingPart-IsFresh_Patch.cs" />
@@ -285,7 +269,6 @@
     <Compile Include="CombatExtended\Jobs\JobDriver_Reload.cs" />
     <Compile Include="CombatExtended\SecondaryDamage.cs" />
     <Compile Include="CombatExtended\MassBulkUtility.cs" />
-    <Compile Include="Detours\Detours_MassUtility.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

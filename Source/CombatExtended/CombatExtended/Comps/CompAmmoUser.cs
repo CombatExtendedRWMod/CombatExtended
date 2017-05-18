@@ -461,7 +461,7 @@ namespace CombatExtended
             {
                 Action action = null;
                 if (wielder != null) action = delegate { TryStartReload(); };
-                else if (turret != null && turret.GetMannableComp() != null) action = turret.OrderReload;
+                else if (turret != null && turret.MannableComp != null) action = turret.OrderReload;
 
                 // Check for teaching opportunities
                 string tag;
@@ -472,7 +472,7 @@ namespace CombatExtended
                 }
                 else
                 {
-                    if (turret.GetMannableComp() == null) tag = "CE_ReloadAuto";  // Teach about auto-turrets
+                    if (turret.MannableComp == null) tag = "CE_ReloadAuto";  // Teach about auto-turrets
                     else tag = "CE_ReloadManned";    // Teach about reloading manned turrets
                 }
                 LessonAutoActivator.TeachOpportunity(ConceptDef.Named(tag), turret, OpportunityType.GoodToKnow);

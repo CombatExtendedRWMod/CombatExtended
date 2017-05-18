@@ -47,7 +47,7 @@ namespace CombatExtended
             // In case of ambient damage (fire, electricity) we apply a percentage reduction formula based on the sum of all applicable armor
             if (isAmbientDamage)
             {
-                dinfo.SetAmount(Mathf.CeilToInt(GetAmbientPostArmorDamage(dmgAmount, originalDinfo.Def.armorCategory.DeflectionStat(), pawn, hitPart)));
+                dinfo.SetAmount(Mathf.CeilToInt(GetAmbientPostArmorDamage(dmgAmount, originalDinfo.Def.armorCategory.deflectionStat, pawn, hitPart)));
                 return dinfo;
             }
 
@@ -78,7 +78,7 @@ namespace CombatExtended
                         }
                     }
                     // Try to penetrate the shield
-                    if (blockedByShield && !TryPenetrateArmor(dinfo.Def, shield.GetStatValue(dinfo.Def.armorCategory.DeflectionStat()), ref penAmount, ref dmgAmount, shield))
+                    if (blockedByShield && !TryPenetrateArmor(dinfo.Def, shield.GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref penAmount, ref dmgAmount, shield))
                     {
                         dinfo.SetAmount(0);
                         return dinfo;
@@ -89,7 +89,7 @@ namespace CombatExtended
                 for (int i = apparel.Count - 1; i >= 0; i--)
                 {
                     if (apparel[i].def.apparel.CoversBodyPart(hitPart) 
-                        && !TryPenetrateArmor(dinfo.Def, apparel[i].GetStatValue(dinfo.Def.armorCategory.DeflectionStat()), ref penAmount, ref dmgAmount, apparel[i]))
+                        && !TryPenetrateArmor(dinfo.Def, apparel[i].GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref penAmount, ref dmgAmount, apparel[i]))
                     {
                         // Hit was deflected, convert damage type
                         dinfo = GetDeflectDamageInfo(dinfo, hitPart);
@@ -120,7 +120,7 @@ namespace CombatExtended
                 bool coveredByArmor = curPart.IsInGroup(CE_BodyPartGroupDefOf.CoveredByNaturalArmor);
                 float partArmor = pawn.HealthScale * 0.05f;   // How much armor is provided by sheer meat
                 if (coveredByArmor)
-                    partArmor += pawn.GetStatValue(dinfo.Def.armorCategory.DeflectionStat());
+                    partArmor += pawn.GetStatValue(dinfo.Def.armorCategory.deflectionStat);
                 float unused = dmgAmount;
 
                 // Only apply damage reduction when penetrating armored body parts
@@ -236,7 +236,7 @@ namespace CombatExtended
         private static bool TryPenetrateArmor(DamageDef def, float armorAmount, ref float penAmount, ref float dmgAmount, Thing armor = null)
         {
             // Calculate deflection
-            bool isSharpDmg = def.armorCategory == DamageArmorCategory.Sharp;
+            bool isSharpDmg = def.armorCategory == DamageArmorCategoryDefOf.Sharp;
             float rand = UnityEngine.Random.Range(penAmount - PenetrationRandVariation, penAmount + PenetrationRandVariation);
             bool deflected = isSharpDmg && armorAmount > rand;
 

@@ -28,10 +28,10 @@ namespace CombatExtended
         private void InitTurret()
         {
             Building_TurretGunCE turret = parent as Building_TurretGunCE;
-            if (turret != null && turret.gun == null)
+            if (turret != null && turret.gunInt == null)
             {
                 gun = (Thing)ThingMaker.MakeThing(parent.def.building.turretGunDef);
-                turret.gun = gun;
+                turret.gunInt = gun;
             }
         }
 
