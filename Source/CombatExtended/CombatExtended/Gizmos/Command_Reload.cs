@@ -20,7 +20,7 @@ namespace CombatExtended
                 Log.Error("Command_Reload without ammo comp");
                 return;
             }
-            if (((ev.button == 1 || !ModSettings.rightClickAmmoSelect) 
+            if (((ev.button == 1 || !ModSettings.RightClickAmmoSelect) 
                 && compAmmo.useAmmo 
                 && (compAmmo.compInventory != null || compAmmo.turret != null))
                 || action == null)
@@ -69,7 +69,7 @@ namespace CombatExtended
                 {
                     AmmoDef ammoDef = (AmmoDef)curDef;
                     floatOptionList.Add(new FloatMenuOption(ammoDef.ammoClass.LabelCap, new Action(delegate {
-                        bool shouldReload = ModSettings.autoReloadOnChangeAmmo && (compAmmo.selectedAmmo != ammoDef || compAmmo.curMagCount < compAmmo.Props.magazineSize) && compAmmo.turret?.MannableComp == null;
+                        bool shouldReload = ModSettings.AutoReloadOnChangeAmmo && (compAmmo.selectedAmmo != ammoDef || compAmmo.curMagCount < compAmmo.Props.magazineSize) && compAmmo.turret?.MannableComp == null;
 		               	compAmmo.selectedAmmo = ammoDef;
 		               	if (shouldReload)
 		               	{
@@ -93,7 +93,7 @@ namespace CombatExtended
                     floatOptionList.Add(new FloatMenuOption("CE_UnloadLabel".Translate(), new Action(delegate { compAmmo.TryUnload(); })));
                 }
                 // Append reload command
-                if (compAmmo.hasMagazine && !ModSettings.rightClickAmmoSelect)
+                if (compAmmo.hasMagazine && !ModSettings.RightClickAmmoSelect)
                 {
                     floatOptionList.Add(new FloatMenuOption("CE_ReloadLabel".Translate(), new Action(action)));
                 }

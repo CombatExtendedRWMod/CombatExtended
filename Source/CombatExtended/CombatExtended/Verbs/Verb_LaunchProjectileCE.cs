@@ -155,7 +155,7 @@ namespace CombatExtended
         {
             // attack shooting expression
             Pawn shooter = ShooterPawn;
-            if (ModSettings.showTaunts 
+            if (ModSettings.ShowTaunts 
                 && shooter != null 
                 && shooter.Map != null 
                 && shooter.def.race.Humanlike 
@@ -474,7 +474,7 @@ namespace CombatExtended
                 List<Apparel> wornApparel = CasterPawn.apparel.WornApparel;
                 foreach(Apparel current in wornApparel)
                 {
-                    if (!current.AllowVerbCast(root, targ.ToTargetInfo(caster.Map)))
+                    if (!current.AllowVerbCast(root, caster.Map, targ))
                     {
                         report = "Shooting disallowed by " + current.LabelShort;
                         return false;

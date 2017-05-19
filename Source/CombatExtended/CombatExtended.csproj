@@ -160,6 +160,7 @@
     <Compile Include="CombatExtended\Jobs\JobGiver_TakeAndEquip.cs" />
     <Compile Include="CombatExtended\Loadouts\HoldRecord.cs" />
     <Compile Include="CombatExtended\Loadouts\HoldTrackerAssignment.cs" />
+    <Compile Include="CombatExtended\Loadouts\PawnColumnWorker_Loadout.cs" />
     <Compile Include="CombatExtended\Loadouts\Utility_HoldTracker.cs" />
     <Compile Include="CombatExtended\ParryTracker.cs" />
     <Compile Include="CombatExtended\ModSettings.cs" />
@@ -186,7 +187,6 @@
     <Compile Include="CombatExtended\Things\LoadoutGeneratorThing.cs" />
     <Compile Include="CombatExtended\Loadouts\Dialog_ManageLoadouts.cs" />
     <Compile Include="CombatExtended\Gizmos\Command_Reload.cs" />
-    <Compile Include="CombatExtended\Loadouts\ITabInjector.cs" />
     <Compile Include="CombatExtended\Loadouts\ITab_Inventory.cs" />
     <Compile Include="CombatExtended\Loadouts\Loadout.cs" />
     <Compile Include="CombatExtended\LoadoutGen\LoadoutGenerator.cs" />
@@ -195,7 +195,6 @@
     <Compile Include="CombatExtended\LoadoutGen\LoadoutGenerator_WeaponByTag.cs" />
     <Compile Include="CombatExtended\LoadoutGen\LoadoutGenerator_List.cs" />
     <Compile Include="CombatExtended\Loadouts\LoadoutSlot.cs" />
-    <Compile Include="CombatExtended\Loadouts\MainTabWindow_OutfitsAndLoadouts.cs" />
     <Compile Include="CombatExtended\Loadouts\MapComp_LoadoutManager.cs" />
     <Compile Include="CombatExtended\Things\Apparel_VisibleAccessory.cs" />
     <Compile Include="CombatExtended\Things\IncendiaryFuel.cs" />
@@ -206,7 +205,6 @@
     <Compile Include="CombatExtended\Comps\CompProperties_ExplosiveCE.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_FireModes.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_Suppressable.cs" />
-    <Compile Include="CombatExtended\Comps\CompProperties_TurretInit.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_Inventory.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_AmmoUser.cs" />
     <Compile Include="CombatExtended\Comps\CompProperties_Charges.cs" />
@@ -230,7 +228,6 @@
     <Compile Include="CombatExtended\Comps\CompFireModes.cs" />
     <Compile Include="CombatExtended\Comps\CompSuppressable.cs" />
     <Compile Include="CombatExtended\Comps\CompCharges.cs" />
-    <Compile Include="CombatExtended\Comps\CompTurretInit.cs" />
     <Compile Include="CombatExtended\Gizmos\GizmoAmmoStatus.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_HunkerDown.cs" />
     <Compile Include="CombatExtended\Jobs\JobGiver_HunkerDown.cs" />

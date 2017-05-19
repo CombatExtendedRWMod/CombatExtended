@@ -16,17 +16,15 @@ namespace CombatExtended.Harmony
         {
             if (__result)
             {
+                // Check if gun has ammo first
+                CompAmmoUser comp = p.equipment.Primary.TryGetComp<CompAmmoUser>();
+                __result = comp == null || comp.canBeFiredNow || comp.hasAmmo;
+            }
+            else
+            {
+                // Change result to true if we have melee weapon and melee hunting is allowed in settings
                 ThingWithComps eq = p.equipment.Primary;
-                if (eq.def.IsRangedWeapon)
-                {
-                    CompAmmoUser comp = p.equipment.Primary.TryGetComp<CompAmmoUser>();
-                    __result = comp == null || comp.canBeFiredNow || comp.hasAmmo;
-                }
-                // TODO Add conditional for allow melee hunting setting
-                else if (eq.def.IsMeleeWeapon)
-                {
-                    __result = true;
-                }
+                __result = eq != null && ModSettings.AllowMeleeHunting && eq.def.IsMeleeWeapon;
             }
         }
     }

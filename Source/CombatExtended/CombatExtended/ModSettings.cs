@@ -24,9 +24,11 @@ namespace CombatExtended
 
         private static SettingHandle<bool> showCasingsInt;
         private static SettingHandle<bool> showTauntsInt;
+        private static SettingHandle<bool> allowMeleeHunting;
 
-        public static bool showCasings { get { return showCasingsInt; } }
-        public static bool showTaunts { get { return showTauntsInt; } }
+        public static bool ShowCasings => showCasingsInt;
+        public static bool ShowTaunts => showTauntsInt;
+        public static bool AllowMeleeHunting => allowMeleeHunting;
 
         // Ammo settings
         private static SettingHandle<bool> enableAmmoSystemInt;
@@ -35,11 +37,11 @@ namespace CombatExtended
         private static SettingHandle<bool> autoTakeAmmoInt;
         private static SettingHandle<bool> showCaliberOnGunsInt;
 
-        public static bool enableAmmoSystem { get { return enableAmmoSystemInt; } }
-        public static bool rightClickAmmoSelect { get { return rightClickAmmoSelectInt; } }
-        public static bool autoReloadOnChangeAmmo { get { return autoReloadOnChangeAmmoInt; } }
-        public static bool autoTakeAmmo { get { return autoTakeAmmoInt; } }
-        public static bool showCaliberOnGuns { get { return showCaliberOnGunsInt; } }
+        public static bool EnableAmmoSystem { get { return enableAmmoSystemInt; } }
+        public static bool RightClickAmmoSelect { get { return rightClickAmmoSelectInt; } }
+        public static bool AutoReloadOnChangeAmmo { get { return autoReloadOnChangeAmmoInt; } }
+        public static bool AutoTakeAmmo { get { return autoTakeAmmoInt; } }
+        public static bool ShowCaliberOnGuns { get { return showCaliberOnGunsInt; } }
 
         #endregion
 
@@ -47,6 +49,7 @@ namespace CombatExtended
         {
             showCasingsInt = Settings.GetHandle("showCasings", "CE_Settings_ShowCasings_Title".Translate(), "CE_Settings_ShowCasings_Desc".Translate(), true);
             showTauntsInt = Settings.GetHandle("showTaunts", "CE_Settings_ShowTaunts_Title".Translate(), "CE_Settings_ShowTaunts_Desc".Translate(), true);
+            allowMeleeHunting = Settings.GetHandle("allowMeleeHunting", "CE_Settings_AllowMeleeHunting_Title".Translate(), "CE_Settings_AllowMeleeHunting_Desc".Translate(), false);
 
             // Ammo settings
 

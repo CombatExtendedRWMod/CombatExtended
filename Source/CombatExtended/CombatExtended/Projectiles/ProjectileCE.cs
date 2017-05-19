@@ -233,19 +233,19 @@ namespace CombatExtended
             {
                 launcher = null;
             }
-            Scribe_Values.LookValue<Vector2>(ref origin, "ori", default(Vector2), true);
+            Scribe_Values.Look(ref origin, "ori", default(Vector2), true);
             
-            Scribe_Defs.LookDef(ref equipmentDef, "ed");
-            Scribe_References.LookReference<Thing>(ref launcher, "lcr");
-            Scribe_Values.LookValue<bool>(ref landed, "lnd", false, false);
-            Scribe_Values.LookValue<int>(ref ticksToImpact, "tTI", 0, true);
+            Scribe_Defs.Look(ref equipmentDef, "ed");
+            Scribe_References.Look(ref launcher, "lcr");
+            Scribe_Values.Look(ref landed, "lnd", false, false);
+            Scribe_Values.Look(ref ticksToImpact, "tTI", 0, true);
 
             //Here be new variables
-            Scribe_Values.LookValue<float>(ref shotAngle, "ang", 0f, true);
-            Scribe_Values.LookValue<float>(ref shotRotation, "rot", 0f, true);
-            Scribe_Values.LookValue<float>(ref shotHeight, "hgt", 0f, true);
-            Scribe_Values.LookValue<float>(ref shotSpeed, "spd", 0f, true);
-            Scribe_Values.LookValue<bool>(ref canTargetSelf, "cts", false, false);
+            Scribe_Values.Look(ref shotAngle, "ang", 0f, true);
+            Scribe_Values.Look(ref shotRotation, "rot", 0f, true);
+            Scribe_Values.Look(ref shotHeight, "hgt", 0f, true);
+            Scribe_Values.Look(ref shotSpeed, "spd", 0f, true);
+            Scribe_Values.Look(ref canTargetSelf, "cts", false, false);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace CombatExtended
 
         private void ApplySuppression(Pawn pawn)
         {
-            PersonalShield shield = null;
+            ShieldBelt shield = null;
             if (pawn.RaceProps.Humanlike)
             {
                 // check for shield user
@@ -386,7 +386,7 @@ namespace CombatExtended
                 List<Apparel> wornApparel = pawn.apparel.WornApparel;
                 for (int i = 0; i < wornApparel.Count; i++)
                 {
-                    var personalShield = wornApparel[i] as PersonalShield;
+                    var personalShield = wornApparel[i] as ShieldBelt;
                     if (personalShield != null)
                     {
                         shield = personalShield;

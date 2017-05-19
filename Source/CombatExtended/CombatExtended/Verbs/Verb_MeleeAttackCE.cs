@@ -359,7 +359,7 @@ namespace CombatExtended
 		{
 			if (this.ownerEquipment != null && this.ownerEquipment.Stuff != null)
 			{
-				if (this.verbProps.meleeDamageDef.armorCategory == DamageArmorCategory.Sharp)
+				if (this.verbProps.meleeDamageDef.armorCategory == DamageArmorCategoryDefOf.Sharp)
 				{
 					if (!this.ownerEquipment.Stuff.stuffProps.soundMeleeHitSharp.NullOrUndefined())
 					{
@@ -383,7 +383,7 @@ namespace CombatExtended
 		{
 			if (this.ownerEquipment != null && this.ownerEquipment.Stuff != null)
 			{
-				if (this.verbProps.meleeDamageDef.armorCategory == DamageArmorCategory.Sharp)
+				if (this.verbProps.meleeDamageDef.armorCategory == DamageArmorCategoryDefOf.Sharp)
 				{
 					if (!this.ownerEquipment.Stuff.stuffProps.soundMeleeHitSharp.NullOrUndefined())
 					{

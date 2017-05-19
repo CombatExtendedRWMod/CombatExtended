@@ -54,7 +54,7 @@ namespace CombatExtended
             {
                 // Go through each cell in radius around the pawn
                 Region pawnRegion = pawn.Position.GetRegion(pawn.Map);
-                List<Region> adjacentRegions = pawnRegion.NonPortalNeighbors.ToList();
+                List<Region> adjacentRegions = pawnRegion.Neighbors.ToList();
                 adjacentRegions.Add(pawnRegion);
                 // Make sure only cells within bounds are evaluated
                 foreach (IntVec3 cell in cellList.Where(x => x.InBounds(pawn.Map)))

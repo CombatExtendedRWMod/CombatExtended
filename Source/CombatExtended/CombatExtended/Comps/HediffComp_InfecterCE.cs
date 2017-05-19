@@ -25,6 +25,9 @@ namespace CombatExtended
             infectionModifier *= Pawn.health.immunity.DiseaseContractChanceFactor(HediffDefOf.WoundInfection, parent.Part); // Apply pawn immunity
             if (Pawn.def.race.Animal) infectionModifier *= 0.5f;
 
+            // Adjust for difficulty
+            if (Pawn.Faction == Faction.OfPlayer) infectionModifier *= Find.Storyteller.difficulty.playerPawnInfectionChanceFactor;
+
             // Find out how long the wound was untreated
             HediffComp_TendDuration compTended = parent.TryGetComp<HediffComp_TendDuration>();
             int ticksUntended = parent.ageTicks;
@@ -70,7 +73,7 @@ namespace CombatExtended
             }
         }
 
-        public override void CompPostTick()
+        public override void CompPostTick(ref float severityAdjustment)
         {
             if (!alreadyCausedInfection && ticksUntilInfect > 0)
             {

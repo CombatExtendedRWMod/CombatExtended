@@ -54,7 +54,7 @@ namespace CombatExtended
             Scribe_Values.Look(ref bleedModifier, "bleedModifier", 1);
         }
 
-        public override void CompPostTick()
+        public override void CompPostTick(ref float severityAdjustment)
         {
             // Increase bleed modifier once per second
             if (stabilized && bleedModifier < 1 && parent.ageTicks % 60 == 0)

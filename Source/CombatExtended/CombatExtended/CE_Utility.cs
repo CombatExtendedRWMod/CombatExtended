@@ -113,7 +113,7 @@ namespace CombatExtended
         #region MoteThrower
         public static void ThrowEmptyCasing(Vector3 loc, Map map, ThingDef casingMoteDef, float size = 1f)
         {
-            if (!ModSettings.showCasings || !loc.ShouldSpawnMotesAt(map) || map.moteCounter.SaturatedLowPriority)
+            if (!ModSettings.ShowCasings || !loc.ShouldSpawnMotesAt(map) || map.moteCounter.SaturatedLowPriority)
             {
                 return;
             }
@@ -347,9 +347,9 @@ namespace CombatExtended
             return pawn.RaceProps.Humanlike && crouchJobs.Contains(pawn.CurJob?.def);
         }
 
-#endregion Physics
+        #endregion Physics
 
-#region Inventory
+        #region Inventory
 
         public static void TryUpdateInventory(Pawn pawn)
         {
@@ -371,7 +371,7 @@ namespace CombatExtended
                 TryUpdateInventory(pawn);
             }
         }
-        
-#endregion
+
+        #endregion
     }
 }

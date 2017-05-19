@@ -36,7 +36,7 @@ namespace CombatExtended
         {
             if (InjectAmmos())
             {
-            	Log.Message("Combat Extended :: Ammo " + (ModSettings.enableAmmoSystem ? "injected" : "removed"));
+            	Log.Message("Combat Extended :: Ammo " + (ModSettings.EnableAmmoSystem ? "injected" : "removed"));
             }
             else
             {
@@ -46,7 +46,7 @@ namespace CombatExtended
 
         public static bool InjectAmmos()
         {
-        	bool enabled = ModSettings.enableAmmoSystem;
+        	bool enabled = ModSettings.EnableAmmoSystem;
             if (enabled)
             {
             	// Initialize list of all weapons
