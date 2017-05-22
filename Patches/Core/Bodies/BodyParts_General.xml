@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "Brain"]/hitpoints</xpath>
+    <value>
+      <hitpoints>20</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "Rib"]/hitpoints</xpath>
+    <value>
+      <hitpoints>13</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftLeg"]/hitpoints</xpath>
+    <value>
+      <hitpoints>40</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftFoot"]/hitpoints</xpath>
+    <value>
+      <hitpoints>26</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightLeg"]/hitpoints</xpath>
+    <value>
+      <hitpoints>40</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightFoot"]/hitpoints</xpath>
+    <value>
+      <hitpoints>26</hitpoints>
+    </value>
+  </Operation>
+
+</Patch>
+

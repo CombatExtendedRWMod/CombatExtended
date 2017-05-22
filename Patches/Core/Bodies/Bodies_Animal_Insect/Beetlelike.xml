@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- ==================== BeetleLike ==================== -->
+
+  <!-- Add groups entry if it doesn't exist already -->
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//BodyDef[defName = "BeetleLike"]/corePart/groups</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//BodyDef[defName = "BeetleLike"]/corePart</xpath>
+      	<value>
+        	<groups />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+  <!-- Add armor coverage -->
+	<Operation Class="PatchOperationAdd">
+  	<xpath>//BodyDef[defName = "BeetleLike"]/corePart/groups</xpath>
+  	<value>
+      <li>CoveredByNaturalArmor</li>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "LeftElytra"]/groups</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "LeftElytra"]</xpath>
+      	<value>
+        	<groups />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "LeftElytra"]/groups</xpath>
+  	<value>
+      <li>CoveredByNaturalArmor</li>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "RightElytra"]/groups</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "RightElytra"]</xpath>
+      	<value>
+        	<groups />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "RightElytra"]/groups</xpath>
+  	<value>
+      <li>CoveredByNaturalArmor</li>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "Pronotum"]/groups</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "Pronotum"]</xpath>
+      	<value>
+        	<groups />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "Pronotum"]/groups</xpath>
+  	<value>
+      <li>CoveredByNaturalArmor</li>
+  	</value>
+	</Operation>
+
+  <!-- Patch coverage -->
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "Pronotum"]/coverage</xpath>
+  	<value>
+    	<coverage>0.3</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "LeftAntenna"]/coverage</xpath>
+  	<value>
+    	<coverage>0.05</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "RightAntenna"]/coverage</xpath>
+  	<value>
+    	<coverage>0.05</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "InsectNostril"]/coverage</xpath>
+  	<value>
+    	<coverage>0.1</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "BeetleLike"]//li[def = "InsectMouth"]/coverage</xpath>
+  	<value>
+    	<coverage>0.05</coverage>
+  	</value>
+	</Operation>
+
+</Patch>
+

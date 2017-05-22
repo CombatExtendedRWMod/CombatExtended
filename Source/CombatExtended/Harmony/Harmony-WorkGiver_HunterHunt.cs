@@ -12,7 +12,7 @@ namespace CombatExtended.Harmony
     [HarmonyPatch(typeof(WorkGiver_HunterHunt), "HasHuntingWeapon")]
     public class Harmony_WorkGiver_HunterHunt_HasHuntingWeapon_Patch
     {
-        public static void Postfix(WorkGiver_HunterHunt __instance, ref bool __result, Pawn p)
+        public static void Postfix(ref bool __result, Pawn p)
         {
             if (__result)
             {

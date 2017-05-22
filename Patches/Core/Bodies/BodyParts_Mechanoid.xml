@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "MechanicalThorax"]/hitpoints</xpath>
+    <value>
+      <hitpoints>50</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftBlade"]/hitpoints</xpath>
+    <value>
+      <hitpoints>26</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightBlade"]/hitpoints</xpath>
+    <value>
+      <hitpoints>26</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftMechanicalLeg"]/hitpoints</xpath>
+    <value>
+      <hitpoints>40</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftMechanicalFoot"]/hitpoints</xpath>
+    <value>
+      <hitpoints>26</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightMechanicalLeg"]/hitpoints</xpath>
+    <value>
+      <hitpoints>40</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightMechanicalFoot"]/hitpoints</xpath>
+    <value>
+      <hitpoints>26</hitpoints>
+    </value>
+  </Operation>
+
+</Patch>

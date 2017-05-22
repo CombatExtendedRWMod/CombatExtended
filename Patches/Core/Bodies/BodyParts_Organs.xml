@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "Heart"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>12.5</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftLung"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>7.25</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightLung"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>7.25</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftKidney"]/hitpoints</xpath>
+    <value>
+      <hitpoints>15</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "LeftKidney"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>4.5</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightKidney"]/hitpoints</xpath>
+    <value>
+      <hitpoints>50</hitpoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "RightKidney"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>4.5</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "Liver"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>9.75</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyPartDef[defName = "Stomach"]/bleedingRateMultiplier</xpath>
+    <value>
+      <bleedingRateMultiplier>3.0</bleedingRateMultiplier>
+    </value>
+  </Operation>
+
+</Patch>
+

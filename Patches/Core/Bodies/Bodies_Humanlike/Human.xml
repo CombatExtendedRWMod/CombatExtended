@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- ==================== Human ==================== -->
+
+  <!-- ========== Modify coverage ========== -->
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "Rib"]/coverage</xpath>
+  	<value>
+    	<coverage>0.001</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "Pelvis"]/coverage</xpath>
+  	<value>
+    	<coverage>0.05</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "Stomach"]/coverage</xpath>
+  	<value>
+    	<coverage>0.05</coverage>
+  	</value>
+	</Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "Heart"]/coverage</xpath>
+    <value>
+      <coverage>0.04</coverage>
+    </value>
+  </Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "LeftLung"]/coverage</xpath>
+  	<value>
+    	<coverage>0.055</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "RightLung"]/coverage</xpath>
+  	<value>
+    	<coverage>0.055</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "LeftKidney"]/coverage</xpath>
+  	<value>
+    	<coverage>0.03</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "RightKidney"]/coverage</xpath>
+  	<value>
+    	<coverage>0.03</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "Liver"]/coverage</xpath>
+  	<value>
+    	<coverage>0.06</coverage>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+  	<xpath>//BodyDef[defName = "Human"]//li[def = "Neck"]/coverage</xpath>
+  	<value>
+    	<coverage>0.055</coverage>
+  	</value>
+	</Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "Brain"]/coverage</xpath>
+    <value>
+      <coverage>0.9</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "LeftEye"]/coverage</xpath>
+    <value>
+      <coverage>0.05</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "RightEye"]/coverage</xpath>
+    <value>
+      <coverage>0.05</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "LeftEar"]/coverage</xpath>
+    <value>
+      <coverage>0.05</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "RightEar"]/coverage</xpath>
+    <value>
+      <coverage>0.05</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "Nose"]/coverage</xpath>
+    <value>
+      <coverage>0.08</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "LeftShoulder"]/coverage</xpath>
+    <value>
+      <coverage>0.085</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "LeftClavicle"]/coverage</xpath>
+    <value>
+      <coverage>0.06</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "RightShoulder"]/coverage</xpath>
+    <value>
+      <coverage>0.085</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "RightClavicle"]/coverage</xpath>
+    <value>
+      <coverage>0.06</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "LeftLeg"]/coverage</xpath>
+    <value>
+      <coverage>0.1</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>//BodyDef[defName = "Human"]//li[def = "RightLeg"]/coverage</xpath>
+    <value>
+      <coverage>0.1</coverage>
+    </value>
+  </Operation>
+
+
+</Patch>
+
