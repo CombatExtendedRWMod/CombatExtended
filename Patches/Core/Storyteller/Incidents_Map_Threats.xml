@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<!-- Delay psychic ship crash -->
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//IncidentDef[defName = "PsychicEmanatorShipPartCrash"]/earliestDay</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//IncidentDef[defName = "PsychicEmanatorShipPartCrash"]/earliestDay</xpath>
+      	<value>
+        	<earliestDay />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+  <Operation Class="PatchOperationReplace">
+  	<xpath>//IncidentDef[defName = "PsychicEmanatorShipPartCrash"]/earliestDay</xpath>
+  	<value>
+  		<earliestDay>60</earliestDay>
+  	</value>
+  </Operation>
+
+	<!-- Delay poison ship crash -->
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//IncidentDef[defName = "PoisonShipPartCrash"]/earliestDay</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//IncidentDef[defName = "PoisonShipPartCrash"]/earliestDay</xpath>
+      	<value>
+        	<earliestDay />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+  <Operation Class="PatchOperationReplace">
+  	<xpath>//IncidentDef[defName = "PoisonShipPartCrash"]/earliestDay</xpath>
+  	<value>
+  		<earliestDay>60</earliestDay>
+  	</value>
+  </Operation>
+</Patch>
+
