@@ -121,43 +121,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontLeftHoof"]/groups</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontLeftHoof"]</xpath>
-      	<value>
-        	<groups />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
       	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontRightLeg"]/groups</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
       	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontRightLeg"]</xpath>
-      	<value>
-        	<groups />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontRightHoof"]/groups</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontRightHoof"]</xpath>
       	<value>
         	<groups />
       	</value>
@@ -185,43 +153,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearLeftHoof"]/groups</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearLeftHoof"]</xpath>
-      	<value>
-        	<groups />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
       	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearRightLeg"]/groups</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
       	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearRightLeg"]</xpath>
-      	<value>
-        	<groups />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearRightHoof"]/groups</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearRightHoof"]</xpath>
       	<value>
         	<groups />
       	</value>
@@ -281,21 +217,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-  	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontLeftHoof"]/groups</xpath>
-  	<value>
-      <li>CoveredByNaturalArmor</li>
-  	</value>
-	</Operation>
-
-	<Operation Class="PatchOperationAdd">
   	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontRightLeg"]/groups</xpath>
-  	<value>
-      <li>CoveredByNaturalArmor</li>
-  	</value>
-	</Operation>
-
-	<Operation Class="PatchOperationAdd">
-  	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "FrontRightHoof"]/groups</xpath>
   	<value>
       <li>CoveredByNaturalArmor</li>
   	</value>
@@ -309,21 +231,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-  	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearLeftHoof"]/groups</xpath>
-  	<value>
-      <li>CoveredByNaturalArmor</li>
-  	</value>
-	</Operation>
-
-	<Operation Class="PatchOperationAdd">
   	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearRightLeg"]/groups</xpath>
-  	<value>
-      <li>CoveredByNaturalArmor</li>
-  	</value>
-	</Operation>
-
-	<Operation Class="PatchOperationAdd">
-  	<xpath>//BodyDef[defName = "QuadrupedAnimalWithClawsTailAndJowl"]//li[def = "RearRightHoof"]/groups</xpath>
   	<value>
       <li>CoveredByNaturalArmor</li>
   	</value>

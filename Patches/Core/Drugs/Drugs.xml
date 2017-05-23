@@ -7,11 +7,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[position()=1]</xpath>
+      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[1]/statOffsets</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[position()=1]</xpath>
+      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[1]</xpath>
       	<value>
         	<statOffsets />
       	</value>
@@ -23,11 +23,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[position()=1]</xpath>
+      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[1]/statOffsets</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[position()=1]</xpath>
+      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[1]</xpath>
       	<value>
         	<statOffsets />
       	</value>
@@ -38,14 +38,14 @@
   <!-- ========== Patch statOffsets ========== -->
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[position()=1]/statOffsets</xpath>
+  	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[1]/statOffsets</xpath>
   	<value>
   		<Suppressability>-0.75</Suppressability>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[position()=1]/statOffsets</xpath>
+  	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[1]/statOffsets</xpath>
   	<value>
   		<Suppressability>-0.5</Suppressability>
   	</value>

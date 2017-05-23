@@ -13,14 +13,14 @@
 	<!-- Missing body part -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//HediffDef[defName = "Hediff_MissingPart"]//bleedRate</xpath>
+		<xpath>//HediffDef[defName = "MissingBodyPart"]//bleedRate</xpath>
 		<value>
 			<bleedRate>0.08</bleedRate>
   	</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//HediffDef[defName = "Hediff_MissingPart"]//painPerSeverity</xpath>
+		<xpath>//HediffDef[defName = "MissingBodyPart"]//painPerSeverity</xpath>
 		<value>
 			<painPerSeverity>0.05</painPerSeverity>
   	</value>

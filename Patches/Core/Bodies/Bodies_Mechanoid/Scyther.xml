@@ -201,11 +201,11 @@
     <success>Always</success>
     <operations>
       <li Class="PatchOperationTest">
-        <xpath>//BodyDef[defName = "Scyther"]//li[def = "LeftMechanicalFoot"]/groups</xpath>
+        <xpath>//BodyDef[defName = "Scyther"]//li[def = "RightMechanicalFoot"]/groups</xpath>
         <success>Invert</success>
       </li>
       <li Class="PatchOperationAdd">
-        <xpath>//BodyDef[defName = "Scyther"]//li[def = "LeftMechanicalFoot"]</xpath>
+        <xpath>//BodyDef[defName = "Scyther"]//li[def = "RightMechanicalFoot"]</xpath>
         <value>
           <groups />
         </value>

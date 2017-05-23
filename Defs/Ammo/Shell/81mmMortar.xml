@@ -14,7 +14,7 @@
     <label>81mm mortar shells</label>
     <ammoTypes>
       <!-- Overrides vanilla artillery shell -->
-      <MortarShell>Bullet_81mmMortarShell_HE</MortarShell>
+      <Ammo_81mmMortarShell_HE>Bullet_81mmMortarShell_HE</Ammo_81mmMortarShell_HE>
       <Ammo_81mmMortarShell_Incendiary>Bullet_81mmMortarShell_Incendiary</Ammo_81mmMortarShell_Incendiary>
       <Ammo_81mmMortarShell_EMP>Bullet_81mmMortarShell_EMP</Ammo_81mmMortarShell_EMP>
     </ammoTypes>
@@ -37,7 +37,7 @@
   </ThingDef>
 
   <ThingDef ParentName="81mmMortarShellBase">
-    <defName>MortarShell</defName>
+    <defName>Ammo_81mmMortarShell_HE</defName>
     <label>81mm mortar shell (HE)</label>
     <graphicData>
       <texPath>Things/Ammo/Mortar/HE</texPath>
@@ -205,7 +205,7 @@
 	<!-- ==================== Recipes ========================== -->
 
   <RecipeDef ParentName="GrenadeRecipeBase">
-    <defName>MakeMortarShell</defName>
+    <defName>MakeAmmo_81mmMortarShell_HE</defName>
     <label>make 81mm HE mortar shells x5</label>
     <description>Craft 5 81mm HE mortar shells.</description>
     <jobString>Making 81mm HE mortar shells.</jobString>
@@ -243,7 +243,7 @@
       </thingDefs>
     </fixedIngredientFilter>
     <products>
-      <MortarShell>5</MortarShell>
+      <Ammo_81mmMortarShell_HE>5</Ammo_81mmMortarShell_HE>
     </products>
   </RecipeDef>
 

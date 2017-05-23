@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <StatDef>
+  <StatDef Name="BulkStat">
     <defName>Bulk</defName>
     <label>bulk</label>
     <description>The amount of inventory space an item takes up when carried in bag or pocket.</description>

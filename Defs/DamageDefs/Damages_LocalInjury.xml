@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <DamageDef ParentName="Blunt">
+  <DamageDef ParentName="BluntDamage">
     <defName>Beanbag</defName>
     <label>beanbag</label>
     <deathMessage>{0} has been shot to death.</deathMessage>
@@ -13,7 +13,7 @@
     </additionalHediffs>
   </DamageDef>
 
-  <DamageDef ParentName="Bullet">
+  <DamageDef ParentName="BulletDamage">
     <defName>Fragment</defName>
     <label>fragment</label>
     <deathMessage>{0} has been shredded to death.</deathMessage>
@@ -23,7 +23,7 @@
   </DamageDef>
   
   <!-- For scratches that have a lot of blunt force behind them, e.g. bear claws -->
-  <DamageDef>
+  <DamageDef ParentName="LocalInjuryBase">
     <defName>Slash</defName>
     <label>slash</label>
     <externalViolence>true</externalViolence>
@@ -33,7 +33,6 @@
     <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
     <impactSoundType>Slice</impactSoundType>
     <armorCategory>Sharp</armorCategory>
-    <harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
     <modExtensions>
       <li Class="CombatExtended.DamageDefExtensionCE">
         <harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
@@ -41,19 +40,19 @@
     </modExtensions>
   </DamageDef>
 
-  <DamageDef ParentName="Bomb">
+  <DamageDef ParentName="BombDamage">
     <defName>Bomb_Secondary</defName>
     <harmAllLayersUntilOutside>false</harmAllLayersUntilOutside>
     <spreadOut>false</spreadOut>
   </DamageDef>
 
-  <DamageDef ParentName="Bomb">
+  <DamageDef ParentName="BombDamage">
     <defName>Thermobaric</defName>
     <label>thermobaric</label>
     <workerClass>CombatExtended.DamageWorker_FlameCE</workerClass>
   </DamageDef>
 
-  <DamageDef ParentName="Burn">
+  <DamageDef ParentName="BurnDamage">
     <defName>Flame_Secondary</defName>
     <harmAllLayersUntilOutside>false</harmAllLayersUntilOutside>
     <spreadOut>false</spreadOut>
@@ -64,7 +63,6 @@
     <label>electrical</label>
     <hasForcefulImpact>false</hasForcefulImpact>
     <makesBlood>false</makesBlood>
-    <incapChanceMultiplier>1.5</incapChanceMultiplier>
     <externalViolence>true</externalViolence>
     <deathMessage>{0} has been electrocuted.</deathMessage>
     <hediff>ElectricalBurn</hediff>

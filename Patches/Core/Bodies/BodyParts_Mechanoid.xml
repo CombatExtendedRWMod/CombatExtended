@@ -2,51 +2,51 @@
 <Patch>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "MechanicalThorax"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "MechanicalThorax"]/hitPoints</xpath>
     <value>
-      <hitpoints>50</hitpoints>
+      <hitPoints>50</hitPoints>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "LeftBlade"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "LeftBlade"]/hitPoints</xpath>
     <value>
-      <hitpoints>26</hitpoints>
+      <hitPoints>26</hitPoints>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "RightBlade"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "RightBlade"]/hitPoints</xpath>
     <value>
-      <hitpoints>26</hitpoints>
+      <hitPoints>26</hitPoints>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "LeftMechanicalLeg"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "LeftMechanicalLeg"]/hitPoints</xpath>
     <value>
-      <hitpoints>40</hitpoints>
+      <hitPoints>40</hitPoints>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "LeftMechanicalFoot"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "LeftMechanicalFoot"]/hitPoints</xpath>
     <value>
-      <hitpoints>26</hitpoints>
+      <hitPoints>26</hitPoints>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "RightMechanicalLeg"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "RightMechanicalLeg"]/hitPoints</xpath>
     <value>
-      <hitpoints>40</hitpoints>
+      <hitPoints>40</hitPoints>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "RightMechanicalFoot"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "RightMechanicalFoot"]/hitPoints</xpath>
     <value>
-      <hitpoints>26</hitpoints>
+      <hitPoints>26</hitPoints>
     </value>
   </Operation>
 

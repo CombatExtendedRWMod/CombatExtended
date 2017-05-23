@@ -57,11 +57,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[@Name="TurretGun"]/tradeTags</xpath>
+      	<xpath>//ThingDef[defName="TurretGun"]/tradeTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="TurretGun"]</xpath>
+      	<xpath>//ThingDef[defName="TurretGun"]</xpath>
       	<value>
         	<tradeTags />
       	</value>
@@ -86,9 +86,9 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/costList/Components</xpath>
+		<xpath>//ThingDef[defName="TurretGun"]/costList/Component</xpath>
 		<value>
-			<Components>8</Components>
+			<Component>8</Component>
 		</value>
 	</Operation>
 
@@ -198,7 +198,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TrapIEDIncendiary"]/costList/MortarShell</xpath>
+		<xpath>//ThingDef[defName="TrapIEDIncendiary"]/costList/Chemfuel</xpath>
 		<value>
 			<Ammo_81mmMortarShell_Incendiary>1</Ammo_81mmMortarShell_Incendiary>
 		</value>

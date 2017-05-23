@@ -23,7 +23,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//StatDef[defName = "ArmorRating_Blunt" or defName = "ArmorRating_Sharp"]/toStringStyle</xpath>
+		<xpath>//StatDef[defName = "ArmorRating_Blunt" or defName = "ArmorRating_Sharp"]</xpath>
 		<value>
 			<toStringStyle>FloatTwo</toStringStyle>
 		</value>

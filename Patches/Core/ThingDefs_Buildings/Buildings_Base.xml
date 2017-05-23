@@ -19,7 +19,7 @@
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="BuildingBase"]/damageMultipliers</xpath>
+      	<xpath>//ThingDef[@Name="BuildingBase"]</xpath>
       	<value>
         	<damageMultipliers />
       	</value>
@@ -67,7 +67,7 @@
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="FurnitureBase"]/damageMultipliers</xpath>
+      	<xpath>//ThingDef[@Name="FurnitureBase"]</xpath>
       	<value>
         	<damageMultipliers />
       	</value>
@@ -115,7 +115,7 @@
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="BuildingNaturalBase"]/damageMultipliers</xpath>
+      	<xpath>//ThingDef[@Name="BuildingNaturalBase"]</xpath>
       	<value>
         	<damageMultipliers />
       	</value>
@@ -141,6 +141,10 @@
 			<li>
 			  <damageDef>Fragment</damageDef>
 			  <multiplier>0.025</multiplier>
+			</li>
+			<li>
+			  <damageDef>Arrow</damageDef>
+			  <multiplier>0.0</multiplier>
 			</li>
 			<li>
 			  <damageDef>Electrical</damageDef>

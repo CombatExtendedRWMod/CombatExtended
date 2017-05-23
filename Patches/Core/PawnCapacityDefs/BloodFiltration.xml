@@ -11,7 +11,7 @@
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//PawnCapacityDef[defName = "BloodFiltration"]/</xpath>
+      	<xpath>//PawnCapacityDef[defName = "BloodFiltration"]</xpath>
       	<value>
         	<labelMechanoids />
       	</value>
@@ -27,9 +27,9 @@
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//PawnCapacityDef[defName = "BloodFiltration"]/</xpath>
+      	<xpath>//PawnCapacityDef[defName = "BloodFiltration"]</xpath>
       	<value>
-        	<lethal />
+        	<lethalMechanoids />
       	</value>
     	</li>
   	</operations>
@@ -38,21 +38,21 @@
   <!-- ========== Patch values ========== -->
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "BloodFiltration"]/labelMechanoids</xpath>
+    <xpath>//PawnCapacityDef[defName = "BloodFiltration"]/labelMechanoids</xpath>
     <value>
       <labelMechanoids>capacitance</labelMechanoids>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "BloodFiltration"]/lethalMechanoids</xpath>
+    <xpath>//PawnCapacityDef[defName = "BloodFiltration"]/lethalMechanoids</xpath>
     <value>
       <lethalMechanoids>true</lethalMechanoids>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "BloodFiltration"]/showOnMechanoids</xpath>
+    <xpath>//PawnCapacityDef[defName = "BloodFiltration"]/showOnMechanoids</xpath>
     <value>
       <showOnMechanoids>true</showOnMechanoids>
     </value>

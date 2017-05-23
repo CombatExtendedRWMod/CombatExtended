@@ -79,12 +79,6 @@
 
   <!-- Injuries -->
 
-  <HediffDef Name="InjuryBase" Abstract="True">
-    <hediffClass>Hediff_Injury</hediffClass>
-    <tendable>true</tendable>
-    <displayWound>true</displayWound>
-  </HediffDef>
-
 	<HediffDef ParentName="Burn">
 		<defName>ElectricalBurn</defName>
 		<label>electrical burn</label>

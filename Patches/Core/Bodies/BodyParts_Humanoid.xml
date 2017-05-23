@@ -2,9 +2,9 @@
 <Patch>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>//BodyPartDef[defName = "Torso"]/hitpoints</xpath>
+    <xpath>//BodyPartDef[defName = "Torso"]/hitPoints</xpath>
     <value>
-      <hitpoints>50</hitpoints>
+      <hitPoints>50</hitPoints>
     </value>
   </Operation>
 

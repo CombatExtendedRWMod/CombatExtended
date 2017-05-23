@@ -6,7 +6,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[@Name="MealBase"]/statBases</xpath>
 		<value>
-			<bulk>1</bulk>
+			<Bulk>1</Bulk>
 		</value>
 	</Operation>
 
@@ -15,21 +15,21 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="HerbalMedicine"]/statBases</xpath>
 		<value>
-			<bulk>1</bulk>
+			<Bulk>1</Bulk>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Medicine"]/statBases</xpath>
 		<value>
-			<bulk>1</bulk>
+			<Bulk>1</Bulk>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="GlitterworldMedicine"]/statBases</xpath>
 		<value>
-			<bulk>1</bulk>
+			<Bulk>1</Bulk>
 		</value>
 	</Operation>
 
@@ -44,7 +44,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[@Name="OrganicProductBase"]/statBases</xpath>
 		<value>
-			<bulk>0.2</bulk>
+			<Bulk>0.2</Bulk>
 		</value>
 	</Operation>
 
@@ -53,14 +53,14 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Silver"]/statBases</xpath>
 		<value>
-			<bulk>0.007</bulk>
+			<Bulk>0.007</Bulk>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Gold"]/statBases</xpath>
 		<value>
-			<bulk>0.01</bulk>
+			<Bulk>0.01</Bulk>
 		</value>
 	</Operation>
 
@@ -69,7 +69,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Steel"]/statBases</xpath>
 		<value>
-			<bulk>0.03</bulk>
+			<Bulk>0.03</Bulk>
 		</value>
 	</Operation>
 
@@ -92,7 +92,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Plasteel"]/statBases</xpath>
 		<value>
-			<bulk>0.03</bulk>
+			<Bulk>0.03</Bulk>
 		</value>
 	</Operation>
 
@@ -155,19 +155,19 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="WoodLog"]/statBases</xpath>
 		<value>
-			<bulk>0.07</bulk>
+			<Bulk>0.07</Bulk>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="WoodLog"]/statBases/sharpDamageMultiplier</xpath>
+		<xpath>//ThingDef[defName="WoodLog"]/statBases/SharpDamageMultiplier</xpath>
 		<value>
 			<sharpDamageMultiplier>0.7</sharpDamageMultiplier>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="WoodLog"]/statBases/bluntDamageMultiplier</xpath>
+		<xpath>//ThingDef[defName="WoodLog"]/statBases/BluntDamageMultiplier</xpath>
 		<value>
 			<bluntDamageMultiplier>0.5</bluntDamageMultiplier>
 		</value>
@@ -187,12 +187,19 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="WoodLog"]//verbClass</xpath>
+		<value>
+			<verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
+		</value>
+	</Operation>
+
 	<!-- Uranium -->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Uranium"]/statBases</xpath>
 		<value>
-			<bulk>0.05</bulk>
+			<Bulk>0.05</Bulk>
 		</value>
 	</Operation>
 
@@ -222,7 +229,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Jade"]/statBases</xpath>
 		<value>
-			<bulk>0.3</bulk>
+			<Bulk>0.3</Bulk>
 		</value>
 	</Operation>
 
@@ -236,35 +243,35 @@
 	<!-- Devilstrand -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Devilstrand"]/statBases</xpath>
+		<xpath>//ThingDef[defName="DevilstrandCloth"]/statBases</xpath>
 		<value>
-			<bulk>0.3</bulk>
+			<Bulk>0.3</Bulk>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statOffsets</xpath>
+		<xpath>//ThingDef[defName="DevilstrandCloth"]/stuffProps/statOffsets</xpath>
 		<value>
 			<Mass>0.5</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statOffsets</xpath>
+		<xpath>//ThingDef[defName="DevilstrandCloth"]/stuffProps/statOffsets</xpath>
 		<value>
 			<WornBulk>0.5</WornBulk>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statFactors</xpath>
+		<xpath>//ThingDef[defName="DevilstrandCloth"]/stuffProps/statFactors</xpath>
 		<value>
 			<Mass>1.5</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statFactors</xpath>
+		<xpath>//ThingDef[defName="DevilstrandCloth"]/stuffProps/statFactors</xpath>
 		<value>
 			<WornBulk>1.5</WornBulk>
 		</value>
@@ -275,7 +282,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Hyperweave"]/statBases</xpath>
 		<value>
-			<bulk>0.3</bulk>
+			<Bulk>0.3</Bulk>
 		</value>
 	</Operation>
 
