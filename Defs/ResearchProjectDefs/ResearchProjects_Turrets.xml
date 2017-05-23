@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResearchProjectDefs>
 
-  <!--<ResearchProjectDef>
+  <ResearchProjectDef>
     <defName>CE_TurretHeavyWeapons</defName>
     <label>heavy weapons</label>
     <description>Allows you to assemble high-caliber weapons such as the KPV machine gun.</description>
@@ -10,7 +10,7 @@
     <prerequisites>
       <li>Machining</li>
     </prerequisites>
-  </ResearchProjectDef>-->
+  </ResearchProjectDef>
 
   <!--<ResearchProjectDef>
     <defName>CE_TurretAI</defName>

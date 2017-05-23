@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<!-- ========== Food ========== -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[@Name="MealBase"]/statBases</xpath>
+		<value>
+			<bulk>1</bulk>
+		</value>
+	</Operation>
+
+	<!-- ========== Resource Manufactured ========== -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="HerbalMedicine"]/statBases</xpath>
+		<value>
+			<bulk>1</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Medicine"]/statBases</xpath>
+		<value>
+			<bulk>1</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="GlitterworldMedicine"]/statBases</xpath>
+		<value>
+			<bulk>1</bulk>
+		</value>
+	</Operation>
+
+	<!-- Delete mortar shell -->
+
+	<Operation Class="PatchOperationRemove">
+		<xpath>//ThingDef[defName="MortarShell"]</xpath>
+	</Operation>
+
+	<!-- ========== Resource RawPlant ========== -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[@Name="OrganicProductBase"]/statBases</xpath>
+		<value>
+			<bulk>0.2</bulk>
+		</value>
+	</Operation>
+
+	<!-- ========== Resource Stuff ========== -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Silver"]/statBases</xpath>
+		<value>
+			<bulk>0.007</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Gold"]/statBases</xpath>
+		<value>
+			<bulk>0.01</bulk>
+		</value>
+	</Operation>
+
+	<!-- Steel -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Steel"]/statBases</xpath>
+		<value>
+			<bulk>0.03</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Steel"]/stuffProps/categories</xpath>
+		<value>
+			<li>Metallic_Weapon</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Steel"]/stuffProps/categories</xpath>
+		<value>
+			<li>Steeled</li>
+		</value>
+	</Operation>
+
+	<!-- Plasteel -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/statBases</xpath>
+		<value>
+			<bulk>0.03</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps/categories</xpath>
+		<value>
+			<li>Metallic_Weapon</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps/categories</xpath>
+		<value>
+			<li>Steeled</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps</xpath>
+		<value>
+			<statOffsets>
+			  <ArmorRating_Blunt>0.0</ArmorRating_Blunt>
+			  <ArmorRating_Sharp>0.18</ArmorRating_Sharp>
+			  <ArmorRating_Heat>0</ArmorRating_Heat>
+			  <ArmorRating_Electric>0.0</ArmorRating_Electric>
+			</statOffsets>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps/statFactors</xpath>
+		<value>
+			<Mass>0.8</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps/statFactors</xpath>
+		<value>
+			<ArmorRating_Blunt>1.0</ArmorRating_Blunt>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps/statFactors</xpath>
+		<value>
+      <ArmorRating_Sharp>1.15</ArmorRating_Sharp>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Plasteel"]/stuffProps/statFactors</xpath>
+		<value>
+			<MeleeWeapon_Penetration>1.3</MeleeWeapon_Penetration>
+		</value>
+	</Operation>
+
+	<!-- Wood -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="WoodLog"]/statBases</xpath>
+		<value>
+			<bulk>0.07</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName="WoodLog"]/statBases/sharpDamageMultiplier</xpath>
+		<value>
+			<sharpDamageMultiplier>0.7</sharpDamageMultiplier>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName="WoodLog"]/statBases/bluntDamageMultiplier</xpath>
+		<value>
+			<bluntDamageMultiplier>0.5</bluntDamageMultiplier>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="WoodLog"]/stuffProps/statFactors</xpath>
+		<value>
+			<Mass>0.3</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="WoodLog"]/stuffProps/statFactors</xpath>
+		<value>
+			<MeleeWeapon_Penetration>0.3</MeleeWeapon_Penetration>
+		</value>
+	</Operation>
+
+	<!-- Uranium -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Uranium"]/statBases</xpath>
+		<value>
+			<bulk>0.05</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Uranium"]/stuffProps/categories</xpath>
+		<value>
+			<li>Metallic_Weapon</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Uranium"]/stuffProps/statFactors</xpath>
+		<value>
+			<Mass>2</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Uranium"]/stuffProps/statFactors</xpath>
+		<value>
+			<MeleeWeapon_Penetration>1.4</MeleeWeapon_Penetration>
+		</value>
+	</Operation>
+
+	<!-- Jade -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Jade"]/statBases</xpath>
+		<value>
+			<bulk>0.3</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Jade"]/stuffProps/statFactors</xpath>
+		<value>
+			<Mass>1.3</Mass>
+		</value>
+	</Operation>
+
+	<!-- Devilstrand -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Devilstrand"]/statBases</xpath>
+		<value>
+			<bulk>0.3</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statOffsets</xpath>
+		<value>
+			<Mass>0.5</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statOffsets</xpath>
+		<value>
+			<WornBulk>0.5</WornBulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statFactors</xpath>
+		<value>
+			<Mass>1.5</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Devilstrand"]/stuffProps/statFactors</xpath>
+		<value>
+			<WornBulk>1.5</WornBulk>
+		</value>
+	</Operation>
+
+	<!-- Hyperweave -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Hyperweave"]/statBases</xpath>
+		<value>
+			<bulk>0.3</bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Hyperweave"]/stuffProps/statOffsets</xpath>
+		<value>
+			<Mass>0.75</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Hyperweave"]/stuffProps/statOffsets</xpath>
+		<value>
+			<WornBulk>0.5</WornBulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Hyperweave"]/stuffProps/statFactors</xpath>
+		<value>
+			<Mass>1.8</Mass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//ThingDef[defName="Hyperweave"]/stuffProps/statFactors</xpath>
+		<value>
+			<WornBulk>1.8</WornBulk>
+		</value>
+	</Operation>
+
+</Patch>
+

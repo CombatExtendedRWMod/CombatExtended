@@ -20,19 +20,8 @@
       <Beauty>-60</Beauty>
     </statBases>
     <comps>
-      <li Class="CombatExtended.CompProperties_TurretInit"/>
       <li Class="CompProperties_Forbiddable"/>
     </comps>
-    <recipeMaker>
-      <workSpeedStat>SmithingSpeed</workSpeedStat>
-      <workSkill>Crafting</workSkill>
-      <effectWorking>Smith</effectWorking>
-      <soundWorking>Recipe_Smith</soundWorking>
-      <recipeUsers>
-        <li>TableMachining</li>
-      </recipeUsers>
-      <unfinishedThingDef>UnfinishedTurretGun</unfinishedThingDef>
-    </recipeMaker>
     <tickerType>Normal</tickerType>
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
@@ -57,6 +46,16 @@
         <manWorkType>Violent</manWorkType>
       </li>
     </comps>
+    <recipeMaker>
+      <workSpeedStat>SmithingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <recipeUsers>
+        <li>TableMachining</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedTurretGun</unfinishedThingDef>
+    </recipeMaker>
   </ThingDef>
 
   <!--=============== Blaster Turret ===============-->
@@ -104,6 +103,7 @@
     </recipeMaker>
     <specialDisplayRadius>40</specialDisplayRadius>
     <minifiedDef>MinifiedTurret_Blaster</minifiedDef>
+    <designationCategory>Security</designationCategory>
   </ThingDef>
 
   <!--=============== Heavy Turret ===============-->
@@ -152,6 +152,7 @@
       <li Class="CompProperties_Breakdownable"/>
     </comps>
     <minifiedDef>MinifiedTurret_Heavy</minifiedDef>
+    <designationCategory>Security</designationCategory>
   </ThingDef>
 
   <!--=============== M240B ===============-->
@@ -204,7 +205,7 @@
       <turretTopgraphicPath>Things/Building/Turrets/KPVT_Top</turretTopgraphicPath>
     </building>
     <recipeMaker>
-      <researchPrerequisite>MultibarrelWeapons</researchPrerequisite>
+      <researchPrerequisite>CE_TurretHeavyWeapons</researchPrerequisite>
     </recipeMaker>
     <minifiedDef>MinifiedTurret_KPV</minifiedDef>
   </ThingDef>
@@ -225,8 +226,8 @@
     </statBases>
     <description>Old school anti-aircraft cannon. Ineffective against modern aviation but still popular on rimworlds for use against entrenched enemies and vehicles.</description>
     <costList>
-      <Steel>1000</Steel>
-      <Component>15</Component>
+      <Steel>700</Steel>
+      <Component>6</Component>
     </costList>
     <specialDisplayRadius>16</specialDisplayRadius>
     <building>
@@ -235,7 +236,7 @@
     </building>
     <size>(2,2)</size>
     <recipeMaker>
-      <researchPrerequisite>MultibarrelWeapons</researchPrerequisite>
+      <researchPrerequisite>CE_TurretHeavyWeapons</researchPrerequisite>
     </recipeMaker>
     <minifiedDef>MinifiedTurret_Flak</minifiedDef>
   </ThingDef>
@@ -264,7 +265,7 @@
       <turretTopgraphicPath>Things/Building/Turrets/TurretGun_AGS30</turretTopgraphicPath>
     </building>
     <recipeMaker>
-      <researchPrerequisite>MultibarrelWeapons</researchPrerequisite>
+      <researchPrerequisite>CE_TurretHeavyWeapons</researchPrerequisite>
     </recipeMaker>
     <minifiedDef>MinifiedTurret_AGSThirty</minifiedDef>
   </ThingDef>
