@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<!-- Add CompStabilize to all injury and missing part hediffs -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//HediffDef[hediffClass = "Hediff_Injury" or hediffClass = "Hediff_MissingPart"]/comps</xpath>
+		<value>
+			<li Class="CombatExtended.HediffCompProperties_Stabilize" />
+		</value>
+	</Operation>
+
+	<!-- Missing body part -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Hediff_MissingPart"]//bleedRate</xpath>
+		<value>
+			<bleedRate>0.08</bleedRate>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Hediff_MissingPart"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.05</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<!-- Burn -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Burn"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.0375</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Burn"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.07</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//HediffDef[defName = "Burn"]/comps/li[@Class = "HediffCompProperties_GetsOld"]</xpath>
+		<value>
+			<becomeOldChance>1.5</becomeOldChance>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAttributeSet">
+  	<xpath>//HediffDef[defName = "Burn"]</xpath>
+    <attribute>Name</attribute>
+    <value>Burn</value>
+	</Operation>
+
+	<!-- Crush -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Crush"]//bleedRate</xpath>
+		<value>
+			<bleedRate>0.015</bleedRate>
+  	</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Crush"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.0125</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Crush"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.04</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<!-- Crack -->
+	
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Crack"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.02</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<!-- Cut -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Cut"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.015</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//HediffDef[defName = "Cut"]/comps/li[@Class = "HediffCompProperties_GetsOld"]</xpath>
+		<value>
+			<becomeOldChance>0.75</becomeOldChance>
+  	</value>
+	</Operation>
+
+	<!-- Scratch -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Scratch"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.015</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>//HediffDef[defName = "Scratch"]/comps/li[@Class = "HediffCompProperties_GetsOld"]</xpath>
+		<value>
+			<becomeOldChance>0.5</becomeOldChance>
+  	</value>
+	</Operation>
+
+	<!-- Bite -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Bite"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.06</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<!-- Stab -->
+	
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Stab"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.025</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Stab"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.03</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<!-- Gunshot -->
+	
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Gunshot"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.025</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Gunshot"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.03</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+
+	<!-- Shredded -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Shredded"]//bleedRate</xpath>
+		<value>
+			<bleedRate>0.015</bleedRate>
+  	</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Shredded"]//painPerSeverity</xpath>
+		<value>
+			<painPerSeverity>0.025</painPerSeverity>
+  	</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Shredded"]/comps/li[@Class = "HediffCompProperties_Infecter"]</xpath>
+		<value>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.05</infectionChancePerHourUntended>
+      </li>
+  	</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationReplace">
+		<xpath>//HediffDef[defName = "Shredded"]//oldLabel</xpath>
+		<value>
+			<oldLabel>shrapnel scar</oldLabel>
+  	</value>
+	</Operation>
+
+</Patch>
+

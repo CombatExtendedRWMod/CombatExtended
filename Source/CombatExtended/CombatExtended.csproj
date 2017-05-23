@@ -145,12 +145,10 @@
     <Compile Include="CombatExtended\DefOfs\CE_ThingDefOf.cs" />
     <Compile Include="CombatExtended\DefOfs\CE_StatDefOf.cs" />
     <Compile Include="CombatExtended\Defs\Apparel_VisibleAccessoryDef.cs" />
-    <Compile Include="CombatExtended\Defs\DamageArmorCategoryExtensionCE.cs" />
     <Compile Include="CombatExtended\Defs\LoadoutGenericDef.cs" />
     <Compile Include="CombatExtended\Defs\RacePropertiesExtensionCE.cs" />
     <Compile Include="CombatExtended\Enums\BodyType.cs" />
     <Compile Include="CombatExtended\Enums\LoadoutCountType.cs" />
-    <Compile Include="CombatExtended\Hediff_InjuryCE.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_Hunt.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_Stabilize.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_TakeFromOther.cs" />
@@ -251,7 +249,8 @@
     <Compile Include="CombatExtended\Verbs\Verb_ShootCEOneUse.cs" />
     <Compile Include="Harmony\Harmony-GenRadial_RadialPatternCount_Patch.cs" />
     <Compile Include="Harmony\Harmony-HediffComp_TendDuration_CompTended_Patch.cs" />
-    <Compile Include="Harmony\Harmony-Hediff_MissingPart-IsFresh_Patch.cs" />
+    <Compile Include="Harmony\Harmony-HediffWithComps.cs" />
+    <Compile Include="Harmony\Harmony-Hediff_MissingPart.cs" />
     <Compile Include="Harmony\Harmony-JobDriverWait-CheckForAutoAttack_Patch.cs" />
     <Compile Include="Harmony\Harmony-TendUtility_OrderBy.cs" />
     <Compile Include="Harmony\Harmony-ThingOwner.cs" />

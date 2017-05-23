@@ -108,6 +108,21 @@ namespace CombatExtended
             return !comp.useAmmo || comp.curMagCount > 0 || comp.hasAmmo;
         }
 
+        public static bool CanBeStabilizied(this Hediff diff)
+        {
+            HediffWithComps hediff = diff as HediffWithComps;
+            if (hediff == null)
+            {
+                return false;
+            }
+            if (hediff.BleedRate == 0 || hediff.IsTended() || hediff.IsOld())
+            {
+                return false;
+            }
+            HediffComp_Stabilize comp = hediff.TryGetComp<HediffComp_Stabilize>();
+            return comp != null && comp.Stabilized;
+        }
+
         #endregion Misc
 
         #region MoteThrower

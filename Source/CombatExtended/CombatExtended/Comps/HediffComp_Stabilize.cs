@@ -26,6 +26,7 @@ namespace CombatExtended
             get
             {
                 float mod = bleedModifier;
+                if (parent is Hediff_MissingPart) mod *= 0.5f;
                 if (parent.Part.depth == BodyPartDepth.Inside) mod += internalBleedOffset;
                 return Mathf.Clamp01(mod);
             }

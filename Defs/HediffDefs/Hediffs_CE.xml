@@ -1,68 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-
-  <HediffDef>
-    <defName>BloodLoss</defName>
-    <label>blood loss</label>
-    <lethalSeverity>1</lethalSeverity>
-    <stages>
-      <li>
-        <label>hidden</label>
-        <everVisible>false</everVisible>
-      </li>
-      <li>
-        <minSeverity>0.1</minSeverity>
-        <label>minor</label>
-        <capMods>
-          <li>
-            <capacity>Consciousness</capacity>
-            <offset>-0.05</offset>
-          </li>
-        </capMods>
-      </li>
-      <li>
-        <minSeverity>0.2</minSeverity>
-        <label>minor</label>
-        <capMods>
-          <li>
-            <capacity>Consciousness</capacity>
-            <offset>-0.25</offset>
-          </li>
-        </capMods>
-      </li>
-      <li>
-        <minSeverity>0.4</minSeverity>
-        <label>moderate</label>
-        <capMods>
-          <li>
-            <capacity>Consciousness</capacity>
-            <offset>-0.5</offset>
-          </li>
-        </capMods>
-      </li>
-      <li>
-        <minSeverity>0.6</minSeverity>
-        <label>severe</label>
-        <capMods>
-          <li>
-            <capacity>Consciousness</capacity>
-            <setMax>0.25</setMax>
-          </li>
-        </capMods>
-      </li>
-      <li>
-        <minSeverity>0.8</minSeverity>
-        <label>extreme</label>
-        <lifeThreatening>true</lifeThreatening>
-        <capMods>
-          <li>
-            <capacity>Consciousness</capacity>
-            <setMax>0.1</setMax>
-          </li>
-        </capMods>
-      </li>
-    </stages>
-  </HediffDef>
+<HediffDefs>
 
   <HediffDef>
     <defName>MuscleSpasms</defName>
@@ -139,5 +76,46 @@
       </li>
     </stages>
   </HediffDef>
-  
-</Defs>
+
+  <!-- Injuries -->
+
+  <HediffDef Name="InjuryBase" Abstract="True">
+    <hediffClass>Hediff_Injury</hediffClass>
+    <tendable>true</tendable>
+    <displayWound>true</displayWound>
+  </HediffDef>
+
+	<HediffDef ParentName="Burn">
+		<defName>ElectricalBurn</defName>
+		<label>electrical burn</label>
+	</HediffDef>
+
+	<HediffDef ParentName="InjuryBase">
+		<defName>Blast</defName>
+		<label>blasted</label>
+    <comps>
+      <li Class="HediffCompProperties_TendDuration">
+        <labelTendedWell>bandaged</labelTendedWell>
+        <labelTendedWellInner>sutured</labelTendedWellInner>
+        <labelSolidTendedWell>set</labelSolidTendedWell>
+      </li>
+      <li Class="CombatExtended.HediffCompProperties_InfecterCE">
+        <infectionChancePerHourUntended>0.08</infectionChancePerHourUntended>
+      </li>
+      <li Class="HediffCompProperties_GetsOld">
+        <becomeOldChance>2</becomeOldChance>
+        <oldLabel>old blast injury</oldLabel>
+        <instantlyOldLabel>permanent blast injury</instantlyOldLabel>
+      </li>
+    </comps>
+		<injuryProps>
+      <painPerSeverity>0.03</painPerSeverity>
+      <averagePainPerSeverityOld>0.00625</averagePainPerSeverityOld>
+			<bleedRate>0.035</bleedRate>
+			<canMerge>false</canMerge>
+			<destroyedLabel>Torn off</destroyedLabel>
+			<destroyedOutLabel>Torn out</destroyedOutLabel>
+		</injuryProps>
+	</HediffDef>
+ 
+</HediffDefs>

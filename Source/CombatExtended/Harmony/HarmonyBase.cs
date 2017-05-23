@@ -20,8 +20,22 @@ namespace CombatExtended.Harmony
 	static class HarmonyBase
 	{
 		private static HarmonyInstance harmony = null;
-		
-		static HarmonyBase()
+
+        /// <summary>
+        /// Fetch CombatExtended's instance of Harmony.
+        /// </summary>
+        /// <remarks>One should only have a single instance of Harmony per Assembly.</remarks>
+        static internal HarmonyInstance instance
+        {
+            get
+            {
+                if (harmony == null)
+                    harmony = harmony = HarmonyInstance.Create("CombatExtended.Harmony");
+                return harmony;
+            }
+        }
+
+        static HarmonyBase()
 		{
 			// Unremark the following when developing new Harmony patches (Especially Transpilers).  The file "harmony.log.txt" on your desktop and is always appended.  Will cause ALL patches to be debugged.
 			//HarmonyInstance.DEBUG = true;
@@ -30,7 +44,12 @@ namespace CombatExtended.Harmony
 			instance.PatchAll(Assembly.GetExecutingAssembly());
 
             // NOTE: Technically one shouldn't mix PatchAll() and Patch() but I didn't get a clear understanding of how/if this was bad or just not a good idea.
+            PatchThingOwner();
+            PatchHediffWithComps();
+        }
 
+        private static void PatchThingOwner()
+        {
             // Need to patch ThingOwner<T> manually for all child classes of Thing
             var postfixTryAdd = typeof(Harmony_ThingOwner_TryAdd_Patch).GetMethod("Postfix");
             var postfixTake = typeof(Harmony_ThingOwner_Take_Patch).GetMethod("Postfix");
@@ -46,20 +65,17 @@ namespace CombatExtended.Harmony
                 instance.Patch(type.GetMethod("Remove", new Type[] { typeof(Thing) }), null, new HarmonyMethod(postfixRemove));
             }
         }
-		
-		/// <summary>
-		/// Fetch CombatExtended's instance of Harmony.
-		/// </summary>
-		/// <remarks>One should only have a single instance of Harmony per Assembly.</remarks>
-		static internal HarmonyInstance instance
-		{
-			get 
-			{
-				if (harmony == null)
-					harmony = harmony = HarmonyInstance.Create("CombatExtended.Harmony");
-				return harmony;
-			}
-		}
+
+        private static void PatchHediffWithComps()
+        {
+            var postfixBleedRate = typeof(Harmony_HediffWithComps_BleedRate_Patch).GetMethod("Postfix");
+            var baseType = typeof(HediffWithComps);
+            var types = baseType.AllSubclassesNonAbstract().Add(baseType);
+            foreach(Type cur in types)
+            {
+                instance.Patch(cur.GetProperty("BleedRate").GetGetMethod(), null, new HarmonyMethod(postfixBleedRate));
+            }
+        }
 
         #region Utility_Methods
         /// <summary>

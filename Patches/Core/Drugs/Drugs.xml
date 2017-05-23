@@ -7,11 +7,27 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//HediffDef[defName = "GoJuiceHigh" or defName = "YayoHigh"]//stages/li[position()=1]</xpath>
+      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[position()=1]</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//HediffDef[defName = "GoJuiceHigh" or defName = "YayoHigh"]//stages/li[position()=1]</xpath>
+      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[position()=1]</xpath>
+      	<value>
+        	<statOffsets />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[position()=1]</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[position()=1]</xpath>
       	<value>
         	<statOffsets />
       	</value>
