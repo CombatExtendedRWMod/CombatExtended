@@ -27,7 +27,6 @@
       <harvestTag>Standard</harvestTag>
       <reproduces>false</reproduces>
       <harvestedThingDef>Prometheum</harvestedThingDef>
-      <harvestDestroys>true</harvestDestroys>
       <harvestYield>5</harvestYield>
       <sowTags>
         <li>Ground</li>

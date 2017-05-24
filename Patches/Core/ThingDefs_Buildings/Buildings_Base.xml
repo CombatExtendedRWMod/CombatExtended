@@ -59,6 +59,7 @@
 
 	<!-- FurnitureBase -->
 
+<!--
 	<Operation Class="PatchOperationSequence">
   	<success>Always</success>
   	<operations>
@@ -104,8 +105,9 @@
 			</li>
 		</value>
 	</Operation>
+-->
 
-	<!-- BuildingNaturalBase -->
+	<!-- BuildingNaturalBase and ChunkBase -->
 
 	<Operation Class="PatchOperationSequence">
   	<success>Always</success>
@@ -123,8 +125,24 @@
   	</operations>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+  	<success>Always</success>
+  	<operations>
+    	<li Class="PatchOperationTest">
+      	<xpath>//ThingDef[@Name="ChunkBase"]/damageMultipliers</xpath>
+      	<success>Invert</success>
+    	</li>
+    	<li Class="PatchOperationAdd">
+      	<xpath>//ThingDef[@Name="ChunkBase"]</xpath>
+      	<value>
+        	<damageMultipliers />
+      	</value>
+    	</li>
+  	</operations>
+	</Operation>
+
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[@Name="BuildingNaturalBase"]/damageMultipliers</xpath>
+		<xpath>//ThingDef[@Name="BuildingNaturalBase" or @Name="ChunkBase"]/damageMultipliers</xpath>
 		<value>
 			<li>
 			  <damageDef>Bomb</damageDef>

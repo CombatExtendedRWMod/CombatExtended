@@ -123,6 +123,10 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationRemove">
+		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]//turretShellDef</xpath>
+	</Operation>
+
 	<!-- Add trade tags -->
 
 	<Operation Class="PatchOperationSequence">

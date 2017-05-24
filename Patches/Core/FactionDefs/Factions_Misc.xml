@@ -6,7 +6,7 @@
   <Operation Class="PatchOperationReplace">
     <xpath>//FactionDef[defName = "Mechanoid"]/earliestRaidDays</xpath>
     <value>
-      <MercenaryShieldBearer>60</MercenaryShieldBearer>
+      <earliestRaidDays>60</earliestRaidDays>
     </value>
   </Operation>
 
@@ -31,21 +31,21 @@
 
   <!-- Outlanders -->
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers//li[1]/options</xpath>
+  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers/li[1]/options</xpath>
   	<value>
   		<MercenaryShieldBearer>100</MercenaryShieldBearer>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers//li[2]/guards</xpath>
+  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers/li[2]/guards</xpath>
   	<value>
   		<MercenaryShieldBearer>70</MercenaryShieldBearer>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers//li[3]/options</xpath>
+  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers/li[3]/options</xpath>
   	<value>
   		<MercenaryShieldBearer>70</MercenaryShieldBearer>
   	</value>
@@ -53,21 +53,21 @@
 
   <!-- Pirates -->
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers//li[1]/options</xpath>
+  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers/li[1]/options</xpath>
   	<value>
   		<MercenaryShieldBearer>70</MercenaryShieldBearer>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers//li[2]/options</xpath>
+  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers/li[2]/options</xpath>
   	<value>
   		<MercenaryShieldBearer>100</MercenaryShieldBearer>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers//li[3]/options</xpath>
+  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers/li[3]/options</xpath>
   	<value>
   		<MercenaryShieldBearer>70</MercenaryShieldBearer>
   	</value>
@@ -77,21 +77,21 @@
 
   <!-- Outlanders -->
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers//li[1]/options</xpath>
+  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers/li[1]/options</xpath>
   	<value>
   		<MercenaryMachineGunner>70</MercenaryMachineGunner>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers//li[2]/guards</xpath>
+  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers/li[2]/guards</xpath>
   	<value>
   		<MercenaryMachineGunner>50</MercenaryMachineGunner>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers//li[3]/options</xpath>
+  	<xpath>//FactionDef[defName = "Outlander"]/pawnGroupMakers/li[3]/options</xpath>
   	<value>
   		<MercenaryMachineGunner>50</MercenaryMachineGunner>
   	</value>
@@ -99,14 +99,14 @@
 
   <!-- Pirates -->
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers//li[1]/options</xpath>
+  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers/li[1]/options</xpath>
   	<value>
   		<MercenaryMachineGunner>80</MercenaryMachineGunner>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers//li[3]/options</xpath>
+  	<xpath>//FactionDef[defName = "Pirate"]/pawnGroupMakers/li[3]/options</xpath>
   	<value>
   		<MercenaryMachineGunner>80</MercenaryMachineGunner>
   	</value>

@@ -33,7 +33,7 @@
 		</value>
 	</Operation>
 
-	<!-- Delete mortar shell -->
+	<!-- Delete mortar shell and replace all references to it -->
 
 	<Operation Class="PatchOperationRemove">
 		<xpath>//ThingDef[defName="MortarShell"]</xpath>
@@ -162,14 +162,14 @@
 	<Operation Class="PatchOperationReplace">
 		<xpath>//ThingDef[defName="WoodLog"]/statBases/SharpDamageMultiplier</xpath>
 		<value>
-			<sharpDamageMultiplier>0.7</sharpDamageMultiplier>
+			<SharpDamageMultiplier>0.7</SharpDamageMultiplier>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
 		<xpath>//ThingDef[defName="WoodLog"]/statBases/BluntDamageMultiplier</xpath>
 		<value>
-			<bluntDamageMultiplier>0.5</bluntDamageMultiplier>
+			<BluntDamageMultiplier>0.5</BluntDamageMultiplier>
 		</value>
 	</Operation>
 
