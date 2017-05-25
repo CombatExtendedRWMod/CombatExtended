@@ -67,6 +67,7 @@ namespace CombatExtended
             Text.Font = GameFont.Medium;
             list.Label("CE_Settings_HeaderGeneral".Translate());
             Text.Font = GameFont.Small;
+            list.Gap();
 
             list.CheckboxLabeled("CE_Settings_ShowCasings_Title".Translate(), ref showCasings, "CE_Settings_ShowCasings_Desc".Translate());
             list.CheckboxLabeled("CE_Settings_ShowTaunts_Title".Translate(), ref showTaunts, "CE_Settings_ShowTaunts_Desc".Translate());
@@ -78,12 +79,26 @@ namespace CombatExtended
             Text.Font = GameFont.Medium;
             list.Label("CE_Settings_HeaderAmmo".Translate());
             Text.Font = GameFont.Small;
-
+            list.Gap();
+            
             list.CheckboxLabeled("CE_Settings_EnableAmmoSystem_Title".Translate(), ref enableAmmoSystem, "CE_Settings_EnableAmmoSystem_Desc".Translate());
-            list.CheckboxLabeled("CE_Settings_RightClickAmmoSelect_Title".Translate(), ref rightClickAmmoSelect, "CE_Settings_RightClickAmmoSelect_Desc".Translate());
-            list.CheckboxLabeled("CE_Settings_AutoReloadOnChangeAmmo_Title".Translate(), ref autoReloadOnChangeAmmo, "CE_Settings_AutoReloadOnChangeAmmo_Desc".Translate());
-            list.CheckboxLabeled("CE_Settings_AutoTakeAmmo_Title".Translate(), ref autoTakeAmmo, "CE_Settings_AutoTakeAmmo_Desc".Translate());
-            list.CheckboxLabeled("CE_Settings_ShowCaliberOnGuns_Title".Translate(), ref showCaliberOnGuns, "CE_Settings_ShowCaliberOnGuns_Desc".Translate());
+            list.GapLine();
+            if (enableAmmoSystem)
+            {
+                list.CheckboxLabeled("CE_Settings_RightClickAmmoSelect_Title".Translate(), ref rightClickAmmoSelect, "CE_Settings_RightClickAmmoSelect_Desc".Translate());
+                list.CheckboxLabeled("CE_Settings_AutoReloadOnChangeAmmo_Title".Translate(), ref autoReloadOnChangeAmmo, "CE_Settings_AutoReloadOnChangeAmmo_Desc".Translate());
+                list.CheckboxLabeled("CE_Settings_AutoTakeAmmo_Title".Translate(), ref autoTakeAmmo, "CE_Settings_AutoTakeAmmo_Desc".Translate());
+                list.CheckboxLabeled("CE_Settings_ShowCaliberOnGuns_Title".Translate(), ref showCaliberOnGuns, "CE_Settings_ShowCaliberOnGuns_Desc".Translate());
+            }
+            else
+            {
+                GUI.contentColor = Color.gray;
+                list.Label("CE_Settings_RightClickAmmoSelect_Title".Translate());
+                list.Label("CE_Settings_AutoReloadOnChangeAmmo_Title".Translate());
+                list.Label("CE_Settings_AutoTakeAmmo_Title".Translate());
+                list.Label("CE_Settings_ShowCaliberOnGuns_Title".Translate());
+                GUI.contentColor = Color.white;
+            }
 
             list.End();
 

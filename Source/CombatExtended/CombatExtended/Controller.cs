@@ -21,7 +21,7 @@ namespace CombatExtended
             HarmonyBase.InitPatches();
 
             // Inject ammo
-            AmmoInjector.Inject();
+            LongEventHandler.QueueLongEvent(AmmoInjector.Inject, "LibraryStartup", false, null);
 
             Log.Message("Combat Extended :: initialized");
         }

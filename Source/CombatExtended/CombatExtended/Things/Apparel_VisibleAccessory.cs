@@ -95,6 +95,7 @@ namespace CombatExtended
         protected float GetAltitudeOffset(Rot4 rotation)
         {
         	VisibleAccessoryDefExtension myDef = def.GetModExtension<VisibleAccessoryDefExtension>() ?? new VisibleAccessoryDefExtension();
+            myDef.Validate();
         	float offset = _OffsetFactor * myDef.order;
         	
         	if (!onHead)
