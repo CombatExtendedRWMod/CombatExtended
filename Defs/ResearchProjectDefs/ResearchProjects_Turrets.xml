@@ -1,17 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ResearchProjectDefs>
+<Defs>
+
+  <ResearchTabDef>
+    <defName>CE_Turrets</defName>
+    <label>Turrets</label>
+  </ResearchTabDef>
 
   <ResearchProjectDef>
     <defName>CE_TurretHeavyWeapons</defName>
     <label>heavy weapons</label>
     <description>Allows you to assemble high-caliber weapons such as the KPV machine gun.</description>
     <baseCost>1000</baseCost>
-	<techLevel>Industrial</techLevel>
+    <techLevel>Industrial</techLevel>
     <prerequisites>
       <li>Machining</li>
     </prerequisites>
     <researchViewX>1</researchViewX>
     <researchViewY>2</researchViewY>
+    <tab>CE_Turrets</tab>
   </ResearchProjectDef>
 
   <!--<ResearchProjectDef>
@@ -44,8 +50,9 @@
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
-    <researchViewX>2</researchViewX>
+    <researchViewX>3</researchViewX>
     <researchViewY>1</researchViewY>
+    <tab>CE_Turrets</tab>
   </ResearchProjectDef>
   
   <ResearchProjectDef>
@@ -62,9 +69,10 @@
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
-    <researchViewX>2</researchViewX>
+    <researchViewX>3</researchViewX>
     <researchViewY>2</researchViewY>
+    <tab>CE_Turrets</tab>
   </ResearchProjectDef>
 
 
-</ResearchProjectDefs>
+</Defs>

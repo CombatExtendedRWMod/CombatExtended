@@ -24,7 +24,7 @@ namespace CombatExtended.Harmony
             {
                 // Change result to true if we have melee weapon and melee hunting is allowed in settings
                 ThingWithComps eq = p.equipment.Primary;
-                __result = eq != null && ModSettings.AllowMeleeHunting && eq.def.IsMeleeWeapon;
+                __result = eq != null && Controller.settings.AllowMeleeHunting && eq.def.IsMeleeWeapon;
             }
         }
     }

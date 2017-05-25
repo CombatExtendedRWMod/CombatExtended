@@ -155,7 +155,7 @@ namespace CombatExtended
         {
             // attack shooting expression
             Pawn shooter = ShooterPawn;
-            if (ModSettings.ShowTaunts 
+            if (Controller.settings.ShowTaunts 
                 && shooter != null 
                 && shooter.Map != null 
                 && shooter.def.race.Humanlike 

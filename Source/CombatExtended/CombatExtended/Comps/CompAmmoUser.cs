@@ -69,7 +69,7 @@ namespace CombatExtended
         {
             get
             {
-                return ModSettings.EnableAmmoSystem && Props.ammoSet != null;
+                return Controller.settings.EnableAmmoSystem && Props.ammoSet != null;
             }
         }
         public bool hasAndUsesAmmoOrMagazine
@@ -492,7 +492,7 @@ namespace CombatExtended
 
 		public override string TransformLabel(string label)
 		{
-            string ammoSet = useAmmo && ModSettings.ShowCaliberOnGuns ? " (" + Props.ammoSet.LabelCap + ") " : "";
+            string ammoSet = useAmmo && Controller.settings.ShowCaliberOnGuns ? " (" + Props.ammoSet.LabelCap + ") " : "";
             return  label + ammoSet;
 		}
 

@@ -13,7 +13,7 @@ namespace CombatExtended.Harmony
     [HarmonyPatch(typeof(WorkGiver_HunterHunt), "TakeFoodForAnimalInteractJob")]
     public class Harmony_WorkGiver_InteractAnimal_TakeFoodForAnimalInteractJob_Patch
     {
-        public static void Postfix(WorkGiver_InteractAnimal __instance, Job __result, Pawn pawn, Pawn tamee)
+        public static void Postfix(WorkGiver_InteractAnimal __instance, ref Job __result, Pawn pawn, Pawn tamee)
         {
             if (__result != null)
             {

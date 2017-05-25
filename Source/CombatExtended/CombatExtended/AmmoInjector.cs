@@ -9,7 +9,16 @@ using UnityEngine;
 
 namespace CombatExtended
 {
-    //[StaticConstructorOnStartup]
+    /* Ammo Injection Handler
+     * 
+     * Automatically enables all ammo types defined and in use by at least one gun somewhere. Also enables appropriate crafting recipes and trading tags.
+     * This way we can have all ammo defs in one core mod and selectively enable the ones we need based on which gun mods are installed, avoiding duplication
+     * issues where multiple gun mods are adding the same ammo.
+     * 
+     * When ammo system is disabled automatically disables crafting and spawning of all ammo. 
+     * 
+     * Call Inject() on game start and whenever ammo system setting is changed.
+     */
     internal static class AmmoInjector
     {
         public static readonly FieldInfo _allRecipesCached = typeof(ThingDef).GetField("allRecipesCached", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -27,16 +36,11 @@ namespace CombatExtended
             }
         }
 
-        static AmmoInjector()
-        {
-            LongEventHandler.QueueLongEvent(Inject, "LibraryStartup", false, null);
-        }
-
         public static void Inject()
         {
             if (InjectAmmos())
             {
-            	Log.Message("Combat Extended :: Ammo " + (ModSettings.EnableAmmoSystem ? "injected" : "removed"));
+            	Log.Message("Combat Extended :: Ammo " + (Controller.settings.EnableAmmoSystem ? "injected" : "removed"));
             }
             else
             {
@@ -46,7 +50,7 @@ namespace CombatExtended
 
         public static bool InjectAmmos()
         {
-        	bool enabled = ModSettings.EnableAmmoSystem;
+        	bool enabled = Controller.settings.EnableAmmoSystem;
             if (enabled)
             {
             	// Initialize list of all weapons

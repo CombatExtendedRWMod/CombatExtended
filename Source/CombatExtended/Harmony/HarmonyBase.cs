@@ -17,7 +17,7 @@ using System.Reflection.Emit;
 namespace CombatExtended.Harmony
 {
 	[StaticConstructorOnStartup]
-	static class HarmonyBase
+	public static class HarmonyBase
 	{
 		private static HarmonyInstance harmony = null;
 
@@ -35,6 +35,7 @@ namespace CombatExtended.Harmony
             }
         }
 
+        /*
         static HarmonyBase()
 		{
 			// Unremark the following when developing new Harmony patches (Especially Transpilers).  The file "harmony.log.txt" on your desktop and is always appended.  Will cause ALL patches to be debugged.
@@ -47,6 +48,18 @@ namespace CombatExtended.Harmony
             PatchThingOwner();
             PatchHediffWithComps();
         }
+        */
+
+        public static void InitPatches()
+        {
+            instance.PatchAll(Assembly.GetExecutingAssembly());
+
+            // Manual patches
+            PatchThingOwner();
+            PatchHediffWithComps();
+        }
+
+        #region Patch helper methods
 
         private static void PatchThingOwner()
         {
@@ -76,6 +89,8 @@ namespace CombatExtended.Harmony
                 instance.Patch(cur.GetProperty("BleedRate").GetGetMethod(), null, new HarmonyMethod(postfixBleedRate));
             }
         }
+
+        #endregion
 
         #region Utility_Methods
         /// <summary>

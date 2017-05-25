@@ -182,14 +182,19 @@
 		<xpath>//ThingDef[defName="Turret_MortarBomb"]//li[@Class = "CompProperties_Explosive"]</xpath>
 	</Operation>
 
-	<!-- Remove excess vanilla mortars -->
+	<!-- Remove unneeded incendiary mortar -->
 
 	<Operation Class="PatchOperationRemove">
 		<xpath>//ThingDef[defName="Turret_MortarIncendiary"]</xpath>
 	</Operation>
 
-	<Operation Class="PatchOperationRemove">
+	<!-- Disable EMP mortar (can't remove because hardcoded references in vanilla) -->
+
+	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName="Turret_MortarEMP"]</xpath>
+		<value>
+			<menuHidden>true</menuHidden>
+		</value>
 	</Operation>
 
 	<!-- ========== Traps ========== -->

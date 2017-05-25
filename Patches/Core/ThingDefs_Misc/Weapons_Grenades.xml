@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<!-- ========== Base Grenade Projectile ========== -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[@Name="BaseGrenadeProjectile"]/thingClass</xpath>
+		<value>
+			<thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAttributeSet">
+		<xpath>//ThingDef[@Name="BaseGrenadeProjectile"]/projectile</xpath>
+		<attribute>Class</attribute>
+		<value>CombatExtended.ProjectilePropertiesCE</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[@Name="BaseGrenadeProjectile"]/projectile/speed</xpath>
+		<value>
+			<speed>24</speed>
+		</value>
+	</Operation>
+
+</Patch>
+
