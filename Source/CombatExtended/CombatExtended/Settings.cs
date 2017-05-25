@@ -111,37 +111,5 @@ namespace CombatExtended
         }
 
         #endregion
-
-        /*
-        public override void DefsLoaded()
-        {
-            showCasings = Settings.GetHandle("showCasings", "CE_Settings_ShowCasings_Title".Translate(), "CE_Settings_ShowCasings_Desc".Translate(), true);
-            showTaunts = Settings.GetHandle("showTaunts", "CE_Settings_ShowTaunts_Title".Translate(), "CE_Settings_ShowTaunts_Desc".Translate(), true);
-            allowMeleeHunting = Settings.GetHandle("allowMeleeHunting", "CE_Settings_AllowMeleeHunting_Title".Translate(), "CE_Settings_AllowMeleeHunting_Desc".Translate(), false);
-
-            // Ammo settings
-
-            enableAmmoSystem = Settings.GetHandle("enableAmmoSystem", "CE_Settings_EnableAmmoSystem_Title".Translate(), "CE_Settings_EnableAmmoSystem_Desc".Translate(), true);
-            rightClickAmmoSelect = Settings.GetHandle("rightClickAmmoSelect", "CE_Settings_RightClickAmmoSelect_Title".Translate(), "CE_Settings_RightClickAmmoSelect_Desc".Translate(), false);
-            autoReloadOnChangeAmmo = Settings.GetHandle("autoReloadOnChangeAmmo", "CE_Settings_AutoReloadOnChangeAmmo_Title".Translate(), "CE_Settings_AutoReloadOnChangeAmmo_Desc".Translate(), false);
-            autoTakeAmmo = Settings.GetHandle("autoTakeAmmo", "CE_Settings_AutoTakeAmmo_Title".Translate(), "CE_Settings_AutoTakeAmmo_Desc".Translate(), true);
-            showCaliberOnGuns = Settings.GetHandle("showCaliberOnGuns", "CE_Settings_ShowCaliberOnGuns_Title".Translate(), "CE_Settings_ShowCaliberOnGuns_Desc".Translate(), true);
-            
-            rightClickAmmoSelect.VisibilityPredicate = GetAmmoSystemEnabled;
-            autoReloadOnChangeAmmo.VisibilityPredicate = GetAmmoSystemEnabled;
-            autoTakeAmmo.VisibilityPredicate = GetAmmoSystemEnabled;
-            showCaliberOnGuns.VisibilityPredicate = GetAmmoSystemEnabled;
-        }
-        
-		public override void SettingsChanged()
-		{
-			AmmoInjector.Inject();
-		}
-        
-        private bool GetAmmoSystemEnabled()
-        {
-            return enableAmmoSystem;
-        }
-        */
     }
 }
