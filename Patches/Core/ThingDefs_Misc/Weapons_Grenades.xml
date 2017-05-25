@@ -28,6 +28,20 @@
 	<!-- Projectile -->
 
 	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Proj_GrenadeFrag"]/thingClass</xpath>
+		<value>
+			<thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Proj_GrenadeFrag"]//texPath</xpath>
+		<value>
+			<texPath>Things/Projectile/Grenades/Frag</texPath>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
 		<xpath>//ThingDef[defName = "Proj_GrenadeFrag"]/projectile</xpath>
 		<value>
 			<projectile>
@@ -70,6 +84,17 @@
 	</Operation>
 
 	<!-- Grenade -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Weapon_GrenadeFrag"]/graphicData</xpath>
+		<value>
+			<graphicData>
+			  <texPath>Things/Ammo/HandGrenades/Frag</texPath>
+			  <graphicClass>Graphic_StackCount</graphicClass>
+			  <onGroundRandomRotateAngle>0</onGroundRandomRotateAngle>
+			</graphicData>
+		</value>
+	</Operation>
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName = "Weapon_GrenadeFrag"]</xpath>
@@ -173,6 +198,13 @@
 	<!-- Projectile -->
 
 	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Proj_GrenadeMolotov"]//texPath</xpath>
+		<value>
+			<texPath>Things/Projectile/Grenades/Molotov</texPath>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
 		<xpath>//ThingDef[defName = "Proj_GrenadeMolotov"]/projectile</xpath>
 		<value>
 			<projectile>
@@ -193,6 +225,17 @@
 	</Operation>
 
 	<!-- Grenade -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Weapon_GrenadeMolotov"]/graphicData</xpath>
+		<value>
+			<graphicData>
+			  <texPath>Things/Ammo/HandGrenades/Molotov</texPath>
+			  <graphicClass>Graphic_StackCount</graphicClass>
+			  <onGroundRandomRotateAngle>0</onGroundRandomRotateAngle>
+			</graphicData>
+		</value>
+	</Operation>
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName = "Weapon_GrenadeMolotov"]</xpath>
@@ -291,6 +334,20 @@
 	<!-- Projectile -->
 
 	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Proj_GrenadeEMP"]/thingClass</xpath>
+		<value>
+			<thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Proj_GrenadeEMP"]//texPath</xpath>
+		<value>
+			<texPath>Things/Projectile/Grenades/EMP</texPath>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
 		<xpath>//ThingDef[defName = "Proj_GrenadeEMP"]/projectile</xpath>
 		<value>
 			<projectile>
@@ -333,6 +390,17 @@
 	</Operation>
 
 	<!-- Grenade -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>//ThingDef[defName = "Weapon_GrenadeEMP"]/graphicData</xpath>
+		<value>
+			<graphicData>
+			  <texPath>Things/Ammo/HandGrenades/EMP</texPath>
+			  <graphicClass>Graphic_StackCount</graphicClass>
+			  <onGroundRandomRotateAngle>0</onGroundRandomRotateAngle>
+			</graphicData>
+		</value>
+	</Operation>
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>//ThingDef[defName = "Weapon_GrenadeEMP"]</xpath>

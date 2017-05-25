@@ -15,8 +15,8 @@
     <prerequisites>
       <li>Machining</li>
     </prerequisites>
-    <researchViewX>1</researchViewX>
-    <researchViewY>2</researchViewY>
+    <researchViewX>0</researchViewX>
+    <researchViewY>1</researchViewY>
     <tab>CE_Turrets</tab>
   </ResearchProjectDef>
 
@@ -50,8 +50,8 @@
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
-    <researchViewX>3</researchViewX>
-    <researchViewY>1</researchViewY>
+    <researchViewX>2</researchViewX>
+    <researchViewY>0</researchViewY>
     <tab>CE_Turrets</tab>
   </ResearchProjectDef>
   
@@ -69,8 +69,8 @@
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
-    <researchViewX>3</researchViewX>
-    <researchViewY>2</researchViewY>
+    <researchViewX>2</researchViewX>
+    <researchViewY>1</researchViewY>
     <tab>CE_Turrets</tab>
   </ResearchProjectDef>
 

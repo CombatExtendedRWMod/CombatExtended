@@ -17,14 +17,14 @@
 	<Operation Class="PatchOperationReplace">
 		<xpath>//ResearchProjectDef[defName="GunTurrets"]/researchViewX</xpath>
 		<value>
-			<researchViewX>2</researchViewX>
+			<researchViewX>1</researchViewX>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
 		<xpath>//ResearchProjectDef[defName="GunTurrets"]/researchViewY</xpath>
 		<value>
-			<researchViewY>1</researchViewY>
+			<researchViewY>0</researchViewY>
 		</value>
 	</Operation>
 

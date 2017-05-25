@@ -49,16 +49,18 @@ namespace CombatExtended
             string label = pawn.GetLoadout().label.Truncate(loadoutButtonRect.width, null);
             if (Widgets.ButtonText(loadoutButtonRect, label, true, false, true))
             {
-                List<FloatMenuOption> list = new List<FloatMenuOption>();
-                foreach (Outfit current in Current.Game.outfitDatabase.AllOutfits)
+                LoadoutManager.SortLoadouts();
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (Loadout loadout in LoadoutManager.Loadouts)
                 {
-                    Outfit localOut = current;
-                    list.Add(new FloatMenuOption(localOut.label, delegate
+                    // need to create a local copy for delegate
+                    Loadout localLoadout = loadout;
+                    options.Add(new FloatMenuOption(localLoadout.LabelCap, delegate
                     {
-                        pawn.outfits.CurrentOutfit = localOut;
-                    }, MenuOptionPriority.Default, null, null, 0f, null, null));
+                        pawn.SetLoadout(localLoadout);
+                    }, MenuOptionPriority.Default, null, null));
                 }
-                Find.WindowStack.Add(new FloatMenu(list));
+                Find.WindowStack.Add(new FloatMenu(options));
             }
 
             // Clear forced button
