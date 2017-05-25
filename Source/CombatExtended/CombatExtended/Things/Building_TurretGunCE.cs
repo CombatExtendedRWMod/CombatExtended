@@ -15,6 +15,7 @@ namespace CombatExtended
      * Unmodified methods should be kept up-to-date with vanilla class so long as they don't conflict with changes made. Please mark any changes you make from vanilla.
      * -NIA
      */
+    [StaticConstructorOnStartup]
     public class Building_TurretGunCE : Building_Turret
     {
         private const int minTicksBeforeAutoReload = 1800;              // This much time must pass before haulers will try to automatically reload an auto-turret

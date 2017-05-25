@@ -94,10 +94,6 @@
       <HintPath>..\..\..\..\RimWorld1546Win_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Override">
-      <HintPath>..\..\..\RimWorld-MFO-master\Assemblies\Override.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
