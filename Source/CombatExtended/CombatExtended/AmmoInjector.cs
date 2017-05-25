@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CombatExtended
 {
-    [StaticConstructorOnStartup]
+    //[StaticConstructorOnStartup]
     internal static class AmmoInjector
     {
         public static readonly FieldInfo _allRecipesCached = typeof(ThingDef).GetField("allRecipesCached", BindingFlags.Instance | BindingFlags.NonPublic);

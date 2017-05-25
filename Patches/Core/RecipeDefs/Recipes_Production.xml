@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
+	
 	<Operation Class="PatchOperationAdd">
 		<xpath>//RecipeDef[defName = "SmeltWeapon"]//fixedIngredientFilter</xpath>
 		<value>
@@ -8,5 +9,10 @@
 			</exceptedCategories>
 		</value>
 	</Operation>
+
+	<Operation Class="PatchOperationRemove">
+		<xpath>//RecipeDef[defName="MakeMortarShell"]</xpath>
+	</Operation>
+
 </Patch>
 

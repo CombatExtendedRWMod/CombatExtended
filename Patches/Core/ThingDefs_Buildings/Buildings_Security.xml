@@ -195,13 +195,6 @@
 	<!-- ========== Traps ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TrapIEDBomb"]/costList/MortarShell</xpath>
-		<value>
-			<Ammo_81mmMortarShell_HE>1</Ammo_81mmMortarShell_HE>
-		</value>
-	</Operation>
-
-	<Operation Class="PatchOperationReplace">
 		<xpath>//ThingDef[defName="TrapIEDIncendiary"]/costList/Chemfuel</xpath>
 		<value>
 			<Ammo_81mmMortarShell_Incendiary>1</Ammo_81mmMortarShell_Incendiary>

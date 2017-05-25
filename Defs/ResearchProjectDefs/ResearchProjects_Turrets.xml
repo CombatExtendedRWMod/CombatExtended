@@ -10,6 +10,8 @@
     <prerequisites>
       <li>Machining</li>
     </prerequisites>
+    <researchViewX>1</researchViewX>
+    <researchViewY>2</researchViewY>
   </ResearchProjectDef>
 
   <!--<ResearchProjectDef>
@@ -42,6 +44,8 @@
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
+    <researchViewX>2</researchViewX>
+    <researchViewY>1</researchViewY>
   </ResearchProjectDef>
   
   <ResearchProjectDef>
@@ -52,12 +56,14 @@
     <techLevel>Industrial</techLevel>
     <prerequisites>
       <li>GunTurrets</li>
-      <li>MultibarrelWeapons</li>
+      <li>CE_TurretHeavyWeapons</li>
     </prerequisites>
     <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
+    <researchViewX>2</researchViewX>
+    <researchViewY>2</researchViewY>
   </ResearchProjectDef>
 
 

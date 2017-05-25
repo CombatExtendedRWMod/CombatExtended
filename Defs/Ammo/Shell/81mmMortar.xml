@@ -14,7 +14,7 @@
     <label>81mm mortar shells</label>
     <ammoTypes>
       <!-- Overrides vanilla artillery shell -->
-      <Ammo_81mmMortarShell_HE>Bullet_81mmMortarShell_HE</Ammo_81mmMortarShell_HE>
+      <MortarShell>Bullet_81mmMortarShell_HE</MortarShell>
       <Ammo_81mmMortarShell_Incendiary>Bullet_81mmMortarShell_Incendiary</Ammo_81mmMortarShell_Incendiary>
       <Ammo_81mmMortarShell_EMP>Bullet_81mmMortarShell_EMP</Ammo_81mmMortarShell_EMP>
     </ammoTypes>
@@ -36,8 +36,9 @@
     <cookOffSound>MortarBomb_Explode</cookOffSound>
   </ThingDef>
 
+  <!-- Need to override mortar shell because of hardcoded vanilla references -->
   <ThingDef ParentName="81mmMortarShellBase">
-    <defName>Ammo_81mmMortarShell_HE</defName>
+    <defName>MortarShell</defName>
     <label>81mm mortar shell (HE)</label>
     <graphicData>
       <texPath>Things/Ammo/Mortar/HE</texPath>
@@ -243,7 +244,7 @@
       </thingDefs>
     </fixedIngredientFilter>
     <products>
-      <Ammo_81mmMortarShell_HE>5</Ammo_81mmMortarShell_HE>
+      <MortarShell>5</MortarShell>
     </products>
   </RecipeDef>
 

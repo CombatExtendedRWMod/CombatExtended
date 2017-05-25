@@ -33,12 +33,6 @@
 		</value>
 	</Operation>
 
-	<!-- Delete mortar shell and replace all references to it -->
-
-	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="MortarShell"]</xpath>
-	</Operation>
-
 	<!-- ========== Resource RawPlant ========== -->
 
 	<Operation Class="PatchOperationAdd">

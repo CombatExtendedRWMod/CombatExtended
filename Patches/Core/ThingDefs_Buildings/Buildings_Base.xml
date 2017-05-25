@@ -11,6 +11,10 @@
 
 	<!-- BuildingBase -->
 
+	<Operation Class="PatchOperationRemove">
+		<xpath>//ThingDef[defName="Wall"]/damageMultipliers</xpath>
+	</Operation>
+
 	<Operation Class="PatchOperationSequence">
   	<success>Always</success>
   	<operations>

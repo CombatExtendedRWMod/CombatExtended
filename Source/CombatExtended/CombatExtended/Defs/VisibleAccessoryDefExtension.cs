@@ -6,7 +6,7 @@ namespace CombatExtended
 	{
 		public int order = 1;
 
-        public VisibleAccessoryDefExtension()
+        public void Validate()
         {
             if (order < 1)
             {

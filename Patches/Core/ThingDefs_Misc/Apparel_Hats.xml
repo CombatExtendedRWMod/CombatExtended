@@ -35,8 +35,8 @@
   	<xpath>//ThingDef[defName="Apparel_SimpleHelmet"]/equippedStatOffsets/MoveSpeed</xpath>
   </Operation>
 
-  <Operation Class="PatchOperationAdd">
-    <xpath>//ThingDef[defName="Apparel_VestPlate"]/costStuffCount</xpath>
+  <Operation Class="PatchOperationReplace">
+    <xpath>//ThingDef[defName="Apparel_SimpleHelmet"]/costStuffCount</xpath>
     <value>
       <costStuffCount>50</costStuffCount>
     </value>
@@ -76,8 +76,8 @@
   	<xpath>//ThingDef[defName="Apparel_AdvancedHelmet"]/equippedStatOffsets/MoveSpeed</xpath>
   </Operation>
 
-  <Operation Class="PatchOperationAdd">
-    <xpath>//ThingDef[defName="Apparel_VestPlate"]/costStuffCount</xpath>
+  <Operation Class="PatchOperationReplace">
+    <xpath>//ThingDef[defName="Apparel_AdvancedHelmet"]/costStuffCount</xpath>
     <value>
       <costStuffCount>50</costStuffCount>
     </value>
