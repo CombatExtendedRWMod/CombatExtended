@@ -4,7 +4,7 @@
 	<!-- ========== Sandbags ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Sandbags"]/fillPercent</xpath>
+		<xpath>*/ThingDef[defName="Sandbags"]/fillPercent</xpath>
 		<value>
 			<fillPercent>0.6</fillPercent>
 		</value>
@@ -13,39 +13,39 @@
 	<!-- ========== Improvised turret ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/thingClass</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/thingClass</xpath>
 		<value>
 			<thingClass>CombatExtended.Building_TurretGunCE</thingClass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/label</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/label</xpath>
 		<value>
 			<label>auto-turret</label>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="TurretGun"]//li[@Class = "CompProperties_Explosive"]</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]//li[@Class = "CompProperties_Explosive"]</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/fillPercent</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/fillPercent</xpath>
 		<value>
 			<fillPercent>0.85</fillPercent>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/specialDisplayRadius</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/specialDisplayRadius</xpath>
 		<value>
 			<specialDisplayRadius>27</specialDisplayRadius>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/building/turretBurstCooldownTime</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/building/turretBurstCooldownTime</xpath>
 		<value>
 			<turretBurstCooldownTime>1.1</turretBurstCooldownTime>
 		</value>
@@ -57,11 +57,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName="TurretGun"]/tradeTags</xpath>
+      	<xpath>*/ThingDef[defName="TurretGun"]/tradeTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName="TurretGun"]</xpath>
+      	<xpath>*/ThingDef[defName="TurretGun"]</xpath>
       	<value>
         	<tradeTags />
       	</value>
@@ -70,7 +70,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="TurretGun"]/tradeTags</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/tradeTags</xpath>
 		<value>
 			<li>CE_Turret</li>
 		</value>
@@ -79,52 +79,52 @@
 	<!-- Patch build costs -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/costList/Steel</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/costList/Steel</xpath>
 		<value>
 			<Steel>175</Steel>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TurretGun"]/costList/Component</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/costList/Component</xpath>
 		<value>
 			<Component>8</Component>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="TurretGun"]/stuffCategories</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/stuffCategories</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="TurretGun"]/costStuffCount</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/costStuffCount</xpath>
 	</Operation>
 
 	<!-- ========== Mortar Base ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/thingClass</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/thingClass</xpath>
 		<value>
 			<thingClass>CombatExtended.Building_TurretGunCE</thingClass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/building/turretBurstCooldownTime</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/building/turretBurstCooldownTime</xpath>
 		<value>
 			<turretBurstCooldownTime>2</turretBurstCooldownTime>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/building</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/building</xpath>
 		<value>
 			<spawnedConceptLearnOpportunity>CE_MortarDirectFire</spawnedConceptLearnOpportunity>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]//turretShellDef</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/building/turretShellDef</xpath>
 	</Operation>
 
 	<!-- Add trade tags -->
@@ -133,11 +133,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/tradeTags</xpath>
+      	<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/tradeTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]</xpath>
+      	<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]</xpath>
       	<value>
         	<tradeTags />
       	</value>
@@ -146,7 +146,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/tradeTags</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/tradeTags</xpath>
 		<value>
 			<li>CE_Turret</li>
 		</value>
@@ -155,43 +155,43 @@
 	<!-- Patch build costs -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/costList/Steel</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/costList/Steel</xpath>
 		<value>
 			<Steel>200</Steel>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/stuffCategories</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/stuffCategories</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@Name = "BaseArtilleryBuilding"]/costStuffCount</xpath>
+		<xpath>*/ThingDef[@Name = "BaseArtilleryBuilding"]/costStuffCount</xpath>
 	</Operation>
 
 	<!-- ========== Actual Mortars ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Turret_MortarBomb"]/label</xpath>
+		<xpath>*/ThingDef[defName="Turret_MortarBomb"]/label</xpath>
 		<value>
 			<label>81mm mortar</label>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="Turret_MortarBomb"]//li[@Class = "CompProperties_Explosive"]</xpath>
+		<xpath>*/ThingDef[defName="Turret_MortarBomb"]/comps/li[@Class = "CompProperties_Explosive"]</xpath>
 	</Operation>
 
 	<!-- Remove unneeded incendiary mortar -->
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="Turret_MortarIncendiary"]</xpath>
+		<xpath>*/ThingDef[defName="Turret_MortarIncendiary"]</xpath>
 	</Operation>
 
 	<!-- Disable EMP mortar (can't remove because hardcoded references in vanilla) -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Turret_MortarEMP"]</xpath>
+		<xpath>*/ThingDef[defName="Turret_MortarEMP"]</xpath>
 		<value>
 			<menuHidden>true</menuHidden>
 		</value>
@@ -200,7 +200,7 @@
 	<!-- ========== Traps ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="TrapIEDIncendiary"]/costList/Chemfuel</xpath>
+		<xpath>*/ThingDef[defName="TrapIEDIncendiary"]/costList/Chemfuel</xpath>
 		<value>
 			<Ammo_81mmMortarShell_Incendiary>1</Ammo_81mmMortarShell_Incendiary>
 		</value>

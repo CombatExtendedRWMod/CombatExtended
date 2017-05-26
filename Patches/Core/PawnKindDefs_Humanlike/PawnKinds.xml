@@ -4,18 +4,18 @@
 	<!-- ========== Mechanoid ========== -->
 
   <Operation Class="PatchOperationRemove">
-  	<xpath>//PawnKindDef[defName = "Scyther"]/aiAvoidCover</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="Scyther"]/aiAvoidCover</xpath>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-  	<xpath>//PawnKindDef[defName = "Centipede"]/combatPower</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="Centipede"]/combatPower</xpath>
   	<value>
   		<combatPower>580</combatPower>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "Scyther" or defName = "Centipede"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="Scyther" or defName="Centipede"]</xpath>
   	<value>
     	<fixedInventory>
       	<LoadoutGen_MechanoidAmmo>1</LoadoutGen_MechanoidAmmo>
@@ -26,7 +26,7 @@
   <!-- ========== Mercenary ========== -->
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "MercenaryGunner"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="MercenaryGunner"]</xpath>
   	<value>
     	<fixedInventory>
       	<LoadoutGen_MercAmmoPrimary>1</LoadoutGen_MercAmmoPrimary>
@@ -36,7 +36,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "MercenarySniper"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="MercenarySniper"]</xpath>
   	<value>
   		<fixedInventory>
   		  <LoadoutGen_MercAmmoPrimary>1</LoadoutGen_MercAmmoPrimary>
@@ -48,7 +48,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "MercenaryHeavy"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="MercenaryHeavy"]</xpath>
   	<value>
   		<fixedInventory>
   		  <LoadoutGen_MercSidearmSMG>1</LoadoutGen_MercSidearmSMG>
@@ -59,7 +59,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[@Name = "EliteBase"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[@Name = "EliteBase"]</xpath>
   	<value>
   		<fixedInventory>
   		  <LoadoutGen_MercAmmoPrimary>1</LoadoutGen_MercAmmoPrimary>
@@ -73,7 +73,7 @@
   <!-- ========== Outlander ========== -->
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "Villager"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="Villager"]</xpath>
   	<value>
   		<fixedInventory>
   		  <LoadoutGen_OutlanderAmmoPrimary>1</LoadoutGen_OutlanderAmmoPrimary>
@@ -83,7 +83,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "TownGuard"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="TownGuard"]</xpath>
   	<value>
     	<fixedInventory>
       	<LoadoutGen_MercAmmoPrimary>1</LoadoutGen_MercAmmoPrimary>
@@ -96,7 +96,7 @@
   <!-- ========== Pirate ========== -->
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "Drifter" or defName = "Scavenger"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="Drifter" or defName="Scavenger"]</xpath>
   	<value>
   		<fixedInventory>
   		  <LoadoutGen_PirateAmmoPrimary>1</LoadoutGen_PirateAmmoPrimary>
@@ -105,7 +105,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//PawnKindDef[defName = "Pirate"]</xpath>
+  	<xpath>/PawnKindDefs/PawnKindDef[defName="Pirate"]</xpath>
   	<value>
   		<fixedInventory>
   		  <LoadoutGen_MercAmmoPrimary>1</LoadoutGen_MercAmmoPrimary>
@@ -117,7 +117,7 @@
   <!-- ========== Spacer ========== -->
 
   <Operation Class="PatchOperationAdd">
-    <xpath>//PawnKindDef[defName = "SpaceSoldier"]</xpath>
+    <xpath>/PawnKindDefs/PawnKindDef[defName="SpaceSoldier"]</xpath>
     <value>
       <fixedInventory>
         <LoadoutGen_MercAmmoPrimary>1</LoadoutGen_MercAmmoPrimary>
@@ -131,7 +131,7 @@
   <!-- ========== Tribal ========== -->
 
   <Operation Class="PatchOperationAdd">
-    <xpath>//PawnKindDef[defName = "TribalArcher"]</xpath>
+    <xpath>/PawnKindDefs/PawnKindDef[defName="TribalArcher"]</xpath>
     <value>
       <fixedInventory>
         <LoadoutGen_TribalSidearm>1</LoadoutGen_TribalSidearm>
@@ -141,7 +141,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-    <xpath>//PawnKindDef[defName = "TribalChief"]</xpath>
+    <xpath>/PawnKindDefs/PawnKindDef[defName="TribalChief"]</xpath>
     <value>
       <fixedInventory>
         <LoadoutGen_TribalAmmo>1</LoadoutGen_TribalAmmo>

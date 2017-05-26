@@ -4,14 +4,14 @@
 	<!-- ========== Elephant ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Elephant"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Elephant"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>5</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Elephant"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Elephant"]/statBases</xpath>
 		<value>
 			<ArmorRating_Blunt>0.10</ArmorRating_Blunt>
 			<ArmorRating_Sharp>0.125</ArmorRating_Sharp>
@@ -19,7 +19,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Elephant"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Elephant"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -35,7 +35,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Elephant"]</xpath>
+		<xpath>*/ThingDef[defName="Elephant"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -46,7 +46,7 @@
 	<!-- ========== Megasloth ========== -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Megasloth"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Megasloth"]/statBases</xpath>
 		<value>
 			<ArmorRating_Blunt>0.10</ArmorRating_Blunt>
 			<ArmorRating_Sharp>0.125</ArmorRating_Sharp>
@@ -54,7 +54,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megasloth"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Megasloth"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -78,7 +78,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Megasloth"]</xpath>
+		<xpath>*/ThingDef[defName="Megasloth"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -89,7 +89,7 @@
 	<!-- ========== Thrumbo ========== -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Thrumbo"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Thrumbo"]/statBases</xpath>
 		<value>
 			<ArmorRating_Blunt>0.2</ArmorRating_Blunt>
 			<ArmorRating_Sharp>0.3</ArmorRating_Sharp>
@@ -97,7 +97,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Thrumbo"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Thrumbo"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -113,7 +113,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Thrumbo"]</xpath>
+		<xpath>*/ThingDef[defName="Thrumbo"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Birdlike</bodyType>

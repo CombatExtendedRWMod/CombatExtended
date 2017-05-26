@@ -4,7 +4,7 @@
 	<!-- ========== Warg ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Warg"]</xpath>
+		<xpath>*/ThingDef[defName="Warg"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -13,14 +13,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Warg"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Warg"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>7</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Warg"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Warg"]/statBases</xpath>
 		<value>
 			<ArmorRating_Blunt>0.075</ArmorRating_Blunt>
 			<ArmorRating_Sharp>0.125</ArmorRating_Sharp>
@@ -28,7 +28,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Warg"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Warg"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -85,7 +85,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Warg"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Warg"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>1.25</baseHealthScale>
 		</value>
@@ -94,7 +94,7 @@
 	<!-- ========== Base Wolf ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[@Name="ThingBaseWolf"]</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseWolf"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -103,14 +103,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="ThingBaseWolf"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseWolf"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>6.25</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="ThingBaseWolf"]//verbs</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseWolf"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -168,7 +168,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="ThingBaseWolf"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseWolf"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.85</baseHealthScale>
 		</value>
@@ -177,7 +177,7 @@
 	<!-- ========== Base Fox ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[@Name="ThingBaseFox"]</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseFox"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -186,7 +186,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="ThingBaseFox"]//verbs</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseFox"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -244,14 +244,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="ThingBaseFox"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseFox"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.35</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="ThingBaseFox"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[@Name="ThingBaseFox"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.35</baseHealthScale>
 		</value>

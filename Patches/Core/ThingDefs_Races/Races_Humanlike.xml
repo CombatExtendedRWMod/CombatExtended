@@ -2,7 +2,7 @@
 <Patch>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Human"]</xpath>
+		<xpath>*/ThingDef[defName="Human"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Humanoid</bodyType>
@@ -11,7 +11,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Human"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Human"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -38,11 +38,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName="Human"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Human"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName="Human"]</xpath>
+      	<xpath>*/ThingDef[defName="Human"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -51,7 +51,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Human"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Human"]/comps</xpath>
 		<value>
 			<li>
 			  <compClass>CombatExtended.CompPawnGizmo</compClass>
@@ -61,7 +61,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Human"]/recipes</xpath>
+		<xpath>*/ThingDef[defName="Human"]/recipes</xpath>
 		<value>
 			<li>GraftSynthTissue</li>
 		</value>

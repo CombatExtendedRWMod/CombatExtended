@@ -4,7 +4,7 @@
 	<!-- ========== Patch bench recipes ========== -->
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[DefName = "TableMachining"]/recipes/li[. = "MakeMortarShell"]</xpath>
+		<xpath>*/ThingDef[DefName="TableMachining"]/recipes/li[.="MakeMortarShell"]</xpath>
 	</Operation>
 
 	<!-- ========== Add damage resistance to buildings ========== -->
@@ -12,52 +12,38 @@
 	<!-- BuildingBase -->
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="Wall"]/damageMultipliers</xpath>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[@Name="BuildingBase"]/damageMultipliers</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="BuildingBase"]</xpath>
-      	<value>
-        	<damageMultipliers />
-      	</value>
-    	</li>
-  	</operations>
+		<xpath>/Buildings/ThingDef[defName="Wall"]/damageMultipliers</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[@Name="BuildingBase"]/damageMultipliers</xpath>
+		<xpath>*/ThingDef[@Name="BuildingBase"]</xpath>
 		<value>
-			<li>
-			  <damageDef>Bomb</damageDef>
-			  <multiplier>1.2</multiplier>
-			</li>
-			<li>
-			  <damageDef>Thermobaric</damageDef>
-			  <multiplier>1.5</multiplier>
-			</li>
-			<li>
-			  <damageDef>Bullet</damageDef>
-			  <multiplier>0.25</multiplier>
-			</li>
-			<li>
-			  <damageDef>Fragment</damageDef>
-			  <multiplier>0.125</multiplier>
-			</li>
-			<li>
-			  <damageDef>Arrow</damageDef>
-			  <multiplier>0.05</multiplier>
-			</li>
-			<li>
-			  <damageDef>Electrical</damageDef>
-			  <multiplier>0.25</multiplier>
-			</li>
+			<damageMultipliers>
+				<li>
+				  <damageDef>Bomb</damageDef>
+				  <multiplier>1.2</multiplier>
+				</li>
+				<li>
+				  <damageDef>Thermobaric</damageDef>
+				  <multiplier>1.5</multiplier>
+				</li>
+				<li>
+				  <damageDef>Bullet</damageDef>
+				  <multiplier>0.25</multiplier>
+				</li>
+				<li>
+				  <damageDef>Fragment</damageDef>
+				  <multiplier>0.125</multiplier>
+				</li>
+				<li>
+				  <damageDef>Arrow</damageDef>
+				  <multiplier>0.05</multiplier>
+				</li>
+				<li>
+				  <damageDef>Electrical</damageDef>
+				  <multiplier>0.25</multiplier>
+				</li>
+			</damageMultipliers>
 		</value>
 	</Operation>
 
@@ -113,65 +99,67 @@
 
 	<!-- BuildingNaturalBase and ChunkBase -->
 
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[@Name="BuildingNaturalBase"]/damageMultipliers</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="BuildingNaturalBase"]</xpath>
-      	<value>
-        	<damageMultipliers />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[@Name="ChunkBase"]/damageMultipliers</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="ChunkBase"]</xpath>
-      	<value>
-        	<damageMultipliers />
-      	</value>
-    	</li>
-  	</operations>
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[@Name="BuildingNaturalBase"]</xpath>
+		<value>
+			<damageMultipliers>
+				<li>
+				  <damageDef>Bomb</damageDef>
+				  <multiplier>2</multiplier>
+				</li>
+				<li>
+				  <damageDef>Thermobaric</damageDef>
+				  <multiplier>2.5</multiplier>
+				</li>
+				<li>
+				  <damageDef>Bullet</damageDef>
+				  <multiplier>0.05</multiplier>
+				</li>
+				<li>
+				  <damageDef>Fragment</damageDef>
+				  <multiplier>0.025</multiplier>
+				</li>
+				<li>
+				  <damageDef>Arrow</damageDef>
+				  <multiplier>0.0</multiplier>
+				</li>
+				<li>
+				  <damageDef>Electrical</damageDef>
+				  <multiplier>0.0</multiplier>
+				</li>
+			</damageMultipliers>
+		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[@Name="BuildingNaturalBase" or @Name="ChunkBase"]/damageMultipliers</xpath>
+		<xpath>*/ThingDef[@Name="ChunkBase"]</xpath>
 		<value>
-			<li>
-			  <damageDef>Bomb</damageDef>
-			  <multiplier>2</multiplier>
-			</li>
-			<li>
-			  <damageDef>Thermobaric</damageDef>
-			  <multiplier>2.5</multiplier>
-			</li>
-			<li>
-			  <damageDef>Bullet</damageDef>
-			  <multiplier>0.05</multiplier>
-			</li>
-			<li>
-			  <damageDef>Fragment</damageDef>
-			  <multiplier>0.025</multiplier>
-			</li>
-			<li>
-			  <damageDef>Arrow</damageDef>
-			  <multiplier>0.0</multiplier>
-			</li>
-			<li>
-			  <damageDef>Electrical</damageDef>
-			  <multiplier>0.0</multiplier>
-			</li>
+			<damageMultipliers>
+				<li>
+				  <damageDef>Bomb</damageDef>
+				  <multiplier>2</multiplier>
+				</li>
+				<li>
+				  <damageDef>Thermobaric</damageDef>
+				  <multiplier>2.5</multiplier>
+				</li>
+				<li>
+				  <damageDef>Bullet</damageDef>
+				  <multiplier>0.05</multiplier>
+				</li>
+				<li>
+				  <damageDef>Fragment</damageDef>
+				  <multiplier>0.025</multiplier>
+				</li>
+				<li>
+				  <damageDef>Arrow</damageDef>
+				  <multiplier>0.0</multiplier>
+				</li>
+				<li>
+				  <damageDef>Electrical</damageDef>
+				  <multiplier>0.0</multiplier>
+				</li>
+			</damageMultipliers>
 		</value>
 	</Operation>
 

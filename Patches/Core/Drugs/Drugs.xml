@@ -1,53 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-  <!-- ========== Add statOffsets entry if it doesn't exist already ========== -->
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[1]/statOffsets</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[1]</xpath>
-      	<value>
-        	<statOffsets />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
-	<Operation Class="PatchOperationSequence">
-  	<success>Always</success>
-  	<operations>
-    	<li Class="PatchOperationTest">
-      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[1]/statOffsets</xpath>
-      	<success>Invert</success>
-    	</li>
-    	<li Class="PatchOperationAdd">
-      	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[1]</xpath>
-      	<value>
-        	<statOffsets />
-      	</value>
-    	</li>
-  	</operations>
-	</Operation>
-
   <!-- ========== Patch statOffsets ========== -->
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//HediffDef[defName = "GoJuiceHigh"]//stages/li[1]/statOffsets</xpath>
+  	<xpath>/GoJuice/HediffDef[defName="GoJuiceHigh"]//stages/li[1]</xpath>
   	<value>
-  		<Suppressability>-0.75</Suppressability>
+      <statOffsets>
+        <Suppressability>-0.75</Suppressability>
+      </statOffsets>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>//HediffDef[defName = "YayoHigh"]//stages/li[1]/statOffsets</xpath>
+  	<xpath>/Yayo/HediffDef[defName="YayoHigh"]//stages/li[1]</xpath>
   	<value>
-  		<Suppressability>-0.5</Suppressability>
+      <statOffsets>
+        <Suppressability>-0.5</Suppressability>
+      </statOffsets>
   	</value>
   </Operation>
 

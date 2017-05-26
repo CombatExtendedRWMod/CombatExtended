@@ -4,7 +4,7 @@
 	<!-- ========== Big Bird Base ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[@Name="BigBirdThingBase"]</xpath>
+		<xpath>*/ThingDef[@Name="BigBirdThingBase"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Birdlike</bodyType>
@@ -15,14 +15,14 @@
 	<!-- ========== Cassowary ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cassowary"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Cassowary"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>5</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cassowary"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Cassowary"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -63,14 +63,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cassowary"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Cassowary"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.9</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cassowary"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Cassowary"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.7</baseHealthScale>
 		</value>
@@ -79,14 +79,14 @@
 	<!-- ========== Emu ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Emu"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Emu"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>4.8</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Emu"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Emu"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -127,14 +127,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Emu"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Emu"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>1</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Emu"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Emu"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.8</baseHealthScale>
 		</value>
@@ -143,7 +143,7 @@
 	<!-- ========== Ostrich ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Ostrich"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Ostrich"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -184,14 +184,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Ostrich"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Ostrich"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>1.2</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Ostrich"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Ostrich"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.95</baseHealthScale>
 		</value>
@@ -200,7 +200,7 @@
 	<!-- ========== Turkey ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Turkey"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Turkey"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -240,14 +240,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Turkey"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Turkey"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.6</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Turkey"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Turkey"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.5</baseHealthScale>
 		</value>

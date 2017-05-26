@@ -4,14 +4,14 @@
 	<!-- ========== Base Hare ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="BaseHare"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[@Name="BaseHare"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>4.8</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="BaseHare"]//verbs</xpath>
+		<xpath>*/ThingDef[@Name="BaseHare"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -27,14 +27,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="BaseHare"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[@Name="BaseHare"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.15</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[@Name="BaseHare"]</xpath>
+		<xpath>*/ThingDef[@Name="BaseHare"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>

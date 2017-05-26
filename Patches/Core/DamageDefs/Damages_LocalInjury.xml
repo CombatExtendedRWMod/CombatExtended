@@ -4,14 +4,14 @@
 	<!-- ========== Replace damage workers with CE ones ========== -->
 
 	<Operation Class="PatchOperationReplace">
-  	<xpath>//DamageDef[workerClass = "DamageWorker_AddInjury"]/workerClass</xpath>
+  	<xpath>*/DamageDef[workerClass = "DamageWorker_AddInjury"]/workerClass</xpath>
   	<value>
       <workerClass>CombatExtended.DamageWorker_AddInjuryCE</workerClass>
   	</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-  	<xpath>//DamageDef[workerClass = "DamageWorker_Flame"]/workerClass</xpath>
+  	<xpath>*/DamageDef[workerClass = "DamageWorker_Flame"]/workerClass</xpath>
   	<value>
       <workerClass>CombatExtended.DamageWorker_FlameCE</workerClass>
   	</value>
@@ -20,7 +20,7 @@
 	<!-- ========== Add DefModExtension ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-  	<xpath>//DamageDef[defName = "Crush"]</xpath>
+  	<xpath>*/DamageDef[defName="Crush"]</xpath>
   	<value>
   		<li Class="CombatExtended.DamageDefExtensionCE">
   			<harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
@@ -29,7 +29,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-  	<xpath>//DamageDef[defName = "Blunt"]</xpath>
+  	<xpath>*/DamageDef[defName="Blunt"]</xpath>
   	<value>
   		<li Class="CombatExtended.DamageDefExtensionCE">
   			<harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
@@ -38,7 +38,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-  	<xpath>//DamageDef[defName = "Scratch"]</xpath>
+  	<xpath>*/DamageDef[defName="Scratch"]</xpath>
   	<value>
   		<li Class="CombatExtended.DamageDefExtensionCE">
   			<noDamageOnDeflect>true</noDamageOnDeflect>
@@ -48,7 +48,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-  	<xpath>//DamageDef[defName = "Bite"]</xpath>
+  	<xpath>*/DamageDef[defName="Bite"]</xpath>
   	<value>
   		<li Class="CombatExtended.DamageDefExtensionCE">
   			<harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
@@ -57,7 +57,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-  	<xpath>//DamageDef[defName = "Flame"]</xpath>
+  	<xpath>*/DamageDef[defName="Flame"]</xpath>
   	<value>
   		<li Class="CombatExtended.DamageDefExtensionCE">
   			<harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
@@ -67,7 +67,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-  	<xpath>//DamageDef[defName = "Frostbite"]</xpath>
+  	<xpath>*/DamageDef[defName="Frostbite"]</xpath>
   	<value>
   		<li Class="CombatExtended.DamageDefExtensionCE">
   			<harmOnlyOutsideLayers>true</harmOnlyOutsideLayers>
@@ -79,25 +79,25 @@
 	<!-- ========== Add Names for secondary damage inheritance ========== -->
 
 	<Operation Class="PatchOperationAttributeSet">
-  	<xpath>//DamageDef[defName = "Blunt"]</xpath>
+  	<xpath>*/DamageDef[defName="Blunt"]</xpath>
     <attribute>Name</attribute>
     <value>BluntDamage</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAttributeSet">
-  	<xpath>//DamageDef[defName = "Bullet"]</xpath>
+  	<xpath>*/DamageDef[defName="Bullet"]</xpath>
     <attribute>Name</attribute>
     <value>BulletDamage</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAttributeSet">
-  	<xpath>//DamageDef[defName = "Bomb"]</xpath>
+  	<xpath>*/DamageDef[defName="Bomb"]</xpath>
     <attribute>Name</attribute>
     <value>BombDamage</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAttributeSet">
-  	<xpath>//DamageDef[defName = "Burn"]</xpath>
+  	<xpath>*/DamageDef[defName="Burn"]</xpath>
     <attribute>Name</attribute>
     <value>BurnDamage</value>
 	</Operation>

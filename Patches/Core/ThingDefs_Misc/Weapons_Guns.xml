@@ -4,19 +4,19 @@
 	<!-- ========== Remove unused vanilla stats ========== -->
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyTouch</xpath>
+		<xpath>*/ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyTouch</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyShort</xpath>
+		<xpath>*/ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyShort</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyMedium</xpath>
+		<xpath>*/ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyMedium</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyLong</xpath>
+		<xpath>*/ThingDef[@ParentName="BaseGun" or @ParentName="BaseHumanMakeableGun" or @ParentName="BaseWeaponNeolithic"]/statBases/AccuracyLong</xpath>
 	</Operation>
 
 	<!-- ========== Pistol ========== -->
@@ -24,21 +24,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_Pistol"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_Pistol"]/statBases/Mass</xpath>
 		<value>
 			<Mass>1</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_Pistol"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_Pistol"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
 			<RangedWeapon_Cooldown>0.25</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_Pistol"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_Pistol"]/statBases</xpath>
 		<value>
 			<SightsEfficiency>0.35</SightsEfficiency>
 			<ShotSpread>0.16</ShotSpread>
@@ -48,7 +48,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_Pistol"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_Pistol"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -71,11 +71,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_Pistol"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Pistol"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_Pistol"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Pistol"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -84,7 +84,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_Pistol"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_Pistol"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>7</magazineSize>
@@ -104,11 +104,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_Pistol"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Pistol"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_Pistol"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Pistol"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -117,7 +117,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_Pistol"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_Pistol"]/weaponTags</xpath>
 		<value>
 			<li>CE_Sidearm</li>
 			<li>CE_AI_Pistol</li>
@@ -130,21 +130,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_PumpShotgun"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/statBases/Mass</xpath>
 		<value>
       <Mass>3.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_PumpShotgun"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_PumpShotgun"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/statBases</xpath>
 		<value>
       <ShotSpread>0.5</ShotSpread>
       <SwayFactor>0.77</SwayFactor>
@@ -153,7 +153,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_PumpShotgun"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -176,11 +176,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_PumpShotgun"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_PumpShotgun"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_PumpShotgun"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -189,7 +189,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_PumpShotgun"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
@@ -209,11 +209,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_PumpShotgun"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_PumpShotgun"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_PumpShotgun"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -222,7 +222,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_PumpShotgun"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_PumpShotgun"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_AssaultWeapon</li>
 		</value>
@@ -233,21 +233,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChainShotgun"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/statBases/Mass</xpath>
 		<value>
       <Mass>3.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChainShotgun"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_ChainShotgun"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/statBases</xpath>
 		<value>
       <ShotSpread>0.5</ShotSpread>
       <SwayFactor>0.77</SwayFactor>
@@ -256,7 +256,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_ChainShotgun"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -279,11 +279,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChainShotgun"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChainShotgun"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChainShotgun"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -292,7 +292,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChainShotgun"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
@@ -312,11 +312,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChainShotgun"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChainShotgun"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChainShotgun"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -325,7 +325,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChainShotgun"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChainShotgun"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_AssaultWeapon</li>
 		</value>
@@ -336,21 +336,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_BoltActionRifle"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/statBases/Mass</xpath>
 		<value>
       <Mass>4.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_BoltActionRifle"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_BoltActionRifle"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.08</ShotSpread>
@@ -360,7 +360,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -383,11 +383,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -396,7 +396,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>10</magazineSize>
@@ -416,11 +416,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -429,7 +429,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_BoltActionRifle"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_BoltActionRifle"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Rifle</li>
 		</value>
@@ -440,21 +440,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_AssaultRifle"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/statBases/Mass</xpath>
 		<value>
       <Mass>3.40</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_AssaultRifle"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.4</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_AssaultRifle"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.08</ShotSpread>
@@ -464,7 +464,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_AssaultRifle"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -491,11 +491,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_AssaultRifle"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_AssaultRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_AssaultRifle"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -504,7 +504,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_AssaultRifle"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>30</magazineSize>
@@ -525,11 +525,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_AssaultRifle"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_AssaultRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_AssaultRifle"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -538,7 +538,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_AssaultRifle"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_AssaultRifle"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Rifle</li>
 		</value>
@@ -549,21 +549,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_SniperRifle"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/statBases/Mass</xpath>
 		<value>
       <Mass>7.30</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_SniperRifle"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_SniperRifle"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.04</ShotSpread>
@@ -573,7 +573,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_SniperRifle"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -596,11 +596,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_SniperRifle"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_SniperRifle"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_SniperRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_SniperRifle"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -609,7 +609,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_SniperRifle"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
@@ -629,11 +629,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_SniperRifle"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_SniperRifle"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_SniperRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_SniperRifle"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -642,7 +642,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_SniperRifle"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Rifle</li>
 		</value>
@@ -653,21 +653,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_MachinePistol"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_MachinePistol"]/statBases/Mass</xpath>
 		<value>
       <Mass>3.50</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_MachinePistol"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_MachinePistol"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.33</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_MachinePistol"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_MachinePistol"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.12</ShotSpread>
@@ -677,7 +677,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_MachinePistol"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_MachinePistol"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -704,11 +704,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_MachinePistol"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_MachinePistol"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_MachinePistol"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_MachinePistol"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -717,7 +717,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_MachinePistol"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_MachinePistol"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>32</magazineSize>
@@ -738,11 +738,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_MachinePistol"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_MachinePistol"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_MachinePistol"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_MachinePistol"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -751,7 +751,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_MachinePistol"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_MachinePistol"]/weaponTags</xpath>
 		<value>
 			<li>CE_SMG</li>
 			<li>CE_AI_AssaultWeapon</li>
@@ -764,21 +764,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_HeavySMG"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_HeavySMG"]/statBases/Mass</xpath>
 		<value>
       <Mass>1.40</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_HeavySMG"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_HeavySMG"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.33</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_HeavySMG"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_HeavySMG"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.35</SightsEfficiency>
       <ShotSpread>0.12</ShotSpread>
@@ -788,7 +788,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_HeavySMG"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_HeavySMG"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -815,11 +815,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_HeavySMG"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_HeavySMG"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_HeavySMG"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_HeavySMG"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -828,7 +828,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_HeavySMG"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_HeavySMG"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>20</magazineSize>
@@ -849,11 +849,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_HeavySMG"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_HeavySMG"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_HeavySMG"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_HeavySMG"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -862,7 +862,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_HeavySMG"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_HeavySMG"]/weaponTags</xpath>
 		<value>
 			<li>CE_SMG</li>
 			<li>CE_AI_AssaultWeapon</li>
@@ -875,21 +875,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_IncendiaryLauncher"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/statBases/Mass</xpath>
 		<value>
       <Mass>6</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_IncendiaryLauncher"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.4</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_IncendiaryLauncher"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.17</ShotSpread>
@@ -899,7 +899,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -927,11 +927,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -940,7 +940,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
@@ -960,11 +960,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -973,7 +973,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_IncendiaryLauncher"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_IncendiaryLauncher"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Rifle</li>
 			<li>CE_AI_Launcher</li>
@@ -985,21 +985,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_LMG"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_LMG"]/statBases/Mass</xpath>
 		<value>
       <Mass>9.12</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_LMG"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_LMG"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_LMG"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_LMG"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.08</ShotSpread>
@@ -1009,7 +1009,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_LMG"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_LMG"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1039,11 +1039,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_LMG"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_LMG"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_LMG"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_LMG"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1052,7 +1052,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_LMG"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_LMG"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>47</magazineSize>
@@ -1073,11 +1073,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_LMG"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_LMG"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_LMG"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_LMG"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1086,7 +1086,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_LMG"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_LMG"]/weaponTags</xpath>
 		<value>
 			<li>CE_MachineGun</li>
 			<li>CE_AI_Suppressive</li>
@@ -1098,21 +1098,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChargeRifle"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/statBases/Mass</xpath>
 		<value>
       <Mass>3.50</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChargeRifle"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.4</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_ChargeRifle"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/statBases</xpath>
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.05</ShotSpread>
@@ -1122,7 +1122,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_ChargeRifle"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1149,11 +1149,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChargeRifle"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChargeRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeRifle"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1162,7 +1162,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChargeRifle"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>60</magazineSize>
@@ -1183,11 +1183,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChargeRifle"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChargeRifle"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeRifle"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1196,7 +1196,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChargeRifle"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeRifle"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Rifle</li>
 		</value>
@@ -1207,14 +1207,14 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_TurretImprovised"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_TurretImprovised"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
 			<RangedWeapon_Cooldown>0.4</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_TurretImprovised"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_TurretImprovised"]/statBases</xpath>
 		<value>
 			<SightsEfficiency>0.35</SightsEfficiency>
 			<ShotSpread>0.08</ShotSpread>
@@ -1224,7 +1224,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_TurretImprovised"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_TurretImprovised"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1251,11 +1251,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_TurretImprovised"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_TurretImprovised"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_TurretImprovised"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_TurretImprovised"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1264,7 +1264,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_TurretImprovised"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_TurretImprovised"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 				<magazineSize>300</magazineSize>
@@ -1286,21 +1286,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_Minigun"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/statBases/Mass</xpath>
 		<value>
       <Mass>20.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_Minigun"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_Minigun"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.08</ShotSpread>
@@ -1310,7 +1310,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_Minigun"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1337,11 +1337,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_Minigun"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Minigun"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_Minigun"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Minigun"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1350,7 +1350,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_Minigun"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/comps</xpath>
 		<value>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>600</magazineSize>
@@ -1370,11 +1370,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_Minigun"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Minigun"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_Minigun"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_Minigun"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1383,7 +1383,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_Minigun"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/weaponTags</xpath>
 		<value>
       <li>CE_AI_Suppressive</li>
 		</value>
@@ -1392,28 +1392,28 @@
 	<!-- Disable for player -->
 
 	<Operation Class="PatchOperationAttributeSet">
-		<xpath>//ThingDef[defName="Gun_Minigun"]</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]</xpath>
 		<attribute>ParentName</attribute>
 		<value>BaseGun</value>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="Gun_Minigun"]/costList</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/costList</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName="Gun_Minigun"]/recipeMaker</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/recipeMaker</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_Minigun"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]/statBases</xpath>
 		<value>
       <MarketValue>2200</MarketValue>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_Minigun"]</xpath>
+		<xpath>*/ThingDef[defName="Gun_Minigun"]</xpath>
 		<value>
 			<tradeability>Never</tradeability>
 			<destroyOnDrop>True</destroyOnDrop>
@@ -1426,14 +1426,14 @@
 	<!-- Patch projectile -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bullet_DoomsdayRocket"]/thingClass</xpath>
+		<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/thingClass</xpath>
 		<value>
       <thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bullet_DoomsdayRocket"]/projectile</xpath>
+		<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/projectile</xpath>
 		<value>
 			<projectile>
 				<damageDef>Bomb</damageDef>
@@ -1448,11 +1448,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Bullet_DoomsdayRocket"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Bullet_DoomsdayRocket"]</xpath>
+      	<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1461,7 +1461,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Bullet_DoomsdayRocket"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_ExplosiveCE">
 				<fragSpeedFactor>1</fragSpeedFactor>
@@ -1475,21 +1475,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_DoomsdayRocket"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/statBases/Mass</xpath>
 		<value>
       <Mass>11.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_DoomsdayRocket"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_DoomsdayRocket"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.2</ShotSpread>
@@ -1499,7 +1499,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1528,11 +1528,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1541,7 +1541,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
@@ -1556,11 +1556,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1569,7 +1569,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Launcher</li>
 		</value>
@@ -1578,11 +1578,11 @@
 	<!-- Add recipe -->
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]/statBases/MarketValue</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/statBases/MarketValue</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_DoomsdayRocket"]</xpath>
+		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]</xpath>
 		<value>
 			<recipeMaker>
 			  <researchPrerequisite>LargeRockets</researchPrerequisite>
@@ -1600,14 +1600,14 @@
 	<!-- Patch projectile -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bullet_Rocket"]/thingClass</xpath>
+		<xpath>*/ThingDef[defName="Bullet_Rocket"]/thingClass</xpath>
 		<value>
       <thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bullet_DoomsdayRocket"]/projectile</xpath>
+		<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/projectile</xpath>
 		<value>
 			<projectile>
 				<damageDef>Bomb</damageDef>
@@ -1622,11 +1622,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Bullet_Rocket"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Bullet_Rocket"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Bullet_Rocket"]</xpath>
+      	<xpath>*/ThingDef[defName="Bullet_Rocket"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1635,7 +1635,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Bullet_Rocket"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Bullet_Rocket"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_ExplosiveCE">
 				<fragSpeedFactor>1</fragSpeedFactor>
@@ -1649,21 +1649,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_TripleRocket"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/statBases/Mass</xpath>
 		<value>
       <Mass>9.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_TripleRocket"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_TripleRocket"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.2</ShotSpread>
@@ -1673,7 +1673,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_TripleRocket"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1704,11 +1704,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_TripleRocket"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_TripleRocket"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_TripleRocket"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_TripleRocket"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1717,7 +1717,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_TripleRocket"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aimedBurstShotCount>1</aimedBurstShotCount>
@@ -1734,11 +1734,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_TripleRocket"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_TripleRocket"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_TripleRocket"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_TripleRocket"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1747,7 +1747,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_TripleRocket"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Launcher</li>
 		</value>
@@ -1756,11 +1756,11 @@
 	<!-- Add recipe -->
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>//ThingDef[defName = "Gun_TripleRocket"]/statBases/MarketValue</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]/statBases/MarketValue</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_TripleRocket"]</xpath>
+		<xpath>*/ThingDef[defName="Gun_TripleRocket"]</xpath>
 		<value>
 			<recipeMaker>
 			  <researchPrerequisite>LargeRockets</researchPrerequisite>
@@ -1778,21 +1778,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChargeBlasterHeavy"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/statBases/Mass</xpath>
 		<value>
       <Mass>25.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChargeBlasterHeavy"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_ChargeBlasterHeavy"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.04</ShotSpread>
@@ -1802,7 +1802,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1830,11 +1830,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1843,7 +1843,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/comps</xpath>
 		<value>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>100</magazineSize>
@@ -1864,11 +1864,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1877,7 +1877,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChargeBlasterHeavy"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeBlasterHeavy"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Suppressive</li>
 		</value>
@@ -1888,21 +1888,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_InfernoCannon"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/statBases/Mass</xpath>
 		<value>
       <Mass>100.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_InfernoCannon"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_InfernoCannon"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.1</ShotSpread>
@@ -1912,7 +1912,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_InfernoCannon"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -1937,11 +1937,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_InfernoCannon"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_InfernoCannon"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_InfernoCannon"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -1950,7 +1950,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_InfernoCannon"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>1</magazineSize>
@@ -1970,11 +1970,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_InfernoCannon"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_InfernoCannon"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_InfernoCannon"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -1983,7 +1983,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_InfernoCannon"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_InfernoCannon"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Launcher</li>
 		</value>
@@ -1994,21 +1994,21 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChargeLance"]/statBases/Mass</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeLance"]/statBases/Mass</xpath>
 		<value>
       <Mass>7.00</Mass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gun_ChargeLance"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeLance"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
       <RangedWeapon_Cooldown>0.5</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Gun_ChargeLance"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeLance"]/statBases</xpath>
 		<value>
       <SightsEfficiency>1.25</SightsEfficiency>
       <ShotSpread>0.017</ShotSpread>
@@ -2018,7 +2018,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName = "Gun_ChargeLance"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeLance"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -2042,11 +2042,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChargeLance"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeLance"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChargeLance"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeLance"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -2055,7 +2055,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChargeLance"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeLance"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>0</magazineSize>
@@ -2074,11 +2074,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName = "Gun_ChargeLance"]/weaponTags</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeLance"]/weaponTags</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName = "Gun_ChargeLance"]</xpath>
+      	<xpath>*/ThingDef[defName="Gun_ChargeLance"]</xpath>
       	<value>
         	<weaponTags />
       	</value>
@@ -2087,7 +2087,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName = "Gun_ChargeLance"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Gun_ChargeLance"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Rifle</li>
 		</value>

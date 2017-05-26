@@ -4,7 +4,7 @@
 	<!-- ========== Base Insect ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[@Name="BaseInsect"]</xpath>
+		<xpath>*/ThingDef[@Name="BaseInsect"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -15,14 +15,14 @@
 	<!-- ========== Megascarab ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megascarab"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Megascarab"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>3.7</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megascarab"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Megascarab"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -38,21 +38,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megascarab"]/statBases/ArmorRating_Blunt</xpath>
+		<xpath>*/ThingDef[defName="Megascarab"]/statBases/ArmorRating_Blunt</xpath>
 		<value>
 			<ArmorRating_Blunt>0.05</ArmorRating_Blunt>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megascarab"]/statBases/ArmorRating_Sharp</xpath>
+		<xpath>*/ThingDef[defName="Megascarab"]/statBases/ArmorRating_Sharp</xpath>
 		<value>
 			<ArmorRating_Sharp>0.05</ArmorRating_Sharp>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megascarab"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Megascarab"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.3</baseHealthScale>
 		</value>
@@ -61,14 +61,14 @@
 	<!-- ========== Spelopede ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Spelopede"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Spelopede"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>3.7</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Spelopede"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Spelopede"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -84,21 +84,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Spelopede"]/statBases/ArmorRating_Blunt</xpath>
+		<xpath>*/ThingDef[defName="Spelopede"]/statBases/ArmorRating_Blunt</xpath>
 		<value>
 			<ArmorRating_Blunt>0.2</ArmorRating_Blunt>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Spelopede"]/statBases/ArmorRating_Sharp</xpath>
+		<xpath>*/ThingDef[defName="Spelopede"]/statBases/ArmorRating_Sharp</xpath>
 		<value>
 			<ArmorRating_Sharp>0.2</ArmorRating_Sharp>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Spelopede"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Spelopede"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>1.2</baseHealthScale>
 		</value>
@@ -107,14 +107,14 @@
 	<!-- ========== Megaspider ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megaspider"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Megaspider"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>4</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megaspider"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Megaspider"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -130,21 +130,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megaspider"]/statBases/ArmorRating_Blunt</xpath>
+		<xpath>*/ThingDef[defName="Megaspider"]/statBases/ArmorRating_Blunt</xpath>
 		<value>
 			<ArmorRating_Blunt>0.3</ArmorRating_Blunt>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megaspider"]/statBases/ArmorRating_Sharp</xpath>
+		<xpath>*/ThingDef[defName="Megaspider"]/statBases/ArmorRating_Sharp</xpath>
 		<value>
 			<ArmorRating_Sharp>0.3</ArmorRating_Sharp>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Megaspider"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Megaspider"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>1.8</baseHealthScale>
 		</value>

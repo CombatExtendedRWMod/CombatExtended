@@ -4,7 +4,7 @@
 	<!-- ========== Squirrel ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Squirrel"]</xpath>
+		<xpath>*/ThingDef[defName="Squirrel"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -13,14 +13,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Squirrel"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Squirrel"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>2.4</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Squirrel"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Squirrel"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -52,7 +52,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Squirrel"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Squirrel"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.12</baseHealthScale>
 		</value>
@@ -61,7 +61,7 @@
 	<!-- ========== Alphabeaver ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Alphabeaver"]</xpath>
+		<xpath>*/ThingDef[defName="Alphabeaver"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -70,14 +70,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Alphabeaver"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Alphabeaver"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>5</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Alphabeaver"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Alphabeaver"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -111,7 +111,7 @@
 	<!-- ========== Capybara ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Capybara"]</xpath>
+		<xpath>*/ThingDef[defName="Capybara"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -120,7 +120,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Capybara"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Capybara"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -152,7 +152,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Capybara"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Capybara"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.7</baseBodySize>
 		</value>
@@ -161,7 +161,7 @@
 	<!-- ========== Chinchilla ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Chinchilla"]</xpath>
+		<xpath>*/ThingDef[defName="Chinchilla"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -170,14 +170,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Chinchilla"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Chinchilla"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>2.84</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Chinchilla"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Chinchilla"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li>
@@ -206,14 +206,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Chinchilla"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Chinchilla"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.17</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Chinchilla"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Chinchilla"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.12</baseHealthScale>
 		</value>
@@ -222,7 +222,7 @@
 	<!-- ========== Boomrat ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Boomrat"]</xpath>
+		<xpath>*/ThingDef[defName="Boomrat"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -231,14 +231,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Boomrat"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Boomrat"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>3.0</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Boomrat"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Boomrat"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -270,7 +270,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Boomrat"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Boomrat"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.2</baseHealthScale>
 		</value>
@@ -279,7 +279,7 @@
 	<!-- ========== Raccoon ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Raccoon"]</xpath>
+		<xpath>*/ThingDef[defName="Raccoon"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -288,14 +288,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Raccoon"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Raccoon"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>3</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Raccoon"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Raccoon"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -327,14 +327,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Raccoon"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Raccoon"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.35</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Raccoon"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Raccoon"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.35</baseHealthScale>
 		</value>
@@ -343,7 +343,7 @@
 	<!-- ========== Rat ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Rat"]</xpath>
+		<xpath>*/ThingDef[defName="Rat"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>QuadrupedLow</bodyType>
@@ -352,14 +352,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rat"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Rat"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>2.3</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rat"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Rat"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -391,14 +391,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rat"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Rat"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.2</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rat"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Rat"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.2</baseHealthScale>
 		</value>

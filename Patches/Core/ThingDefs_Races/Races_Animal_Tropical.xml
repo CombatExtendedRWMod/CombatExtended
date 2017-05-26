@@ -4,7 +4,7 @@
 	<!-- ========== Cobra ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Cobra"]</xpath>
+		<xpath>*/ThingDef[defName="Cobra"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Serpentine</bodyType>
@@ -13,14 +13,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cobra"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Cobra"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>3.84</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cobra"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Cobra"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -46,7 +46,7 @@
 	<!-- ========== Monkey ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Monkey"]</xpath>
+		<xpath>*/ThingDef[defName="Monkey"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Monkeylike</bodyType>
@@ -55,14 +55,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Monkey"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Monkey"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>5</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Monkey"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Monkey"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -86,7 +86,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Monkey"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Monkey"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.35</baseHealthScale>
 		</value>
@@ -95,7 +95,7 @@
 	<!-- ========== Boomalope ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Boomalope"]</xpath>
+		<xpath>*/ThingDef[defName="Boomalope"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -104,7 +104,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Boomalope"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Boomalope"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -123,11 +123,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName="Boomalope"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Boomalope"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName="Boomalope"]</xpath>
+      	<xpath>*/ThingDef[defName="Boomalope"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -136,7 +136,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Boomalope"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Boomalope"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_ShearableRenameable">
 			  <compClass>CombatExtended.CompShearableRenameable</compClass>

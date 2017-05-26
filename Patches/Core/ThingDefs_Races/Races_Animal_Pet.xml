@@ -4,7 +4,7 @@
 	<!-- ========== YorkshireTerrier ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="YorkshireTerrier"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="YorkshireTerrier"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -36,14 +36,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="YorkshireTerrier"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="YorkshireTerrier"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.3</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="YorkshireTerrier"]</xpath>
+		<xpath>*/ThingDef[defName="YorkshireTerrier"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -54,7 +54,7 @@
 	<!-- ========== Husky ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Husky"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Husky"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -86,21 +86,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Husky"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Husky"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.65</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Husky"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Husky"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.65</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Husky"]</xpath>
+		<xpath>*/ThingDef[defName="Husky"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -111,7 +111,7 @@
 	<!-- ========== LabradorRetriever ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="LabradorRetriever"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="LabradorRetriever"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -143,21 +143,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="LabradorRetriever"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="LabradorRetriever"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.65</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="LabradorRetriever"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="LabradorRetriever"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.65</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="LabradorRetriever"]</xpath>
+		<xpath>*/ThingDef[defName="LabradorRetriever"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -168,7 +168,7 @@
 	<!-- ========== Cat ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cat"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Cat"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -224,14 +224,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Cat"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Cat"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.23</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Cat"]</xpath>
+		<xpath>*/ThingDef[defName="Cat"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>

@@ -2,31 +2,28 @@
 <Patch>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="FilthFuel"]/thingClass</xpath>
+		<xpath>*/ThingDef[defName="FilthFuel"]/thingClass</xpath>
 		<value>
 			<thingClass>CombatExtended.IncendiaryFuel</thingClass>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="FilthFuel"]/statBases/MaxHitPoints</xpath>
+		<xpath>*/ThingDef[defName="FilthFuel"]/statBases/MaxHitPoints</xpath>
 		<value>
 			<MaxHitPoints>75</MaxHitPoints>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="FilthFuel"]//Flammability</xpath>
+		<xpath>*/ThingDef[defName="FilthFuel"]/statBases/Flammability</xpath>
 		<value>
 			<Flammability>5</Flammability>
 		</value>
 	</Operation>
 
-	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="FilthFuel"]//rainWashes</xpath>
-		<value>
-			<rainWashes>false</rainWashes>
-		</value>
+	<Operation Class="PatchOperationRemove">
+		<xpath>*/ThingDef[defName="FilthFuel"]/filth/rainWashes</xpath>
 	</Operation>
 
 </Patch>

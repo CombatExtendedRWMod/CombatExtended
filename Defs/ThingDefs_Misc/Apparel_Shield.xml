@@ -74,7 +74,7 @@
       <texPath>Things/Apparel/BallisticShield/BallisticShield</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <costStuffCount>120</costStuffCount>
+    <costStuffCount>90</costStuffCount>
     <stuffCategories>
       <li>Steeled</li>
     </stuffCategories>

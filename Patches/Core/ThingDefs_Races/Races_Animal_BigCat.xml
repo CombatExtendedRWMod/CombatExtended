@@ -4,7 +4,7 @@
 	<!-- ========== Big Cat Base ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[@Name="BigCatThingBase"]</xpath>
+		<xpath>*/ThingDef[@Name="BigCatThingBase"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -13,7 +13,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="BigCatThingBase"]//verbs</xpath>
+		<xpath>*/ThingDef[@Name="BigCatThingBase"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -71,14 +71,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="BigCatThingBase"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[@Name="BigCatThingBase"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.85</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[@Name="BigCatThingBase"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[@Name="BigCatThingBase"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.8</baseHealthScale>
 		</value>
@@ -87,7 +87,7 @@
 	<!-- ========== Lynx ========== -->
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Lynx"]</xpath>
+		<xpath>*/ThingDef[defName="Lynx"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -96,7 +96,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Lynx"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Lynx"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -154,7 +154,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Lynx"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Lynx"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.75</baseHealthScale>
 		</value>

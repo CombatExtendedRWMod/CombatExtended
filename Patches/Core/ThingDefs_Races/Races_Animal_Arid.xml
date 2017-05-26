@@ -4,14 +4,14 @@
 	<!-- ========== Muffalo ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Muffalo"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Muffalo"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>5</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Muffalo"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Muffalo"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -27,14 +27,14 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Muffalo"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Muffalo"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>2</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Muffalo"]</xpath>
+		<xpath>*/ThingDef[defName="Muffalo"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -45,14 +45,14 @@
 	<!-- ========== Gazelle ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gazelle"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Gazelle"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>6.2</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gazelle"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Gazelle"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -76,21 +76,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gazelle"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Gazelle"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.5</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Gazelle"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Gazelle"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.5</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Gazelle"]</xpath>
+		<xpath>*/ThingDef[defName="Gazelle"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -101,7 +101,7 @@
 	<!-- ========== Iguana ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Iguana"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Iguana"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -133,21 +133,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Iguana"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Iguana"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>0.28</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Iguana"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Iguana"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>0.3</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Iguana"]</xpath>
+		<xpath>*/ThingDef[defName="Iguana"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Serpentine</bodyType>
@@ -158,14 +158,14 @@
 	<!-- ========== Rhinoceros ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rhinoceros"]//MoveSpeed</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/statBases/MoveSpeed</xpath>
 		<value>
 			<MoveSpeed>5.5</MoveSpeed>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Rhinoceros"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/statBases</xpath>
 		<value>
 			<ArmorRating_Blunt>0.13</ArmorRating_Blunt>
 			<ArmorRating_Sharp>0.15</ArmorRating_Sharp>
@@ -173,7 +173,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rhinoceros"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/verbs</xpath>
 		<value>
 			<verbs>
 			  <li Class="CombatExtended.VerbPropertiesCE">
@@ -198,35 +198,35 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rhinoceros"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>2.1</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rhinoceros"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>2.3</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rhinoceros"]//leatherStatFactors/ArmorRating_Blunt</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/race/leatherStatFactors/ArmorRating_Blunt</xpath>
 		<value>
 			<ArmorRating_Blunt>1.2</ArmorRating_Blunt>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Rhinoceros"]//leatherStatFactors/ArmorRating_Sharp</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]/race/leatherStatFactors/ArmorRating_Sharp</xpath>
 		<value>
 			<ArmorRating_Sharp>1.5</ArmorRating_Sharp>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Rhinoceros"]</xpath>
+		<xpath>*/ThingDef[defName="Rhinoceros"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>
@@ -237,7 +237,7 @@
 	<!-- ========== Dromedary ========== -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Dromedary"]//verbs</xpath>
+		<xpath>*/ThingDef[defName="Dromedary"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -261,21 +261,21 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Dromedary"]//baseBodySize</xpath>
+		<xpath>*/ThingDef[defName="Dromedary"]/race/baseBodySize</xpath>
 		<value>
 			<baseBodySize>1.1</baseBodySize>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Dromedary"]//baseHealthScale</xpath>
+		<xpath>*/ThingDef[defName="Dromedary"]/race/baseHealthScale</xpath>
 		<value>
 			<baseHealthScale>1</baseHealthScale>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAddModExtension">
-		<xpath>//ThingDef[defName="Dromedary"]</xpath>
+		<xpath>*/ThingDef[defName="Dromedary"]</xpath>
 		<value>
 			<li Class="CombatExtended.RacePropertiesExtensionCE">
 				<bodyType>Quadruped</bodyType>

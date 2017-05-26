@@ -46,6 +46,7 @@ namespace CombatExtended.Harmony
                         if (!obstructReport.NullOrEmpty()) stringBuilder.Append(" " + obstructReport + ".");
                     }
                 }
+                __result = stringBuilder.ToString();
             }
         }
     }
