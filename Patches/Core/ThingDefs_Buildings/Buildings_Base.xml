@@ -54,11 +54,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[@Name="FurnitureBase"]/damageMultipliers</xpath>
+      	<xpath>*/ThingDef[@Name="FurnitureBase"]/damageMultipliers</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[@Name="FurnitureBase"]</xpath>
+      	<xpath>*/ThingDef[@Name="FurnitureBase"]</xpath>
       	<value>
         	<damageMultipliers />
       	</value>
@@ -67,7 +67,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[@Name="FurnitureBase"]/damageMultipliers</xpath>
+		<xpath>*/ThingDef[@Name="FurnitureBase"]/damageMultipliers</xpath>
 		<value>
 			<li>
 			  <damageDef>Bomb</damageDef>

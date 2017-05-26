@@ -27,7 +27,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationRemove">
-		<xpath>*/ThingDef[defName="TurretGun"]//li[@Class = "CompProperties_Explosive"]</xpath>
+		<xpath>*/ThingDef[defName="TurretGun"]/comps/li[@Class = "CompProperties_Explosive"]</xpath>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">

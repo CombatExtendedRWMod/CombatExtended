@@ -4,7 +4,7 @@
   <!-- ========== Patch statOffsets ========== -->
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>/GoJuice/HediffDef[defName="GoJuiceHigh"]//stages/li[1]</xpath>
+  	<xpath>/GoJuice/HediffDef[defName="GoJuiceHigh"]/stages/li[1]</xpath>
   	<value>
       <statOffsets>
         <Suppressability>-0.75</Suppressability>
@@ -13,7 +13,7 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>/Yayo/HediffDef[defName="YayoHigh"]//stages/li[1]</xpath>
+  	<xpath>/Yayo/HediffDef[defName="YayoHigh"]/stages/li[1]</xpath>
   	<value>
       <statOffsets>
         <Suppressability>-0.5</Suppressability>

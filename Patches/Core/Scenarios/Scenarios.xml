@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 	<Operation Class="PatchOperationAdd">
-		<xpath>*/ScenarioDef[defName="Crashlanded"]//parts</xpath>
+		<xpath>*/ScenarioDef[defName="Crashlanded"]/scenario/parts</xpath>
 		<value>
 			<li Class="ScenPart_StartingThing_Defined">
 			  <def>StartingThing_Defined</def>
@@ -17,7 +17,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>*/ScenarioDef[defName="TheRichExplorer"]//parts</xpath>
+		<xpath>*/ScenarioDef[defName="TheRichExplorer"]/scenario/parts</xpath>
 		<value>
 			<li Class="ScenPart_StartingThing_Defined">
 			  <def>StartingThing_Defined</def>

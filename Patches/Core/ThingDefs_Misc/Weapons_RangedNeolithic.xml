@@ -6,14 +6,14 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bow_Short"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Bow_Short"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
 			<RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Bow_Short"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Bow_Short"]/statBases</xpath>
 		<value>
 			<SightsEfficiency>0.35</SightsEfficiency>
 			<ShotSpread>1</ShotSpread>
@@ -23,7 +23,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bow_Short"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Bow_Short"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -44,11 +44,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName="Bow_Short"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Bow_Short"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName="Bow_Short"]</xpath>
+      	<xpath>*/ThingDef[defName="Bow_Short"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -57,7 +57,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Bow_Short"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Bow_Short"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 				<ammoSet>AmmoSet_Arrow</ammoSet>
@@ -72,7 +72,7 @@
 	<!-- Add tags -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Bow_Short"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Bow_Short"]/weaponTags</xpath>
 		<value>
 			<li>CE_Bow</li>
 		</value>
@@ -83,14 +83,14 @@
 	<!-- Patch stats -->
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bow_Great"]/statBases/RangedWeapon_Cooldown</xpath>
+		<xpath>*/ThingDef[defName="Bow_Great"]/statBases/RangedWeapon_Cooldown</xpath>
 		<value>
 			<RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
 		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Bow_Great"]/statBases</xpath>
+		<xpath>*/ThingDef[defName="Bow_Great"]/statBases</xpath>
 		<value>
 			<SightsEfficiency>0.35</SightsEfficiency>
 			<ShotSpread>1</ShotSpread>
@@ -100,7 +100,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>//ThingDef[defName="Bow_Great"]/verbs</xpath>
+		<xpath>*/ThingDef[defName="Bow_Great"]/verbs</xpath>
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
@@ -121,11 +121,11 @@
   	<success>Always</success>
   	<operations>
     	<li Class="PatchOperationTest">
-      	<xpath>//ThingDef[defName="Bow_Great"]/comps</xpath>
+      	<xpath>*/ThingDef[defName="Bow_Great"]/comps</xpath>
       	<success>Invert</success>
     	</li>
     	<li Class="PatchOperationAdd">
-      	<xpath>//ThingDef[defName="Bow_Great"]</xpath>
+      	<xpath>*/ThingDef[defName="Bow_Great"]</xpath>
       	<value>
         	<comps />
       	</value>
@@ -134,7 +134,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Bow_Great"]/comps</xpath>
+		<xpath>*/ThingDef[defName="Bow_Great"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 				<ammoSet>AmmoSet_GreatArrow</ammoSet>
@@ -149,7 +149,7 @@
 	<!-- Add tags -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>//ThingDef[defName="Bow_Great"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Bow_Great"]/weaponTags</xpath>
 		<value>
 			<li>CE_Bow</li>
 		</value>
