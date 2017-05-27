@@ -31,7 +31,7 @@ namespace CombatExtended.Detours
             DangerUtility.NotifyDirectOrderingThisFrame(pawn);
 
             // ***** Beginning of drafted options *****
-            FloatMenuMakerMap.making = true;
+            FloatMenuMakerMap.making = true; // nothing obvious changed here from A16
             try
             {
                 if (pawn.Drafted)
@@ -213,7 +213,7 @@ namespace CombatExtended.Detours
             {
                 Thing t = current;
                 // Consume command
-                if (t.def.ingestible != null && pawn.RaceProps.CanEverEat(t) && t.IngestibleNow)
+                if (t.def.ingestible != null && pawn.RaceProps.CanEverEat(t) && t.IngestibleNow) // nothing obvious changed here from A16
                 {
                     string text;
                     if (t.def.ingestible.ingestCommandString.NullOrEmpty())
@@ -346,7 +346,7 @@ namespace CombatExtended.Detours
                     }
                 }
                 // Stabilize option
-                foreach(LocalTargetInfo curTarget in GenUI.TargetsAt(clickPos, TargetingParameters.ForRescue(pawn), true))
+                foreach(LocalTargetInfo curTarget in GenUI.TargetsAt(clickPos, TargetingParameters.ForRescue(pawn), true)) // !! This needs to be patched into A17
                 {
                     Pawn patient = (Pawn)curTarget.Thing;
                     if (patient.Downed 
