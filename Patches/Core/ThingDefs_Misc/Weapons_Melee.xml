@@ -110,11 +110,6 @@
 				  <hasStandardCommand>true</hasStandardCommand>
 				  <meleeDamageDef>Cut</meleeDamageDef>
 				</li>
-				<li>
-				  <verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
-				  <hasStandardCommand>true</hasStandardCommand>
-				  <meleeDamageDef>Stab</meleeDamageDef>
-				</li>
 			</verbs>
 		</value>
 	</Operation>
@@ -309,11 +304,6 @@
 				  <hasStandardCommand>true</hasStandardCommand>
 				  <meleeDamageDef>Cut</meleeDamageDef>
 				</li>
-				<li>
-				  <verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
-				  <hasStandardCommand>true</hasStandardCommand>
-				  <meleeDamageDef>Stab</meleeDamageDef>
-				</li>
 			</verbs>
 		</value>
 	</Operation>
@@ -416,11 +406,6 @@
 				  <verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
 				  <meleeDamageDef>Cut</meleeDamageDef>
-				</li>
-				<li>
-				  <verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
-				  <hasStandardCommand>true</hasStandardCommand>
-				  <meleeDamageDef>Stab</meleeDamageDef>
 				</li>
 			</verbs>
 		</value>

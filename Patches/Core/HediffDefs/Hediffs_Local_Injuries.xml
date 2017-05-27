@@ -4,9 +4,18 @@
 	<!-- Add CompStabilize to all injury and missing part hediffs -->
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>/HediffDefs/HediffDef[hediffClass = "Hediff_Injury" or hediffClass = "Hediff_MissingPart"]/comps</xpath>
+		<xpath>/HediffDefs/HediffDef[defName = "MissingBodyPart"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.HediffCompProperties_Stabilize" />
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/HediffDefs/HediffDef[@Name="InjuryBase"]</xpath>
+		<value>
+			<comps>
+				<li Class="CombatExtended.HediffCompProperties_Stabilize" />
+			</comps>
 		</value>
 	</Operation>
 

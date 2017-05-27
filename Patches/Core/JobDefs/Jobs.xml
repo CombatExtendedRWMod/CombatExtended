@@ -13,5 +13,16 @@
   		<driverClass>CombatExtended.JobDriver_Hunt</driverClass>
   	</value>
   </Operation>
+
+  <!-- Mark crouch jobs -->
+
+  <Operation Class="PatchOperationAddModExtension">
+    <xpath>*/JobDef[defName="AttackStatic" or defName="WaitCombat" or defName="ManTurret"]</xpath>
+    <value>
+      <li Class="CombatExtended.JobDefExtensionCE">
+        <isCrouchJob>true</isCrouchJob>
+      </li>
+    </value>
+  </Operation>
 </Patch>
 

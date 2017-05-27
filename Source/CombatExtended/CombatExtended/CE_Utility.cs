@@ -120,7 +120,7 @@ namespace CombatExtended
                 return false;
             }
             HediffComp_Stabilize comp = hediff.TryGetComp<HediffComp_Stabilize>();
-            return comp != null && comp.Stabilized;
+            return comp != null && !comp.Stabilized;
         }
 
         #endregion Misc

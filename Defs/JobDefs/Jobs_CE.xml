@@ -7,6 +7,11 @@
 		<defName>ReloadWeapon</defName>
 		<driverClass>CombatExtended.JobDriver_Reload</driverClass>
 		<reportString>Reloading FlagSource TargetB with AmmoType.</reportString>
+		<ModExtensions>
+			<li Class="CombatExtended.JobDefExtensionCE">
+			  <isCrouchJob>true</isCrouchJob>
+			</li>
+		</ModExtensions>
 	</JobDef>
 	
 	<JobDef>
@@ -33,6 +38,11 @@
 		<defName>ReloadTurret</defName>
 		<driverClass>CombatExtended.JobDriver_ReloadTurret</driverClass>
 		<reportString>Reloading TurretType TargetA with TargetB.</reportString>
+		<ModExtensions>
+			<li Class="CombatExtended.JobDefExtensionCE">
+			  <isCrouchJob>true</isCrouchJob>
+			</li>
+		</ModExtensions>
 	</JobDef>
   
   <JobDef>
@@ -40,6 +50,11 @@
     <driverClass>CombatExtended.JobDriver_Stabilize</driverClass>
     <reportString>Stabilizing.</reportString>
     <casualInterruptible>false</casualInterruptible>
+		<ModExtensions>
+			<li Class="CombatExtended.JobDefExtensionCE">
+			  <isCrouchJob>true</isCrouchJob>
+			</li>
+		</ModExtensions>
   </JobDef>
 	
 	<JobDef>

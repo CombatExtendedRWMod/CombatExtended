@@ -132,6 +132,20 @@
   </Operation>
 
   <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def="LeftShoulder"]/parts/li[def = "LeftArm"]/parts/li[def="LeftHumerus"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def="LeftShoulder"]/parts/li[def = "LeftArm"]/parts/li[def="LeftRadius"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
     <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "RightShoulder"]/coverage</xpath>
     <value>
       <coverage>0.085</coverage>
@@ -146,6 +160,20 @@
   </Operation>
 
   <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def="RightShoulder"]/parts/li[def = "RightArm"]/parts/li[def="RightHumerus"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def="RightShoulder"]/parts/li[def = "RightArm"]/parts/li[def="RightRadius"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
     <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "LeftLeg"]/coverage</xpath>
     <value>
       <coverage>0.1</coverage>
@@ -153,7 +181,49 @@
   </Operation>
 
   <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "LeftLeg"]/parts/li[def="LeftFemur"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "LeftLeg"]/parts/li[def="LeftTibia"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "LeftLeg"]/parts/li[def="LeftFoot"]/coverage</xpath>
+    <value>
+      <coverage>0.1</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
     <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "RightLeg"]/coverage</xpath>
+    <value>
+      <coverage>0.1</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "RightLeg"]/parts/li[def="RightFemur"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "RightLeg"]/parts/li[def="RightTibia"]/coverage</xpath>
+    <value>
+      <coverage>0.15</coverage>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/BodyDef[defName = "Human"]/corePart/parts/li[def = "RightLeg"]/parts/li[def="RightFoot"]/coverage</xpath>
     <value>
       <coverage>0.1</coverage>
     </value>
