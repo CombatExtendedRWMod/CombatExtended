@@ -36,7 +36,11 @@ namespace CombatExtended.Harmony
 
         public static void InitPatches()
         {
+            // Remove the remark on the following to debug all auto patches.
+            HarmonyInstance.DEBUG = true;
             instance.PatchAll(Assembly.GetExecutingAssembly());
+            // Keep the following remarked to also debug manual patches.
+            HarmonyInstance.DEBUG = false;
 
             // Manual patches
             PatchThingOwner();
