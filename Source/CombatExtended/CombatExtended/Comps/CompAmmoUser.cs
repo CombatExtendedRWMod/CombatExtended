@@ -116,7 +116,7 @@ namespace CombatExtended
                 return holder.TryGetComp<CompInventory>();
             }
         }
-        private IntVec3 position
+        private IntVec3 Position
         {
             get
             {
@@ -124,6 +124,15 @@ namespace CombatExtended
                 else if (turret != null) return turret.Position;
                 else if (holder != null) return holder.Position;
                 else return parent.Position;
+            }
+        }
+        private Map Map
+        {
+            get
+            {
+                if (holder != null) return holder.MapHeld;
+                else if (turret != null) return turret.MapHeld;
+                else return parent.MapHeld;
             }
         }
 
@@ -317,7 +326,7 @@ namespace CombatExtended
             {
             	// NOTE: If we get here from ThingContainer.TryAdd() it will have modified the ammoThing.stackCount to what it couldn't take.
                 Thing outThing;
-                if (!GenThing.TryDropAndSetForbidden(ammoThing, position, Find.VisibleMap, ThingPlaceMode.Near, out outThing, turret.Faction != Faction.OfPlayer))
+                if (!GenThing.TryDropAndSetForbidden(ammoThing, Position, Map, ThingPlaceMode.Near, out outThing, turret.Faction != Faction.OfPlayer))
                 {
                 	Log.Warning(String.Concat(this.GetType().Assembly.GetName().Name + " :: " + this.GetType().Name + " :: ",
                 	                         "Unable to drop ", ammoThing.LabelCap, " on the ground, thing was destroyed."));
@@ -351,7 +360,7 @@ namespace CombatExtended
         {
             if (Props.throwMote)
             {
-                MoteMaker.ThrowText(position.ToVector3Shifted(), Find.VisibleMap, "CE_OutOfAmmo".Translate() + "!");
+                MoteMaker.ThrowText(Position.ToVector3Shifted(), Find.VisibleMap, "CE_OutOfAmmo".Translate() + "!");
             }
             if (wielder != null && compInventory != null && (wielder.CurJob == null || wielder.CurJob.def != JobDefOf.Hunt)) compInventory.SwitchToNextViableWeapon();
         }
@@ -408,7 +417,7 @@ namespace CombatExtended
             }
             curMagCountInt = newMagCount;
             if (turret != null) turret.isReloading = false;
-            if (parent.def.soundInteract != null) parent.def.soundInteract.PlayOneShot(new TargetInfo(position,  Find.VisibleMap, false));
+            if (parent.def.soundInteract != null) parent.def.soundInteract.PlayOneShot(new TargetInfo(Position,  Find.VisibleMap, false));
         }
 
         private bool TryFindAmmoInInventory(out Thing ammoThing)

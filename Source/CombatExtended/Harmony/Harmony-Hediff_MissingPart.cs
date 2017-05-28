@@ -18,7 +18,7 @@ namespace CombatExtended.Harmony
             var hediff = Traverse.Create(__instance);
             __result = Current.ProgramState != ProgramState.Entry 
                 && hediff.Field("isFreshInt").GetValue<bool>()
-                && !hediff.Property("TicksAfterMissingBodyPartNoLongerFreshPassed").GetValue<bool>()
+                && !hediff.Property("TicksAfterNoLongerFreshPassed").GetValue<bool>()
                 && !__instance.Part.def.IsSolid(__instance.Part, __instance.pawn.health.hediffSet.hediffs) 
                 && !hediff.Property("ParentIsMissing").GetValue<bool>();
             return false;
