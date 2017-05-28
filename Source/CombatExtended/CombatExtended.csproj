@@ -225,6 +225,7 @@
     <Compile Include="Harmony\Harmony-Hediff_MissingPart.cs" />
     <Compile Include="Harmony\Harmony-ThingOwner.cs" />
     <Compile Include="Harmony\Harmony-TooltipUtility.cs" />
+    <Compile Include="Harmony\Harmony-VerbTracker_Patches.cs" />
     <Compile Include="Harmony\Harmony-WorkGiver_HunterHunt.cs" />
     <Compile Include="Harmony\HarmonyBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

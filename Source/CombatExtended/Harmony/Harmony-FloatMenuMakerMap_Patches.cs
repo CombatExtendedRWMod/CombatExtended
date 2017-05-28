@@ -11,6 +11,12 @@ using Verse.AI;
 
 namespace CombatExtended.Harmony
 {
+    /*
+     * The additional item to be inserted adds learning information for CE when a weapon is selected for equipping.
+     * The target is actually a nested (compiler generated) class' method.
+     * Used dynamic targetting in case the target assemly changes the name of the target class will most certainly change or even shift position (removing the ability to count).
+     * Looking for a signature (field by name/type) that identifies the desired class without looking at it's code.
+     */
     [HarmonyPatch]
     static class FloatMenuMakerMap_PatchKnowledge
     {
@@ -48,30 +54,19 @@ namespace CombatExtended.Harmony
     {
         static readonly string logPrefix = Assembly.GetExecutingAssembly().GetName().Name + " :: " + typeof(FloatMenuMakerMap_Modify_AddHumanlikeOrders).Name + " :: ";
 
-        /* Dev Notes:
-         * First target is to insert the Stabalize option to the float menu...
-         * target is after the IEnumerator for "CarryToCryptosleepCasket" is disposed in AddHumanLikeOrders()
-         * target insertion is before ForStrip.
-         * Flowing from top to bottom, looking for the following
-         * -ldstr "CarryToCryptosleepCasket"
-         * -callvirt Void Dispose()
-         * -endfinally
-         * in that order, insert after endfinally.
-         * 
-         * args needed?
-         * arg1 Vector3 clickpos
-         * arg2 Pawn pawn
-         * arg3 List<FloatMenuOption>
-         * <unknown> Messages, ignoring for now.
-         * no obvious locals needed.
-         * 
-         * after analysis, turns out I don't need an infix, can be done with a postfix.
+        /* 
+         * Opted for a postfix as the original Detour had the code inserted generally after other code had run and because we want the target's code
+         * to always run unmodified.
+         * There are two goals for this postfix, to add menu items for stabalizing a target and to add inventory pickup functions for pawns.
+         * -Both when right clicking on something with a pawn selected.
          */
+
         // __instance isn't apt, target is static.
         // __result isn't apt, target return is void.
         [HarmonyPostfix]
         static void AddMenuItems(Vector3 clickPos, Pawn pawn, List<FloatMenuOption> opts)
         {
+            // Stabilize
             if (pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
             {
                 foreach (LocalTargetInfo curTarget in GenUI.TargetsAt(clickPos, TargetingParameters.ForRescue(pawn), true)) // !! This needs to be patched into A17
@@ -112,6 +107,7 @@ namespace CombatExtended.Harmony
                 }
             }
 
+            // Item pickup.
             IntVec3 c = IntVec3.FromVector3(clickPos);
             CompInventory compInventory = pawn.TryGetComp<CompInventory>();
             if (compInventory != null)
@@ -190,13 +186,11 @@ namespace CombatExtended.Harmony
                 }
             }
         }
-        /* Dev Notes:
-         * 3 different decompilers, 3 very different views of the logic, usually they are pretty similar.  That compilicates things as none look like what CE has.
-         * Looking at the CE (Detour) code it looks like a check is done before allowing force wear.
+
+
+        /* Dev Notes (Don't need to read this, a short explanation is just before the method below):
+         * The IL of the region I'm interested in (As of RimWorld 0.17.6351.26908, generated via Harmony debug mode):
          * 
-         * Since none of the decompilers are sharing a common view not providing much of an example of the code version of what I'm attempting.
-         * 
-         * The IL of the region I'm interested in:
          * L_0b20: br Label #71 //end of previous logic block ("CannotWearBecauseOfMissingBodyParts")
          * // want to insert the new logic here...
          * L_0b25: Label #70    //Make sure this label is on our new logic block and not right here.
@@ -240,32 +234,17 @@ namespace CombatExtended.Harmony
          * L_0b8e: callvirt Verse.Map get_Map()
          * L_0b93: callvirt Boolean get_IsPlayerHome()
          * 
+         * A couple of routes, opted to allow the called new method to modify the list directly but could have altered the
+         * IL structure to store the returned object (or null) to the local variable, branch if not null to the list.add code.
+         * The path I went with should be easier to maintain.
          * 
-         * Patch concept:
-         * -Locate (ldstr "ForceWear"), store the label object and remove it from this instruction (modify the instruction)
-         * -Locate (callvirt Void Add(Verse.FloatMenuOption)).
-         * -On the next line, remember the label so we can jump to it in our logic.  If there isn't a label on the next instruction we've goofed, stop patching.
+         * New method call signature: (Pawn, Apparel, List<FloatMenuOption)
+         * In the target method that correspods to arg1, a field of a nested class (discovered dynamically via code inspection), and arg2.
          * 
-         * Patch code concept1:
-         * -Called method can return a Verse.FloatMenuOption.
-         * -If the call is null then allow the original code to run.
-         * -If the call is non-null then add (in IL) the returned object to the list (opts).
-         * 
-         * Patch code concept2: (since the list is an object it's mutable by the methods that recieve it as an arg, no need to worry about out)
-         * -Called method returns a bool.
-         * -If the call is false, skip the original code, the caller has already added the menu item to the list.
-         * -If the call is true, allow the original code to run, opts list wasn't changed.
-         * 
-         * Going with concept2... (since the call is static, ldarg0 is NOT an instance of the object this method holds)
-         * Signature of call:
-         * Pawn (arg1)
-         * Apparel (a field... complex, need to find the class, load the class, then load the field, don't know if loading the field replaces the class on the stack or not.  looks like yes.)
-         * List<FloatMenuOption> (arg2)
-         * 
-         * Detailed Patch Notes:
+         * Detailed Patch Notes (plan, kept in sync with the code below):
          * *Search Phase:
          * -Locate ldstr "ForceWear"
-         * --When found, store the label as an object. (mem1)
+         * --When found, store the List<Label>. (mem1)
          * -Start keeping a previous instruction cache.
          * -Locate ldfld RimWorld.Apparel apparel
          * --When found, store the previous instruction unaltered for re-use later. (mem2)
@@ -285,6 +264,16 @@ namespace CombatExtended.Harmony
          * --Modify the instruction we located, strip the label from it.
          * 
          */
+
+        /* The goal of this infix is to add a check for if the pawn is too loaded down with stuff (worn/inventory) before allowing them to wear
+         * something.
+         * Because all 3 decompilers I checked the Core code with gave me different sets of logic had to do the patch entirely from IL with no decent high
+         * level reference.  That made things a bit tougher, I've left most of my dev notes intact above but reading is mostly optional.
+         * When maintaining this patch will need to temporarily return all the unmodified instructions with Harmony debug mode enabled and compare
+         * the code block above (in dev notes) with what Harmony generated to locate the bug.  This patch *should* work fine if the section of
+         * FloatMenuMakerMap.AddHumanlikeOrders doesn't change in logic significantly.
+         * The label relocation is a little soft.
+         */
         [HarmonyTranspiler]
         static IEnumerable<CodeInstruction> Modify_ForceWear(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
         {
@@ -302,32 +291,44 @@ namespace CombatExtended.Harmony
 
             foreach (CodeInstruction instruction in instructions)
             {
+                // NOTE: The reverse order of the phases is important.
+
+                // -The next instruction found is expected to have a label.
                 if (searchPhase == 3)
                 {
                     if (instruction.labels != null)
                         branchLabel = instruction.labels;
                     break;
                 }
+
+                // -Locate callvirt Void Add(Verse.FloatMenuOption)
                 if (searchPhase == 2 && instruction.opcode == OpCodes.Callvirt && (instruction.operand as MethodInfo) != null && (instruction.operand as MethodInfo).Name == "Add"
                     && (previous.operand as LocalVariableInfo) != null && (previous.operand as LocalVariableInfo).LocalType == typeof(FloatMenuOption))
                     searchPhase = 3;
+
+                // -Locate ldfld RimWorld.Apparel apparel
                 if (searchPhase == 1 && instruction.opcode == OpCodes.Ldfld && (instruction.operand as FieldInfo) != null && (instruction.operand as FieldInfo).Name == "apparel")
                 {
                     apparelField1 = previous;
                     apparelField2 = instruction;
                     searchPhase = 2;
                 }
+
+                // -Locate ldstr "ForceWear"
                 if (searchPhase == 0 && instruction.opcode == OpCodes.Ldstr && (instruction.operand as String) != null && (instruction.operand as String).Equals(targetString))
                 {
                     startLabel = instruction.labels;
                     searchPhase = 1;
                 }
+
+                // -Start keeping a previous instruction cache.
                 if (searchPhase > 0 && searchPhase < 3)
                     previous = instruction;
             }
 
             if (branchLabel != null)
             {
+                // search succeeded, find our insertion point again and insert the patch.
                 foreach (CodeInstruction instruction in instructions)
                 {
                     if (!patched && instruction.opcode == OpCodes.Ldstr && (instruction.operand as String) != null && (instruction.operand as String).Equals(targetString))
@@ -343,7 +344,7 @@ namespace CombatExtended.Harmony
                         yield return new CodeInstruction(OpCodes.Ldarg_2);
                         // call
                         yield return new CodeInstruction(OpCodes.Call, typeof(FloatMenuMakerMap_Modify_AddHumanlikeOrders).GetMethod("ForceWearInventoryCheck", AccessTools.all));
-                        // branch if false
+                        // branch if return from call is false, indicates original code should not run.
                         yield return new CodeInstruction(OpCodes.Brfalse, branchLabel.First());
                         // modify the original labeled instruction to remove it's label.
                         instruction.labels.Clear();
@@ -360,6 +361,14 @@ namespace CombatExtended.Harmony
 
         }
 
+        /// <summary>
+        /// This method is a short segment of code originally from Detour_FloatMenuMakerMap.  Handles checking of the pawn has enough space to wear the item.
+        /// </summary>
+        /// <param name="pawn">Pawn which the FloatMenu is being generated for.</param>
+        /// <param name="apparel">Apparel which the player right clicked on with intent to have the pawn wear.</param>
+        /// <param name="opts">List of FloatMenuOption which this method may modify in the event the pawn can't wear the item.</param>
+        /// <returns>bool, true indicates the pawn CAN wear the item (and that opts is unmodified), false indicates the pawn cannot wear the item (and opts is modified).</returns>
+        /// <remarks>This method should be used exclusively with the Harmony infix patch since the patch is difficult to alter.  return and mutability MUST be maintained carefully.</remarks>
         static bool ForceWearInventoryCheck(Pawn pawn, Apparel apparel, List<FloatMenuOption> opts)
         {
             CompInventory compInventory = pawn.TryGetComp<CompInventory>();
