@@ -287,8 +287,6 @@ namespace CombatExtended.Harmony
             CodeInstruction apparelField2 = null;   // mem1
             List<Label> branchLabel = null;  // mem2
 
-            int tmpcount = 0;
-
             foreach (CodeInstruction instruction in instructions)
             {
                 // NOTE: The reverse order of the phases is important.

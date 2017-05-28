@@ -37,10 +37,10 @@ namespace CombatExtended.Harmony
         public static void InitPatches()
         {
             // Remove the remark on the following to debug all auto patches.
-            //HarmonyInstance.DEBUG = true;
+            HarmonyInstance.DEBUG = true;
             instance.PatchAll(Assembly.GetExecutingAssembly());
             // Keep the following remarked to also debug manual patches.
-            //HarmonyInstance.DEBUG = false;
+            HarmonyInstance.DEBUG = false;
 
             // Manual patches
             PatchThingOwner();
@@ -81,6 +81,18 @@ namespace CombatExtended.Harmony
         #endregion
 
         #region Utility_Methods
+        /// <summary>
+        /// Utility function to convert a nullable bool (bool?) into a bool (primitive).
+        /// </summary>
+        /// <param name="input">bool? (nullable bool)</param>
+        /// <returns>bool</returns>
+        internal static bool doCast(bool? input)
+        {
+            if (!input.HasValue)
+                return false;
+            return (bool)input;
+        }
+
         /// <summary>
         /// Return a CodeInstruction object with the correct opcode to fetch a local variable at a specific index.
         /// </summary>
