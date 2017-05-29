@@ -44,7 +44,7 @@ namespace CombatExtended
             if (!Props.fragments.NullOrEmpty() && GenGrid.InBounds(pos, map))
             {
                 Vector2 exactOrigin = new Vector2(parent.DrawPos.x, parent.DrawPos.z);
-                float height = CE_Utility.GetCollisionVertical(pos.GetEdifice(map)).max;
+                float height = (new CollisionVertical(pos.GetEdifice(map))).Max;
                 
                 foreach (ThingCountClass fragment in Props.fragments)
                 {
