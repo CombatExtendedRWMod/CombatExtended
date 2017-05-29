@@ -47,9 +47,9 @@ namespace CombatExtended.Harmony
      * L_003d: br Label #0
      * L_0042: Label #0
      * L_0042: ret
-     * 
      */
 
+    // Opted to do the logic and all in pure IL since speed is a bit of an issue so an additional unnecessary call (which would hold the logic) could be costly.
     [HarmonyPatch(typeof(VerbTracker), "VerbsTick")]
     static class Harmony_VerbTracker_Modify_VerbsTick
     {

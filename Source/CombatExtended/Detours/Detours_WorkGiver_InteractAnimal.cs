@@ -6,7 +6,7 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using UnityEngine;
-
+// there is an older partial harmony conversion of this... make sure this is well represented in the harmony patch.
 namespace CombatExtended.Detours
 {
     internal static class Detours_WorkGiver_InteractAnimal

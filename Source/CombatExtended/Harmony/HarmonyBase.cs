@@ -3,6 +3,7 @@ using Harmony;
 using Verse;
 using System;
 using System.Reflection.Emit;
+using System.Linq;
 
 /* Note to those unfamiliar with Reflection/Harmony (like me, ProfoundDarkness), operands have some specific types and it's useful to know these to make good patches (Transpiler).
  * Below I'm noting the operators and what type of operand I've observed.
@@ -12,6 +13,8 @@ using System.Reflection.Emit;
  * local variable operands (ex Ldloc_s, Stloc_s) == LocalVariableInfo
  * field operands (ex ldfld) == FieldInfo
  * method operands (ex call, callvirt) == MethodInfo
+ * For branching, if the operand is a branch the label will be a Label? (Label isn't nullable but since it's in an object it must be nullable).
+ * -Labels tend to look the same, use <instance_label>.GetHashCode() to determine WHICH label it is...
  */
 
 namespace CombatExtended.Harmony
@@ -60,6 +63,7 @@ namespace CombatExtended.Harmony
             var types = baseType.AllSubclassesNonAbstract().Add(baseType);
             foreach (Type current in types)
             {
+                Log.Message(string.Concat("PatchThingOwner type: ", current)); //TODO: ask why this method of patching.
                 var type = typeof(ThingOwner<>).MakeGenericType(current);
                 instance.Patch(type.GetMethod("TryAdd", new Type[] { typeof(Thing), typeof(bool) }), null, new HarmonyMethod(postfixTryAdd));
                 instance.Patch(type.GetMethod("Take", new Type[] { typeof(Thing), typeof(int) }), null, new HarmonyMethod(postfixTake));
@@ -81,6 +85,27 @@ namespace CombatExtended.Harmony
         #endregion
 
         #region Utility_Methods
+        /// <summary>
+        /// branchOps is used by isBranch utility method.
+        /// </summary>
+        private static readonly OpCode[] branchOps = {
+            OpCodes.Br, OpCodes.Br_S, OpCodes.Brfalse, OpCodes.Brfalse_S, OpCodes.Brtrue, OpCodes.Brtrue_S, // basic branches
+            OpCodes.Bge, OpCodes.Bge_S, OpCodes.Bge_Un, OpCodes.Bge_Un_S, OpCodes.Bgt, OpCodes.Bgt_S, OpCodes.Bgt_Un, OpCodes.Bgt_Un_S, // Branch Greater
+            OpCodes.Ble, OpCodes.Ble_S, OpCodes.Ble_Un, OpCodes.Ble_Un_S, OpCodes.Blt, OpCodes.Blt_S, OpCodes.Blt_Un, OpCodes.Blt_Un_S, // Branch Less
+            OpCodes.Beq, OpCodes.Beq_S, OpCodes.Bne_Un, OpCodes.Bne_Un_S // Branch Equality
+        };
+        /// <summary>
+        /// Simple check to see if the instruction is a branching instruction (and if so the operand should be a label)
+        /// </summary>
+        /// <param name="instruction">CodeInstruction provided by Harmony.</param>
+        /// <returns>bool, true means it is a branching instruction, false is it's not.</returns>
+        internal static bool isBranch(CodeInstruction instruction)
+        {
+            if (branchOps.Contains(instruction.opcode))
+                return true;
+            return false;
+        }
+
         /// <summary>
         /// Utility function to convert a nullable bool (bool?) into a bool (primitive).
         /// </summary>

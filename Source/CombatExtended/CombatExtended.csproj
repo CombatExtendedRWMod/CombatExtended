@@ -224,6 +224,7 @@
     <Compile Include="Harmony\Harmony-HediffComp_GetsOld.cs" />
     <Compile Include="Harmony\Harmony-HediffWithComps.cs" />
     <Compile Include="Harmony\Harmony-Hediff_MissingPart.cs" />
+    <Compile Include="Harmony\Harmony-Pawn_HealthTracker.cs" />
     <Compile Include="Harmony\Harmony-ThingOwner.cs" />
     <Compile Include="Harmony\Harmony-TooltipUtility.cs" />
     <Compile Include="Harmony\Harmony-VerbTracker_Patches.cs" />

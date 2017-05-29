@@ -70,30 +70,22 @@ namespace CombatExtended.Harmony
 
                         // change the mode so the store instruction that we found is retained.
                         patchPhase = 6;
-                        Log.Message("going to phase 6 (end)");
                     }
 
                     // find the branch false (or rather branch if null) instruction.
                     if (patchPhase == 3 && instruction.opcode == OpCodes.Brfalse)
-                    {
                         patchPhase = 4;
-                        Log.Message("going to phase 4");
-                    }
 
                     // find the instruction that gets HediffComp_TendDuration so we know where we are in the code some.
                     if (patchPhase == 2 && instruction.opcode == OpCodes.Call && HarmonyBase.doCast((instruction.operand as MethodInfo)?.ReturnType.Equals(typeof(HediffComp_TendDuration)))
                         && HarmonyBase.doCast((instruction.operand as MethodInfo)?.Name.Equals("TryGetComp")))
-                    {
                         patchPhase = 3;
-                        Log.Message("going to phase 3");
-                    }
 
                     // the next store event will be the local variable we want to save for later.
                     if (patchPhase == 1 && HarmonyBase.OpcodeStoreIndex(instruction) >= 0)
                     {
                         chanceLocalIndex = HarmonyBase.OpcodeStoreIndex(instruction);
                         patchPhase = 2;
-                        Log.Message("going to phase 2");
                     }
 
                     // search for and change the 0.2f float value to 1, should only be found once since it's stored to a local variable.
@@ -101,7 +93,6 @@ namespace CombatExtended.Harmony
                     {
                         instruction.operand = baseChance;
                         patchPhase = 1;
-                        Log.Message("going to phase 1");
                     }
 
                     // in phase 5 we are removing a whole heap of instructions and replacing them all with 1 call, so in that phase don't write any instructions out.
@@ -111,7 +102,6 @@ namespace CombatExtended.Harmony
                     if (patchPhase == 4)
                     {
                         patchPhase = 5;
-                        Log.Message("going to phase 5 (no more instructions)");
                     }
                 }
             }
