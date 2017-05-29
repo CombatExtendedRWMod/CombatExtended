@@ -69,24 +69,7 @@ namespace CombatExtended
             if (Props.explosionRadius > 0 && Props.explosionDamage > 0 && parent.def != null && GenGrid.InBounds(pos, map))
             {
                 // Can't use GenExplosion because it no longer allows setting damage amount
-                /*
-				GenExplosion.DoExplosion
-                    (pos,
-					map,
-					Props.explosionRadius * scaleFactor,
-					Props.explosionDamageDef,
-					instigator,
-					Props.soundExplode ?? Props.explosionDamageDef.soundExplosion,
-					parent.def, 
-					null,
-					Props.postExplosionSpawnThingDef,
-					Props.postExplosionSpawnChance,
-					Props.postExplosionSpawnThingCount, 
-					Props.applyDamageToExplosionCellsNeighbors, 
-					Props.preExplosionSpawnThingDef, 
-					Props.explosionSpawnChance,
-					Props.preExplosionSpawnThingCount);
-                */
+
                 // Copy-paste from GenExplosion
                 Explosion explosion = new Explosion();
                 explosion.position = pos;

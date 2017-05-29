@@ -47,7 +47,7 @@ namespace CombatExtended
         {
             get
             {
-                if (this.gunInt == null)
+                if (Gun == null)
                 {
                     return null;
                 }
@@ -72,7 +72,7 @@ namespace CombatExtended
         {
             get
             {
-                return this.gunInt.TryGetComp<CompEquippable>();
+                return Gun.TryGetComp<CompEquippable>();
             }
         }
         private bool WarmingUp
@@ -120,7 +120,7 @@ namespace CombatExtended
         {
             get
             {
-                if (compAmmo == null && gunInt != null) compAmmo = gunInt.TryGetComp<CompAmmoUser>();
+                if (compAmmo == null && Gun != null) compAmmo = Gun.TryGetComp<CompAmmoUser>();
                 return compAmmo;
             }
         }
@@ -128,7 +128,7 @@ namespace CombatExtended
         {
             get
             {
-                if (compFireModes == null && gunInt != null) compFireModes = gunInt.TryGetComp<CompFireModes>();
+                if (compFireModes == null && Gun != null) compFireModes = Gun.TryGetComp<CompFireModes>();
                 return compFireModes;
             }
         }
@@ -263,7 +263,7 @@ namespace CombatExtended
             {
                 stringBuilder.AppendLine(inspectString);
             }
-            stringBuilder.AppendLine("GunInstalled".Translate() + ": " + this.gunInt.LabelCap);
+            stringBuilder.AppendLine("GunInstalled".Translate() + ": " + this.Gun.LabelCap);
             if (this.GunCompEq.PrimaryVerb.verbProps.minRange > 0f)
             {
                 stringBuilder.AppendLine("MinimumRange".Translate() + ": " + this.GunCompEq.PrimaryVerb.verbProps.minRange.ToString("F0"));
