@@ -251,7 +251,7 @@ namespace CombatExtended
             Scribe_Values.Look(ref burstWarmupTicksLeft, "burstWarmupTicksLeft", 0);
             Scribe_Values.Look(ref isReloading, "isReloading", false);
             Scribe_Values.Look(ref ticksUntilAutoReload, "ticksUntilAutoReload", 0);
-            Scribe_Deep.Look(ref gunInt, "gun");
+            //Scribe_Deep.Look(ref gunInt, "gunInt");
         }
 
         // Replaced vanilla loaded text with CE reloading
@@ -380,7 +380,7 @@ namespace CombatExtended
             if (CompAmmo != null)
             {
                 CompAmmo.turret = this;
-                if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
+                //if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
             }
         }
         
@@ -397,10 +397,12 @@ namespace CombatExtended
         {
             base.Tick();
             if (ticksUntilAutoReload > 0) ticksUntilAutoReload--;   // Reduce time until we can auto-reload
+            /*
             if (!CanSetForcedTarget && forcedTarget.IsValid)
             {
                 ResetForcedTarget();
             }
+            */
             if (!CanToggleHoldFire)
             {
                 holdFire = false;
@@ -543,7 +545,7 @@ namespace CombatExtended
                         if (CompAmmo.currentAmmo == CompAmmo.selectedAmmo) amount -= CompAmmo.curMagCount;
                         if (inventory.container.TryDrop(ammo, this.Position, this.Map, ThingPlaceMode.Direct, Mathf.Min(ammo.stackCount, amount), out droppedAmmo))
                         {
-                            reloadJob = new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), this, droppedAmmo) { count = droppedAmmo.stackCount };
+                            reloadJob = new Job(CE_JobDefOf.ReloadTurret, this, droppedAmmo) { count = droppedAmmo.stackCount };
                         }
                     }
                 }

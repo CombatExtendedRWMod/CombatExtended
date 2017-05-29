@@ -7,11 +7,11 @@ using Verse.AI;
 
 namespace CombatExtended
 {
-    class JobGiver_RunForCover : ThinkNode_JobGiver
+    public static class SuppressionUtility
     {
         public const float maxCoverDist = 10f; //Maximum distance to run for cover to
 
-        protected override Job TryGiveJob(Pawn pawn)
+        public static Job GetRunForCoverJob(Pawn pawn)
         {
             //Calculate cover position
             CompSuppressable comp = pawn.TryGetComp<CompSuppressable>();
@@ -44,7 +44,7 @@ namespace CombatExtended
             };
         }
 
-        public static bool GetCoverPositionFrom(Pawn pawn, IntVec3 fromPosition, float maxDist, out IntVec3 coverPosition)
+        private static bool GetCoverPositionFrom(Pawn pawn, IntVec3 fromPosition, float maxDist, out IntVec3 coverPosition)
         {
             List<IntVec3> cellList = new List<IntVec3>(GenRadial.RadialCellsAround(pawn.Position, maxDist, true));
             IntVec3 bestPos = pawn.Position;

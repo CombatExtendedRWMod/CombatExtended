@@ -665,9 +665,7 @@ namespace CombatExtended
                     {
                         cover = cell.GetCover(caster.Map);
                     }
-                    if (cover != null 
-                        && (cover is Pawn || (cover.def.Fillage == FillCategory.Partial && !cover.IsTree())) 
-                        && !cover.Position.AdjacentTo8Way(sourceSq))
+                    if (cover != null && !cover.IsTree() && !cover.Position.AdjacentTo8Way(sourceSq))
                     {
                         Bounds bounds = CE_Utility.GetBoundsFor(cover);
 

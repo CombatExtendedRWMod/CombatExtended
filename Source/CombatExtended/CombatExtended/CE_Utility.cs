@@ -145,10 +145,6 @@ namespace CombatExtended
 
         #region Physics
         public const float gravityConst = 9.8f;
-
-        // These jobs will have pawns crouch down to reduce their collision height
-        // TODO: Rework this into an XML flag so we don't have to rely on a hardcoded list of jobs
-        private static readonly JobDef[] crouchJobs = { JobDefOf.AttackStatic, JobDefOf.WaitCombat, JobDefOf.ManTurret, CE_JobDefOf.ReloadTurret, CE_JobDefOf.ReloadWeapon, CE_JobDefOf.Stabilize };
         
         /// <summary>
         /// Calculates the range reachable with a projectile of speed <i>velocity</i> fired at <i>angle</i> from height <i>shotHeight</i>. Does not take into account air resistance.

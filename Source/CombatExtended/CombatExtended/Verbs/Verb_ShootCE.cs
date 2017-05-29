@@ -104,7 +104,7 @@ namespace CombatExtended
         }
 
         // Whether our shooter is currently under suppressive fire
-        private bool IsSuppressed => caster.TryGetComp<CompSuppressable>()?.isSuppressed ?? false;
+        private bool IsSuppressed => CasterPawn?.TryGetComp<CompSuppressable>()?.isSuppressed ?? false;
 
         #endregion
 

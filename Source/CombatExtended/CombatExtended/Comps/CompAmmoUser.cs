@@ -281,17 +281,7 @@ namespace CombatExtended
             	if (reloadJob == null)
             		return;
             	reloadJob.playerForced = true;
-
-                // Store the current job so we can reassign it later
-                if (wielder.Faction == Faction.OfPlayer
-                    && wielder.CurJob != null
-                       && (wielder.CurJob.def == JobDefOf.AttackStatic || wielder.CurJob.def == JobDefOf.Goto || wielder.CurJob.def == JobDefOf.Hunt))
-                {
-                    if (wielder.CurJob.targetA.HasThing) storedTarget = new LocalTargetInfo(wielder.CurJob.targetA.Thing);
-                    else storedTarget = new LocalTargetInfo(wielder.CurJob.targetA.Cell);
-                    storedJobDef = wielder.CurJob.def;
-                }
-                AssignJobToWielder(reloadJob);
+                wielder.jobs.StartJob(reloadJob, JobCondition.InterruptForced, null, true, false);
             }
         }
         

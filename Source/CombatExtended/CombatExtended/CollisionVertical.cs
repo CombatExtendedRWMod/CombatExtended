@@ -10,7 +10,8 @@ namespace CombatExtended
 {
     public struct CollisionVertical
     {
-        private const float treeCollisionHeight = 5f;        // Trees are this tall
+        private const float TreeCollisionHeight = 5f;        // Trees are this tall
+        private const float WallCollisionHeight = 2f;       // Walls are this tall
         public const float BodyRegionBottomHeight = 0.45f;  // Hits below this percentage will impact the corresponding body region
         public const float BodyRegionMiddleHeight = 0.85f;  // This also sets the altitude at which pawns hold their guns
 
@@ -36,9 +37,14 @@ namespace CombatExtended
             }
             if (thing is Building)
             {
+                if (thing.def.Fillage == FillCategory.Full)
+                {
+                    heightRange = new FloatRange(0, WallCollisionHeight);
+                    return;
+                }
                 if (thing.IsTree())
                 {
-                    heightRange = new FloatRange(0, treeCollisionHeight);    // Check for trees
+                    heightRange = new FloatRange(0, TreeCollisionHeight);    // Check for trees
                     return;
                 }
                 float fillPercent = thing.def.fillPercent;

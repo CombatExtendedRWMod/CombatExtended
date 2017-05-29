@@ -204,7 +204,7 @@
     <Compile Include="CombatExtended\Gizmos\GizmoAmmoStatus.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_HunkerDown.cs" />
     <Compile Include="CombatExtended\Jobs\JobGiver_HunkerDown.cs" />
-    <Compile Include="CombatExtended\Jobs\JobGiver_RunForCover.cs" />
+    <Compile Include="CombatExtended\SuppressionUtility.cs" />
     <Compile Include="CombatExtended\Projectiles\ProjectileCE.cs" />
     <Compile Include="CombatExtended\Projectiles\ProjectilePropertiesCE.cs" />
     <Compile Include="CombatExtended\ShiftVecReport.cs" />
