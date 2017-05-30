@@ -26,11 +26,10 @@ using Verse.AI;
 
 namespace CombatExtended.Harmony
 {
-    [HarmonyPatch(typeof(JobDriver_Wait))]
-    [HarmonyPatch("CheckForAutoAttack")]
-    static class Harmony_JobDriverWait_CheckForAutoAttack_Patch
+    [HarmonyPatch(typeof(JobDriver_Wait), "CheckForAutoAttack")]
+    static class Harmony_JobDriverWait_CheckForAutoAttack
     {
-        static readonly string logPrefix = Assembly.GetExecutingAssembly().GetName().Name + " :: " + typeof(Harmony_JobDriverWait_CheckForAutoAttack_Patch).Name + " :: ";
+        static readonly string logPrefix = Assembly.GetExecutingAssembly().GetName().Name + " :: " + typeof(Harmony_JobDriverWait_CheckForAutoAttack).Name + " :: ";
         static DynamicMethod Patched_ClosestThingTarget_Global = null;
 
         /// <summary>
@@ -76,7 +75,7 @@ namespace CombatExtended.Harmony
                 {
                     CodeInstruction tmp = HarmonyBase.MakeLocalLoadInstruction(verbLocalIndex);
                     code[i++] = HarmonyBase.MakeLocalLoadInstruction(verbLocalIndex);
-                    code.Insert(i, new CodeInstruction(OpCodes.Call, typeof(Harmony_JobDriverWait_CheckForAutoAttack_Patch).GetMethod("GetValidTargetPredicate", AccessTools.all)));
+                    code.Insert(i, new CodeInstruction(OpCodes.Call, typeof(Harmony_JobDriverWait_CheckForAutoAttack).GetMethod("GetValidTargetPredicate", AccessTools.all)));
                     break;
                 }
             }
