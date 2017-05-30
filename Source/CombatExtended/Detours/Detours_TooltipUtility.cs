@@ -5,7 +5,7 @@ using System.Text;
 using RimWorld;
 using Verse;
 using UnityEngine;
-
+// this appears to have been converted to Harmony.
 namespace CombatExtended.Detours
 {
     internal static class Detours_TooltipUtility

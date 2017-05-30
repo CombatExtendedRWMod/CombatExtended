@@ -6,7 +6,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 using UnityEngine;
-
+// This doesn't appear to require harmony conversion as another patch took care of this.
 namespace CombatExtended.Detours
 {
     internal static class Detours_Pawn_ApparelTracker

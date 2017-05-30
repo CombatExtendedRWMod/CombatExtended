@@ -6,7 +6,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 using UnityEngine;
-
+// The detoured class no longer exists and an existing harmony patch handles what this detour did.
 namespace CombatExtended.Detours
 {
     internal static class Detours_ThingContainer

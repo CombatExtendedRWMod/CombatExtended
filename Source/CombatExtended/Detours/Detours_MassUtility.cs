@@ -2,7 +2,7 @@
 using System;
 using Verse;
 using UnityEngine;
-
+// according to issue #172 turning this into a patch isn't necessary.
 namespace CombatExtended
 {
     internal static class Detours_MassUtility

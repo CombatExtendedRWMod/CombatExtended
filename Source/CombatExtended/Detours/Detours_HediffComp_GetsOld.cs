@@ -7,7 +7,7 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 using HugsLib.Source.Detour;
-
+// This has been converted to harmony (I think), looks like the original code came from a much earlier version of RimWorld. Harmony patch is an estimate of intent.
 namespace CombatExtended.Detours
 {
     internal static class Detours_HediffComp_GetsOld
