@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
-
+// no current plans to get this one up and running unless it turns out the new A17 feature needs tweaking.
 namespace CombatExtended.Harmony
 {
     /* Somewhat complex patch...  If we JUST wanted to order by bleedrate it's easy, Harmony prefix of:

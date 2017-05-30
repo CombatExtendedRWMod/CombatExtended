@@ -8,7 +8,7 @@ using Verse;
 using Verse.AI;
 using UnityEngine;
 using HugsLib.Source.Detour;
-
+// This has been converted to Harmony.
 namespace CombatExtended.Detours
 {
     internal static class Detours_Pawn_HealthTracker
