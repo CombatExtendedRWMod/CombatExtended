@@ -339,7 +339,7 @@ namespace CombatExtended
             {
                 return false;
             }
-            List<Thing> mainThingList = new List<Thing>(base.Map.thingGrid.ThingsListAtFast(cell)).Where(t => t is Pawn || t.def.Fillage != FillCategory.None).ToList();
+            List<Thing> mainThingList = new List<Thing>(base.Map.thingGrid.ThingsListAtFast(cell)).Where(t => t.def.useHitPoints && (t is Pawn || t.def.Fillage != FillCategory.None)).ToList();
 
             //Find pawns in adjacent cells and append them to main list
             List<IntVec3> adjList = new List<IntVec3>();
@@ -399,12 +399,15 @@ namespace CombatExtended
                 if (Controller.settings.DebugShowTreeCollisionChance) MoteMaker.ThrowText(thing.Position.ToVector3Shifted(), thing.Map, chance.ToString());
                 if (!Rand.Chance(chance)) return false;
             }
-
-            var bounds = CE_Utility.GetBoundsFor(thing);
-            if (!bounds.IntersectRay(shotLine))
+            else
             {
-                return false;
+                var bounds = CE_Utility.GetBoundsFor(thing);
+                if (!bounds.IntersectRay(shotLine))
+                {
+                    return false;
+                }
             }
+
 
             if (DebugViewSettings.drawInterceptChecks) MoteMaker.ThrowText(thing.Position.ToVector3Shifted(), thing.Map, "x", Color.red);
             Impact(thing);
