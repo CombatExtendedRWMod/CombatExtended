@@ -13,7 +13,7 @@ namespace CombatExtended.Harmony
 	[HarmonyPatch(typeof(HediffComp_TendDuration))] // Target class for patching, generally required.
 	[HarmonyPatch("CompTended")] // Target method for patching, generally required.
 	[HarmonyPatch(new Type[] {typeof(float), typeof(int)})] // Target method signature (arguments), not generally required if there is only one method with the target name in the target class.
-	static class HediffComp_TendDuration_CompTended_Patch
+	static class HediffComp_TendDuration_CompTended
 	{
 		// can name the method something else but then requires the attribute [HarmonyTranspiler]
 		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
