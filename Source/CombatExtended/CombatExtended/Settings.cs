@@ -36,7 +36,7 @@ namespace CombatExtended
 
         // Debug settings - make sure all of these default to false for the release build
         private bool debugDrawPartialLoSChecks = false;
-        private bool debugEnableInventoryValidation = true;
+        private bool debugEnableInventoryValidation = false;
         private bool debugDrawTargetCoverChecks = false;
         private bool debugShowTreeCollisionChance = false;
 
@@ -61,7 +61,7 @@ namespace CombatExtended
 #if DEBUG
             // Debug settings
             Scribe_Values.Look(ref debugDrawPartialLoSChecks, "drawPartialLoSChecks", false);
-            Scribe_Values.Look(ref debugEnableInventoryValidation, "enableInventoryValidation", true);
+            Scribe_Values.Look(ref debugEnableInventoryValidation, "enableInventoryValidation", false);
             Scribe_Values.Look(ref debugDrawTargetCoverChecks, "debugDrawTargetCoverChecks", false);
             Scribe_Values.Look(ref debugShowTreeCollisionChance, "debugShowTreeCollisionChance", false);
 #endif
