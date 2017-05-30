@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using RimWorld;
+using System.Reflection;
+using System.Reflection.Emit;
+using Harmony;
 using Verse;
+using RimWorld;
 using Verse.AI;
 using UnityEngine;
-using Harmony;
 
 namespace CombatExtended.Harmony
 {
-    [HarmonyPatch(typeof(WorkGiver_HunterHunt), "TakeFoodForAnimalInteractJob")]
-    public class Harmony_WorkGiver_InteractAnimal_TakeFoodForAnimalInteractJob_Patch
+    [HarmonyPatch(typeof(WorkGiver_InteractAnimal), "TakeFoodForAnimalInteractJob", new Type[] { typeof(Pawn), typeof(Pawn) })]
+    public class Harmony_WorkGiver_InteractAnimal_TakeFoodForAnimalInteractJob
     {
         public static void Postfix(WorkGiver_InteractAnimal __instance, ref Job __result, Pawn pawn, Pawn tamee)
         {
@@ -26,6 +27,7 @@ namespace CombatExtended.Harmony
                     if (inventory.CanFitInInventory(__result.targetA.Thing, out maxCount))
                     {
                         __result.count = Mathf.Min(numToCarry, maxCount);
+                        pawn.Notify_HoldTrackerJob(__result);
                     }
                     else
                     {

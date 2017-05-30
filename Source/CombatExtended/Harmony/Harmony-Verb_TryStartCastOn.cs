@@ -6,8 +6,6 @@ using Harmony;
 using Verse;
 using Verse.AI;
 
-
-
 /*
  * Initial notes:
  * Trying to find a general solution to the reload after warmup problem (want reload before warmup).
@@ -18,49 +16,42 @@ using Verse.AI;
  
  namespace CombatExtended.Harmony
  {
- 	[HarmonyPatch(typeof(Verb))]
- 	[HarmonyPatch("TryStartCastOn")]
- 	[HarmonyPatch(new Type[] { typeof(LocalTargetInfo), typeof(bool), typeof(bool) } )]
-	static class Verb_TryStartCastOn_Patch
+ 	[HarmonyPatch(typeof(Verb), "TryStartCastOn", new Type[] { typeof(LocalTargetInfo), typeof(bool), typeof(bool) } )]
+	static class Harmony_Verb_TryStartCastOn
 	{
-		
 		[HarmonyTranspiler]
 		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
 		{
-			// targetting after the lines
-			// if (!this.TryFindShootLineFromTo(this.caster.Position, castTarg, out line))
-        	// {
+            // targetting after the lines
+            // if (!this.TryFindShootLineFromTo(this.caster.Position, castTarg, out line))
+            // {
             // 		return false;
             // }
-			
-            bool foundCall = false;
-            bool foundBranch = false;
-            bool donePatch = false;
-            object branchLabel = null;
+
+            int patchPhase = 0;
+
+            Label? branchLabel = null;
             
             foreach (CodeInstruction instruction in instructions)
             {
-            	if (foundBranch && !donePatch)
+            	if (patchPhase == 2)
             	{
-            		// this is where we want to insert our call and branch if it failed.
-            		CodeInstruction ldArg = new CodeInstruction(OpCodes.Ldarg_0);
-            		CodeInstruction call = new CodeInstruction(OpCodes.Call, typeof(Verb_TryStartCastOn_Patch).GetMethod("CheckReload", AccessTools.all));
-            		
-            		//CodeInstruction branch = new CodeInstruction(OpCodes.Brfalse, );
-            		yield return ldArg;
-            		yield return call;
+                    // this is where we want to insert our call and branch if it failed.
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+            		yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Harmony_Verb_TryStartCastOn), "CheckReload"));
             		yield return new CodeInstruction(OpCodes.Brfalse, branchLabel);
-            		donePatch = true;
+                    patchPhase = 3;
             	}
             	
-            	if (foundCall && !foundBranch && instruction.opcode == OpCodes.Brfalse)
+            	if (patchPhase == 1 && instruction.opcode == OpCodes.Brfalse)
             	{
-            		foundBranch = true;
-            		branchLabel = instruction.operand;
+                    patchPhase = 2;
+            		branchLabel = instruction.operand as Label?;
             	}
-            	
-            	if (!foundCall && instruction.opcode == OpCodes.Call && ((MethodInfo)instruction.operand).Name.Contains("TryFindShootLineFromTo"))
-            		foundCall = true;
+
+                if (patchPhase == 0 && instruction.opcode == OpCodes.Call // && HarmonyBase.doCast((instruction.operand as MethodInfo).MemberType.Equals(typeof(Verb))) // this condition isn't working for some unknown reason...
+                    && HarmonyBase.doCast((instruction.operand as MethodInfo).Name.Equals("TryFindShootLineFromTo")))
+                    patchPhase = 1;
             	
             	yield return instruction;
             }
@@ -71,11 +62,11 @@ using Verse.AI;
 		{
 			if (!(__instance is Verb_ShootCE || __instance is Verb_ShootCEOneUse))
 				return true; // no work to do as the verb isn't the right kind.
-			
+
 			CompAmmoUser gun = __instance.ownerEquipment.TryGetComp<CompAmmoUser>();
 			if (gun == null || !gun.hasMagazine || gun.curMagCount > 0)
 				return true; // gun isn't an ammo user that stores ammo internally or isn't out of bullets.
-			
+
 			// we got work to do at this point.
 			// Try starting the reload job.
 			gun.TryStartReload();
