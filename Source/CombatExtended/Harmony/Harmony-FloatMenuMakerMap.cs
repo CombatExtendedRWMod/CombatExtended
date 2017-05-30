@@ -73,7 +73,8 @@ namespace CombatExtended.Harmony
                 {
                     Pawn patient = (Pawn)curTarget.Thing;
                     if (patient.Downed
-                        && pawn.CanReserveAndReach(patient, PathEndMode.InteractionCell, Danger.Deadly)
+                        //&& pawn.CanReserveAndReach(patient, PathEndMode.InteractionCell, Danger.Deadly)
+                        && pawn.CanReach(patient, PathEndMode.InteractionCell, Danger.Deadly)
                         && patient.health.hediffSet.GetHediffsTendable().Any(h => h.CanBeStabilizied()))
                     {
                         if (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Doctor))
@@ -101,7 +102,7 @@ namespace CombatExtended.Harmony
                                     PlayerKnowledgeDatabase.KnowledgeDemonstrated(CE_ConceptDefOf.CE_Stabilizing, KnowledgeAmount.Total);
                                 }
                             };
-                            opts.Add(new FloatMenuOption(label, action, MenuOptionPriority.Default, null, patient));
+                            opts.Add(FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(label, action, MenuOptionPriority.Default, null, patient), pawn, patient, "ReservedBy"));
                         }
                     }
                 }
