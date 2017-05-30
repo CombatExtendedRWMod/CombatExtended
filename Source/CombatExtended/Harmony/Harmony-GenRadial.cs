@@ -16,11 +16,10 @@ namespace CombatExtended.Harmony
 	 */ 
 	
 	// NOTE: When using a complex patch (where Patch()) must be used, do not include any Harmony class Attributes.  Method Attributes are optional as the Patch() handles what type of patch something is.
-	[StaticConstructorOnStartup]
-	static class GenRadial_RadialPatternCount_Patch
+	internal static class Harmony_GenRadial_RadialPatternCount
 	{
 		// used for debug outputs (probably not used much).
-		static readonly string logPrefix = Assembly.GetExecutingAssembly().GetName().Name + " :: " + typeof(GenRadial_RadialPatternCount_Patch).Name + " :: ";
+		static readonly string logPrefix = Assembly.GetExecutingAssembly().GetName().Name + " :: " + typeof(Harmony_GenRadial_RadialPatternCount).Name + " :: ";
 		
 		// this replaces -60 and 60 in SetupRadialPattern()
 		const SByte newRadialRange = SByte.MaxValue; // set to max value as I was creeping up on it to make things look right.  Though no crashes the circle was squished on cardinal directions.
@@ -32,7 +31,7 @@ namespace CombatExtended.Harmony
 		// on further thought I think the limit should be about 68 percent of the maximum available by the loop in order to avoid squishing.
 		
 		// This is a complex patch so PatchAll() can't cover it.
-		static GenRadial_RadialPatternCount_Patch()
+		internal static void Patch()
 		{
 			IEnumerable<MethodInfo> methods = typeof(GenRadial).GetMethods(AccessTools.all).Where(m => m.DeclaringType == typeof(GenRadial));
 			// (ProfoundDarkness) I tried to get the individual default constructor via GetConstructor() but didn't know enough of what I was doing.
@@ -40,17 +39,17 @@ namespace CombatExtended.Harmony
 			MethodInfo redoMethod = null;
 			
 			// patch the constructor.
-			HarmonyBase.instance.Patch(constructor, null, null, new HarmonyMethod(typeof(GenRadial_RadialPatternCount_Patch), "Transpiler_RadialPatternCount"));
+			HarmonyBase.instance.Patch(constructor, null, null, new HarmonyMethod(typeof(Harmony_GenRadial_RadialPatternCount), "Transpiler_RadialPatternCount"));
 			
 			// patch all the methods.
 			foreach(MethodInfo method in methods)
 			{
-				HarmonyBase.instance.Patch(method, null, null, new HarmonyMethod(typeof(GenRadial_RadialPatternCount_Patch), "Transpiler_RadialPatternCount"));
+				HarmonyBase.instance.Patch(method, null, null, new HarmonyMethod(typeof(Harmony_GenRadial_RadialPatternCount), "Transpiler_RadialPatternCount"));
 				if (method.Name == "SetupRadialPattern")
 				{
 					// this method is useful to remember and we need to double patch it.
 					redoMethod = method;
-					HarmonyBase.instance.Patch(method, null, null, new HarmonyMethod(typeof(GenRadial_RadialPatternCount_Patch), "Transpiler_Range"));
+					HarmonyBase.instance.Patch(method, null, null, new HarmonyMethod(typeof(Harmony_GenRadial_RadialPatternCount), "Transpiler_Range"));
 				}
 			}
 			

@@ -222,6 +222,7 @@
     <Compile Include="CombatExtended\Verbs\Verb_ShootMortarCE.cs" />
     <Compile Include="CombatExtended\Verbs\Verb_ShootCEOneUse.cs" />
     <Compile Include="Harmony\Harmony-FloatMenuMakerMap.cs" />
+    <Compile Include="Harmony\Harmony-GenRadial_RadialPatternCount.cs" />
     <Compile Include="Harmony\Harmony-HediffComp_GetsOld.cs" />
     <Compile Include="Harmony\Harmony-HediffWithComps.cs" />
     <Compile Include="Harmony\Harmony-Hediff_MissingPart.cs" />
