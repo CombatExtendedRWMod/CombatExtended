@@ -15,8 +15,6 @@ namespace CombatExtended
         #region Fields
 
         private int curMagCountInt;
-        private LocalTargetInfo storedTarget = null;
-        private JobDef storedJobDef = null;
         private AmmoDef currentAmmoInt = null;
         public AmmoDef selectedAmmo;
         
@@ -338,10 +336,6 @@ namespace CombatExtended
         {
         	if (!hasMagazine || (holder == null && turret == null))
         		return null; // the job couldn't be created.
-        	
-            // blank the stored job details so we don't try to start another job after reloading.  Up to caller to set these after getting the reload job from us.
-        	storedTarget = null;
-            storedJobDef = null;
             
             return new Job(CE_JobDefOf.ReloadWeapon, holder, parent);
         }
@@ -436,19 +430,6 @@ namespace CombatExtended
                 }
             }
             return false;
-        }
-
-        public void TryContinuePreviousJob()
-        {
-            //If a job is stored, assign it
-            if (storedTarget != null && storedJobDef != null)
-            {
-                AssignJobToWielder(new Job(storedJobDef, storedTarget));
-
-                //Clear out stored job after assignment
-                storedTarget = null;
-                storedJobDef = null;
-            }
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
