@@ -145,14 +145,6 @@ namespace CombatExtended
 
         #region Physics
         public const float gravityConst = 9.8f;
-        public const float collisionHeightFactor = 1.0f;    // Global collision height multiplier
-        public const float treeCollisionHeight = 5f;        // Trees are this tall
-        public const float BodyRegionBottomHeight = 0.45f;  // Hits below this percentage will impact the corresponding body region
-        public const float BodyRegionMiddleHeight = 0.85f;  // This also sets the altitude at which pawns hold their guns
-
-        // These jobs will have pawns crouch down to reduce their collision height
-        // TODO: Rework this into an XML flag so we don't have to rely on a hardcoded list of jobs
-        private static readonly JobDef[] crouchJobs = { JobDefOf.AttackStatic, JobDefOf.WaitCombat, JobDefOf.ManTurret, CE_JobDefOf.ReloadTurret, CE_JobDefOf.ReloadWeapon, CE_JobDefOf.Stabilize };
         
         /// <summary>
         /// Calculates the range reachable with a projectile of speed <i>velocity</i> fired at <i>angle</i> from height <i>shotHeight</i>. Does not take into account air resistance.
@@ -210,74 +202,18 @@ namespace CombatExtended
             return Mathf.Atan((Mathf.Pow(velocity, 2f) + (flyOverhead ? 1f : -1f) * Mathf.Sqrt(Mathf.Pow(velocity, 4f) - gravityConst * (gravityConst * Mathf.Pow(range, 2f) + 2f * heightDifference * Mathf.Pow(velocity, 2f)))) / (gravityConst * range));
         }
 
-        /// <summary>
-        /// Returns the vertical collision box of a Thing
-        /// </summary>
-        /// <param name="thing">Thing (can be null) to have its collision vertical height returned.</param>
-        /// <param name="isEdifice">False by default. Set to true if thing is the edifice at the location thing.Position.</param>
-        /// <param name="isEdifice">False by default. Set to true to get the standing height of a pawn.</param>
-        public static FloatRange GetCollisionVertical(Thing thing, bool ignoreCrouch = false)
+        public static Bounds GetBoundsFor(Thing thing)
         {
             if (thing == null)
             {
-            	return new FloatRange(0f, 0f);
+                return new Bounds();
             }
-            if (thing is Building)
-            {
-                if (thing.def.category == ThingCategory.Plant && thing.def.altitudeLayer == AltitudeLayer.Building)
-                {
-                	return new FloatRange(0, treeCollisionHeight * collisionHeightFactor);    // Check for trees
-                }
-                float fillPercent = thing.def.fillPercent * collisionHeightFactor;
-                return new FloatRange(Mathf.Min(0f, fillPercent), Mathf.Max(0f, fillPercent));
-            }
-            float collisionHeight = 0f;
-            var pawn = thing as Pawn;
-            if (pawn != null)
-            {
-                collisionHeight = pawn.BodySize * GetCollisionBodyFactors(pawn).Second;
-                if (pawn.GetPosture() != PawnPosture.Standing)
-                {
-                    collisionHeight = pawn.BodySize > 1 ? pawn.BodySize - 0.8f : 0.2f * pawn.BodySize;
-                }
-                // Humanlikes in combat crouch to reduce their profile
-                else if (!ignoreCrouch && pawn.IsCrouching())
-                {
-                    float crouchHeight = BodyRegionBottomHeight * collisionHeight;  // Minimum height we can crouch down to
-
-                    // Find the highest adjacent cover
-                    Map map = pawn.Map;
-                    for (int i = 0; i < 8; i++)
-                    {
-                        IntVec3 c = pawn.Position + GenAdj.AdjacentCells[i];
-                        if (c.InBounds(map))
-                        {
-                            Thing cover = c.GetEdifice(map);
-                            if (cover?.def.Fillage == FillCategory.Partial && cover.def.fillPercent > crouchHeight)
-                            {
-                                crouchHeight = cover.def.fillPercent;
-                            }
-                        }
-                    }
-                    collisionHeight = Mathf.Min(collisionHeight, (crouchHeight + 0.01f) + collisionHeight * (1 - BodyRegionMiddleHeight));  // We crouch down only so far that we can still shoot over our own cover and never beyond our own body size
-                }
-            }
-            else
-            {
-            	collisionHeight = thing.def.fillPercent;
-            }
-            var edificeHeight = 0f;
-            if (thing.Map != null)
-            {
-                var edifice = thing.Position.GetEdifice(thing.Map);
-                if (edifice != null && edifice.GetHashCode() != thing.GetHashCode())
-                {
-                    edificeHeight = GetCollisionVertical(edifice).max;
-                }
-            }
-            float fillPercent2 = collisionHeight * collisionHeightFactor;
-            FloatRange floatRange = new FloatRange(Mathf.Min(edificeHeight, edificeHeight + fillPercent2), Mathf.Max(edificeHeight, edificeHeight + fillPercent2));
-            return floatRange;
+            var height = new CollisionVertical(thing);
+            var width = GetCollisionWidth(thing) * 2;
+            var thingPos = thing.DrawPos;
+            thingPos.y = height.Max - height.HeightRange.Span / 2;
+            Bounds bounds = new Bounds(thingPos, new Vector3(width, height.HeightRange.Span, width));
+            return bounds;
         }
 
         /// <summary>
@@ -301,7 +237,7 @@ namespace CombatExtended
         /// </summary>
         /// <param name="pawn">Which pawn to measure for</param>
         /// <returns>Width factor as First, height factor as second</returns>
-        private static Pair<float, float> GetCollisionBodyFactors(Pawn pawn)
+        public static Pair<float, float> GetCollisionBodyFactors(Pawn pawn)
         {
             if (pawn == null)
             {
@@ -335,31 +271,17 @@ namespace CombatExtended
         }
 
         /// <summary>
-        /// Calculates the BodyPartHeight based on how high a projectile impacted in relation to overall pawn height.
-        /// </summary>
-        /// <param name="thing">The Thing to check impact height on.</param>
-        /// <param name="projectileHeight">The height of the projectile at time of impact.</param>
-        /// <returns>For pawns, BodyPartHeight from Bottom to Top. For non-pawns, returns BodyPartHeight.Undefined</returns>
-        public static BodyPartHeight GetCollisionBodyHeight(Thing thing, float projectileHeight)
-        {
-            Pawn pawn = thing as Pawn;
-            if (pawn != null)
-            {
-                FloatRange pawnHeight = GetCollisionVertical(thing);
-                if (projectileHeight < pawnHeight.max * BodyRegionBottomHeight) return BodyPartHeight.Bottom;
-                else if (projectileHeight < pawnHeight.max * BodyRegionMiddleHeight) return BodyPartHeight.Middle;
-                return BodyPartHeight.Top;
-            }
-            return BodyPartHeight.Undefined;
-        }
-
-        /// <summary>
         /// Determines whether a pawn should be currently crouching down or not
         /// </summary>
         /// <returns>True for humanlike pawns currently doing a job during which they should be crouching down</returns>
         public static bool IsCrouching(this Pawn pawn)
         {
             return pawn.RaceProps.Humanlike && (pawn.CurJob?.def.GetModExtension<JobDefExtensionCE>()?.isCrouchJob ?? false);
+        }
+
+        public static bool IsTree(this Thing thing)
+        {
+            return thing.def.category == ThingCategory.Plant && thing.def.altitudeLayer == AltitudeLayer.Building;
         }
 
         #endregion Physics

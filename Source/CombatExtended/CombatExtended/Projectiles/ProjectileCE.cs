@@ -353,7 +353,7 @@ namespace CombatExtended
                 if (CE_Utility.ClosestDistBetween(origin, Destination, new Vector2(pawn.DrawPos.x, pawn.DrawPos.z)) <= CE_Utility.GetCollisionWidth(pawn))
                 {
                     //Check vertical distance
-                    if (CE_Utility.GetCollisionVertical(thing).Includes(height))
+                    if ((new CollisionVertical(thing)).HeightRange.Includes(height))
                     {
                         Impact(thing);
                         return true;
@@ -367,7 +367,7 @@ namespace CombatExtended
             }
             if (thing.def.fillPercent > 0)
             {
-                if (CE_Utility.GetCollisionVertical(thing).Includes(height))
+                if ((new CollisionVertical(thing)).HeightRange.Includes(height))
                 {
                     Impact(thing);
                     return true;

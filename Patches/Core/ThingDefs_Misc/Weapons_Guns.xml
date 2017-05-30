@@ -565,9 +565,9 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>*/ThingDef[defName="Gun_SniperRifle"]/statBases</xpath>
 		<value>
-      <SightsEfficiency>1.25</SightsEfficiency>
+      <SightsEfficiency>1.5</SightsEfficiency>
       <ShotSpread>0.04</ShotSpread>
-      <SwayFactor>1.3</SwayFactor>
+      <SwayFactor>2.09</SwayFactor>
       <Bulk>10.92</Bulk>
 		</value>
 	</Operation>
@@ -1435,7 +1435,7 @@
 	<Operation Class="PatchOperationReplace">
 		<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/projectile</xpath>
 		<value>
-			<projectile>
+			<projectile Class="CombatExtended.ProjectilePropertiesCE">
 				<damageDef>Bomb</damageDef>
 				<damageAmountBase>250</damageAmountBase>
 				<explosionRadius>7.8</explosionRadius>
@@ -1607,9 +1607,9 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>*/ThingDef[defName="Bullet_DoomsdayRocket"]/projectile</xpath>
+		<xpath>*/ThingDef[defName="Bullet_Rocket"]/projectile</xpath>
 		<value>
-			<projectile>
+			<projectile Class="CombatExtended.ProjectilePropertiesCE">
 				<damageDef>Bomb</damageDef>
 				<damageAmountBase>180</damageAmountBase>
 				<explosionRadius>3.0</explosionRadius>

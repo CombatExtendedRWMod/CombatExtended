@@ -34,6 +34,15 @@ namespace CombatExtended
         public bool AutoTakeAmmo => autoTakeAmmo;
         public bool ShowCaliberOnGuns => showCaliberOnGuns;
 
+        // Debug settings - make sure all of these default to false for the release build
+        private bool debugDrawPartialLoSChecks = false;
+        private bool debugEnableInventoryValidation = true;
+        private bool debugDrawTargetCoverChecks = false;
+
+        public bool DebugDrawPartialLoSChecks => debugDrawPartialLoSChecks;
+        public bool DebugEnableInventoryValidation => debugEnableInventoryValidation;
+        public bool DebugDrawTargetCoverChecks => debugDrawTargetCoverChecks;
+
         #endregion
 
         private bool lastAmmoSystemStatus;
@@ -46,6 +55,13 @@ namespace CombatExtended
             Scribe_Values.Look(ref showCasings, "showCasings", true);
             Scribe_Values.Look(ref showTaunts, "showTaunts", true);
             Scribe_Values.Look(ref allowMeleeHunting, "allowMeleeHunting", false);
+
+#if DEBUG
+            // Debug settings
+            Scribe_Values.Look(ref debugDrawPartialLoSChecks, "drawPartialLoSChecks", false);
+            Scribe_Values.Look(ref debugEnableInventoryValidation, "enableInventoryValidation", true);
+            Scribe_Values.Look(ref debugDrawTargetCoverChecks, "debugDrawTargetCoverChecks", true);
+#endif
 
             // Ammo settings
             Scribe_Values.Look(ref enableAmmoSystem, "enableAmmoSystem", true);
@@ -72,6 +88,19 @@ namespace CombatExtended
             list.CheckboxLabeled("CE_Settings_ShowCasings_Title".Translate(), ref showCasings, "CE_Settings_ShowCasings_Desc".Translate());
             list.CheckboxLabeled("CE_Settings_ShowTaunts_Title".Translate(), ref showTaunts, "CE_Settings_ShowTaunts_Desc".Translate());
             list.CheckboxLabeled("CE_Settings_AllowMeleeHunting_Title".Translate(), ref allowMeleeHunting, "CE_Settings_AllowMeleeHunting_Desc".Translate());
+
+#if DEBUG
+            // Do Debug settings
+            list.GapLine();
+            Text.Font = GameFont.Medium;
+            list.Label("Debug");
+            Text.Font = GameFont.Small;
+            list.Gap();
+
+            list.CheckboxLabeled("Draw partial LoS checks", ref debugDrawPartialLoSChecks, "Displays line of sight checks against partial cover");
+            list.CheckboxLabeled("Draw target cover checks", ref debugDrawTargetCoverChecks, "Displays highest cover of target as it is selected");
+            list.CheckboxLabeled("Enable inventory validation", ref debugEnableInventoryValidation, "Inventory will refresh its cache every tick and log any discrepancies");
+#endif
 
             // Do ammo settings
             list.NewColumn();

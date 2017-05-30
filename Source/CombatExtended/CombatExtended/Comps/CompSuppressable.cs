@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RimWorld;
 using Verse;
+using Verse.AI;
 using UnityEngine;
 
 namespace CombatExtended
@@ -169,14 +170,20 @@ namespace CombatExtended
                 locSuppressionAmount = currentSuppression;
             }
 
-            // Assign suppressed status and interrupt activity if necessary
+            // Assign suppressed status and assign reaction job
             if (currentSuppression > SuppressionThreshold)
             {
                 isSuppressed = true;
-                if (pawn.CurJob != null && !(pawn.CurJob.def == CE_JobDefOf.HunkerDown || pawn.CurJob.def == CE_JobDefOf.RunForCover))
+                Job reactJob;
+                if (IsHunkering)
                 {
-                    pawn.jobs.StopAll();
+                    reactJob = new Job(CE_JobDefOf.HunkerDown, pawn);
                 }
+                else
+                {
+                    reactJob = SuppressionUtility.GetRunForCoverJob(pawn);
+                }
+                if (reactJob != null) pawn.jobs.StartJob(reactJob, JobCondition.InterruptForced, null, true);
             }
         }
 

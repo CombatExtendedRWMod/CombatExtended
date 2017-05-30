@@ -109,6 +109,7 @@
     <Compile Include="CombatExtended\Alerts\Alert_ColonistHasShieldAndTwoHandedWeapon.cs" />
     <Compile Include="CombatExtended\AmmoInjector.cs" />
     <Compile Include="CombatExtended\AmmoUtility.cs" />
+    <Compile Include="CombatExtended\CollisionVertical.cs" />
     <Compile Include="CombatExtended\Controller.cs" />
     <Compile Include="CombatExtended\DefOfs\CE_ConceptDefOf.cs" />
     <Compile Include="CombatExtended\Defs\AmmoLink.cs" />
@@ -203,7 +204,7 @@
     <Compile Include="CombatExtended\Gizmos\GizmoAmmoStatus.cs" />
     <Compile Include="CombatExtended\Jobs\JobDriver_HunkerDown.cs" />
     <Compile Include="CombatExtended\Jobs\JobGiver_HunkerDown.cs" />
-    <Compile Include="CombatExtended\Jobs\JobGiver_RunForCover.cs" />
+    <Compile Include="CombatExtended\SuppressionUtility.cs" />
     <Compile Include="CombatExtended\Projectiles\ProjectileCE.cs" />
     <Compile Include="CombatExtended\Projectiles\ProjectilePropertiesCE.cs" />
     <Compile Include="CombatExtended\ShiftVecReport.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Harmony\Harmony-ThingOwner.cs" />
     <Compile Include="Harmony\Harmony-TooltipUtility.cs" />
     <Compile Include="Harmony\Harmony-TradeDeal.cs" />
+    <Compile Include="Harmony\Harmony-VerbTracker_Patches.cs" />
     <Compile Include="Harmony\Harmony-VerbTracker.cs" />
     <Compile Include="Harmony\Harmony-WorkGiver_HunterHunt.cs" />
     <Compile Include="Harmony\HarmonyBase.cs" />

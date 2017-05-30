@@ -47,7 +47,7 @@ namespace CombatExtended
         {
             get
             {
-                if (this.gunInt == null)
+                if (Gun == null)
                 {
                     return null;
                 }
@@ -72,7 +72,7 @@ namespace CombatExtended
         {
             get
             {
-                return this.gunInt.TryGetComp<CompEquippable>();
+                return Gun.TryGetComp<CompEquippable>();
             }
         }
         private bool WarmingUp
@@ -120,7 +120,7 @@ namespace CombatExtended
         {
             get
             {
-                if (compAmmo == null && gunInt != null) compAmmo = gunInt.TryGetComp<CompAmmoUser>();
+                if (compAmmo == null && Gun != null) compAmmo = Gun.TryGetComp<CompAmmoUser>();
                 return compAmmo;
             }
         }
@@ -128,7 +128,7 @@ namespace CombatExtended
         {
             get
             {
-                if (compFireModes == null && gunInt != null) compFireModes = gunInt.TryGetComp<CompFireModes>();
+                if (compFireModes == null && Gun != null) compFireModes = Gun.TryGetComp<CompFireModes>();
                 return compFireModes;
             }
         }
@@ -251,7 +251,7 @@ namespace CombatExtended
             Scribe_Values.Look(ref burstWarmupTicksLeft, "burstWarmupTicksLeft", 0);
             Scribe_Values.Look(ref isReloading, "isReloading", false);
             Scribe_Values.Look(ref ticksUntilAutoReload, "ticksUntilAutoReload", 0);
-            Scribe_Deep.Look(ref gunInt, "gun");
+            //Scribe_Deep.Look(ref gunInt, "gunInt");
         }
 
         // Replaced vanilla loaded text with CE reloading
@@ -263,7 +263,7 @@ namespace CombatExtended
             {
                 stringBuilder.AppendLine(inspectString);
             }
-            stringBuilder.AppendLine("GunInstalled".Translate() + ": " + this.gunInt.LabelCap);
+            stringBuilder.AppendLine("GunInstalled".Translate() + ": " + this.Gun.LabelCap);
             if (this.GunCompEq.PrimaryVerb.verbProps.minRange > 0f)
             {
                 stringBuilder.AppendLine("MinimumRange".Translate() + ": " + this.GunCompEq.PrimaryVerb.verbProps.minRange.ToString("F0"));
@@ -380,7 +380,7 @@ namespace CombatExtended
             if (CompAmmo != null)
             {
                 CompAmmo.turret = this;
-                if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
+                //if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
             }
         }
         
@@ -397,10 +397,12 @@ namespace CombatExtended
         {
             base.Tick();
             if (ticksUntilAutoReload > 0) ticksUntilAutoReload--;   // Reduce time until we can auto-reload
+            /*
             if (!CanSetForcedTarget && forcedTarget.IsValid)
             {
                 ResetForcedTarget();
             }
+            */
             if (!CanToggleHoldFire)
             {
                 holdFire = false;
@@ -543,7 +545,7 @@ namespace CombatExtended
                         if (CompAmmo.currentAmmo == CompAmmo.selectedAmmo) amount -= CompAmmo.curMagCount;
                         if (inventory.container.TryDrop(ammo, this.Position, this.Map, ThingPlaceMode.Direct, Mathf.Min(ammo.stackCount, amount), out droppedAmmo))
                         {
-                            reloadJob = new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), this, droppedAmmo) { count = droppedAmmo.stackCount };
+                            reloadJob = new Job(CE_JobDefOf.ReloadTurret, this, droppedAmmo) { count = droppedAmmo.stackCount };
                         }
                     }
                 }

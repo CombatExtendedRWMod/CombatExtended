@@ -74,7 +74,7 @@ namespace CombatExtended.Harmony
                     Pawn patient = (Pawn)curTarget.Thing;
                     if (patient.Downed
                         && pawn.CanReserveAndReach(patient, PathEndMode.InteractionCell, Danger.Deadly)
-                        && patient.health.hediffSet.GetInjuriesTendable().Any(h => h.CanBeStabilizied()))
+                        && patient.health.hediffSet.GetHediffsTendable().Any(h => h.CanBeStabilizied()))
                     {
                         if (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Doctor))
                         {

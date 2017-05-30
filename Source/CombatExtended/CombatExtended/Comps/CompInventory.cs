@@ -435,7 +435,7 @@ namespace CombatExtended
             }
             */
 
-            ValidateCache();
+            if (Controller.settings.DebugEnableInventoryValidation) ValidateCache();
         }
 
         /// <summary>
