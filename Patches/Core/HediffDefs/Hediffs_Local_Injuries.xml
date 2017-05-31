@@ -152,7 +152,7 @@
 	<Operation Class="PatchOperationReplace">
 		<xpath>/HediffDefs/HediffDef[defName="Stab"]/injuryProps/painPerSeverity</xpath>
 		<value>
-			<painPerSeverity>0.025</painPerSeverity>
+			<painPerSeverity>0.02</painPerSeverity>
   	</value>
 	</Operation>
 
@@ -170,7 +170,7 @@
 	<Operation Class="PatchOperationReplace">
 		<xpath>/HediffDefs/HediffDef[defName="Gunshot"]/injuryProps/painPerSeverity</xpath>
 		<value>
-			<painPerSeverity>0.025</painPerSeverity>
+			<painPerSeverity>0.02</painPerSeverity>
   	</value>
 	</Operation>
 
@@ -195,7 +195,7 @@
 	<Operation Class="PatchOperationReplace">
 		<xpath>/HediffDefs/HediffDef[defName="Shredded"]/injuryProps/painPerSeverity</xpath>
 		<value>
-			<painPerSeverity>0.025</painPerSeverity>
+			<painPerSeverity>0.02</painPerSeverity>
   	</value>
 	</Operation>
 
