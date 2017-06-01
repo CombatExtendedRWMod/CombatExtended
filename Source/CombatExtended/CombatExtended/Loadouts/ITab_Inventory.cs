@@ -154,7 +154,7 @@ namespace CombatExtended
 	                if(Widgets.ButtonText(loadoutButtonRect, "Make Loadout"))
 	                {
 	                	Loadout loadout = SelPawnForGear.GenerateLoadoutFromPawn();
-	                	LoadoutManager.AddLoadout(loadout);
+	                	LoadoutManager.active.AddLoadout(loadout);
 	                	SelPawnForGear.SetLoadout(loadout);
 	                	
 	                	// UNDONE ideally we'd open the assign (MainTabWindow_OutfitsAndLoadouts) tab as if the user clicked on it here.

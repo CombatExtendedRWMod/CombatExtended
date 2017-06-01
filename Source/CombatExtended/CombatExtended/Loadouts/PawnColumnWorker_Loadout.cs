@@ -49,9 +49,9 @@ namespace CombatExtended
             string label = pawn.GetLoadout().label.Truncate(loadoutButtonRect.width, null);
             if (Widgets.ButtonText(loadoutButtonRect, label, true, false, true))
             {
-                LoadoutManager.SortLoadouts();
+                LoadoutManager.active.SortLoadouts();
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (Loadout loadout in LoadoutManager.Loadouts)
+                foreach (Loadout loadout in LoadoutManager.active.Loadouts)
                 {
                     // need to create a local copy for delegate
                     Loadout localLoadout = loadout;
@@ -76,7 +76,7 @@ namespace CombatExtended
                 TooltipHandler.TipRegion(forcedHoldRect, new TipSignal(delegate
                 {
                     string text = "CE_ForcedHold".Translate() + ":\n";
-                    foreach (HoldRecord rec in LoadoutManager.GetHoldRecords(pawn))
+                    foreach (HoldRecord rec in LoadoutManager.active.GetHoldRecords(pawn))
                     {
                         if (!rec.pickedUp) continue;
                         text = text + "\n   " + rec.thingDef.LabelCap + " x" + rec.count;
