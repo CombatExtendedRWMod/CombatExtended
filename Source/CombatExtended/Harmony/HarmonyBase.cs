@@ -195,6 +195,11 @@ namespace CombatExtended.Harmony
         }
         */
 
+        internal static LocalBuilder[] GetLocals(ILGenerator il)
+        {
+            return Traverse.Create(il).Field("locals").GetValue<LocalBuilder[]>();
+        }
+
         /// <summary>
         /// branchOps is used by isBranch utility method.
         /// </summary>
