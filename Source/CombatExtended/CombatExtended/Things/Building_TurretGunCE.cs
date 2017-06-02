@@ -295,7 +295,8 @@ namespace CombatExtended
                 }
             }
             */
-            return stringBuilder.ToString().TrimEndNewlines();
+            stringBuilder.Length--; // Fix for empty lines error introduced by A17
+            return stringBuilder.ToString();
         }
 
         private bool IsValidTarget(Thing t)
