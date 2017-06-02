@@ -34,9 +34,12 @@ namespace CombatExtended
         /// <param name="originalDinfo">The pre-armor damage info</param>
         /// <param name="pawn">The damaged pawn</param>
         /// <param name="hitPart">The pawn's body part that has been hit</param>
+        /// <param name="shieldAbsorbed">Returns true if attack did not penetrate pawn's melee shield</param>
         /// <returns>If shot is deflected returns a new dinfo cloned from the original with damage amount, Def and ForceHitPart adjusted for deflection, otherwise a clone with only the damage adjusted</returns>
-        public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart)
+        public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart, out bool shieldAbsorbed)
         {
+            shieldAbsorbed = false;
+
             if (originalDinfo.Def.armorCategory == null) return originalDinfo;
 
             DamageInfo dinfo = new DamageInfo(originalDinfo);
@@ -80,7 +83,23 @@ namespace CombatExtended
                     // Try to penetrate the shield
                     if (blockedByShield && !TryPenetrateArmor(dinfo.Def, shield.GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref penAmount, ref dmgAmount, shield))
                     {
+                        shieldAbsorbed = true;
                         dinfo.SetAmount(0);
+
+                        // Apply secondary damage to shield
+                        var props = dinfo.WeaponGear.projectile as ProjectilePropertiesCE;
+                        if (props != null && !props.secondaryDamage.NullOrEmpty())
+                        {
+                            foreach(SecondaryDamage sec in props.secondaryDamage)
+                            {
+                                if (shield.Destroyed) break;
+                                var secDinfo = sec.GetDinfo();
+                                var pen = GetPenetrationValue(originalDinfo);
+                                var dmg = (float)secDinfo.Amount;
+                                TryPenetrateArmor(secDinfo.Def, shield.GetStatValue(secDinfo.Def.armorCategory.deflectionStat), ref pen, ref dmg, shield);
+                            }
+                        }
+
                         return dinfo;
                     }
                 }
