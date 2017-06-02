@@ -11,21 +11,32 @@ using Verse;
 
 namespace CombatExtended
 {
+    /*
     public class EList<T> : List<T>, IExposable
     {
         public void ExposeData()
         {
-            List<T> l = base.ToArray().ToList();
-            Scribe_Collections.Look<T>(ref l, "EList", LookMode.Reference);
+            //Type genericList = typeof(List<>);
+            //Type type = typeof(T);
+            //Type listType = genericList.MakeGenericType(type);
+            //var list = Activator.CreateInstance(listType);
+
+            List<T> list = Activator.CreateInstance(typeof(List<>).MakeGenericType(typeof(T))) as List<T>;
+            list = base.ToArray().ToList();
+            Type listType = list.GetType();
+            Scribe_Values.Look<Type>(ref listType, "EListType");
+            if (Scribe.mode == LoadSaveMode.Saving || (Scribe.mode == LoadSaveMode.LoadingVars && listType == base.GetType()))
+                Scribe_Collections.Look<T>(ref list, "EList", LookMode.Reference);
         }
     }
+    */
 
     public class LoadoutManager : GameComponent
     {
         #region Fields
         private Dictionary<Pawn, Loadout> _assignedLoadouts = new Dictionary<Pawn, Loadout>();
         private List<Loadout> _loadouts = new List<Loadout>();
-        private Dictionary<Pawn, EList<HoldRecord>> _tracker = new Dictionary<Pawn, EList<HoldRecord>>();  // track what the pawn is holding to not drop.
+        private Dictionary<Pawn, List<HoldRecord>> _tracker = new Dictionary<Pawn, List<HoldRecord>>();  // track what the pawn is holding to not drop.
         private static LoadoutManager _active;
         #endregion Fields
 
@@ -59,7 +70,7 @@ namespace CombatExtended
         {
             base.FinalizeInit();
             _active = Current.Game.GetComponent<LoadoutManager>();
-            // Log.Message("Loadout FinalizeInit");
+            Log.Message("Loadout FinalizeInit");
         }
         // called when RW is doing anything with UI
         /*public override void GameComponentOnGUI()
@@ -107,12 +118,13 @@ namespace CombatExtended
 
             Scribe_Collections.Look(ref _loadouts, "loadouts", LookMode.Deep);
             Scribe_Collections.Look<Pawn, Loadout>(ref _assignedLoadouts, "assignments", LookMode.Reference, LookMode.Reference);
-            bool hasTrackers = _tracker.Keys.Any();
-            hasTrackers = false; // temp force it not to save hold tracker data.
-            Scribe_Values.Look<bool>(ref hasTrackers, "HasTrackers");
-            hasTrackers = false; // temp force it not to load hold tracker data.
-            if (hasTrackers)
-                Scribe_Collections.Look<Pawn, EList<HoldRecord>>(ref _tracker, "trackers", LookMode.Reference, LookMode.Deep);
+            //bool hasTrackers = _tracker.Keys.Any();
+            //Scribe_Values.Look<bool>(ref hasTrackers, "HasTrackers");
+            //if (hasTrackers)
+            //{
+                //TODO: Need to convert the List<HoldRecord> into a definite type (that functions like a list) so that we can do LookMode.Deep and have IExplosable above.
+                //Scribe_Collections.Look<Pawn, List<HoldRecord>>(ref _tracker, "trackers", LookMode.Reference, LookMode.Deep);
+            //}
 
             /*
 
@@ -211,9 +223,9 @@ namespace CombatExtended
         /// </summary>
         /// <param name="pawn">Pawn to get the List for.</param>
         /// <returns>List of HoldRecords or null if the pawn has none.</returns>
-        public EList<HoldRecord> GetHoldRecords(Pawn pawn) // Rename Try?
+        public List<HoldRecord> GetHoldRecords(Pawn pawn) // Rename Try?
         {
-            EList<HoldRecord> recs;
+            List<HoldRecord> recs;
             if (_tracker.TryGetValue(pawn, out recs))
                 return recs;
             return null;
@@ -260,7 +272,7 @@ namespace CombatExtended
         /// </summary>
         /// <param name="pawn">Pawn for whome new List should be stored.</param>
         /// <param name="newRecords">List of HoldRecord that should be attached to pawn.</param>
-        public void AddHoldRecords(Pawn pawn, EList<HoldRecord> newRecords)
+        public void AddHoldRecords(Pawn pawn, List<HoldRecord> newRecords)
         {
             _tracker.Add(pawn, newRecords);
         }

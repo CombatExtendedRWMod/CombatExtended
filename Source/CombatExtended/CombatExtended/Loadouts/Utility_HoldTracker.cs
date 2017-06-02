@@ -49,11 +49,11 @@ namespace CombatExtended
 				return;
 			
 			// find out if we are already remembering this thing on this pawn...
-			EList<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+			List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
 			
 			if (recs == null)
 			{
-				recs = new EList<HoldRecord>();
+				recs = new List<HoldRecord>();
 				LoadoutManager.active.AddHoldRecords(pawn, recs);
 			}
 			
