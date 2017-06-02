@@ -62,7 +62,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>300</magazineSize>
-        <reloadTicks>420</reloadTicks>
+        <reloadTime>420</reloadTime>
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_6x24mmCharged</ammoSet>
       </li>
@@ -105,7 +105,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>100</magazineSize>
-        <reloadTicks>420</reloadTicks>
+        <reloadTime>420</reloadTime>
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_145x114mm</ammoSet>
       </li>
@@ -148,7 +148,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>40</magazineSize>
-        <reloadTicks>420</reloadTicks>
+        <reloadTime>420</reloadTime>
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_145x114mm</ammoSet>
       </li>
@@ -194,7 +194,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>100</magazineSize>
-        <reloadTicks>510</reloadTicks>
+        <reloadTime>510</reloadTime>
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_762x51mmNATO</ammoSet>
       </li>
@@ -243,7 +243,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>1</magazineSize>
-        <reloadTicks>750</reloadTicks>
+        <reloadTime>750</reloadTime>
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_90mmCannonShell</ammoSet>
       </li>
@@ -292,7 +292,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>30</magazineSize>
-        <reloadTicks>420</reloadTicks>
+        <reloadTime>420</reloadTime>
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_30x29mmGrenade</ammoSet>
       </li>

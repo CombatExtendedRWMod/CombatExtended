@@ -88,7 +88,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>7</magazineSize>
-			  <reloadTicks>180</reloadTicks>
+			  <reloadTime>180</reloadTime>
 			  <ammoSet>AmmoSet_45ACP</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -193,7 +193,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
-			  <reloadTicks>240</reloadTicks>
+			  <reloadTime>240</reloadTime>
 			  <ammoSet>AmmoSet_12Gauge</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -268,7 +268,6 @@
 				  <soundCast>ShotShotgun</soundCast>
 				  <soundCastTail>GunTail_Heavy</soundCastTail>
 				  <muzzleFlashScale>9</muzzleFlashScale>
-				  <burstShotCount>3</burstShotCount>
 				  <ticksBetweenBurstShots>15</ticksBetweenBurstShots>
 				  <recoilPattern>Regular</recoilPattern>
 				  <recoilAmount>0.51</recoilAmount>
@@ -300,11 +299,10 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>10</magazineSize>
-			  <reloadTicks>240</reloadTicks>
+			  <reloadTime>240</reloadTime>
 			  <ammoSet>AmmoSet_12Gauge</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
-			  <aimedBurstShotCount>2</aimedBurstShotCount>
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
 			  <aiUseAimMode>FALSE</aiUseAimMode>
 			</li>
@@ -405,7 +403,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>10</magazineSize>
-			  <reloadTicks>180</reloadTicks>
+			  <reloadTime>180</reloadTime>
 			  <ammoSet>AmmoSet_303British</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -513,7 +511,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>30</magazineSize>
-			  <reloadTicks>300</reloadTicks>
+			  <reloadTime>300</reloadTime>
 			  <ammoSet>AmmoSet_556x45mmNATO</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -618,7 +616,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
-			  <reloadTicks>300</reloadTicks>
+			  <reloadTime>300</reloadTime>
 			  <ammoSet>AmmoSet_762x51mmNATO</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -726,7 +724,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>32</magazineSize>
-			  <reloadTicks>240</reloadTicks>
+			  <reloadTime>240</reloadTime>
 			  <ammoSet>AmmoSet_9x19mmPara</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -837,7 +835,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>20</magazineSize>
-			  <reloadTicks>240</reloadTicks>
+			  <reloadTime>240</reloadTime>
 			  <ammoSet>AmmoSet_45ACP</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -949,7 +947,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>5</magazineSize>
-			  <reloadTicks>300</reloadTicks>
+			  <reloadTime>300</reloadTime>
 			  <ammoSet>AmmoSet_30x64mmFuel</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -1061,7 +1059,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>47</magazineSize>
-			  <reloadTicks>420</reloadTicks>
+			  <reloadTime>420</reloadTime>
 			  <ammoSet>AmmoSet_762x54mmR</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -1171,7 +1169,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>60</magazineSize>
-			  <reloadTicks>300</reloadTicks>
+			  <reloadTime>300</reloadTime>
 			  <ammoSet>AmmoSet_6x24mmCharged</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
@@ -1273,7 +1271,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 				<magazineSize>300</magazineSize>
-				<reloadTicks>300</reloadTicks>
+				<reloadTime>300</reloadTime>
 				<spawnUnloaded>true</spawnUnloaded>
 				<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
 			</li>
@@ -1359,7 +1357,7 @@
 		<value>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>600</magazineSize>
-        <reloadTicks>300</reloadTicks>
+        <reloadTime>300</reloadTime>
         <ammoSet>AmmoSet_762x51mmNATO</ammoSet>
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
@@ -1852,7 +1850,7 @@
 		<value>
       <li Class="CombatExtended.CompProperties_AmmoUser">
         <magazineSize>100</magazineSize>
-        <reloadTicks>300</reloadTicks>
+        <reloadTime>300</reloadTime>
         <ammoSet>AmmoSet_12x64mmCharged</ammoSet>
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
@@ -1959,7 +1957,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 			  <magazineSize>1</magazineSize>
-			  <reloadTicks>600</reloadTicks>
+			  <reloadTime>600</reloadTime>
 			  <ammoSet>AmmoSet_80x256mmFuel</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
