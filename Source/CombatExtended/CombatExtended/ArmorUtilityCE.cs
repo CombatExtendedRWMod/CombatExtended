@@ -14,8 +14,6 @@ namespace CombatExtended
 
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
-        public const string ShieldTag = "CE_Shield";  // Identify shields by this apparel tag
-        public const string BallisticShieldTag = "CE_BallisticShield";
 
         #endregion
 
@@ -62,22 +60,26 @@ namespace CombatExtended
                 List<Apparel> apparel = pawn.apparel.WornApparel;
 
                 // Check for shields first
-                Apparel shield = apparel.FirstOrDefault(x => x.def.apparel.tags.Any(t => t == ShieldTag || t == BallisticShieldTag));
+                Apparel shield = apparel.FirstOrDefault(x => x is Apparel_Shield);
                 if (shield != null)
                 {
                     // Determine whether the hit is blocked by the shield
                     bool blockedByShield = false;
                     if (!(dinfo.WeaponGear?.IsMeleeWeapon ?? false))
                     {
-                        if (hitPart.height == BodyPartHeight.Middle)
+                        var shieldDef = shield.def.GetModExtension<ShieldDefExtension>();
+                        if (shieldDef == null)
                         {
-                            // Torso hits are always deflected but right arm is vulnerable during warmup/attack/cooldown
-                            blockedByShield = !(pawn.stances?.curStance?.StanceBusy ?? false && hitPart.IsInGroup(DefDatabase<BodyPartGroupDef>.GetNamed("Arms")) && hitPart.def.defName.Contains("Right"));
+                            Log.ErrorOnce("CE :: shield " + shield.def.ToString() + " is Apparel_Shield but has no ShieldDefExtension", shield.def.GetHashCode() + 12748102);
                         }
-                        else if (shield.def.apparel.tags.Contains(BallisticShieldTag))
+                        else
                         {
-                            // Feet are always vulnerable, legs and pelvis only while not crouching
-                            blockedByShield = hitPart.height != BodyPartHeight.Bottom || (!hitPart.IsInGroup(DefDatabase<BodyPartGroupDef>.GetNamed("Feet")) && pawn.IsCrouching());
+                            bool hasCoverage = shieldDef.PartIsCoveredByShield(hitPart, pawn);
+                            if (hasCoverage)
+                            {
+                                // Right arm is vulnerable during warmup/attack/cooldown
+                                blockedByShield = !((pawn.stances?.curStance as Stance_Busy)?.verb != null && hitPart.IsInGroup(DefDatabase<BodyPartGroupDef>.GetNamed("Arms")) && hitPart.def.defName.Contains("Right"));
+                            }
                         }
                     }
                     // Try to penetrate the shield
