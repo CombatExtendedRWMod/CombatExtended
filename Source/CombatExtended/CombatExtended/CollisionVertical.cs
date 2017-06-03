@@ -21,6 +21,8 @@ namespace CombatExtended
         public FloatRange HeightRange => new FloatRange(heightRange.min, heightRange.max);
         public float Min => heightRange.min;
         public float Max => heightRange.max;
+        public float BottomHeight => Max * BodyRegionBottomHeight;
+        public float MiddleHeight => Max * BodyRegionMiddleHeight;
 
         public CollisionVertical(Thing thing)
         {
@@ -110,9 +112,14 @@ namespace CombatExtended
         /// <returns>BodyPartHeight between Bottom and Top.</returns>
         public BodyPartHeight GetCollisionBodyHeight(float projectileHeight)
         {
-            if (projectileHeight < heightRange.max * BodyRegionBottomHeight) return BodyPartHeight.Bottom;
-            else if (projectileHeight < heightRange.max * BodyRegionMiddleHeight) return BodyPartHeight.Middle;
+            if (projectileHeight < BottomHeight) return BodyPartHeight.Bottom;
+            else if (projectileHeight < MiddleHeight) return BodyPartHeight.Middle;
             return BodyPartHeight.Top;
+        }
+
+        public BodyPartHeight GetRandWeightedBodyHeightBelow(float threshold)
+        {
+            return GetCollisionBodyHeight(Rand.Range(Min, threshold));
         }
     }
 }

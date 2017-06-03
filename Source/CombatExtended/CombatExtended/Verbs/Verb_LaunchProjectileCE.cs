@@ -402,7 +402,7 @@ namespace CombatExtended
             // Check target self
             if (targ.Thing != null && targ.Thing == this.caster)
             {
-                if (verbProps.targetParams.canTargetSelf)
+                if (!verbProps.targetParams.canTargetSelf)
                 {
                     report = "Can't target self";
                     return false;
@@ -451,28 +451,6 @@ namespace CombatExtended
                 }
                 return false;
             }
-            /*
-            //Check if target is obstructed behind cover
-            Thing coverTarg;
-            if (GetHighestCoverBetween(root.ToVector3Shifted(), targ, out coverTarg))
-            {
-                if (new CollisionVertical(targ.Thing).Max < new CollisionVertical(coverTarg).Max)
-                {
-                    report = "Target obstructed by " + coverTarg.LabelShort;
-                    return false;
-                }
-            }
-            //Check if shooter is obstructed by cover
-            Thing coverShoot;
-            if (GetHighestCoverBetween(targ.Cell.ToVector3Shifted(), caster, out coverShoot))
-            {
-                if (ShotHeight < new CollisionVertical(coverShoot).Max)
-                {
-                    report = "Shooter obstructed by " + coverShoot.LabelShort;
-                    return false;
-                }
-            }
-            */
             return true;
         }
 
@@ -498,25 +476,12 @@ namespace CombatExtended
             {
                 ProjectileCE projectile = (ProjectileCE)ThingMaker.MakeThing(ProjectileDef, null);
                 GenSpawn.Spawn(projectile, shootLine.Source, caster.Map);
-	           	//Vector3 targetVec3 = ShiftTarget(report, pelletMechanicsOnly);
 	           	ShiftTarget(report, pelletMechanicsOnly);
 
                 //New aiming algorithm
                 projectile.canTargetSelf = verbProps.targetParams.canTargetSelf;
                 projectile.minCollisionSqr = (sourceLoc - newTargetLoc).sqrMagnitude;
                 projectile.Launch(caster, sourceLoc, shotAngle, shotRotation, ShotHeight, ShotSpeed, ownerEquipment);
-                
-                /*projectile.shotAngle = this.shotAngle;
-                projectile.shotHeight = this.shotHeight;
-                projectile.shotSpeed = this.shotSpeed;
-                if (this.currentTarget.Thing != null)
-                {
-                    projectile.Launch(this.caster, casterExactPosition, new LocalTargetInfo(this.currentTarget.Thing), targetVec3, this.ownerEquipment);
-                }
-                else
-                {
-                    projectile.Launch(this.caster, casterExactPosition, new LocalTargetInfo(shootLine.Dest), targetVec3, this.ownerEquipment);
-                }*/
 	           	pelletMechanicsOnly = true;
             }
            	pelletMechanicsOnly = false;
