@@ -164,7 +164,13 @@ namespace CombatExtended
             if (involveArmor)
             {
                 postArmorDinfo = ArmorUtilityCE.GetAfterArmorDamage(dinfo, pawn, exactPartFromDamageInfo, out shieldAbsorbed);
-                if (postArmorDinfo.ForceHitPart != null && exactPartFromDamageInfo != postArmorDinfo.ForceHitPart) exactPartFromDamageInfo = postArmorDinfo.ForceHitPart;   // If the shot was deflected, update our body part
+                if (dinfo.ForceHitPart == null 
+                    && postArmorDinfo.ForceHitPart != null 
+                    && exactPartFromDamageInfo != postArmorDinfo.ForceHitPart)
+                {
+                    exactPartFromDamageInfo = postArmorDinfo.ForceHitPart;   // If the shot was deflected, update our body part
+                    //dinfo.SetForcedHitPart(postArmorDinfo.ForceHitPart);
+                }
             }
 
             // Vanilla code - apply hediff
