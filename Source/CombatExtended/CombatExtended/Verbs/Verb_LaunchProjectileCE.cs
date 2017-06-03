@@ -264,11 +264,10 @@ namespace CombatExtended
         private void GetRecoilVec(ref float rotation, ref float angle)
         {
             var recoil = VerbPropsCE.recoilAmount;
-            float maxX = recoil;
-            float minX = -maxX;
-            float maxY = recoil;
-            float minY = -maxY / 3;
-            /*
+            float maxX = 0;
+            float minX = 0;
+            float maxY = 0;
+            float minY = 0;
             switch (VerbPropsCE.recoilPattern)
             {
                 case RecoilPattern.None:
@@ -282,13 +281,12 @@ namespace CombatExtended
                     break;
                 case RecoilPattern.Mounted:
                     float num2 = VerbPropsCE.recoilAmount / 3;
-                    minX = -num2 / 3;
+                    minX = -num2;
                     maxX = num2;
                     minY = -num2;
-                    maxX = VerbPropsCE.recoilAmount;
+                    maxY = VerbPropsCE.recoilAmount;
                     break;
             }
-            */
             float recoilMagnitude = Mathf.Pow((5 - ShootingAccuracy), (Mathf.Min(10, numShotsFired) / 6.25f));
             
             rotation += recoilMagnitude * UnityEngine.Random.Range(minX, maxX);
