@@ -49,12 +49,12 @@ namespace CombatExtended
 				return;
 			
 			// find out if we are already remembering this thing on this pawn...
-			List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+			List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
 			
 			if (recs == null)
 			{
 				recs = new List<HoldRecord>();
-				LoadoutManager.active.AddHoldRecords(pawn, recs);
+				LoadoutManager.AddHoldRecords(pawn, recs);
 			}
 			
 			// could check isHeld but that tells us if there is a record AND it's been picked up.
@@ -94,7 +94,7 @@ namespace CombatExtended
 		/// <returns></returns>
 		public static bool HoldTrackerIsHeld(this Pawn pawn, Thing thing)
 		{
-			List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+			List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
 			if (recs != null && recs.Any(hr => hr.thingDef == thing.def))
 			    return true;
 			return false;
@@ -107,7 +107,7 @@ namespace CombatExtended
         /// <returns>bool indicating if the pawn has any HoldTracker records.</returns>
         public static bool HoldTrackerAnythingHeld(this Pawn pawn)
         {
-            List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+            List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
             if (recs == null || recs.NullOrEmpty())
                 return false;
             return recs.Any(r => r.pickedUp);
@@ -115,7 +115,7 @@ namespace CombatExtended
 
         public static void HoldTrackerClear(this Pawn pawn)
         {
-            List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+            List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
             recs.Clear();
         }
 		
@@ -127,10 +127,10 @@ namespace CombatExtended
 		{
 			if (_tickLastPurge <= GenTicks.TicksAbs)
 			{
-				LoadoutManager.active.PurgeHoldTrackerRolls();
+				LoadoutManager.PurgeHoldTrackerRolls();
 				_tickLastPurge = GenTicks.TicksAbs + GenDate.TicksPerDay;
 			}
-			List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+			List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
 			CompInventory inventory = pawn.TryGetComp<CompInventory>();
 			if (recs == null || inventory == null)
 				return;
@@ -149,7 +149,7 @@ namespace CombatExtended
 		/// <param name="thing">Thing who's def should be forgotten.</param>
 		public static void HoldTrackerForget(this Pawn pawn, Thing thing)
 		{
-			List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+			List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
 			if (recs == null)
 			{
 				Log.Error(string.Concat(pawn.Name, " wasn't being tracked by HoldTracker and tried to forget a ThingDef ", thing.def, "."));
@@ -167,7 +167,7 @@ namespace CombatExtended
 		/// <returns>List of HoldRecords otherwise known as the Pawn's holdTracker.</returns>
 		public static List<HoldRecord> GetHoldRecords(this Pawn pawn)
 		{
-			return LoadoutManager.active.GetHoldRecords(pawn);
+			return LoadoutManager.GetHoldRecords(pawn);
 		}
 		
 		#endregion
@@ -239,7 +239,7 @@ namespace CombatExtended
         	Loadout loadout = pawn.GetLoadout();
         	if (loadout == null || loadout.Slots.NullOrEmpty())
         	{
-        		List<HoldRecord> recs = LoadoutManager.active.GetHoldRecords(pawn);
+        		List<HoldRecord> recs = LoadoutManager.GetHoldRecords(pawn);
         		if (recs != null)
         		{
 	        		// hand out any inventory item not covered by a HoldRecord.
@@ -326,7 +326,7 @@ namespace CombatExtended
 	        //(ProfoundDarkness) Thanks to erdelf on the RimWorldMod discord for helping me figure out some dictionary stuff and C# concepts related to 'Primitives' (pass by Value).
         	CompInventory inventory = pawn.TryGetComp<CompInventory>();
         	Loadout loadout = pawn.GetLoadout();
-        	List<HoldRecord> records = LoadoutManager.active.GetHoldRecords(pawn);
+        	List<HoldRecord> records = LoadoutManager.GetHoldRecords(pawn);
         	dropThing = null;
         	dropCount = 0;
         	

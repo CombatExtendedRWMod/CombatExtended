@@ -143,10 +143,10 @@ namespace CombatExtended
                 throw new ArgumentNullException("pawn");
 
             Loadout loadout;
-            if (!LoadoutManager.active.AssignedLoadouts.TryGetValue(pawn, out loadout))
+            if (!LoadoutManager.AssignedLoadouts.TryGetValue(pawn, out loadout))
             {
-                LoadoutManager.active.AssignedLoadouts.Add(pawn, LoadoutManager.active.DefaultLoadout);
-                loadout = LoadoutManager.active.DefaultLoadout;
+                LoadoutManager.AssignedLoadouts.Add(pawn, LoadoutManager.DefaultLoadout);
+                loadout = LoadoutManager.DefaultLoadout;
             }
             return loadout;
         }
@@ -224,15 +224,15 @@ namespace CombatExtended
             if (pawn == null)
                 throw new ArgumentNullException("pawn");
 
-            if (LoadoutManager.active.AssignedLoadouts.ContainsKey(pawn))
-                LoadoutManager.active.AssignedLoadouts[pawn] = loadout;
+            if (LoadoutManager.AssignedLoadouts.ContainsKey(pawn))
+                LoadoutManager.AssignedLoadouts[pawn] = loadout;
             else
-                LoadoutManager.active.AssignedLoadouts.Add(pawn, loadout);
+                LoadoutManager.AssignedLoadouts.Add(pawn, loadout);
         }
 
         public static void SetLoadoutById(this Pawn pawn, int loadoutId)
         {
-            Loadout loadout = LoadoutManager.active.GetLoadoutById(loadoutId);
+            Loadout loadout = LoadoutManager.GetLoadoutById(loadoutId);
             if (loadout == null)
                 throw new ArgumentNullException("loadout");
 

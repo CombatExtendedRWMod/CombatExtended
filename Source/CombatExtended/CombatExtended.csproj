@@ -136,6 +136,7 @@
     <Compile Include="CombatExtended\Jobs\JobGiver_ConfigurableHostilityResponse.cs" />
     <Compile Include="CombatExtended\Jobs\JobGiver_TakeAndEquip.cs" />
     <Compile Include="CombatExtended\Loadouts\HoldRecord.cs" />
+    <Compile Include="CombatExtended\Loadouts\Tracker.cs" />
     <Compile Include="CombatExtended\Loadouts\PawnColumnWorker_Loadout.cs" />
     <Compile Include="CombatExtended\Loadouts\Utility_HoldTracker.cs" />
     <Compile Include="CombatExtended\ParryTracker.cs" />

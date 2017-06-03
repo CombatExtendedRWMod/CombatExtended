@@ -163,8 +163,8 @@ namespace CombatExtended
                 (canvas.width - _margin) / 2f,
                 canvas.height - 24f - _topAreaHeight - _margin * 3);
 
-        	LoadoutManager.active.SortLoadouts();
-            List<Loadout> loadouts = LoadoutManager.active.Loadouts.Where(l => !l.defaultLoadout).ToList();
+        	LoadoutManager.SortLoadouts();
+            List<Loadout> loadouts = LoadoutManager.Loadouts.Where(l => !l.defaultLoadout).ToList();
 
             // DRAW CONTENTS
             // buttons
@@ -193,14 +193,14 @@ namespace CombatExtended
             {
                 Loadout loadout = new Loadout();
                 loadout.AddBasicSlots();
-                LoadoutManager.active.AddLoadout(loadout);
+                LoadoutManager.AddLoadout(loadout);
                 CurrentLoadout = loadout;
             }
             // copy loadout
             if (CurrentLoadout != null && Widgets.ButtonText(copyRect, "CE_CopyLoadout".Translate()))
             {
             	CurrentLoadout = CurrentLoadout.Copy();
-            	LoadoutManager.active.AddLoadout(CurrentLoadout);
+            	LoadoutManager.AddLoadout(CurrentLoadout);
             }
             // delete loadout
             if (loadouts.Any(l => l.canBeDeleted) && Widgets.ButtonText(deleteRect, "CE_DeleteLoadout".Translate()))
@@ -218,8 +218,8 @@ namespace CombatExtended
                         delegate
                         {
                             if (CurrentLoadout == loadouts[local_i])
-								CurrentLoadout = LoadoutManager.active.DefaultLoadout;
-                            LoadoutManager.active.RemoveLoadout(loadouts[local_i]);
+								CurrentLoadout = LoadoutManager.DefaultLoadout;
+                            LoadoutManager.RemoveLoadout(loadouts[local_i]);
                         }));
                 }
 
