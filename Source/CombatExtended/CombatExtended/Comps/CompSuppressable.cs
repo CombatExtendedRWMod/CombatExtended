@@ -14,9 +14,9 @@ namespace CombatExtended
         #region Constants
 
         private const float minSuppressionDist = 5f;        //Minimum distance to be suppressed from, so melee won't be suppressed if it closes within this distance
-        private const float maxSuppression = 500f;          //Cap to prevent suppression from building indefinitely
+        private const float maxSuppression = 1050f;          //Cap to prevent suppression from building indefinitely
         private const int TicksForDecayStart = 120;          // How long since last suppression before decay starts
-        private const float suppressionDecayRate = 2.38f;    // How much suppression decays per tick
+        private const float suppressionDecayRate = 5f;    // How much suppression decays per tick
         private const int ticksPerMote = 150;               //How many ticks between throwing a mote
 
         #endregion
@@ -86,7 +86,7 @@ namespace CombatExtended
                     //Get morale
                     float hardBreakThreshold = pawn.mindState?.mentalBreaker?.BreakThresholdMajor ?? 0;
                     float currentMood = pawn.needs?.mood?.CurLevel ?? 0.5f;
-                    threshold = Mathf.Sqrt(currentMood - hardBreakThreshold) * maxSuppression * 0.25f;
+                    threshold = Mathf.Sqrt(Mathf.Max(0, currentMood - hardBreakThreshold)) * maxSuppression * 0.125f;
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace CombatExtended
         {
             get
             {
-                if (currentSuppression > SuppressionThreshold * 3)
+                if (currentSuppression > (SuppressionThreshold * 10))
                 {
                     if (isSuppressed)
                     {

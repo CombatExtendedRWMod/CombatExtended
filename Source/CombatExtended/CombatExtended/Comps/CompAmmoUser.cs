@@ -133,6 +133,7 @@ namespace CombatExtended
                 else return parent.MapHeld;
             }
         }
+        public bool ShouldThrowMote => Props.throwMote && Props.magazineSize > 1;
 
         #endregion Properties
 
@@ -346,7 +347,7 @@ namespace CombatExtended
         
         private void DoOutOfAmmoAction()
         {
-            if (Props.throwMote)
+            if (ShouldThrowMote)
             {
                 MoteMaker.ThrowText(Position.ToVector3Shifted(), Find.VisibleMap, "CE_OutOfAmmo".Translate() + "!");
             }

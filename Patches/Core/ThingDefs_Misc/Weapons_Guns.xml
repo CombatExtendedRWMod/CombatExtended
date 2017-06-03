@@ -268,7 +268,6 @@
 				  <soundCastTail>GunTail_Heavy</soundCastTail>
 				  <muzzleFlashScale>9</muzzleFlashScale>
 				  <ticksBetweenBurstShots>15</ticksBetweenBurstShots>
-				  <recoilPattern>Regular</recoilPattern>
 				  <recoilAmount>4.34</recoilAmount>
 				</li>
 			</verbs>
@@ -466,7 +465,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Regular</recoilPattern>
 				  <recoilAmount>1.18</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
@@ -678,7 +676,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Regular</recoilPattern>
 				  <recoilAmount>0.91</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
@@ -789,7 +786,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Regular</recoilPattern>
 				  <recoilAmount>2.16</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
@@ -1010,7 +1006,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Mounted</recoilPattern>
 				  <recoilAmount>0.82</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
@@ -1123,7 +1118,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Regular</recoilPattern>
 				  <recoilAmount>1.13</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
@@ -1225,7 +1219,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-					<recoilPattern>Mounted</recoilPattern>
 					<recoilAmount>0.22</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
@@ -1311,7 +1304,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Mounted</recoilPattern>
 				  <recoilAmount>0.09</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>
@@ -1802,7 +1794,6 @@
 		<value>
 			<verbs>
 				<li Class="CombatExtended.VerbPropertiesCE">
-				  <recoilPattern>Mounted</recoilPattern>
 				  <recoilAmount>0.75</recoilAmount>
 				  <verbClass>CombatExtended.Verb_ShootCE</verbClass>
 				  <hasStandardCommand>true</hasStandardCommand>

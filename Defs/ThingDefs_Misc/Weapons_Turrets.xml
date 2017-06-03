@@ -45,7 +45,6 @@
     </statBases>
     <verbs>
       <li Class="CombatExtended.VerbPropertiesCE">
-        <recoilPattern>Mounted</recoilPattern>
         <recoilAmount>0.53</recoilAmount>
         <verbClass>CombatExtended.Verb_ShootCE</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
@@ -88,7 +87,6 @@
     </statBases>
     <verbs>
       <li Class="CombatExtended.VerbPropertiesCE">
-        <recoilPattern>Mounted</recoilPattern>
         <recoilAmount>0.95</recoilAmount>
         <verbClass>CombatExtended.Verb_ShootCE</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
@@ -131,7 +129,6 @@
     </statBases>
     <verbs>
       <li Class="CombatExtended.VerbPropertiesCE">
-        <recoilPattern>Mounted</recoilPattern>
         <recoilAmount>1.08</recoilAmount>
         <verbClass>CombatExtended.Verb_ShootCE</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
@@ -177,7 +174,6 @@
     </statBases>
     <verbs>
       <li Class="CombatExtended.VerbPropertiesCE">
-        <recoilPattern>Mounted</recoilPattern>
         <recoilAmount>0.60</recoilAmount>
         <verbClass>CombatExtended.Verb_ShootCE</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
@@ -270,7 +266,6 @@
     </statBases>
     <verbs>
       <li Class="CombatExtended.VerbPropertiesCE">
-        <recoilPattern>Mounted</recoilPattern>
         <recoilAmount>4.90</recoilAmount>
         <verbClass>CombatExtended.Verb_ShootCE</verbClass>
         <hasStandardCommand>true</hasStandardCommand>

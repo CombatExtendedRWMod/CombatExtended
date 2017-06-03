@@ -215,28 +215,30 @@ namespace CombatExtended
 			    // Height difference calculations for ShotAngle
 			    float targetHeight = 0f;
 	            
-	            var coverVertical = new CollisionVertical(report.cover).HeightRange;	//Get " " cover, assume it is the edifice
+	            var coverRange = new CollisionVertical(report.cover).HeightRange;	//Get " " cover, assume it is the edifice
 	            
 	            // Projectiles with flyOverhead target the ground below the target and ignore cover
 	            if (ProjectileDef.projectile.flyOverhead)
 	            {
-	            	targetHeight = coverVertical.max;
+	            	targetHeight = coverRange.max;
 	            }
 	            else
 	            {
-	           		var targetVertical = new CollisionVertical(currentTarget.Thing).HeightRange;	//Get lower and upper heights of the target
-	           		if (targetVertical.min < coverVertical.max)	//Some part of the target is hidden behind cover
+                    var VictimVert = new CollisionVertical(currentTarget.Thing);
+                    var targetRange = VictimVert.HeightRange;	//Get lower and upper heights of the target
+	           		if (targetRange.min < coverRange.max)	//Some part of the target is hidden behind cover
 	           		{
-	           			//TODO : It is possible for targetVertical.max < coverVertical.max, technically, in which case the shooter will never hit until the cover is gone.
-	           			targetVertical.min = coverVertical.max;
+	           			// - It is possible for targetVertical.max < coverVertical.max, technically, in which case the shooter will never hit until the cover is gone.
+                        // - This should be checked for in LoS -NIA
+	           			targetRange.min = coverRange.max;
 	           		}
                     else if (currentTarget.Thing is Pawn)
                     {
                         // Aim for center of mass on an exposed target
-                        targetVertical.min += CollisionVertical.BodyRegionBottomHeight * targetVertical.max;
-                        targetVertical.max *= CollisionVertical.BodyRegionMiddleHeight;
+                        targetRange.min = VictimVert.BottomHeight;
+                        targetRange.max = VictimVert.MiddleHeight;
                     }
-	           		targetHeight = targetVertical.min + (targetVertical.max - targetVertical.min) * 0.5f;
+	           		targetHeight = targetRange.Average;
 	            }
 	            
 	            angleRadians += ProjectileCE.GetShotAngle(ShotSpeed, (newTargetLoc - sourceLoc).magnitude, targetHeight - ShotHeight, ProjectileDef.projectile.flyOverhead, projectilePropsCE.Gravity);
@@ -261,10 +263,12 @@ namespace CombatExtended
         /// <param name="angle">The ref float to have vertical recoil in radians added to.</param>
         private void GetRecoilVec(ref float rotation, ref float angle)
         {
-            float minX = 0;
-            float maxX = 0;
-            float minY = 0;
-            float maxY = 0;
+            var recoil = VerbPropsCE.recoilAmount;
+            float maxX = recoil;
+            float minX = -maxX;
+            float maxY = recoil;
+            float minY = -maxY / 3;
+            /*
             switch (VerbPropsCE.recoilPattern)
             {
                 case RecoilPattern.None:
@@ -284,6 +288,7 @@ namespace CombatExtended
                     maxX = VerbPropsCE.recoilAmount;
                     break;
             }
+            */
             float recoilMagnitude = Mathf.Pow((5 - ShootingAccuracy), (Mathf.Min(10, numShotsFired) / 6.25f));
             
             rotation += recoilMagnitude * UnityEngine.Random.Range(minX, maxX);
