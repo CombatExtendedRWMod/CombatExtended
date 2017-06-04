@@ -93,7 +93,6 @@
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>FALSE</aiUseAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -402,7 +401,7 @@
 			  <ammoSet>AmmoSet_303British</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -510,7 +509,7 @@
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aimedBurstShotCount>3</aimedBurstShotCount>
 			  <aiUseBurstMode>TRUE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -613,7 +612,7 @@
 			  <ammoSet>AmmoSet_762x51mmNATO</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -721,7 +720,6 @@
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aimedBurstShotCount>3</aimedBurstShotCount>
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>FALSE</aiUseAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -831,7 +829,6 @@
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aimedBurstShotCount>3</aimedBurstShotCount>
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>FALSE</aiUseAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -942,7 +939,7 @@
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>SuppressFire</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -1055,7 +1052,7 @@
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aimedBurstShotCount>5</aimedBurstShotCount>
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>FALSE</aiUseAimMode>
+			  <aiAimMode>SuppressFire</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -1164,7 +1161,7 @@
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aimedBurstShotCount>3</aimedBurstShotCount>
 			  <aiUseBurstMode>TRUE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -1265,8 +1262,7 @@
 				<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
-				<aiUseBurstMode>TRUE</aiUseBurstMode>
-				<aiUseAimMode>TRUE</aiUseAimMode>
+				<aiAimMode>AimedShot</aiAimMode>
 				<noSnapshot>true</noSnapshot>
 				<noSingleShot>true</noSingleShot>
 			</li>
@@ -1349,8 +1345,7 @@
         <ammoSet>AmmoSet_762x51mmNATO</ammoSet>
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
-        <aiUseBurstMode>FALSE</aiUseBurstMode>
-        <aiUseAimMode>FALSE</aiUseAimMode>
+        <aiAimMode>AimedShot</aiAimMode>
       </li>
 		</value>
 	</Operation>
@@ -1535,8 +1530,7 @@
 		<xpath>*/ThingDef[defName="Gun_DoomsdayRocket"]/comps</xpath>
 		<value>
 			<li Class="CombatExtended.CompProperties_FireModes">
-			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -1712,7 +1706,7 @@
 		<value>
 			<li Class="CombatExtended.CompProperties_FireModes">
 			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			  <noSingleShot>true</noSingleShot>
 			</li>
 		</value>
@@ -1842,8 +1836,7 @@
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
         <aimedBurstShotCount>5</aimedBurstShotCount>
-        <aiUseBurstMode>FALSE</aiUseBurstMode>
-        <aiUseAimMode>FALSE</aiUseAimMode>
+        <aiAimMode>AimedShot</aiAimMode>
       </li>
 		</value>
 	</Operation>
@@ -1948,8 +1941,7 @@
 			  <ammoSet>AmmoSet_80x256mmFuel</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
-			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>
@@ -2053,8 +2045,7 @@
 			  <ammoSet>AmmoSet_5x35mmCharged</ammoSet>
 			</li>
 			<li Class="CombatExtended.CompProperties_FireModes">
-			  <aiUseBurstMode>FALSE</aiUseBurstMode>
-			  <aiUseAimMode>TRUE</aiUseAimMode>
+			  <aiAimMode>AimedShot</aiAimMode>
 			</li>
 		</value>
 	</Operation>

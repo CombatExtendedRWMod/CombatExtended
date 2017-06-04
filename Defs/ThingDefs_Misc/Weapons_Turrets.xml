@@ -18,7 +18,7 @@
     <comps>
       <li Class="CombatExtended.CompProperties_FireModes">
         <aiUseBurstMode>FALSE</aiUseBurstMode>
-        <aiUseAimMode>TRUE</aiUseAimMode>
+        <aiAimMode>AimedShot</aiAimMode>
         <noSnapshot>true</noSnapshot>
         <noSingleShot>true</noSingleShot>
       </li>
@@ -154,6 +154,7 @@
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
         <aimedBurstShotCount>5</aimedBurstShotCount>
+        <aiAimMode>SuppressFire</aiAimMode>
       </li>
     </comps>
   </ThingDef>
@@ -200,6 +201,7 @@
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
         <aimedBurstShotCount>5</aimedBurstShotCount>
+        <aiAimMode>SuppressFire</aiAimMode>
       </li>
     </comps>
   </ThingDef>
@@ -248,7 +250,9 @@
         <spawnUnloaded>true</spawnUnloaded>
         <ammoSet>AmmoSet_90mmCannonShell</ammoSet>
       </li>
-      <li Class="CombatExtended.CompProperties_FireModes" />
+      <li Class="CombatExtended.CompProperties_FireModes">
+        <aiAimMode>AimedShot</aiAimMode>
+      </li>
     </comps>
   </ThingDef>
 
@@ -299,7 +303,7 @@
       </li>
       <li Class="CombatExtended.CompProperties_FireModes">
         <aiUseBurstMode>FALSE</aiUseBurstMode>
-        <aiUseAimMode>FALSE</aiUseAimMode>
+        <aiAimMode>SuppressFire</aiAimMode>
         <aimedBurstShotCount>3</aimedBurstShotCount>
       </li>
     </comps>

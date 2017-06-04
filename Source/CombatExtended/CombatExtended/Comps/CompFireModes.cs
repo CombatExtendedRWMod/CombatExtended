@@ -69,6 +69,7 @@ namespace CombatExtended
         {
             get
             {
+                if (useAIModes && Props.aiUseBurstMode && availableFireModes.Contains(FireMode.BurstFire)) return FireMode.BurstFire;
                 return currentFireModeInt;
             }
         }
@@ -76,9 +77,11 @@ namespace CombatExtended
         {
             get
             {
+                if (useAIModes && availableAimModes.Contains(Props.aiAimMode)) return Props.aiAimMode;
                 return currentAimModeInt;
             }
         }
+        private bool useAIModes => Caster.Faction != Faction.OfPlayer;
 
         #endregion
 
@@ -126,7 +129,7 @@ namespace CombatExtended
             }
 
             // Sanity check in case def changed
-            if (!availableFireModes.Contains(currentFireModeInt) || !availableAimModes.Contains(CurrentAimMode))
+            if (!availableFireModes.Contains(currentFireModeInt) || !availableAimModes.Contains(currentAimModeInt))
             {
                 ResetModes();
             }
@@ -176,9 +179,9 @@ namespace CombatExtended
             Command_Action toggleFireModeGizmo = new Command_Action
             {
                 action = ToggleFireMode,
-                defaultLabel = ("CE_" + CurrentFireMode.ToString() + "Label").Translate(),
+                defaultLabel = ("CE_" + currentFireModeInt.ToString() + "Label").Translate(),
                 defaultDesc = "CE_ToggleFireModeDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get(("UI/Buttons/" + CurrentFireMode.ToString()), true),
+                icon = ContentFinder<Texture2D>.Get(("UI/Buttons/" + currentFireModeInt.ToString()), true),
                 tutorTag = availableFireModes.Count > 1 ? "CE_FireModeToggle" : null
             };
             if (availableFireModes.Count > 1)
@@ -192,9 +195,9 @@ namespace CombatExtended
             Command_Action toggleAimModeGizmo = new Command_Action
             {
                 action = ToggleAimMode,
-                defaultLabel = ("CE_" + CurrentAimMode.ToString() + "Label").Translate(),
+                defaultLabel = ("CE_" + currentAimModeInt.ToString() + "Label").Translate(),
                 defaultDesc = "CE_ToggleAimModeDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get(("UI/Buttons/" + CurrentAimMode.ToString()), true),
+                icon = ContentFinder<Texture2D>.Get(("UI/Buttons/" + currentAimModeInt.ToString()), true),
             };
             if (availableAimModes.Count > 1)
             {

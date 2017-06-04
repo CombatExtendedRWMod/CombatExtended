@@ -46,7 +46,7 @@ namespace CombatExtended
                     {
                         return 1;
                     }
-                    if ((this.CompFireModes.CurrentFireMode == FireMode.BurstFire || (UseDefaultModes && this.CompFireModes.Props.aiUseBurstMode))
+                    if (this.CompFireModes.CurrentFireMode == FireMode.BurstFire
                         && this.CompFireModes.Props.aimedBurstShotCount > 0)
                     {
                         return this.CompFireModes.Props.aimedBurstShotCount;
@@ -71,14 +71,11 @@ namespace CombatExtended
                         // Check for suppression
                         if (IsSuppressed) return false;
                     }
-                    return this.CompFireModes.CurrentAimMode == AimMode.AimedShot || (UseDefaultModes && this.CompFireModes.Props.aiUseAimMode);
+                    return this.CompFireModes.CurrentAimMode == AimMode.AimedShot;
                 }
                 return false;
             }
         }
-        
-        // Whether this gun should use default AI firing modes
-        private bool UseDefaultModes => !(caster.Faction == Faction.OfPlayer);
 
         protected override float SwayAmplitude
         {
