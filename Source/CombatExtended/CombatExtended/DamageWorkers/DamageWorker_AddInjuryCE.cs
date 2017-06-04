@@ -164,7 +164,6 @@ namespace CombatExtended
 
         private void ApplyDamageToPart(DamageInfo dinfo, Pawn pawn, ref DamageWorker_AddInjuryCE.LocalInjuryResult result)
         {
-            Log.Message("CE calling ApplyDamageToPart with dinfo " + dinfo.ToString());
             BodyPartRecord exactPartFromDamageInfo = DamageWorker_AddInjuryCE.GetExactPartFromDamageInfo(dinfo, pawn);
             if (exactPartFromDamageInfo == null)
             {

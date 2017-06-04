@@ -85,7 +85,6 @@ namespace CombatExtended
                 explosion.postExplosionSpawnChance = Props.postExplosionSpawnChance;
                 explosion.postExplosionSpawnThingCount = Props.postExplosionSpawnThingCount;
                 explosion.applyDamageToExplosionCellsNeighbors = Props.applyDamageToExplosionCellsNeighbors;
-                Log.Message("CE calling ExplosionManager with explosion=" + explosion.ToString());
                 map.GetComponent<ExplosionManager>().StartExplosion(explosion, Props.soundExplode ?? Props.explosionDamageDef.soundExplosion);
             }
         }
