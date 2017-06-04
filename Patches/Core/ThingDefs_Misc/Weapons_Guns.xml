@@ -996,7 +996,7 @@
 		<value>
       <SightsEfficiency>0.50</SightsEfficiency>
       <ShotSpread>0.05</ShotSpread>
-      <SwayFactor>1.31</SwayFactor>
+      <SwayFactor>1.53</SwayFactor>
       <Bulk>13.7</Bulk>
 		</value>
 	</Operation>

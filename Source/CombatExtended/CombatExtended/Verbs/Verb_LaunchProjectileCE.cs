@@ -36,6 +36,7 @@ namespace CombatExtended
 
         protected CompCharges compCharges = null;
         protected CompAmmoUser compAmmo = null;
+        protected CompFireModes compFireModes = null;
         private float shotSpeed = -1;
         
         private float rotationDegrees = 0f;
@@ -125,6 +126,18 @@ namespace CombatExtended
                     }
                 }
                 return this.VerbPropsCE.projectileDef;
+            }
+        }
+        
+        protected CompFireModes CompFireModes
+        {
+            get
+            {
+                if (this.compFireModes == null && this.ownerEquipment != null)
+                {
+                    this.compFireModes = this.ownerEquipment.TryGetComp<CompFireModes>();
+                }
+                return this.compFireModes;
             }
         }
 
@@ -231,6 +244,13 @@ namespace CombatExtended
 	           			// - It is possible for targetVertical.max < coverVertical.max, technically, in which case the shooter will never hit until the cover is gone.
                         // - This should be checked for in LoS -NIA
 	           			targetRange.min = coverRange.max;
+
+                        // Shift aim upwards if we're doing suppressive fire
+                        if (targetRange.max <= coverRange.max && CompFireModes?.CurrentAimMode == AimMode.SuppressFire)
+                        {
+                            targetRange.max = coverRange.max * 2;
+                            targetRange.min = coverRange.max;
+                        }
 	           		}
                     else if (currentTarget.Thing is Pawn)
                     {
@@ -500,8 +520,6 @@ namespace CombatExtended
         {
         }
 
-        #endregion
-
         #region Line of Sight Utility
 
         /* Line of sight calculating methods
@@ -631,8 +649,13 @@ namespace CombatExtended
                 Ray shotLine = new Ray(shotSource, (targetPos - shotSource));
 
                 // Create validator to check for intersection with partial cover
+                var aimMode = CompFireModes?.CurrentAimMode;
                 Func<IntVec3, bool> validator = delegate (IntVec3 cell)
                 {
+                    // Skip this check entirely if we're doing suppressive fire and cell is adjacent to target
+                    if (aimMode == AimMode.SuppressFire)
+                        return true;
+
                     Thing cover = cell.GetFirstPawn(caster.Map);
                     if (cover == null)
                     {
@@ -670,6 +693,8 @@ namespace CombatExtended
             }
             return true;
         }
+
+        #endregion
 
         #endregion
     }

@@ -8,9 +8,11 @@ using UnityEngine;
 
 namespace CombatExtended
 {
-
-    public class RacePropertiesExtensionCE : DefModExtension
+    public class BodyShapeDef : Def
     {
-        public BodyShapeDef bodyShape = CE_BodyShapeDefOf.Invalid;
+        public float width = 1;
+        public float widthLaying = 1;
+        public float height = 1;
+        public float heightLaying = 1;
     }
 }

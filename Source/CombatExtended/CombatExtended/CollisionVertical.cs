@@ -61,12 +61,9 @@ namespace CombatExtended
             {
                 collisionHeight = pawn.BodySize * CE_Utility.GetCollisionBodyFactors(pawn).Second;
                 shotHeightOffset = collisionHeight * (1 - BodyRegionMiddleHeight);
-                if (pawn.GetPosture() != PawnPosture.Standing)
-                {
-                    collisionHeight = pawn.BodySize > 1 ? pawn.BodySize - 0.8f : 0.2f * pawn.BodySize;
-                }
+
                 // Humanlikes in combat crouch to reduce their profile
-                else if (pawn.IsCrouching())
+                if (pawn.IsCrouching())
                 {
                     float crouchHeight = BodyRegionBottomHeight * collisionHeight;  // Minimum height we can crouch down to
 
