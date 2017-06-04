@@ -461,7 +461,7 @@ namespace CombatExtended
             var stat = CE_StatDefOf.MeleeParryChance;
             var offSkill = attacker.GetStatValue(stat);
             var defSkill = defender.GetStatValue(stat);
-            return Mathf.Clamp01(BaseCritChance + offSkill - defSkill);
+            return Mathf.Clamp01(BaseParryChance + defSkill - offSkill);
         }
 
         private static float GetDodgeChanceAgainst(Pawn attacker, Pawn defender)
@@ -471,7 +471,7 @@ namespace CombatExtended
             var stat = StatDefOf.MeleeDodgeChance;
             var offSkill = attacker.GetStatValue(stat);
             var defSkill = defender.GetStatValue(stat);
-            return Mathf.Clamp01(BaseCritChance + offSkill - defSkill);
+            return Mathf.Clamp01(BaseDodgeChance + defSkill - offSkill);
         }
 
         #endregion

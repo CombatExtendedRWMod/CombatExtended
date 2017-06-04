@@ -189,7 +189,7 @@
     <defaultBaseValue>1</defaultBaseValue>
     <showOnPawns>true</showOnPawns>
     <minValue>0.0</minValue>
-    <maxValue>0.8</maxValue>
+    <maxValue>0.7</maxValue>
     <toStringStyle>PercentZero</toStringStyle>
     <noSkillFactor>0</noSkillFactor>
     <skillNeedFactors>
