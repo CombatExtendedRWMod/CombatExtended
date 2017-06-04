@@ -1020,6 +1020,7 @@
 				  <targetParams>
 				    <canTargetLocations>true</canTargetLocations>
 				  </targetParams>
+				  <recoilPattern>Mounted</recoilPattern>
 				</li>
 			</verbs>
 		</value>
@@ -1230,6 +1231,7 @@
 					<soundCast>GunShotA</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+				  <recoilPattern>Mounted</recoilPattern>
 				</li>
 			</verbs>
 		</value>
@@ -1806,6 +1808,7 @@
 				  <soundCast>ShotChargeBlaster</soundCast>
 				  <soundCastTail>GunTail_Heavy</soundCastTail>
 				  <muzzleFlashScale>9</muzzleFlashScale>
+				  <recoilPattern>Mounted</recoilPattern>
 				</li>
 			</verbs>
 		</value>
