@@ -104,7 +104,7 @@
     <defaultBaseValue>1</defaultBaseValue>
     <showOnPawns>true</showOnPawns>
     <minValue>0.0</minValue>
-    <maxValue>0.8</maxValue>
+    <maxValue>3.2</maxValue>
     <toStringStyle>PercentZero</toStringStyle>
     <skillNeedFactors>
       <li Class="SkillNeed_BaseBonus">
@@ -135,6 +135,7 @@
         <li>(0.6, 0.45)</li>
         <li>(1.2, 0.6)</li>
         <li>(2.4, 0.75)</li>
+        <li>(3.2, 0.8)</li>
       </points>
     </postProcessCurve>
   </StatDef>
@@ -148,7 +149,7 @@
     <displayPriorityInCategory>99</displayPriorityInCategory>
     <defaultBaseValue>1</defaultBaseValue>
     <minValue>0</minValue>
-    <maxValue>0.8</maxValue>
+    <maxValue>1.6</maxValue>
     <toStringStyle>PercentZero</toStringStyle>
     <skillNeedFactors>
       <li Class="SkillNeed_BaseBonus">
@@ -187,7 +188,7 @@
     <defaultBaseValue>1</defaultBaseValue>
     <showOnPawns>true</showOnPawns>
     <minValue>0.0</minValue>
-    <maxValue>0.7</maxValue>
+    <maxValue>3.2</maxValue>
     <toStringStyle>PercentZero</toStringStyle>
     <noSkillFactor>0</noSkillFactor>
     <skillNeedFactors>
@@ -219,6 +220,7 @@
         <li>(0.6, 0.45)</li>
         <li>(1.2, 0.6)</li>
         <li>(2.4, 0.75)</li>
+        <li>(3.2, 0.8)</li>
       </points>
     </postProcessCurve>
   </StatDef>

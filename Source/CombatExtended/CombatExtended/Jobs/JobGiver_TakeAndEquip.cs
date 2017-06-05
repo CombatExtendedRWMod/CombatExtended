@@ -17,6 +17,7 @@ namespace CombatExtended
             LowAmmo,
             Weapon,
             Ammo
+            //Apparel
         }
 
         private WorkPriority GetPriorityWork(Pawn pawn)
@@ -476,6 +477,7 @@ namespace CombatExtended
             return null;
         }
 
+        /*
         private static Job GotoForce(Pawn pawn, LocalTargetInfo target, PathEndMode pathEndMode)
         {
             using (PawnPath pawnPath = pawn.Map.pathFinder.FindPath(pawn.Position, target, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.PassAllDestroyableThings, false), pathEndMode))
@@ -510,6 +512,7 @@ namespace CombatExtended
                 return MeleeOrWaitJob(pawn, thing, cellBeforeBlocker);
             }
         }
+        */
 
         private static bool Unload(Pawn pawn)
         {
@@ -539,6 +542,7 @@ namespace CombatExtended
             };
         }
 
+        /*
         private Apparel FindGarmentCoveringPart(Pawn pawn, BodyPartGroupDef bodyPartGroupDef)
         {
             Room room = pawn.GetRoom();
@@ -561,5 +565,6 @@ namespace CombatExtended
             }
             return null;
         }
+        */
     }
 }

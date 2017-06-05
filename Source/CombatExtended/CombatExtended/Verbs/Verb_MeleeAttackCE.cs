@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using RimWorld;
 using Verse;
+using Verse.AI;
 using Verse.Sound;
 
 namespace CombatExtended
@@ -25,7 +26,7 @@ namespace CombatExtended
         private const int TargetCooldown = 50;
 		private const float DefaultHitChance = 0.6f;
         private const float ShieldBlockChance = 0.75f;   // If we have a shield equipped, this is the chance a parry will be a shield block
-        private const float CritFactor = 1.5f;  // Criticals will do normal damage times this
+        private const int KnockdownDuration = 120;   // Animal knockdown lasts for this long
 
         // XP variables
         private const float HitXP = 200;    // Vanilla is 250
@@ -45,6 +46,24 @@ namespace CombatExtended
         private const float BaseCritChance = 0.1f;
         private const float BaseDodgeChance = 0.1f;
         private const float BaseParryChance = 0.2f;
+
+        #endregion
+
+        #region Properties
+
+        DamageDef CritDamageDef
+        {
+            get
+            {
+                if (CasterPawn.def.race.Animal)
+                    return verbProps.meleeDamageDef;
+                if (verbProps.meleeDamageDef.armorCategory == CE_DamageArmorCategoryDefOf.Blunt)
+                {
+                    return DamageDefOf.Stun;
+                }
+                return DefDatabase<DamageDef>.GetNamed(verbProps.meleeDamageDef.defName + "_Critical");
+            }
+        }
 
         #endregion
 
@@ -182,10 +201,11 @@ namespace CombatExtended
         /// </summary>
         /// <param name="target">The target damage is to be applied to</param>
         /// <returns>Collection with primary DamageInfo, followed by secondary types</returns>
-		private IEnumerable<DamageInfo> DamageInfosToApply(LocalTargetInfo target)
+		private IEnumerable<DamageInfo> DamageInfosToApply(LocalTargetInfo target, bool isCrit = false)
 		{
 			float damAmount = (float)this.verbProps.AdjustedMeleeDamageAmount(this, base.CasterPawn, this.ownerEquipment);
-			DamageDef damDef = this.verbProps.meleeDamageDef;
+            var critDamDef = CritDamageDef;
+			DamageDef damDef = isCrit && critDamDef != DamageDefOf.Stun ? critDamDef : verbProps.meleeDamageDef;
 			BodyPartGroupDef bodyPartGroupDef = null;
 			HediffDef hediffDef = null;
 			if (base.CasterIsPawn)
@@ -222,6 +242,8 @@ namespace CombatExtended
 			mainDinfo.SetWeaponHediff(hediffDef);
 			mainDinfo.SetAngle(direction);
 			yield return mainDinfo;
+
+            // Apply secondary damage on surprise attack
 			if (this.surpriseAttack && this.verbProps.surpriseAttack != null && this.verbProps.surpriseAttack.extraMeleeDamages != null)
 			{
 				List<ExtraMeleeDamage> extraDamages = this.verbProps.surpriseAttack.extraMeleeDamages;
@@ -238,6 +260,18 @@ namespace CombatExtended
 					yield return extraDinfo;
 				}
 			}
+
+            // Apply critical damage
+            if (isCrit && critDamDef == DamageDefOf.Stun)
+            {
+                var critAmount = GenMath.RoundRandom(mainDinfo.Amount * 0.25f);
+                var critDinfo = new DamageInfo(critDamDef, critAmount, -1, caster, null, source);
+                critDinfo.SetBodyRegion(bodyRegion, BodyPartDepth.Outside);
+                critDinfo.SetWeaponBodyPartGroup(bodyPartGroupDef);
+                critDinfo.SetWeaponHediff(hediffDef);
+                critDinfo.SetAngle(direction);
+                yield return critDinfo;
+            }
 		}
 
         // unmodified
@@ -278,15 +312,25 @@ namespace CombatExtended
         /// <param name="isCrit">Whether we should apply critical damage</param>
 		private void ApplyMeleeDamageToTarget(LocalTargetInfo target, bool isCrit = false)
 		{
-			foreach (DamageInfo current in DamageInfosToApply(target))
+			foreach (DamageInfo current in DamageInfosToApply(target, isCrit))
 			{
 				if (target.ThingDestroyed)
 				{
 					break;
 				}
-                if (isCrit) current.SetAmount(Mathf.CeilToInt(current.Amount * CritFactor));    // Apply crit factor
 				target.Thing.TakeDamage(current);
 			}
+            // Apply animal knockdown
+            if (isCrit && CasterPawn.def.race.Animal)
+            {
+                var pawn = target.Thing as Pawn;
+                if (pawn != null)
+                {
+                    //pawn.stances?.stunner.StunFor(KnockdownDuration);
+                    pawn.stances.SetStance(new Stance_Cooldown(KnockdownDuration, pawn, null));
+                    pawn.jobs?.StartJob(new Job(CE_JobDefOf.WaitKnockdown) { expiryInterval = KnockdownDuration }, JobCondition.InterruptForced, null, false, false);
+                }
+            }
 		}
 
         /// <summary>
