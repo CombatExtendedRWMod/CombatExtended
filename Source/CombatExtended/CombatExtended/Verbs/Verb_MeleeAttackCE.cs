@@ -300,7 +300,7 @@ namespace CombatExtended
                 || pawn.Dead 
                 || !pawn.RaceProps.Humanlike 
                 || pawn.story.WorkTagIsDisabled(WorkTags.Violent) 
-                || pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation) 
+                || !pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation) 
                 || IsTargetImmobile(pawn))
             {
                 return false;
@@ -451,7 +451,8 @@ namespace CombatExtended
             var stat = CE_StatDefOf.MeleeCritChance;
             var offSkill = attacker.GetStatValue(stat);
             var defSkill = defender.GetStatValue(stat);
-            return Mathf.Clamp01(BaseCritChance + offSkill - defSkill);
+            var chance = Mathf.Clamp01(BaseCritChance + offSkill - defSkill);
+            return chance;
         }
 
         private static float GetParryChanceAgainst(Pawn attacker,  Pawn defender)
@@ -461,7 +462,8 @@ namespace CombatExtended
             var stat = CE_StatDefOf.MeleeParryChance;
             var offSkill = attacker.GetStatValue(stat);
             var defSkill = defender.GetStatValue(stat);
-            return Mathf.Clamp01(BaseParryChance + defSkill - offSkill);
+            var chance = Mathf.Clamp01(BaseParryChance + defSkill - offSkill);
+            return chance;
         }
 
         private static float GetDodgeChanceAgainst(Pawn attacker, Pawn defender)
@@ -471,7 +473,8 @@ namespace CombatExtended
             var stat = StatDefOf.MeleeDodgeChance;
             var offSkill = attacker.GetStatValue(stat);
             var defSkill = defender.GetStatValue(stat);
-            return Mathf.Clamp01(BaseDodgeChance + defSkill - offSkill);
+            var chance = Mathf.Clamp01(BaseDodgeChance + defSkill - offSkill);
+            return chance;
         }
 
         #endregion

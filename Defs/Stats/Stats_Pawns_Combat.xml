@@ -131,12 +131,10 @@
     <postProcessCurve>
       <points>
         <li>(0.0, 0.0)</li>
-        <li>(0.25, 0.25)</li>
-        <li>(0.5, 0.375)</li>
-        <li>(1.0, 0.5)</li>
-        <li>(2.0, 0.625)</li>
-        <li>(4.0, 0.75)</li>
-        <li>(8.0, 0.875)</li>
+        <li>(0.3, 0.3)</li>
+        <li>(0.6, 0.45)</li>
+        <li>(1.2, 0.6)</li>
+        <li>(2.4, 0.75)</li>
       </points>
     </postProcessCurve>
   </StatDef>
@@ -175,8 +173,7 @@
         <li>(0.0, 0.0)</li>
         <li>(0.4, 0.4)</li>
         <li>(0.8, 0.6)</li>
-        <li>(1.6, 0.7)</li>
-        <li>(3.2, 0.8)</li>
+        <li>(1.6, 0.8)</li>
       </points>
     </postProcessCurve>
   </StatDef>
@@ -218,12 +215,10 @@
     <postProcessCurve>
       <points>
         <li>(0.0, 0.0)</li>
-        <li>(0.28, 0.28)</li>
-        <li>(0.56, 0.42)</li>
-        <li>(1.12, 0.54)</li>
-        <li>(2.24, 0.66)</li>
-        <li>(4.48, 0.78)</li>
-        <li>(8.96, 0.9)</li>
+        <li>(0.3, 0.3)</li>
+        <li>(0.6, 0.45)</li>
+        <li>(1.2, 0.6)</li>
+        <li>(2.4, 0.75)</li>
       </points>
     </postProcessCurve>
   </StatDef>
