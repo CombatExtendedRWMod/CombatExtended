@@ -316,7 +316,7 @@ namespace CombatExtended
 			{
 				if (target.ThingDestroyed)
 				{
-					break;
+					return;
 				}
 				target.Thing.TakeDamage(current);
 			}
