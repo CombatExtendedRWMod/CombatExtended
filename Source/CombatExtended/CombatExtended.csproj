@@ -241,6 +241,7 @@
     <Compile Include="Harmony\Harmony-ThingOwner.cs" />
     <Compile Include="Harmony\Harmony-TooltipUtility.cs" />
     <Compile Include="Harmony\Harmony-TradeDeal.cs" />
+    <Compile Include="Harmony\Harmony-Verb_LaunchProjectileCE.cs" />
     <Compile Include="Harmony\Harmony-Verb_TryStartCastOn.cs" />
     <Compile Include="Harmony\Harmony-VerbTracker.cs" />
     <Compile Include="Harmony\Harmony-WorkGiver_HunterHunt.cs" />
