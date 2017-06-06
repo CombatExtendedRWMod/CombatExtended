@@ -108,7 +108,6 @@ namespace CombatExtended
                     MoteMaker.ThrowText(turret.Position.ToVector3Shifted(), turret.Map, string.Format("CE_ReloadingTurretMote".Translate(), TargetThingA.LabelCapNoCount));
                 Thing newAmmo;
                 compReloader.TryUnload(out newAmmo);
-                Log.Message("CE created newAmmo=" + newAmmo.ToStringSafe());
                 if (newAmmo?.CanStackWith(ammo) ?? false)
                     pawn.carryTracker.TryStartCarry(newAmmo, Mathf.Min(newAmmo.stackCount, compReloader.Props.magazineSize - ammo.stackCount));
             };
