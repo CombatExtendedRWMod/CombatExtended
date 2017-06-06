@@ -99,8 +99,8 @@ namespace CombatExtended
 
         protected float ShootingAccuracy => CasterPawn?.GetStatValue(StatDefOf.ShootingAccuracy) ?? 2f;
         protected float AimingAccuracy => ShooterPawn?.GetStatValue(CE_StatDefOf.AimingAccuracy) ?? 0.75f;
-        protected float SightsEfficiency => (3 - ownerEquipment.GetStatValue(CE_StatDefOf.SightsEfficiency));
-        protected virtual float SwayAmplitude => Mathf.Max(0, (4.5f - ShootingAccuracy * ownerEquipment.GetStatValue(CE_StatDefOf.SightsEfficiency)) * ownerEquipment.GetStatValue(StatDef.Named("SwayFactor")));
+        protected float SightsEfficiency => ownerEquipment.GetStatValue(CE_StatDefOf.SightsEfficiency);
+        protected virtual float SwayAmplitude => Mathf.Max(0, (4.5f - ShootingAccuracy) * ownerEquipment.GetStatValue(StatDef.Named("SwayFactor")));
 
         // Ammo variables
         protected CompAmmoUser CompAmmo
@@ -619,11 +619,25 @@ namespace CombatExtended
                     goodDest = IntVec3.Invalid;
                     return false;
                 }
-                ShootLeanUtility.CalcShootableCellsOf(tempDestList, targ.Thing);
+                // (ProfoundDarkness) I only ever see this code execute for the target, not the shooter...
+                // (ProfoundDarkness) I don't know what I'm doing here so basically if the target has a structure next to them assume they will lean, rather than a more precise and accurate
+                // test.
+
+                // If the target is near something they might have to lean around to shoot then calculate their leans.
+                // NOTE: CellsAdjacent8Way includes the check for if a location is in map bounds so can use CanBeSeenOverFast.  The alternative is fast 8way and slow (bounds checking) CanBeSeenOver.
+                if ((targ.Thing as Pawn).CurJob.def != CE_JobDefOf.HunkerDown && GenAdj.CellsAdjacent8Way(targ.Thing).FirstOrDefault(c => !c.CanBeSeenOverFast(targ.Thing.Map)) != null)
+                {
+                    ShootLeanUtility.CalcShootableCellsOf(tempDestList, targ.Thing);
+                } else // otherwise just assume that the target won't lean...
+                {
+                    tempDestList.Clear();
+                    tempDestList.Add(targ.Cell);
+                }
+
                 for (int i = 0; i < tempDestList.Count; i++)
                 {
                     if (this.CanHitCellFromCellIgnoringRange(sourceCell, tempDestList[i], targ.Thing, targ.Thing.def.Fillage == FillCategory.Full))
-                    {
+                    {   // if any of the locations the target is at or can lean to for shooting can be shot by the shooter then lets have the shooter shoot.
                         goodDest = tempDestList[i];
                         return true;
                     }

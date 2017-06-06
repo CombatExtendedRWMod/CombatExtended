@@ -22,17 +22,17 @@ namespace CombatExtended
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Building_TurretGunCE turret = t as Building_TurretGunCE;
-            if (!forced && (turret == null || !turret.AllowAutomaticReload)) return false;
+            if (turret == null || (!forced && !turret.AllowAutomaticReload)) return false;
             
-            if (turret == null
-                || !turret.NeedsReload
+            if (!turret.NeedsReload
                 || !pawn.CanReserveAndReach(turret, PathEndMode.ClosestTouch, Danger.Deadly)
                 || turret.IsForbidden(pawn.Faction))
             {
                 return false;
             }
+            if (!turret.CompAmmo.useAmmo) return true;
             Thing ammo = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
-                            ThingRequest.ForDef(turret.CompAmmo.selectedAmmo),
+                            ThingRequest.ForDef(turret.CompAmmo.SelectedAmmo),
                             PathEndMode.ClosestTouch,
                             TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn),
                             80,
@@ -47,12 +47,11 @@ namespace CombatExtended
 
             if (!turret.CompAmmo.useAmmo)
             {
-                return new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), t, null);
-                //return null;
+                return new Job(CE_JobDefOf.ReloadTurret, t, null);
             }
 
             Thing ammo = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
-                            ThingRequest.ForDef(turret.CompAmmo.selectedAmmo),
+                            ThingRequest.ForDef(turret.CompAmmo.SelectedAmmo),
                             PathEndMode.ClosestTouch,
                             TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn),
                             80,
@@ -60,7 +59,7 @@ namespace CombatExtended
 
             if (ammo == null) return null;
             int amountNeeded = turret.CompAmmo.Props.magazineSize;
-            if (turret.CompAmmo.currentAmmo == turret.CompAmmo.selectedAmmo) amountNeeded -= turret.CompAmmo.curMagCount;
+            if (turret.CompAmmo.currentAmmo == turret.CompAmmo.SelectedAmmo) amountNeeded -= turret.CompAmmo.curMagCount;
             return new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), t, ammo) { count = Mathf.Min(amountNeeded, ammo.stackCount) };
         }
 

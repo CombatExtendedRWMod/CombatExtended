@@ -103,13 +103,7 @@ namespace CombatExtended
                 if (this.gunInt == null)
                 {
                     this.gunInt = ThingMaker.MakeThing(this.def.building.turretGunDef, null);
-                    List<Verb> allVerbs = this.gunInt.TryGetComp<CompEquippable>().AllVerbs;
-                    for (int i = 0; i < allVerbs.Count; i++)
-                    {
-                        Verb verb = allVerbs[i];
-                        verb.caster = this;
-                        verb.castCompleteCallback = new Action(this.BurstComplete);
-                    }
+                    InitGun();
                 }
                 return this.gunInt;
             }
@@ -138,15 +132,16 @@ namespace CombatExtended
             {
                 return mannableComp == null
                     && CompAmmo != null
-                    && CompAmmo.useAmmo
-                    && (CompAmmo.curMagCount < CompAmmo.Props.magazineSize || CompAmmo.selectedAmmo != CompAmmo.currentAmmo);
+                    && CompAmmo.hasMagazine
+                    && (CompAmmo.curMagCount < CompAmmo.Props.magazineSize || CompAmmo.SelectedAmmo != CompAmmo.currentAmmo);
             }
         }
         public bool AllowAutomaticReload
         {
             get
             {
-                return mannableComp == null && CompAmmo != null && CompAmmo.useAmmo
+                return mannableComp == null && CompAmmo != null
+                    && CompAmmo.hasMagazine
                     && (ticksUntilAutoReload == 0 || CompAmmo.curMagCount <= Mathf.CeilToInt(CompAmmo.Props.magazineSize / 6));
             }
         }
@@ -187,7 +182,7 @@ namespace CombatExtended
             }
             if (CompAmmo != null && CompAmmo.curMagCount <= 0)
             {
-                OrderReload();
+                TryOrderReload();
             }
         }
 
@@ -242,17 +237,34 @@ namespace CombatExtended
         public override void ExposeData()
         {
             base.ExposeData();
+
+            // Look new variables
+            Scribe_Deep.Look(ref gunInt, "gunInt");
+            InitGun();
+            Scribe_Values.Look(ref isReloading, "isReloading", false);
+            Scribe_Values.Look(ref ticksUntilAutoReload, "ticksUntilAutoReload", 0);
+
             Scribe_Values.Look<int>(ref this.burstCooldownTicksLeft, "burstCooldownTicksLeft", 0, false);
             Scribe_Values.Look<int>(ref this.burstWarmupTicksLeft, "burstWarmupTicksLeft", 0, false);
             Scribe_TargetInfo.Look(ref this.currentTargetInt, "currentTarget");
             Scribe_Values.Look<bool>(ref this.holdFire, "holdFire", false, false);
+        }
 
-            // Look new variables
-            Scribe_Values.Look(ref burstWarmupTicksLeft, "burstWarmupTicksLeft", 0);
-            Scribe_Values.Look(ref isReloading, "isReloading", false);
-            Scribe_Values.Look(ref ticksUntilAutoReload, "ticksUntilAutoReload", 0);
-            // gunInt saving disabled until we can figure out a fix for the bug where it'll lose track of its verbs -NIA
-            //Scribe_Deep.Look(ref gunInt, "gunInt");
+        private void InitGun()
+        {
+            // Callback for ammo comp
+            if (CompAmmo != null)
+            {
+                CompAmmo.turret = this;
+                //if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
+            }
+            List<Verb> allVerbs = this.gunInt.TryGetComp<CompEquippable>().AllVerbs;
+            for (int i = 0; i < allVerbs.Count; i++)
+            {
+                Verb verb = allVerbs[i];
+                verb.caster = this;
+                verb.castCompleteCallback = new Action(this.BurstComplete);
+            }
         }
 
         // Replaced vanilla loaded text with CE reloading
@@ -376,13 +388,6 @@ namespace CombatExtended
             base.SpawnSetup(map, respawningAfterLoad);
             powerComp = base.GetComp<CompPowerTrader>();
             mannableComp = base.GetComp<CompMannable>();
-
-            // Callback for ammo comp
-            if (CompAmmo != null)
-            {
-                CompAmmo.turret = this;
-                //if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
-            }
         }
         
         private IAttackTargetSearcher TargSearcher()
@@ -398,6 +403,7 @@ namespace CombatExtended
         {
             base.Tick();
             if (ticksUntilAutoReload > 0) ticksUntilAutoReload--;   // Reduce time until we can auto-reload
+            if (CompAmmo?.curMagCount == 0 && (MannableComp?.MannedNow ?? false)) TryOrderReload();
             /*
             if (!CanSetForcedTarget && forcedTarget.IsValid)
             {
@@ -523,27 +529,29 @@ namespace CombatExtended
 
         // New methods
 
-        public void OrderReload()
+        public void TryOrderReload()
         {
+            /*
             if (mannableComp == null)
             {
                 if (!CompAmmo.useAmmo) CompAmmo.LoadAmmo();
                 return;
             }
+            */
 
-            if (!mannableComp.MannedNow || (CompAmmo.currentAmmo == CompAmmo.selectedAmmo && CompAmmo.curMagCount == CompAmmo.Props.magazineSize)) return;
+            if ((!mannableComp?.MannedNow ?? true) || (CompAmmo.currentAmmo == CompAmmo.SelectedAmmo && CompAmmo.curMagCount == CompAmmo.Props.magazineSize)) return;
             Job reloadJob = null;
             if (CompAmmo.useAmmo)
             {
                 CompInventory inventory = mannableComp.ManningPawn.TryGetComp<CompInventory>();
                 if (inventory != null)
                 {
-                    Thing ammo = inventory.container.FirstOrDefault(x => x.def == CompAmmo.selectedAmmo);
+                    Thing ammo = inventory.container.FirstOrDefault(x => x.def == CompAmmo.SelectedAmmo);
                     if (ammo != null)
                     {
                         Thing droppedAmmo;
                         int amount = CompAmmo.Props.magazineSize;
-                        if (CompAmmo.currentAmmo == CompAmmo.selectedAmmo) amount -= CompAmmo.curMagCount;
+                        if (CompAmmo.currentAmmo == CompAmmo.SelectedAmmo) amount -= CompAmmo.curMagCount;
                         if (inventory.container.TryDrop(ammo, this.Position, this.Map, ThingPlaceMode.Direct, Mathf.Min(ammo.stackCount, amount), out droppedAmmo))
                         {
                             reloadJob = new Job(CE_JobDefOf.ReloadTurret, this, droppedAmmo) { count = droppedAmmo.stackCount };
@@ -557,7 +565,8 @@ namespace CombatExtended
             }
             if (reloadJob != null)
             {
-                mannableComp.ManningPawn.jobs.StartJob(reloadJob, JobCondition.Ongoing, null, true);
+                var pawn = mannableComp.ManningPawn;
+                pawn.jobs.StartJob(reloadJob, JobCondition.Ongoing, null, pawn.CurJob?.def != reloadJob.def);
             }
         }
 
@@ -568,7 +577,7 @@ namespace CombatExtended
                 yield return gizmo;
             }
             // Ammo gizmos
-            if (CompAmmo != null && (CompAmmo.useAmmo || mannableComp != null))
+            if (CompAmmo != null)
             {
                 foreach (Command com in CompAmmo.CompGetGizmosExtra())
                 {
