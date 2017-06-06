@@ -16,7 +16,7 @@ namespace CombatExtended
 
         private int curMagCountInt;
         private AmmoDef currentAmmoInt = null;
-        public AmmoDef selectedAmmo;
+        private AmmoDef selectedAmmo;
         
         private Thing ammoToBeDeleted;
 
@@ -95,7 +95,7 @@ namespace CombatExtended
         {
             get
             {
-				return compInventory != null && compInventory.ammoList.Any(x => Props.ammoSet.ammoTypes.Any(a => a.ammo == x.def));
+                return compInventory != null && compInventory.ammoList.Any(x => Props.ammoSet.ammoTypes.Any(a => a.ammo == x.def));
             }
         }
         public bool hasMagazine { get { return Props.magazineSize > 0; } }
@@ -134,6 +134,22 @@ namespace CombatExtended
             }
         }
         public bool ShouldThrowMote => Props.throwMote && Props.magazineSize > 1;
+
+        public AmmoDef SelectedAmmo
+        {
+            get
+            {
+                return selectedAmmo;
+            }
+            set
+            {
+                selectedAmmo = value;
+                if (!hasMagazine && currentAmmo != value)
+                {
+                    currentAmmoInt = value;
+                }
+            }
+        }
 
         #endregion Properties
 
@@ -225,6 +241,10 @@ namespace CombatExtended
                     if (!TryFindAmmoInInventory(out ammoToBeDeleted))
                     {
                         return false;
+                    }
+                    if (ammoToBeDeleted.def != currentAmmo)
+                    {
+                        currentAmmoInt = ammoToBeDeleted.def as AmmoDef;
                     }
 					
                     if (ammoToBeDeleted.stackCount > 1)
