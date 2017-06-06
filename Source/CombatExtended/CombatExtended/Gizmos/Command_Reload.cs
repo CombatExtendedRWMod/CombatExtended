@@ -75,7 +75,7 @@ namespace CombatExtended
 		               	{
 			               	if (compAmmo.turret != null)
 			               	{
-			               		compAmmo.turret.OrderReload();
+			               		compAmmo.turret.TryOrderReload();
 			               	}
 			               	else
 			               	{

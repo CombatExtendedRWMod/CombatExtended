@@ -182,7 +182,7 @@ namespace CombatExtended
             }
             if (CompAmmo != null && CompAmmo.curMagCount <= 0)
             {
-                OrderReload();
+                TryOrderReload();
             }
         }
 
@@ -403,7 +403,7 @@ namespace CombatExtended
         {
             base.Tick();
             if (ticksUntilAutoReload > 0) ticksUntilAutoReload--;   // Reduce time until we can auto-reload
-            if (CompAmmo?.curMagCount == 0 && (MannableComp?.MannedNow ?? false)) OrderReload();
+            if (CompAmmo?.curMagCount == 0 && (MannableComp?.MannedNow ?? false)) TryOrderReload();
             /*
             if (!CanSetForcedTarget && forcedTarget.IsValid)
             {
@@ -529,7 +529,7 @@ namespace CombatExtended
 
         // New methods
 
-        public void OrderReload()
+        public void TryOrderReload()
         {
             /*
             if (mannableComp == null)
