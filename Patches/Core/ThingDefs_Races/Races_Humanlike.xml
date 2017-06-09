@@ -60,12 +60,5 @@
 		</value>
 	</Operation>
 
-	<Operation Class="PatchOperationAdd">
-		<xpath>*/ThingDef[defName="Human"]/recipes</xpath>
-		<value>
-			<li>GraftSynthTissue</li>
-		</value>
-	</Operation>
-
 </Patch>
 
