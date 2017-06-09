@@ -450,7 +450,7 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>*/ThingDef[defName="Weapon_GrenadeFrag"]/weaponTags</xpath>
+		<xpath>*/ThingDef[defName="Weapon_GrenadeEMP"]/weaponTags</xpath>
 		<value>
 			<li>CE_AI_Grenade</li>
 			<li>CE_OneHandedWeapon</li>
