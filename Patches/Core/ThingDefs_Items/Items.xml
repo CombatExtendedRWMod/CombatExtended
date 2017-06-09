@@ -10,6 +10,88 @@
 		</value>
 	</Operation>
 
+	<!-- ========== Resource Exotic ========== -->
+
+	<!-- Thrumbo Horn -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>*/ThingDef[defName="ThrumboHorn"]/statBases/MeleeWeapon_DamageAmount</xpath>
+		<value>
+      <MeleeWeapon_DamageAmount>19</MeleeWeapon_DamageAmount>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="ThrumboHorn"]/statBases</xpath>
+		<value>
+      <MeleeWeapon_Penetration>0.3</MeleeWeapon_Penetration>
+      <Bulk>10</Bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="ThrumboHorn"]</xpath>
+		<value>
+			<equippedStatOffsets>
+				<MeleeCritChance>1</MeleeCritChance>
+				<MeleeParryChance>0.75</MeleeParryChance>
+			</equippedStatOffsets>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>*/ThingDef[defName="ThrumboHorn"]/verbs</xpath>
+		<value>
+			<verbs>
+				<li>
+				  <verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
+				  <hasStandardCommand>true</hasStandardCommand>
+				  <meleeDamageDef>Stab</meleeDamageDef>
+				</li>
+			</verbs>
+		</value>
+	</Operation>
+
+	<!-- Elephant Tusk -->
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>*/ThingDef[defName="ElephantTusk"]/statBases/MeleeWeapon_DamageAmount</xpath>
+		<value>
+      <MeleeWeapon_DamageAmount>19</MeleeWeapon_DamageAmount>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="ElephantTusk"]/statBases</xpath>
+		<value>
+      <MeleeWeapon_Penetration>0.175</MeleeWeapon_Penetration>
+      <Bulk>10</Bulk>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="ElephantTusk"]</xpath>
+		<value>
+			<equippedStatOffsets>
+				<MeleeCritChance>0.25</MeleeCritChance>
+				<MeleeParryChance>0.5</MeleeParryChance>
+			</equippedStatOffsets>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>*/ThingDef[defName="ElephantTusk"]/verbs</xpath>
+		<value>
+			<verbs>
+				<li>
+				  <verbClass>CombatExtended.Verb_MeleeAttackCE</verbClass>
+				  <hasStandardCommand>true</hasStandardCommand>
+				  <meleeDamageDef>Stab</meleeDamageDef>
+				</li>
+			</verbs>
+		</value>
+	</Operation>
+
 	<!-- ========== Resource Stuff ========== -->
 
 	<Operation Class="PatchOperationAdd">
