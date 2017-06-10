@@ -7,17 +7,6 @@
       <parent>AmmoRockets</parent>
     </ThingCategoryDef>
 	
-	<!-- ==================== AmmoSet ========================== -->
-
-  <CombatExtended.AmmoSetDef>
-    <defName>AmmoSet_RPOGrenade</defName>
-    <label>RPO Grenades</label>
-	<ammoTypes>
-	  <Ammo_RPOGrenade_HEAT>Bullet_RPOGrenade_HEAT</Ammo_RPOGrenade_HEAT>
-	  <Ammo_RPOGrenade_HE>Bullet_RPOGrenade_HE</Ammo_RPOGrenade_HE>
-	</ammoTypes>
-  </CombatExtended.AmmoSetDef>
-	
 	<!-- ================== Projectiles ================== -->
 
 	<ThingDef Name="BaseRPOGrenade" ParentName="BaseBullet" Abstract="true">
