@@ -20,18 +20,32 @@ namespace CombatExtended
 		private TargetIndex sourceInd = TargetIndex.B;
 		private TargetIndex flagInd = TargetIndex.C;
 		
+        /// <summary>
+        /// Property that converts TargetIndex.A into a Thing object.
+        /// </summary>
 		private Thing targetItem
 		{
 			get {
 				return CurJob.GetTarget(thingInd).Thing;
 			}
 		}
+        /// <summary>
+        /// Property that converts TargetIndex.B into a Thing object.
+        /// </summary>
 		private Pawn takePawn
 		{
 			get {
 				return (Pawn)CurJob.GetTarget(sourceInd).Thing;
 			}
 		}
+        /// <summary>
+        /// Property which is used to indicate that the job was created with the expectation that the Pawn doing the job is to equip the thing they are taking.
+        /// </summary>
+        /// <remarks>
+        /// The test in this case looks to see if Target.C was given a Thing (will be the takePawn but any thing/pawn will do) vs being given null
+        /// (in which case doesn't have a thing).  See the JobGiver_UpdateLoadout.cs file for how this is set as it's rather non-standard but we
+        /// needed a way to store a bool value that could be saved into a Job.
+        /// </remarks>
 		private bool doEquip
 		{
 			get
@@ -40,6 +54,10 @@ namespace CombatExtended
 			}
 		}
 
+        /// <summary>
+        /// Generates the Job Report string displayed when clicking on a pawn working on this job.
+        /// </summary>
+        /// <returns>string of the generated report.</returns>
 		public override string GetReport()
 		{
 			string text = CE_JobDefOf.TakeFromOther.reportString;
@@ -49,11 +67,32 @@ namespace CombatExtended
 			return text;
 		}
 
+        /// <summary>
+        /// A fail condition, if the takePawn is dead it no longer has a container.
+        /// </summary>
+        /// <returns>bool, true indicates the takePawn is dead.</returns>
         private bool DeadTakePawn()
         {
             return takePawn.Dead;
         }
 		
+        /// <summary>
+        /// Walks the linked list from a Thing's holdingOwner.Owner back up to a Pawn, or null, and returns the result.
+        /// </summary>
+        /// <param name="container">IThingHolder type which can be a container of some sort or a pawn.</param>
+        /// <returns>Pawn type which can be null if we didn't end up with a pawn at the top.</returns>
+        private Pawn RootHolder(IThingHolder container)
+        {
+            IThingHolder holder = container;
+            while (holder != null && (holder as Pawn) == null)
+                holder = holder.ParentHolder;
+            return holder as Pawn;
+        }
+
+        /// <summary>
+        /// Handles the various yield returns that make up an iterated toil sequence.
+        /// </summary>
+        /// <returns>IEnumberable of Toil containing the sequence of actions the Pawn should take to fulfill the JobDriver's task.</returns>
 		protected override IEnumerable<Toil> MakeNewToils()
 		{
 			this.FailOnDespawnedNullOrForbidden(sourceInd);
@@ -68,7 +107,7 @@ namespace CombatExtended
 				initAction = delegate
 				{
                     // if the targetItem is no longer in the takePawn's inventory then another pawn already took it and we fail...
-                    if (takePawn.inventory.innerContainer.Contains(targetItem))
+                    if (takePawn == RootHolder(targetItem.holdingOwner.Owner))
                     {
                         int amount = targetItem.stackCount < CurJob.count ? targetItem.stackCount : CurJob.count;
                         takePawn.inventory.innerContainer.TryTransferToContainer(targetItem, pawn.inventory.innerContainer, amount);
