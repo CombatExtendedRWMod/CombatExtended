@@ -534,17 +534,17 @@
     <statBases>
     	<Mass>39.00</Mass>
     	<RangedWeapon_Cooldown>0.35</RangedWeapon_Cooldown>
-    	<SightsEfficiency>50</SightsEfficiency>
-    	<ShotSpread>0.06</ShotSpread>
+    	<SightsEfficiency>.50</SightsEfficiency>
+    	<ShotSpread>6</ShotSpread>
     	<SwayFactor>4.70</SwayFactor>
     	<Bulk>8.02</Bulk>
     </statBases>
     <Properties>
-    	<recoilAmount>0.09</recoilAmount>
+    	<recoilAmount>9</recoilAmount>
     	<verbClass>CombatExtended.Verb_ShootCE</verbClass>
     	<hasStandardCommand>true</hasStandardCommand>
     	<projectileDef>Bullet_762x51mmNATO_FMJ</projectileDef>
-    	<warmupTime>1.1</warmupTime>
+    	<warmupTime>4</warmupTime>
     	<range>75</range>
     	<burstShotCount>300</burstShotCount>
     	<ticksBetweenBurstShots>1</ticksBetweenBurstShots>
@@ -554,7 +554,7 @@
     </Properties>
     <AmmoUser>
     	<magazineSize>600</magazineSize>
-    	<reloadTime>9.2</reloadTime>
+    	<reloadTime>15</reloadTime>
     	<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
     </AmmoUser>
     <FireModes>
