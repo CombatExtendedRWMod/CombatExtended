@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!--=============== Bases ==============-->
+
+  <ThingDef Name="CE_MoteBase" Abstract="True">
+    <thingClass>MoteThrown</thingClass>
+    <label>Mote</label>
+    <category>Mote</category>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>Mote</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <isSaveable>false</isSaveable>
+    <rotatable>false</rotatable>
+  </ThingDef>
+
+  <!--=============== Thrown status ==============-->
+
+  <ThingDef ParentName="CE_MoteBase" Name="MoteSwearing" Abstract="True">
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <mote>
+      <fadeInTime>0.08</fadeInTime>
+      <solidTime>1.4</solidTime>
+      <fadeOutTime>1.5</fadeOutTime>
+      <attachedDrawOffset>(0.45, 0, 0.45)</attachedDrawOffset>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_01a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_01</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_02a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_02</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_03a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_03</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_04a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_04</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_05a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_05</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_06a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_06</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_07a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_07</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_08a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_08</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_09a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_09</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_10a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_10</texPath>
+    </graphicData>
+  </ThingDef>
+
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_11a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_11</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_12a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_12</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_13a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_13</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_14a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_14</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_15a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_15</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_16a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_16</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_17a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_17</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_18a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_18</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_19a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_19</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_20a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_20</texPath>
+    </graphicData>
+  </ThingDef>
+
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_21a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_21</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_22a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_22</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_23a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_23</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_24a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_24</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_25a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_25</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_26a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_26</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_27a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_27</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_28a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_28</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_29a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_29</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_30a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_30</texPath>
+    </graphicData>
+  </ThingDef>
+
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_31a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_31</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_32a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_32</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_33a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_33</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_34a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_34</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_35a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_35</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_36a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_36</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_37a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_37</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_38a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_38</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_39a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_39</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_40a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_40</texPath>
+    </graphicData>
+  </ThingDef>
+
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_41a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_41</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_42a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_42</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_43a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_43</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_44a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_44</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_45a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_45</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_46a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_46</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_47a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_47</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_48a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_48</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_49a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_49</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_50a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_50</texPath>
+    </graphicData>
+  </ThingDef>
+
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_51a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_51</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteSwearing">
+    <defName>Mote_Swear_52a</defName>
+    <graphicData>
+      <texPath>Things/Mote/Swearing/Mote_Swear_52</texPath>
+    </graphicData>
+  </ThingDef>
+  
+</Defs>

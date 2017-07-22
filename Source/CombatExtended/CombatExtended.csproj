@@ -19,7 +19,6 @@
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <CscToolPath>$(MSBuildProgramFiles32)\MSBuild\14.0\Bin</CscToolPath>
     <SignAssembly>False</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -91,21 +90,20 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\RimWorld1557Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\RimWorld1557Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombatExtended\DefOfs\CE_TaleDefOf.cs" />
+    <Compile Include="Motes_Swearing.cs" />
     <Compile Include="CombatExtended\Alerts\Alert_ColonistHasShieldAndTwoHandedWeapon.cs" />
     <Compile Include="CombatExtended\AmmoInjector.cs" />
     <Compile Include="CombatExtended\AmmoUtility.cs" />
@@ -151,6 +149,7 @@
     <Compile Include="CombatExtended\Loadouts\Tracker.cs" />
     <Compile Include="CombatExtended\Loadouts\PawnColumnWorker_Loadout.cs" />
     <Compile Include="CombatExtended\Loadouts\Utility_HoldTracker.cs" />
+    <Compile Include="CombatExtended\MoteMaker\CE_MoteMaker.cs" />
     <Compile Include="CombatExtended\ParryTracker.cs" />
     <Compile Include="CombatExtended\PatchOperationFindMod.cs" />
     <Compile Include="CombatExtended\PatchOperationMakeGunCECompatible.cs" />

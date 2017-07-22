@@ -22,7 +22,7 @@ namespace CombatExtended
         #endregion
 
         #region Fields
-        
+
         // --------------- Location calculations ---------------
 
         /*
@@ -32,7 +32,7 @@ namespace CombatExtended
          */
         private IntVec3 suppressorLoc;
         private float locSuppressionAmount = 0f;
-        
+
         private float currentSuppression = 0f;
         public bool isSuppressed = false;
 
@@ -129,7 +129,7 @@ namespace CombatExtended
         #endregion
 
         #region Methods
-        
+
         public override void PostExposeData()
         {
             base.PostExposeData();
@@ -138,6 +138,16 @@ namespace CombatExtended
             Scribe_Values.Look(ref locSuppressionAmount, "locSuppression", 0f);
             Scribe_Values.Look(ref isSuppressed, "isSuppressed", false);
             Scribe_Values.Look(ref ticksUntilDecay, "ticksUntilDecay", 0);
+        }
+
+        public override void PostSpawnSetup(bool reload)
+        {
+            base.PostSpawnSetup(reload);
+
+            if (Motes_Swearing.SwearList.NullOrEmpty())
+            {
+                Motes_Swearing.InitializeSwearList();
+            }
         }
 
         public void AddSuppression(float amount, IntVec3 origin)
@@ -193,7 +203,7 @@ namespace CombatExtended
                 }
                 if (reactJob != null && reactJob.def != pawn.CurJob?.def)
                 {
-                    pawn.jobs.StartJob(reactJob, JobCondition.InterruptForced, null, pawn.jobs.curJob?.def==JobDefOf.ManTurret);
+                    pawn.jobs.StartJob(reactJob, JobCondition.InterruptForced, null, pawn.jobs.curJob?.def == JobDefOf.ManTurret);
                     LessonAutoActivator.TeachOpportunity(CE_ConceptDefOf.CE_SuppressionReaction, pawn, OpportunityType.Critical);
                 }
                 // Throw taunt
@@ -210,7 +220,7 @@ namespace CombatExtended
             base.CompTick();
 
             //Apply decay once per second
-            if(ticksUntilDecay > 0)
+            if (ticksUntilDecay > 0)
             {
                 ticksUntilDecay--;
             }
@@ -231,16 +241,34 @@ namespace CombatExtended
             //Throw mote at set interval
             if (Gen.IsHashIntervalTick(this.parent, ticksPerMote) && CanReactToSuppression)
             {
-                if (IsHunkering)
+                Color color = Color.Lerp(new Color(0.8f, 0.8f, 0, 1f), new Color(0.91f, 0.07f, 0.07f), currentSuppression);
+                if (Controller.settings.ShowTaunts)
                 {
-                    MoteMaker.ThrowMetaIcon(parent.Position, parent.Map, CE_ThingDefOf.Mote_HunkerIcon);
+                    if (IsHunkering)
+                    {
+                        if (Controller.settings.ShowGraphicSwearing)
+                        {
+                            CE_MoteMaker.ThrowSwearIcon(parent, Motes_Swearing.SwearList.RandomElement(), color);
+                        }
+                        else
+                        {
+                            MoteMaker.ThrowMetaIcon(parent.Position, parent.Map, CE_ThingDefOf.Mote_HunkerIcon);
+                        }
+                    }
+                    else if (this.isSuppressed)
+                    {
+                        if (Controller.settings.ShowGraphicSwearing)
+                        {
+                            CE_MoteMaker.ThrowSwearIcon(parent, Motes_Swearing.SwearList.RandomElement(), color);
+                        }
+                        else
+                        {
+                            MoteMaker.ThrowMetaIcon(parent.Position, parent.Map, CE_ThingDefOf.Mote_SuppressIcon);
+                            // MoteMaker.ThrowText(this.parent.Position.ToVector3Shifted(), parent.Map, "CE_SuppressedMote".Translate());
+                        }
+                    }
                 }
-	            else if (this.isSuppressed)
-                {
-                    //MoteMaker.ThrowText(this.parent.Position.ToVector3Shifted(), parent.Map, "CE_SuppressedMote".Translate());
-                    MoteMaker.ThrowMetaIcon(parent.Position, parent.Map, CE_ThingDefOf.Mote_SuppressIcon);
-                }
-			}
+            }
 
             /*if (Gen.IsHashIntervalTick(parent, ticksPerMote + Rand.Range(30, 300))
                 && parent.def.race.Humanlike && !robotBodyList.Contains(parent.def.race.body.defName))
