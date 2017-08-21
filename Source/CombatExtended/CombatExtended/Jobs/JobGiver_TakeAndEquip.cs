@@ -34,11 +34,7 @@ namespace CombatExtended
                 }
             }
 
-            if (pawn.kindDef.trader)
-            {
-                return WorkPriority.None;
-            }
-            if (pawn.CurJob != null && pawn.CurJob.def == JobDefOf.Tame)
+            if (!CheckState(pawn))
             {
                 return WorkPriority.None;
             }
@@ -127,12 +123,15 @@ namespace CombatExtended
             {
                 return null;
             }
-
             if (!pawn.RaceProps.Humanlike || (pawn.story != null && pawn.story.WorkTagIsDisabled(WorkTags.Violent)))
             {
                 return null;
             }
-            if (pawn.Faction.IsPlayer && pawn.Drafted)
+            if (pawn.Faction.IsPlayer && pawn.Drafted || pawn.Downed || pawn.health == null)
+            {
+                return null;
+            }
+            if (!AICanUseJob(pawn))
             {
                 return null;
             }
@@ -144,8 +143,8 @@ namespace CombatExtended
             Log.Message(pawn.ToString() + "capacityBulk: " + pawn.TryGetComp<CompInventory>().capacityBulk.ToString());
             Log.Message(pawn.ToString() + "currentBulk: " + pawn.TryGetComp<CompInventory>().currentBulk.ToString());
             */
-           
-			var brawler = (pawn.story != null && pawn.story.traits != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler));
+
+            var brawler = (pawn.story != null && pawn.story.traits != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler));
             CompInventory inventory = pawn.TryGetComp<CompInventory>();
             bool hasPrimary = (pawn.equipment != null && pawn.equipment.Primary != null);
             CompAmmoUser primaryammouser = hasPrimary ? pawn.equipment.Primary.TryGetComp<CompAmmoUser>() : null;
@@ -234,9 +233,7 @@ namespace CombatExtended
                         }
                     }
                 }
-                
-                Room room = RegionAndRoomQuery.RoomAtFast(pawn.Position, pawn.Map);
-                
+
                 // Find weapon in inventory and try to switch if any ammo in inventory.
                 if (GetPriorityWork(pawn) == WorkPriority.Weapon && !hasPrimary)
                 {
@@ -261,13 +258,12 @@ namespace CombatExtended
                     {
                         Predicate<Thing> validatorWS = (Thing w) => w.def.IsWeapon
                             && w.MarketValue > 500 && pawn.CanReserve(w, 1)
-                            && (DangerInPosRadius(pawn, w.Position, pawn.Map, 30f).Count() <= 0
+                            && (DangerInPosRadius(pawn, w.Position, Find.VisibleMap, 30f).Count() <= 0
                                                     ? pawn.Position.InHorDistOf(w.Position, 25f)
                                                     : pawn.Position.InHorDistOf(w.Position, 6f))
-                            && pawn.CanReach(w, PathEndMode.Touch, Danger.Deadly, true)
-                            && (pawn.Faction.HostileTo(Faction.OfPlayer) || pawn.Faction == Faction.OfPlayer || !pawn.Map.areaManager.Home[w.Position]);
-
+                            && pawn.CanReach(w, PathEndMode.Touch, Danger.Deadly, true);
                         // generate a list of all weapons (this includes melee weapons)
+
                         List<Thing> allWeapons = (
                             from w in pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableAlways)
                             where validatorWS(w)
@@ -300,11 +296,10 @@ namespace CombatExtended
 
                                     Predicate<Thing> validatorA = (Thing t) => t.def.category == ThingCategory.Item
                                         && t is AmmoThing && pawn.CanReserve(t, 1)
-                                        && (DangerInPosRadius(pawn, t.Position, pawn.Map, 30f).Count() <= 0
+                                        && (DangerInPosRadius(pawn, t.Position, Find.VisibleMap, 30f).Count() <= 0
                                                                 ? pawn.Position.InHorDistOf(t.Position, 25f)
                                                                 : pawn.Position.InHorDistOf(t.Position, 6f))
-                                        && pawn.CanReach(t, PathEndMode.Touch, Danger.Deadly, true)
-                                        && (pawn.Faction.HostileTo(Faction.OfPlayer) || pawn.Faction == Faction.OfPlayer || !pawn.Map.areaManager.Home[t.Position]);
+                                        && pawn.CanReach(t, PathEndMode.Touch, Danger.Deadly, true);
 
                                     List<Thing> thingAmmoList = (
 	                                    from t in pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableAlways)
@@ -321,11 +316,26 @@ namespace CombatExtended
                                             int numToThing = 0;
                                             if (inventory.CanFitInInventory(thing, out numToThing))
                                             {
-                                                return new Job(JobDefOf.Equip, thing)
+                                                if (thing.Position == pawn.Position || thing.Position.AdjacentToCardinal(pawn.Position))
                                                 {
-                                                    checkOverrideOnExpire = true,
-                                                    expiryInterval = 100
-                                                };
+                                                    return new Job(JobDefOf.Equip, thing)
+                                                    {
+                                                        checkOverrideOnExpire = true,
+                                                        expiryInterval = 100,
+                                                        canBash = true,
+                                                        locomotionUrgency = LocomotionUrgency.Sprint
+                                                    };
+                                                }
+                                                if (pawn.RaceProps.baseHealthScale < 2)
+                                                {
+                                                    return new Job(JobDefOf.Goto, thing)
+                                                    {
+                                                        locomotionUrgency = LocomotionUrgency.Sprint,
+                                                        ignoreForbidden = true,
+                                                        expiryInterval = 100
+                                                    };
+                                                }
+                                                else return GotoForce(pawn, thing, PathEndMode.Touch);
                                             }
                                         }
 	                                }
@@ -339,13 +349,28 @@ namespace CombatExtended
 							// since we don't need to worry about ammo, just pick one.
 							Thing meleeWeapon = allWeapons.FirstOrDefault(w => !w.def.IsRangedWeapon && w.def.IsMeleeWeapon);
 							
-							if (meleeWeapon != null)
+                            if (meleeWeapon != null)
                             {
-                                return new Job(JobDefOf.Equip, meleeWeapon)
+                                if (meleeWeapon.Position == pawn.Position || meleeWeapon.Position.AdjacentToCardinal(pawn.Position))
                                 {
-                                    checkOverrideOnExpire = true,
-                                    expiryInterval = 100
-                                };
+                                    return new Job(JobDefOf.Equip, meleeWeapon)
+                                    {
+                                        checkOverrideOnExpire = true,
+                                        expiryInterval = 100,
+                                        canBash = true,
+                                        locomotionUrgency = LocomotionUrgency.Sprint
+                                    };
+                                }
+                                if (pawn.RaceProps.baseHealthScale < 2)
+                                {
+                                    return new Job(JobDefOf.Goto, meleeWeapon)
+                                    {
+                                        locomotionUrgency = LocomotionUrgency.Sprint,
+                                        ignoreForbidden = true,
+                                        expiryInterval = 100
+                                    };
+                                }
+                                else return GotoForce(pawn, meleeWeapon, PathEndMode.Touch);
                             }
 						}
 					}
@@ -364,8 +389,7 @@ namespace CombatExtended
                                         && pawn.CanReach(t, PathEndMode.Touch, Danger.Deadly, true)
                                         && ((pawn.Faction.IsPlayer && !ForbidUtility.IsForbidden(t, pawn)) || (!pawn.Faction.IsPlayer && DangerInPosRadius(pawn, t.Position, Find.VisibleMap, 30f).Count() <= 0
                                                                 ? pawn.Position.InHorDistOf(t.Position, 25f)
-                                                                : pawn.Position.InHorDistOf(t.Position, 6f)))
-                                        && (pawn.Faction.HostileTo(Faction.OfPlayer) || pawn.Faction == Faction.OfPlayer || !pawn.Map.areaManager.Home[t.Position]);
+                                                                : pawn.Position.InHorDistOf(t.Position, 6f)));
                         List<Thing> curThingList = (
                             from t in pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableAlways)
                             where validator(t)
@@ -410,16 +434,31 @@ namespace CombatExtended
                                         }
                                         else
                                         {
-                                            int numToCarry = 0;
-                                            if (inventory.CanFitInInventory(th, out numToCarry))
+                                            if (th.Position == pawn.Position || th.Position.AdjacentToCardinal(pawn.Position))
                                             {
-                                                return new Job(JobDefOf.TakeInventory, th)
+                                                int numToCarry = 0;
+                                                if (inventory.CanFitInInventory(th, out numToCarry))
                                                 {
-                                                    count = Mathf.RoundToInt(numToCarry * 0.8f),
-                                                    expiryInterval = 150,
-                                                    checkOverrideOnExpire = true
+                                                    return new Job(JobDefOf.TakeInventory, th)
+                                                    {
+                                                        count = Mathf.RoundToInt(numToCarry * 0.8f),
+                                                        expiryInterval = 150,
+                                                        checkOverrideOnExpire = true,
+                                                        canBash = true,
+                                                        locomotionUrgency = LocomotionUrgency.Sprint
+                                                    };
+                                                }
+                                            }
+                                            if (pawn.RaceProps.baseHealthScale < 2)
+                                            {
+                                                return new Job(JobDefOf.Goto, th)
+                                                {
+                                                    locomotionUrgency = LocomotionUrgency.Sprint,
+                                                    ignoreForbidden = true,
+                                                    expiryInterval = 100
                                                 };
                                             }
+                                            else return GotoForce(pawn, th, PathEndMode.Touch);
                                         }
                                     }
                                 }
@@ -440,7 +479,8 @@ namespace CombatExtended
                             {
                                 return new Job(JobDefOf.Wear, apparel)
                                 {
-                                    ignoreForbidden = true
+                                    ignoreForbidden = true,
+                                    locomotionUrgency = LocomotionUrgency.Sprint
                                 };
                             }
                         }
@@ -455,11 +495,13 @@ namespace CombatExtended
                             {
                                 return new Job(JobDefOf.Wear, apparel2)
                                 {
-                                    ignoreForbidden = true
+                                    ignoreForbidden = true,
+                                    locomotionUrgency = LocomotionUrgency.Sprint
                                 };
                             }
                         }
                     }
+
                     if (!pawn.apparel.BodyPartGroupIsCovered(BodyPartGroupDefOf.FullHead))
                     {
                         Apparel apparel3 = this.FindGarmentCoveringPart(pawn, BodyPartGroupDefOf.FullHead);
@@ -476,14 +518,12 @@ namespace CombatExtended
                             }
                         }
                     }
-                }
                 */
                 return null;
             }
             return null;
         }
 
-        /*
         private static Job GotoForce(Pawn pawn, LocalTargetInfo target, PathEndMode pathEndMode)
         {
             using (PawnPath pawnPath = pawn.Map.pathFinder.FindPath(pawn.Position, target, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.PassAllDestroyableThings, false), pathEndMode))
@@ -518,14 +558,35 @@ namespace CombatExtended
                 return MeleeOrWaitJob(pawn, thing, cellBeforeBlocker);
             }
         }
-        */
+
+        private static bool AICanUseJob(Pawn pawn)
+        {
+            if ((pawn.Faction.HostileTo(Faction.OfPlayer) || pawn.Faction.IsPlayer))
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        private static bool CheckState(Pawn pawn)
+        {
+            if ((pawn.jobs.curJob != null
+                && pawn.jobs.curJob.def == JobDefOf.Tame
+                && pawn.jobs.curJob.def == JobDefOf.LayDown
+                && pawn.jobs.curJob.def == JobDefOf.WaitDowned
+                && pawn.jobs.curJob.def == JobDefOf.FleeAndCower) || pawn.MentalStateDef != null || !AICanUseJob(pawn) || pawn.kindDef.trader)
+            {
+                return false;
+            }
+            else return true;
+        }
 
         private static bool Unload(Pawn pawn)
         {
             var inv = pawn.TryGetComp<CompInventory>();
             if (inv != null
             && !pawn.Faction.IsPlayer
-            && (pawn.CurJob != null && pawn.CurJob.def != JobDefOf.Steal)
+            && (pawn.jobs.curJob != null && pawn.jobs.curJob.def != JobDefOf.Steal)
             && ((inv.capacityWeight - inv.currentWeight < 3f)
             || (inv.capacityBulk - inv.currentBulk < 4f)))
             {
