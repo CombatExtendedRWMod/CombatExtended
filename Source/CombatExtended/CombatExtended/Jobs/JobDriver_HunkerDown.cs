@@ -45,9 +45,7 @@ namespace CombatExtended
                 {
                     if (this.willPee)
                     {
-
-                            FilthMaker.MakeFilth(pawn.Position, this.pawn.Map, CE_ThingDefOf.FilthPee, pawn.LabelIndefinite(), 3);
-                        this.willPee = true;
+                        FilthMaker.MakeFilth(pawn.Position, this.pawn.Map, CE_ThingDefOf.FilthPee, pawn.LabelIndefinite(), 3);
                     }
                 };
             toilNothing.AddFinishAction(

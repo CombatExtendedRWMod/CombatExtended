@@ -22,8 +22,23 @@ namespace CombatExtended
             float distToSuppressor = (pawn.Position - comp.SuppressorLoc).LengthHorizontal;
             IntVec3 coverPosition;
 
+            // Don't care if fleeing or leaving the map
+            if (pawn.CurJob.def == JobDefOf.Flee || pawn.CurJob.def == JobDefOf.CarryDownedPawnToExit
+                || pawn.CurJob.def == JobDefOf.Goto && pawn.CurJob.exitMapOnArrival)
+            {
+                return null;
+            }
+
             //Try to find cover position to move up to
             if (!GetCoverPositionFrom(pawn, comp.SuppressorLoc, maxCoverDist, out coverPosition))
+            {
+                return null;
+            }
+
+            float distTocoverPosition = (pawn.Position - coverPosition).LengthHorizontal;
+
+            // Don't stop attacking if attacker does melee && is near suppressor
+            if (distToSuppressor < distTocoverPosition && pawn.CurJob.def == JobDefOf.AttackMelee)
             {
                 return null;
             }
