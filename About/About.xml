@@ -4,7 +4,11 @@
 	<author>CE Team</author>
 	<targetVersion>0.17.1557</targetVersion>
 	<url>https://ludeon.com/forums/index.php?topic=33461.0</url>
+<<<<<<< HEAD
 	<description>
     Version: 0.17.1.4b\n\nExtends combat mechanics to make them deeper and more tactical.\n\nGraphic swears from the font PottyMouth BB by Nate Piekos, blambot.com
   </description>
+=======
+	<description>Version: 0.17.1.5b\n\nExtends combat mechanics to make them deeper and more tactical.</description>
+>>>>>>> NoImageAvailable-f2cd5717-e4df-4a27-a56c-d38ac5ef7002/master
 </ModMetaData>
