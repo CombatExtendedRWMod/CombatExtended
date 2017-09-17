@@ -21,7 +21,7 @@ namespace CombatExtended
 
         private bool AllowThrowTauntNow(Pawn pawn)
         {
-            if(!Controller.settings.ShowTaunts || pawn == null || !pawn.def.race.Humanlike)
+            if (!Controller.settings.ShowTaunts || pawn == null || !pawn.def.race.Humanlike)
             {
                 return false;
             }
@@ -47,7 +47,14 @@ namespace CombatExtended
             }
             else
             {
-                MoteMaker.ThrowText(pawn.Position.ToVector3Shifted(), pawn.Map, taunt);
+                if (Controller.settings.ShowGraphicSwearing)
+                {
+                    CE_MoteMaker.ThrowSwearIcon(pawn, Motes_Swearing.SwearList.RandomElement(), Color.white);
+                }
+                else
+                {
+                    MoteMaker.ThrowText(pawn.Position.ToVector3Shifted(), pawn.Map, taunt);
+                }
             }
             var curTick = Find.TickManager.TicksGame;
             if (!tauntTickTracker.ContainsKey(pawn))

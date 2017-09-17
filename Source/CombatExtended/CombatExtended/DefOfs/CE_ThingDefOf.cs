@@ -16,7 +16,12 @@ namespace CombatExtended
         public static ThingDef FSX;
 
         public static ThingDef AmmoBench;
+<<<<<<< HEAD
+
+	    public static ThingDef FilthPee;
+=======
         public static ThingDef FilthPrometheum;
+>>>>>>> NoImageAvailable-f2cd5717-e4df-4a27-a56c-d38ac5ef7002/master
 
     }
 }
