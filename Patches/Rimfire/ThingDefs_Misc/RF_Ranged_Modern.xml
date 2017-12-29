@@ -4,8 +4,9 @@
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
-			<li Class="CombatExtended.PatchOperationFindMod">
+			<li Class="ModCheck.isModLoaded">
 				<modName>Rimfire</modName>
+				<yourMod>CombatExtended</yourMod>
 			</li>
 			<!-- P I S T O L S -->
 			<!-- ========== Deringer ========== -->
@@ -1643,7 +1644,7 @@
 					<warmupTime>1.0</warmupTime>
 					<forcedMissRadius>1.0</forcedMissRadius>
 					<range>40</range>
-					<minrange>2</minrange>
+					<minRange>2</minRange>
 					<soundCast>RF_ShotMilkorMGL</soundCast>
 					<muzzleFlashScale>9</muzzleFlashScale>
 				</Properties>
@@ -1683,7 +1684,7 @@
 					<warmupTime>2.17</warmupTime>
 					<forcedMissRadius>2.0</forcedMissRadius>
 					<range>31</range>
-					<minrange>5</minrange>
+					<minRange>5</minRange>
 					<soundCast>RF_ShotRPG7</soundCast>
 					<muzzleFlashScale>14</muzzleFlashScale>
 				</Properties>
@@ -1723,7 +1724,7 @@
 					<warmupTime>2.17</warmupTime>
 					<forcedMissRadius>2.0</forcedMissRadius>
 					<range>40</range>
-					<minrange>5</minrange>
+					<minRange>5</minRange>
 					<soundCast>RF_ShotCarlGustaf</soundCast>
 					<muzzleFlashScale>15</muzzleFlashScale>
 				</Properties>

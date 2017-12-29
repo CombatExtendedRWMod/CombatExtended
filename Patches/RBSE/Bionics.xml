@@ -6,9 +6,10 @@
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>RBSE Lite Edition</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>RBSE Lite Edition</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationRemove">
       	<xpath>*/HediffDef[defName="SimpleProstheticHand" or defName="SimpleProstheticArm"]/comps/li[@Class="HediffCompProperties_VerbGiver"]</xpath>
       </li>
@@ -18,9 +19,10 @@
 	  <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>RBSE Hardcore Edition</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>RBSE Hardcore Edition</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationRemove">
       	<xpath>*/HediffDef[defName="SimpleProstheticHand" or defName="SimpleProstheticArm"]/comps/li[@Class="HediffCompProperties_VerbGiver"]</xpath>
       </li>
@@ -32,9 +34,10 @@
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>RBSE Lite Edition</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>RBSE Lite Edition</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationReplace">
       	<xpath>*/HediffDef[defName="BionicHand"]/comps/li[@Class="HediffCompProperties_VerbGiver"]/verbs</xpath>
       	<value>
@@ -69,9 +72,10 @@
 	  <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>RBSE Hardcore Edition</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>RBSE Hardcore Edition</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationReplace">
       	<xpath>*/HediffDef[defName="BionicHand"]/comps/li[@Class="HediffCompProperties_VerbGiver"]/verbs</xpath>
       	<value>
@@ -108,9 +112,10 @@
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>RBSE Lite Edition</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>RBSE Lite Edition</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationReplace">
       	<xpath>*/HediffDef[defName="AdvancedPowerArm"]/comps/li[@Class="HediffCompProperties_VerbGiver"]/verbs</xpath>
       	<value>
@@ -145,9 +150,10 @@
 	  <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>RBSE Hardcore Edition</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>RBSE Hardcore Edition</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationReplace">
       	<xpath>*/HediffDef[defName="AdvancedPowerArm"]/comps/li[@Class="HediffCompProperties_VerbGiver"]/verbs</xpath>
       	<value>

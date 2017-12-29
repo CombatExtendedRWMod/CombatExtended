@@ -6,9 +6,10 @@
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>A Dog Said...</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>A Dog Said...</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationReplace">
         <xpath>*/HediffDef[defName="SimpleProstheticLegAnimal" or defName="SimpleProstheticArmAnimal"]/comps/li[@Class="HediffCompProperties_VerbGiver"]/verbs</xpath>
         <value>
