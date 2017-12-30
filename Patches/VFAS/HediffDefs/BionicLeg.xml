@@ -4,8 +4,9 @@
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
-			<li Class="CombatExtended.PatchOperationFindMod">
+			<li Class="ModCheck.isModLoaded">
 				<modName>Vanilla-Friendly Animal Prosthetics</modName>
+				<yourMod>CombatExtended</yourMod>
 			</li>
 			<!-- tiny -->
 			<li Class="PatchOperationReplace">

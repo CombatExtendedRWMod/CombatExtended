@@ -260,7 +260,7 @@ namespace CombatExtended
         #endregion
         
         #region Angle
-        private float drawnShotAngle = 1000f;
+        /*private float drawnShotAngleCorrection = 1000f;
         /// <summary>
         /// Drawn shot angle [degrees] for input in the Draw() method. Takes into account the displayed arc corrections.
         /// </summary>
@@ -268,19 +268,67 @@ namespace CombatExtended
         {
         	get
         	{
-        		if (drawnShotAngle > 999f)
+        		if (drawnShotAngleCorrection > 999f)
         		{
-        			drawnShotAngle = Mathf.Rad2Deg*(Mathf.Sin(Mathf.Deg2Rad * shotRotation)*(shotAngle + Mathf.Atan2(shotHeight, DistanceTraveled)));
+        			Vector2 shootVector = (Destination - origin);
+        			drawnShotAngleCorrection = (shootVector.x < 0f ? -1f : 1f) * Vector2.Angle(shootVector, shootVector + shotHeight * Vector2.down);
+        			
+        			//drawnShotAngle = Mathf.Rad2Deg*(Mathf.Sin(Mathf.Deg2Rad * shotRotation)*(shotAngle + Mathf.Atan2(shotHeight, DistanceTraveled)));
         		}
-        		return drawnShotAngle;
+        		return drawnShotAngleCorrection;
         	}
         }
         
+        private float drawnImpactAngle = 1000f;
+        /// <summary>
+        /// Physics-based impact angle [radians].
+        /// </summary>
+        public float ImpactAngle
+        {
+        	get
+        	{
+        		if (drawnImpactAngle > 999f)
+        		{
+	           		float seconds = StartingTicksToImpact / GenTicks.TicksPerRealSecond;
+	           		
+	        		drawnImpactAngle = Mathf.Atan2(
+	           			Mathf.Sin(shotAngle) * shotSpeed - GravityFactor * seconds,
+	           			Mathf.Cos(shotAngle) * shotSpeed
+	           		);
+        			Log.Message("ShotRotation: "+shotRotation+" deg \n ShotAngle: "+shotAngle+" rad, "+shotAngle*Mathf.Rad2Deg+" deg \n ImpactAngle: "+drawnImpactAngle+" rad, "+drawnImpactAngle*Mathf.Rad2Deg+" deg");
+        		}
+        		return drawnImpactAngle;
+        	}
+        }*/
+        
+        /// <summary>
+        /// Based on equations of motion
+        /// </summary>
         public Quaternion DrawRotation
         {
             get
             {
-            	return Quaternion.AngleAxis(shotRotation + Mathf.Lerp(-DrawnShotAngleCorrection, DrawnShotAngleCorrection, fTicks / StartingTicksToImpact) , Vector3.up);
+        		var w = (Destination - origin);
+        		
+        		float vx = w.x / StartingTicksToImpact;
+        		
+        		float vy = (w.y - shotHeight) / StartingTicksToImpact
+        			+ shotSpeed * Mathf.Sin(shotAngle) / GenTicks.TicksPerRealSecond
+        			- (GravityFactor * fTicks) / (GenTicks.TicksPerRealSecond * GenTicks.TicksPerRealSecond);
+        		
+        		return Quaternion.AngleAxis(
+            		Mathf.Rad2Deg*Mathf.Atan2(-vy, vx) + 90f
+            		, Vector3.up);
+        		
+            	/*return Quaternion.AngleAxis(
+            		Mathf.Rad2Deg*Mathf.Atan2(DrawPosV2.y + shotSpeed*Mathf.Sin(shotAngle) - GravityFactor*seconds + shotHeight/StartingTicksToImpact, DrawPosV2.x)
+            	, Vector3.up);*/
+            	
+            	/*return Quaternion.AngleAxis(
+            		shotRotation
+            		- Mathf.Rad2Deg * Mathf.Sin(Mathf.Deg2Rad * shotRotation) * Mathf.Lerp(shotAngle, ImpactAngle, fTicks / StartingTicksToImpact)
+            		- DrawnShotAngleCorrection
+            		, Vector3.up);*/
             }
         }
         
@@ -298,7 +346,7 @@ namespace CombatExtended
         /// </summary>
         public float shotAngle = 0f;
         /// <summary>
-        /// Angle rotation between shooter and destination [degrees].
+        /// Angle rotation between shooter and positive y-vector [degrees]. North: 0f, East: 90f, South: 180f, West: 270f.
         /// </summary>
         public float shotRotation = 0f;
         /// <summary>
@@ -312,6 +360,9 @@ namespace CombatExtended
         
         private float _gravityFactor = -1;
 
+        /// <summary>
+        /// Gravity factor in meters(cells) per second squared
+        /// </summary>
         private float GravityFactor
         {
             get
@@ -480,9 +531,9 @@ namespace CombatExtended
             List<Thing> mainThingList = new List<Thing>(base.Map.thingGrid.ThingsListAtFast(cell))
             	.Where(t => justWallsRoofs ? t.def.Fillage == FillCategory.Full : (t is Pawn || t.def.Fillage != FillCategory.None)).ToList();
 			
+	        //Find pawns in adjacent cells and append them to main list
             if (!justWallsRoofs)
             {
-	            //Find pawns in adjacent cells and append them to main list
 	            List<IntVec3> adjList = new List<IntVec3>();
 	            adjList.AddRange(GenAdj.CellsAdjacentCardinal(cell, Rot4.FromAngleFlat(shotRotation), new IntVec2(collisionCheckSize, 0)).ToList());
 	
@@ -599,6 +650,13 @@ namespace CombatExtended
                 float chance = thing.def.fillPercent * ((thing.Position - OriginIV3).LengthHorizontal / 40);
                 if (Controller.settings.DebugShowTreeCollisionChance) MoteMaker.ThrowText(thing.Position.ToVector3Shifted(), thing.Map, chance.ToString());
                 if (!Rand.Chance(chance)) return false;
+            }
+            
+            // Doors don't collide when Building_Door.Open
+            var door = thing as Building_Door;
+            if (door != null && door.Open)
+            {
+            	return false;
             }
             
             var point = ShotLine.GetPoint(dist);

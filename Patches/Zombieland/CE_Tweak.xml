@@ -4,8 +4,9 @@
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
-			<li Class="CombatExtended.PatchOperationFindMod">
+			<li Class="ModCheck.isModLoaded">
 				<modName>Zombieland</modName>
+				<yourMod>CombatExtended</yourMod>
 			</li>
 			<li Class="PatchOperationAddModExtension">
 				<xpath>*/ThingDef[defName="Zombie"]</xpath>
@@ -59,8 +60,9 @@
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
-			<li Class="CombatExtended.PatchOperationFindMod">
+			<li Class="ModCheck.isModLoaded">
 				<modName>Zombieland</modName>
+				<yourMod>CombatExtended</yourMod>
 			</li>
 			<li Class="PatchOperationAddModExtension">
 			  <xpath>*/DamageDef[defName="ZombieBite"]</xpath>
