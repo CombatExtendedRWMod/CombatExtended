@@ -19,6 +19,9 @@ namespace CombatExtended
         public string casingMoteDefname = "Mote_EmptyCasing";
         public float gravityFactor = 1;
 
+        /// <summary>
+        /// Gravity in meters per second squared multiplied by gravityFactor for the projectile
+        /// </summary>
         public float Gravity => CE_Utility.gravityConst * gravityFactor;
     }
 }
