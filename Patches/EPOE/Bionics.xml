@@ -6,9 +6,10 @@
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <li Class="CombatExtended.PatchOperationFindMod">
-        <modName>Expanded Prosthetics and Organ Engineering 2.0</modName>
-      </li>
+		<li Class="ModCheck.isModLoaded">
+			<modName>Expanded Prosthetics and Organ Engineering 2.0</modName>
+			<yourMod>CombatExtended</yourMod>
+		</li>
       <li Class="PatchOperationReplace">
       	<xpath>*/BodyDef[defName="Human"]/corePart/parts/li[def="Rib1" or def="Rib2" or def="Rib3" or def="Rib4" or def="Rib5" or def="Rib6" or def="Rib7" or def="Rib8" or def="Rib9" or def="Rib10" or def="Rib11" or def="Rib12" or def="Rib13"]/coverage</xpath>
       	<value>

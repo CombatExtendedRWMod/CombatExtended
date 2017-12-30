@@ -3,8 +3,9 @@
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
-			<li Class="CombatExtended.PatchOperationFindMod">
+			<li Class="ModCheck.isModLoaded">
 				<modName>Mechanoids Extraordinaire</modName>
+				<yourMod>CombatExtended</yourMod>
 			</li>
 			<li Class="PatchOperationInsert">
 				<xpath>*/BodyPartDef[defName="MechanicalRollerBearing"]</xpath>
