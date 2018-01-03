@@ -352,9 +352,13 @@ namespace CombatExtended
                 var pawn = target.Thing as Pawn;
                 if (pawn != null && !pawn.Dead)
                 {
-                    //pawn.stances?.stunner.StunFor(KnockdownDuration);
-                    pawn.stances?.SetStance(new Stance_Cooldown(KnockdownDuration, pawn, null));
-                    pawn.jobs?.StartJob(new Job(CE_JobDefOf.WaitKnockdown) { expiryInterval = KnockdownDuration }, JobCondition.InterruptForced, null, false, false);
+                    // Check for size difference. Won't knockdown target if its size much larger. 
+                    if ((CasterPawn.RaceProps.baseBodySize * 1.5f) > pawn.RaceProps.baseBodySize)
+                    {
+                    	//pawn.stances?.stunner.StunFor(KnockdownDuration);
+                   	 pawn.stances?.SetStance(new Stance_Cooldown(KnockdownDuration, pawn, null));
+                    	pawn.jobs?.StartJob(new Job(CE_JobDefOf.WaitKnockdown) { expiryInterval = KnockdownDuration }, JobCondition.InterruptForced, null, false, false);
+		    }
                 }
             }
             isCrit = false;
