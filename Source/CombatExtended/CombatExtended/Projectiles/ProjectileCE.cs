@@ -340,10 +340,6 @@ namespace CombatExtended
         	}
         }
 		#endregion
-
-		#region Impact
-		protected bool stuck=false;
-		#endregion
         
         /*
          * *** End of class variables ***
@@ -420,7 +416,13 @@ namespace CombatExtended
                 SoundInfo info = SoundInfo.InMap(this, MaintenanceType.PerTick);
                 ambientSustainer = def.projectile.soundAmbient.TrySpawnSustainer(info);
             }
+			Log.Message("start debug at launch: \nposition: "+Position+"\ndestination: "+Destination+"\ntarget: "+intendedTarget+"\ntarget position: "+intendedTarget.Position);
         }
+
+		protected void relaunch(){
+			intTicksToImpact=-1;
+			ticksToImpact = IntTicksToImpact;
+		}
         #endregion
         
         #region Collisions
@@ -610,7 +612,7 @@ namespace CombatExtended
             	Log.Error("TryCollideWith out of bounds point from ShotLine: obj " + thing.ThingID + ", proj " + this.ThingID + ", dist " + dist + ", point " + point);
             	
             ExactPosition = point;
-        	landed = true;
+			//landed=true;
         	
             if (DebugViewSettings.drawInterceptChecks) MoteMaker.ThrowText(thing.Position.ToVector3Shifted(), thing.Map, "x", Color.red);
             
@@ -795,9 +797,12 @@ namespace CombatExtended
 					if (pawn != null) ApplySuppression(pawn);
 				}
 			}
-			if(landed || stuck){
+			if(landed){
 				if(comp==null){
 					ReuseNeolithicAmmo();
+				}
+				if(landed){
+					Log.Message("debug at landed: \nPosition: "+Position);
 				}
 				this.Destroy();
 			}

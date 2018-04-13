@@ -14,7 +14,8 @@ namespace CombatExtended
 
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
-		private const float PawnBodyToArmorRate=0.1f;
+		private const float PawnBodyToArmorRate=0.2f;
+		private const int ThingHPToBodyRate=40;
 
         #endregion
 
@@ -35,121 +36,138 @@ namespace CombatExtended
         /// <param name="hitPart">The pawn's body part that has been hit</param>
         /// <param name="shieldAbsorbed">Returns true if attack did not penetrate pawn's melee shield</param>
         /// <returns>If shot is deflected returns a new dinfo cloned from the original with damage amount, Def and ForceHitPart adjusted for deflection, otherwise a clone with only the damage adjusted</returns>
-		public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart, out bool shieldAbsorbed, out float penAmount)
+		public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart, out bool shieldAbsorbed)
         {
-            shieldAbsorbed = false;
+			BulletCE bullet=null;
+			/**
+			 * only the first damage of an impact is related. Others are secondary damages, don't affect bullet's penetration.
+			 * */
+			if(BulletCE.currentBullet!=null){
+				bullet=BulletCE.currentBullet;
+				BulletCE.currentBullet=null;
+			}
+			float armorPenetration=bullet==null?GetPenetrationValue(originalDinfo):bullet.ArmorPenetration;
+			DamageInfo dinfo=GetAfterArmorDamage(originalDinfo, pawn, hitPart, out shieldAbsorbed,ref armorPenetration);
+			if(bullet!=null){
+				bullet.ArmorPenetration=armorPenetration;
+			}
+			return dinfo;
+        }
 
-			penAmount = GetPenetrationValue(originalDinfo);
+		private static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart, out bool shieldAbsorbed,ref float remainingPenetration){
+			
+			shieldAbsorbed = false;
 
-            if (originalDinfo.Def.armorCategory == null) return originalDinfo;
+			if (originalDinfo.Def.armorCategory == null){
 
-            DamageInfo dinfo = new DamageInfo(originalDinfo);
-            float dmgAmount = dinfo.Amount;
-            bool involveArmor = dinfo.Def.harmAllLayersUntilOutside;
-            bool isAmbientDamage = dinfo.IsAmbientDamage();
+				return originalDinfo;
+			}
+			DamageInfo dinfo = new DamageInfo(originalDinfo);
+			float dmgAmount = dinfo.Amount;
+			bool involveArmor = dinfo.Def.harmAllLayersUntilOutside;
+			bool isAmbientDamage = dinfo.IsAmbientDamage();
 
-            // In case of ambient damage (fire, electricity) we apply a percentage reduction formula based on the sum of all applicable armor
-            if (isAmbientDamage)
-            {
-                dinfo.SetAmount(Mathf.CeilToInt(GetAmbientPostArmorDamage(dmgAmount, originalDinfo.Def.armorCategory.deflectionStat, pawn, hitPart)));
-				penAmount=tryPenetrateBody(pawn,penAmount);
-                return dinfo;
-            }
+			// In case of ambient damage (fire, electricity) we apply a percentage reduction formula based on the sum of all applicable armor
+			if (isAmbientDamage)
+			{
+				dinfo.SetAmount(Mathf.CeilToInt(GetAmbientPostArmorDamage(dmgAmount, originalDinfo.Def.armorCategory.deflectionStat, pawn, hitPart)));
+				return dinfo;
+			}
 
-            // Apply worn armor
-            if (involveArmor && pawn.apparel != null && !pawn.apparel.WornApparel.NullOrEmpty())
-            {
-                List<Apparel> apparel = pawn.apparel.WornApparel;
+			// Apply worn armor
+			if (involveArmor && pawn.apparel != null && !pawn.apparel.WornApparel.NullOrEmpty())
+			{
+				List<Apparel> apparel = pawn.apparel.WornApparel;
 
-                // Check for shields first
-                Apparel shield = apparel.FirstOrDefault(x => x is Apparel_Shield);
-                if (shield != null)
-                {
-                    // Determine whether the hit is blocked by the shield
-                    bool blockedByShield = false;
-                    if (!(dinfo.Weapon?.IsMeleeWeapon ?? false))
-                    {
-                        var shieldDef = shield.def.GetModExtension<ShieldDefExtension>();
-                        if (shieldDef == null)
-                        {
-                            Log.ErrorOnce("CE :: shield " + shield.def.ToString() + " is Apparel_Shield but has no ShieldDefExtension", shield.def.GetHashCode() + 12748102);
-                        }
-                        else
-                        {
-                            bool hasCoverage = shieldDef.PartIsCoveredByShield(hitPart, pawn);
-                            if (hasCoverage)
-                            {
-                                // Right arm is vulnerable during warmup/attack/cooldown
-                                blockedByShield = !((pawn.stances?.curStance as Stance_Busy)?.verb != null && hitPart.IsInGroup(CE_BodyPartGroupDefOf.RightArm));
-                            }
-                        }
-                    }
-                    // Try to penetrate the shield
-                    if (blockedByShield && !TryPenetrateArmor(dinfo.Def, shield.GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref penAmount, ref dmgAmount, shield))
-                    {
-                        shieldAbsorbed = true;
-                        dinfo.SetAmount(0);
+				// Check for shields first
+				Apparel shield = apparel.FirstOrDefault(x => x is Apparel_Shield);
+				if (shield != null)
+				{
+					// Determine whether the hit is blocked by the shield
+					bool blockedByShield = false;
+					if (!(dinfo.Weapon?.IsMeleeWeapon ?? false))
+					{
+						var shieldDef = shield.def.GetModExtension<ShieldDefExtension>();
+						if (shieldDef == null)
+						{
+							Log.ErrorOnce("CE :: shield " + shield.def.ToString() + " is Apparel_Shield but has no ShieldDefExtension", shield.def.GetHashCode() + 12748102);
+						}
+						else
+						{
+							bool hasCoverage = shieldDef.PartIsCoveredByShield(hitPart, pawn);
+							if (hasCoverage)
+							{
+								// Right arm is vulnerable during warmup/attack/cooldown
+								blockedByShield = !((pawn.stances?.curStance as Stance_Busy)?.verb != null && hitPart.IsInGroup(CE_BodyPartGroupDefOf.RightArm));
+							}
+						}
+					}
+					// Try to penetrate the shield
+					if (blockedByShield && !TryPenetrateArmor(dinfo.Def, shield.GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref remainingPenetration, ref dmgAmount, shield))
+					{
+						shieldAbsorbed = true;
+						dinfo.SetAmount(0);
 
-                        // Apply secondary damage to shield
-                        var props = dinfo.Weapon.projectile as ProjectilePropertiesCE;
-                        if (props != null && !props.secondaryDamage.NullOrEmpty())
-                        {
-                            foreach(SecondaryDamage sec in props.secondaryDamage)
-                            {
-                                if (shield.Destroyed) break;
-                                var secDinfo = sec.GetDinfo();
-                                var pen = GetPenetrationValue(originalDinfo);
-                                var dmg = (float)secDinfo.Amount;
-                                TryPenetrateArmor(secDinfo.Def, shield.GetStatValue(secDinfo.Def.armorCategory.deflectionStat), ref pen, ref dmg, shield);
-                            }
-                        }
-                        return dinfo;
-                    }
-                }
+						// Apply secondary damage to shield
+						var props = dinfo.Weapon.projectile as ProjectilePropertiesCE;
+						if (props != null && !props.secondaryDamage.NullOrEmpty())
+						{
+							foreach(SecondaryDamage sec in props.secondaryDamage)
+							{
+								if (shield.Destroyed) break;
+								var secDinfo = sec.GetDinfo();
+								var pen = GetPenetrationValue(originalDinfo);
+								var dmg = (float)secDinfo.Amount;
+								TryPenetrateArmor(secDinfo.Def, shield.GetStatValue(secDinfo.Def.armorCategory.deflectionStat), ref pen, ref dmg, shield);
+							}
+						}
+						return dinfo;
+					}
+				}
 
-                // Apparel is arranged in draw order, we run through reverse to go from Shell -> OnSkin
-                for (int i = apparel.Count - 1; i >= 0; i--)
-                {
-                    if (apparel[i].def.apparel.CoversBodyPart(hitPart) 
-                        && !TryPenetrateArmor(dinfo.Def, apparel[i].GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref penAmount, ref dmgAmount, apparel[i]))
-                    {
-                        // Hit was deflected, convert damage type
-                        dinfo = GetDeflectDamageInfo(dinfo, hitPart);
-                        i++;    // We apply this piece of apparel twice on conversion, this means we can't use deflection on Blunt or else we get an infinite loop of eternal deflection
-                    }
-                    if (dmgAmount <= 0)
-                    {
-                        dinfo.SetAmount(0);
-                        return dinfo;
-                    }
-                }
-            }
+				// Apparel is arranged in draw order, we run through reverse to go from Shell -> OnSkin
+				for (int i = apparel.Count - 1; i >= 0; i--)
+				{
+					if (apparel[i].def.apparel.CoversBodyPart(hitPart) 
+					    && !TryPenetrateArmor(dinfo.Def, apparel[i].GetStatValue(dinfo.Def.armorCategory.deflectionStat), ref remainingPenetration, ref dmgAmount, apparel[i]))
+					{
+						// Hit was deflected, convert damage type
+						dinfo = GetDeflectDamageInfo(dinfo, hitPart);
+						i++;    // We apply this piece of apparel twice on conversion, this means we can't use deflection on Blunt or else we get an infinite loop of eternal deflection
+					}
+					if (dmgAmount <= 0)
+					{
+						dinfo.SetAmount(0);
+						return dinfo;
+					}
+				}
+			}
 
-            // Apply natural armor
-            List<BodyPartRecord> partsToHit = new List<BodyPartRecord>() { hitPart };
-            if (involveArmor)
-            {
-                BodyPartRecord curPart = hitPart;
-                while (curPart.parent != null && curPart.depth == BodyPartDepth.Inside)
-                {
-                    curPart = curPart.parent;
-                    partsToHit.Add(curPart);
-                }
-            }
-            for (int i = partsToHit.Count - 1; i >= 0; i--)
-            {
-                BodyPartRecord curPart = partsToHit[i];
-                bool coveredByArmor = curPart.IsInGroup(CE_BodyPartGroupDefOf.CoveredByNaturalArmor);
-                float partArmor = pawn.HealthScale * 0.05f;   // How much armor is provided by sheer meat
-                if (coveredByArmor)
-                    partArmor += pawn.GetStatValue(dinfo.Def.armorCategory.deflectionStat);
-                float unused = dmgAmount;
+			// Apply natural armor
+			List<BodyPartRecord> partsToHit = new List<BodyPartRecord>() { hitPart };
+			if (involveArmor)
+			{
+				BodyPartRecord curPart = hitPart;
+				while (curPart.parent != null && curPart.depth == BodyPartDepth.Inside)
+				{
+					curPart = curPart.parent;
+					partsToHit.Add(curPart);
+				}
+			}
+			for (int i = partsToHit.Count - 1; i >= 0; i--)
+			{
+				BodyPartRecord curPart = partsToHit[i];
+				bool coveredByArmor = curPart.IsInGroup(CE_BodyPartGroupDefOf.CoveredByNaturalArmor);
+				float partArmor = pawn.HealthScale * 0.05f;   // How much armor is provided by sheer meat
+				if (coveredByArmor)
+					partArmor += pawn.GetStatValue(dinfo.Def.armorCategory.deflectionStat);
+				float unused = dmgAmount;
 
-                // Only apply damage reduction when penetrating armored body parts
-                if (coveredByArmor ? !TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref dmgAmount) : !TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref unused))
-                {
-                    dinfo.SetHitPart(curPart);
-                    /*
+				// Only apply damage reduction when penetrating armored body parts
+				if (coveredByArmor ? !TryPenetrateArmor(dinfo.Def, partArmor, ref remainingPenetration, ref dmgAmount) : !TryPenetrateArmor(dinfo.Def, partArmor, ref remainingPenetration, ref unused))
+				{
+					dinfo.SetHitPart(curPart);
+					/*
                     if(coveredByArmor && pawn.RaceProps.IsMechanoid)
                     {
                         // For Mechanoid natural armor, apply deflection and blunt armor
@@ -157,28 +175,30 @@ namespace CombatExtended
                         TryPenetrateArmor(dinfo.Def, partArmor, ref penAmount, ref dmgAmount);
                     }
                     */
-                    break;
-                }
-                if (dmgAmount <= 0)
-                {
-                    dinfo.SetAmount(0);
-                    return dinfo;
-                }
-            }
+					break;
+				}
+				if (dmgAmount <= 0)
+				{
+					dinfo.SetAmount(0);
+					return dinfo;
+				}
+			}
 
-            dinfo.SetAmount(Mathf.CeilToInt(dmgAmount));
-			penAmount=tryPenetrateBody(pawn,penAmount);
-            return dinfo;
-        }
+			dinfo.SetAmount(Mathf.CeilToInt(dmgAmount));
+			return dinfo;
+		}
 
-
-
-		private static float tryPenetrateBody(Pawn pawn,float penAmount){
-			//TODO: Should different ammo type affect this value?
-			float armorAmount=pawn.BodySize*PawnBodyToArmorRate;
-
-			float dmgMult = dmgMultCurve.Evaluate(penAmount / armorAmount);
-			return penAmount * dmgMult;
+		public static float getRemainingPenetrationAfterDamageThing(Thing thing,float armorPenetration){
+			if(thing.HitPoints>0){
+				float HPArmor=thing.HitPoints/ThingHPToBodyRate*PawnBodyToArmorRate;
+				return armorPenetration * dmgMultCurve.Evaluate(armorPenetration / HPArmor); 
+			}else{
+				return 0;
+			}
+		}
+		public static float getRemainingPenetrationAfterDamagePawn(Pawn pawn,float armorPenetration){
+			float HPArmor=pawn.BodySize*PawnBodyToArmorRate;
+			return armorPenetration * dmgMultCurve.Evaluate(armorPenetration / HPArmor); 
 		}
 
         private static ToolCE DistinguishBodyPartGroups(this IEnumerable<ToolCE> tools, DamageInfo dinfo)

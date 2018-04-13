@@ -15,7 +15,18 @@ namespace CombatExtended
 		private const float StuckPenetrationAmount=0.2f;
 
 		public static BulletCE currentBullet;
-		public float remainingPenetrationAmount=-1f;
+		private float penAmount=-1f;
+		public float ArmorPenetration{
+			get{
+				if(penAmount<0f){
+					penAmount=(def.projectile as ProjectilePropertiesCE).armorPenetration;
+				}
+				return penAmount;
+			}
+			set{
+				penAmount=value;
+			}
+		}
 
         private void LogImpact(Thing hitThing, out BattleLogEntry_RangedImpact logEntry)
         {
@@ -66,12 +77,30 @@ namespace CombatExtended
                 dinfo.SetBodyRegion(partHeight, partDepth);
                 if (damDefCE != null && damDefCE.harmOnlyOutsideLayers) dinfo.SetBodyRegion(BodyPartHeight.Undefined, BodyPartDepth.Outside);
 
+				Log.Message("debug at impact start: \npen: "+ArmorPenetration+"\nThing: "+hitThing);
                 // Apply primary damage
 				BulletCE.currentBullet=this;
 				hitThing.TakeDamage(dinfo).InsertIntoLog(logEntry);
 				BulletCE.currentBullet=null;
-				if(this.remainingPenetrationAmount!<0f && this.penAmount<StuckPenetrationAmount){
-					stuck=true;
+				Log.Message("debug at impact before HP armor: \npen: "+ArmorPenetration);
+				float lastArmorPenetration=ArmorPenetration;
+				float newHeight;
+				if(hitThing is Pawn){
+					Pawn pawn=(Pawn)hitThing;
+					ArmorPenetration=ArmorUtilityCE.getRemainingPenetrationAfterDamagePawn(pawn,ArmorPenetration);
+					newHeight=shotHeight*pawn.BodySize*0.75f;
+				}else{
+					ArmorPenetration=ArmorUtilityCE.getRemainingPenetrationAfterDamageThing(hitThing,ArmorPenetration);
+					newHeight=shotHeight;
+				}
+				float newSpeed=ArmorPenetration/lastArmorPenetration*shotSpeed;
+				this.shotSpeed=newSpeed;
+				this.shotHeight=newHeight;
+				relaunch();
+				Log.Message("debug at impact end: \npen: "+ArmorPenetration);
+				if(ArmorPenetration<StuckPenetrationAmount){
+					landed=true;
+					Log.Message("debug at impact stuck");
 				}
 
                 // Apply secondary to non-pawns (pawn secondary damage is handled in the damage worker)
