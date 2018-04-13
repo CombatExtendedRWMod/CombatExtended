@@ -98,6 +98,7 @@
 		<projectile>
 			<speed>51</speed>
 			<soundAmbient>RocketPropelledLoop_Small</soundAmbient>
+            <allowPenetrateTrough>false</allowPenetrateTrough>
 		</projectile>
 	</ThingDef>	
 

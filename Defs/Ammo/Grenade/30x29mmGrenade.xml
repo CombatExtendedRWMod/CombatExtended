@@ -95,6 +95,7 @@
 		<projectile>
 			<speed>60</speed>
 			<flyOverhead>false</flyOverhead>
+           <allowPenetrateTrough>false</allowPenetrateTrough>
 		</projectile>
 	</ThingDef>
 

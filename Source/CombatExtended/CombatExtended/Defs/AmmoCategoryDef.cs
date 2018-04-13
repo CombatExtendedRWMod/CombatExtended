@@ -11,6 +11,8 @@ namespace CombatExtended
         public bool advanced = false;
         public string labelShort;
 
+        public bool allowPenetrateTrough = true;
+
         public string LabelCapShort => labelShort.CapitalizeFirst();
     }
 }

@@ -20,6 +20,7 @@
     <label>hollow point</label>
     <labelShort>HP</labelShort>
     <description>A hollowed out tip causes the bullet to expand on impact, increasing tissue damage at the cost of armor penetration.</description>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
   <CombatExtended.AmmoCategoryDef>
@@ -34,6 +35,7 @@
     <label>armor-piercing incendiary</label>
     <labelShort>AP-I</labelShort>
     <description>Filled with an incendiary compound that ignites on impact, doing additional damage and increasing armor penetration.</description>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
   <CombatExtended.AmmoCategoryDef>
@@ -42,6 +44,7 @@
     <labelShort>AP-HE</labelShort>
     <description>Filled with high-explosives that detonate on impact for additional damage.</description>
     <advanced>true</advanced>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
   
 </Defs>

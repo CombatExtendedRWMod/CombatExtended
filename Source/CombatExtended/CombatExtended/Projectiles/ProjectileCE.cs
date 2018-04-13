@@ -61,6 +61,8 @@ namespace CombatExtended
         protected ThingDef equipmentDef;
         protected Thing launcher;
         public Thing intendedTarget;
+        // Last impacted thing, will be ignored when relaunch sense it has already been hit.
+        protected Thing lastImpactedThing;
         public float minCollisionSqr;
         public bool canTargetSelf;
         public bool castShadow = true;
@@ -73,6 +75,7 @@ namespace CombatExtended
         #endregion
         
         private float suppressionAmount;
+        protected float suppressionModifier = 1f;
         
         #region FreeIntercept
         private static List<IntVec3> checkedCells = new List<IntVec3>();
@@ -362,6 +365,7 @@ namespace CombatExtended
             Scribe_Values.Look<Vector2>(ref origin, "ori", default(Vector2), true);
             Scribe_Values.Look<int>(ref ticksToImpact, "tTI", 0, true);
             Scribe_References.Look<Thing>(ref intendedTarget, "iT");
+            Scribe_References.Look<Thing>(ref lastImpactedThing,"lIT");
             Scribe_References.Look<Thing>(ref launcher, "lcr");
             Scribe_Defs.Look<ThingDef>(ref equipmentDef, "ed");
             Scribe_Values.Look<bool>(ref landed, "lnd", false, false);
@@ -416,6 +420,27 @@ namespace CombatExtended
                 SoundInfo info = SoundInfo.InMap(this, MaintenanceType.PerTick);
                 ambientSustainer = def.projectile.soundAmbient.TrySpawnSustainer(info);
             }
+        }
+
+        /// <summary>
+        /// Relaunch this bullet with new speed and ignoring just hit Thing.
+        /// </summary>
+        /// <returns>The relaunch.</returns>
+        /// <param name="lastImpactedThing">Thing that this bullet just hit, will be ignored when relaunch to avoid multiple hits</param>
+        /// <param name="newSpeed">New speed.</param>
+        protected void relaunch(Thing lastImpactedThing, float newSpeed)
+        {
+        	lastHeightTick = -1;
+        	float currentHeight = Height;
+
+        	shotHeight = currentHeight;
+        	shotSpeed = newSpeed;
+        	this.lastImpactedThing = lastImpactedThing;
+        	intTicksToImpact = -1;
+        	startingTicksToImpactInt = -1;
+        	destinationInt = new Vector3(0f, 0f, -1f);
+        	intendedTarget = null;
+        	ticksToImpact = IntTicksToImpact;
         }
         #endregion
         
@@ -517,7 +542,7 @@ namespace CombatExtended
                 if (thing == launcher && !canTargetSelf) continue;
 				
                 // Check for collision
-                if (TryCollideWith(thing))
+                if (TryCollideWith(thing) && landed)
                 	return true;
 				
                 // Apply suppression. The height here is NOT that of the bullet in CELL,
@@ -574,6 +599,11 @@ namespace CombatExtended
         /// <returns>True if impact occured, false otherwise</returns>
         private bool TryCollideWith(Thing thing)
         {
+            // Ignore last impacted thing to avoid multiple hit to the same thing due to relaunch.
+            if (thing == lastImpactedThing)
+            {
+                return false;
+            }
             if (thing == launcher && !canTargetSelf)
             {
                 return false;
@@ -604,9 +634,6 @@ namespace CombatExtended
             var point = ShotLine.GetPoint(dist);
             if (!point.InBounds(this.Map))
             	Log.Error("TryCollideWith out of bounds point from ShotLine: obj " + thing.ThingID + ", proj " + this.ThingID + ", dist " + dist + ", point " + point);
-            	
-            ExactPosition = point;
-        	landed = true;
         	
             if (DebugViewSettings.drawInterceptChecks) MoteMaker.ThrowText(thing.Position.ToVector3Shifted(), thing.Map, "x", Color.red);
             
@@ -642,7 +669,7 @@ namespace CombatExtended
                 suppressionAmount = def.projectile.damageAmountBase;
                 var propsCE = def.projectile as ProjectilePropertiesCE;
                 float penetrationAmount = propsCE == null ? 0f : propsCE.armorPenetration;
-                suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1);
+                suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1) * suppressionModifier;
                 compSuppressable.AddSuppression(suppressionAmount, OriginIV3);
             }
         }
@@ -788,7 +815,7 @@ namespace CombatExtended
 				{
 					FilthMaker.MakeFilth(Position, Map, thingDef, 1);
 				}
-				else
+                else if (landed)
 				{
 					Thing reusableAmmo = ThingMaker.MakeThing(thingDef, null);
 					reusableAmmo.stackCount = 1;
@@ -810,7 +837,7 @@ namespace CombatExtended
 	            }
             }
 
-            Destroy();
+            if (landed || comp!=null) Destroy();
         }
 		#endregion
 
