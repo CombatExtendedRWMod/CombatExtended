@@ -340,6 +340,10 @@ namespace CombatExtended
         	}
         }
 		#endregion
+
+		#region Impact
+		protected bool stuck=false;
+		#endregion
         
         /*
          * *** End of class variables ***
@@ -771,47 +775,56 @@ namespace CombatExtended
             if (comp != null && ExactPosition.ToIntVec3().IsValid)
             {
                 comp.Explode(launcher, ExactPosition, Find.VisibleMap);
-            }
-			
-			//Spawn things if not an explosive but preExplosionSpawnThingDef != null
-            if (Controller.settings.EnableAmmoSystem
-	        	&& Controller.settings.ReuseNeolithicProjectiles
-	    		&& comp == null
-		    	&& Position.IsValid
-				&& def.projectile.preExplosionSpawnChance > 0
-				&& def.projectile.preExplosionSpawnThingDef != null
-				&& Rand.Value < def.projectile.preExplosionSpawnChance)
-            {
-		    	var thingDef = def.projectile.preExplosionSpawnThingDef;
-				
-			    if (thingDef.IsFilth && Position.Walkable(this.Map))
-				{
+			}
+
+			if(needToSpawn()){
+				var thingDef = def.projectile.preExplosionSpawnThingDef;
+				if(thingDef.IsFilth && Position.Walkable(this.Map)){
 					FilthMaker.MakeFilth(Position, Map, thingDef, 1);
 				}
-				else
-				{
-					Thing reusableAmmo = ThingMaker.MakeThing(thingDef, null);
-					reusableAmmo.stackCount = 1;
-					reusableAmmo.SetForbidden(true, false);
-					GenPlace.TryPlaceThing(reusableAmmo, Position, Map, ThingPlaceMode.Near, null);
-					LessonAutoActivator.TeachOpportunity(CE_ConceptDefOf.CE_ReusableNeolithicProjectiles, reusableAmmo, OpportunityType.GoodToKnow);
-				}
-            }
-			
-            // Opt-out for things without explosionRadius
-            if (def.projectile.explosionRadius > 0 && ExactPosition.y < SuppressionRadius)
-            {
-            	// Apply suppression around impact area
-	            var suppressThings = GenRadial.RadialDistinctThingsAround(ExactPosition.ToIntVec3(), Map, SuppressionRadius + def.projectile.explosionRadius, true);
-	            foreach (Thing thing in suppressThings)
-	            {
-	                Pawn pawn = thing as Pawn;
-	                if (pawn != null) ApplySuppression(pawn);
-	            }
-            }
+			}
 
-            Destroy();
+			// Opt-out for things without explosionRadius
+			if (def.projectile.explosionRadius > 0 && ExactPosition.y < SuppressionRadius)
+			{
+				// Apply suppression around impact area
+				var suppressThings = GenRadial.RadialDistinctThingsAround(ExactPosition.ToIntVec3(), Map, SuppressionRadius + def.projectile.explosionRadius, true);
+				foreach (Thing thing in suppressThings)
+				{
+					Pawn pawn = thing as Pawn;
+					if (pawn != null) ApplySuppression(pawn);
+				}
+			}
+			if(landed || stuck){
+				if(comp==null){
+					ReuseNeolithicAmmo();
+				}
+				this.Destroy();
+			}
+			if(comp!=null){
+				this.Destroy();
+			}
         }
+
+
+		protected void ReuseNeolithicAmmo(){
+			if(needToSpawn() && Controller.settings.ReuseNeolithicProjectiles){
+				Thing reusableAmmo = ThingMaker.MakeThing(def.projectile.preExplosionSpawnThingDef, null);
+				reusableAmmo.stackCount = 1;
+				reusableAmmo.SetForbidden(true, false);
+				GenPlace.TryPlaceThing(reusableAmmo, Position, Map, ThingPlaceMode.Near, null);
+				LessonAutoActivator.TeachOpportunity(CE_ConceptDefOf.CE_ReusableNeolithicProjectiles, reusableAmmo, OpportunityType.GoodToKnow);
+			}
+		}
+
+		private bool needToSpawn(){
+			return Controller.settings.EnableAmmoSystem
+			&& Position.IsValid
+			&& def.projectile.preExplosionSpawnChance > 0
+			&& def.projectile.preExplosionSpawnThingDef != null
+			&& Rand.Value < def.projectile.preExplosionSpawnChance;
+		}
+
 		#endregion
 
         #region Ballistics

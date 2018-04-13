@@ -12,6 +12,10 @@ namespace CombatExtended
     public class BulletCE : ProjectileCE
     {
         private const float StunChance = 0.1f;
+		private const float StuckPenetrationAmount=0.2f;
+
+		public static BulletCE currentBullet;
+		public float remainingPenetrationAmount=-1f;
 
         private void LogImpact(Thing hitThing, out BattleLogEntry_RangedImpact logEntry)
         {
@@ -63,7 +67,12 @@ namespace CombatExtended
                 if (damDefCE != null && damDefCE.harmOnlyOutsideLayers) dinfo.SetBodyRegion(BodyPartHeight.Undefined, BodyPartDepth.Outside);
 
                 // Apply primary damage
-                hitThing.TakeDamage(dinfo).InsertIntoLog(logEntry);
+				BulletCE.currentBullet=this;
+				hitThing.TakeDamage(dinfo).InsertIntoLog(logEntry);
+				BulletCE.currentBullet=null;
+				if(this.remainingPenetrationAmount!<0f && this.penAmount<StuckPenetrationAmount){
+					stuck=true;
+				}
 
                 // Apply secondary to non-pawns (pawn secondary damage is handled in the damage worker)
                 var projectilePropsCE = def.projectile as ProjectilePropertiesCE;

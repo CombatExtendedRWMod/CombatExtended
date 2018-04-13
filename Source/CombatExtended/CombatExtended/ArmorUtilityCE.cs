@@ -14,6 +14,7 @@ namespace CombatExtended
 
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
+		private const float PawnBodyToArmorRate=0.1f;
 
         #endregion
 
@@ -34,9 +35,11 @@ namespace CombatExtended
         /// <param name="hitPart">The pawn's body part that has been hit</param>
         /// <param name="shieldAbsorbed">Returns true if attack did not penetrate pawn's melee shield</param>
         /// <returns>If shot is deflected returns a new dinfo cloned from the original with damage amount, Def and ForceHitPart adjusted for deflection, otherwise a clone with only the damage adjusted</returns>
-        public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart, out bool shieldAbsorbed)
+		public static DamageInfo GetAfterArmorDamage(DamageInfo originalDinfo, Pawn pawn, BodyPartRecord hitPart, out bool shieldAbsorbed, out float penAmount)
         {
             shieldAbsorbed = false;
+
+			penAmount = GetPenetrationValue(originalDinfo);
 
             if (originalDinfo.Def.armorCategory == null) return originalDinfo;
 
@@ -49,10 +52,9 @@ namespace CombatExtended
             if (isAmbientDamage)
             {
                 dinfo.SetAmount(Mathf.CeilToInt(GetAmbientPostArmorDamage(dmgAmount, originalDinfo.Def.armorCategory.deflectionStat, pawn, hitPart)));
+				penAmount=tryPenetrateBody(pawn,penAmount);
                 return dinfo;
             }
-
-            float penAmount = GetPenetrationValue(originalDinfo);
 
             // Apply worn armor
             if (involveArmor && pawn.apparel != null && !pawn.apparel.WornApparel.NullOrEmpty())
@@ -101,7 +103,6 @@ namespace CombatExtended
                                 TryPenetrateArmor(secDinfo.Def, shield.GetStatValue(secDinfo.Def.armorCategory.deflectionStat), ref pen, ref dmg, shield);
                             }
                         }
-
                         return dinfo;
                     }
                 }
@@ -166,8 +167,19 @@ namespace CombatExtended
             }
 
             dinfo.SetAmount(Mathf.CeilToInt(dmgAmount));
+			penAmount=tryPenetrateBody(pawn,penAmount);
             return dinfo;
         }
+
+
+
+		private static float tryPenetrateBody(Pawn pawn,float penAmount){
+			//TODO: Should different ammo type affect this value?
+			float armorAmount=pawn.BodySize*PawnBodyToArmorRate;
+
+			float dmgMult = dmgMultCurve.Evaluate(penAmount / armorAmount);
+			return penAmount * dmgMult;
+		}
 
         private static ToolCE DistinguishBodyPartGroups(this IEnumerable<ToolCE> tools, DamageInfo dinfo)
         {

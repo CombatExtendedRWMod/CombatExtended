@@ -18,12 +18,18 @@ namespace CombatExtended.Harmony
 
         private static void ArmorReroute(Pawn pawn, ref DamageInfo dinfo)
         {
-            var newDinfo = ArmorUtilityCE.GetAfterArmorDamage(dinfo, pawn, dinfo.HitPart, out armorAbsorbed);
+			float penAmount;
+			var newDinfo = ArmorUtilityCE.GetAfterArmorDamage(dinfo, pawn, dinfo.HitPart,out armorAbsorbed,out penAmount);
             if (dinfo.HitPart != newDinfo.HitPart)
             {
                 if (pawn.Spawned) LessonAutoActivator.TeachOpportunity(CE_ConceptDefOf.CE_ArmorSystem, OpportunityType.Critical);   // Inform the player about armor deflection
             }
             dinfo = newDinfo;
+
+			if(BulletCE.currentBullet!=null){
+				BulletCE.currentBullet.penAmount=penAmount;
+				BulletCE.currentBullet=null;
+			}
         }
 
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
