@@ -189,16 +189,19 @@ namespace CombatExtended
 		}
 
 		public static float getRemainingPenetrationAfterDamageThing(Thing thing,float armorPenetration){
+			
 			if(thing.HitPoints>0){
 				float HPArmor=thing.HitPoints/ThingHPToBodyRate*PawnBodyToArmorRate;
-				return armorPenetration * dmgMultCurve.Evaluate(armorPenetration / HPArmor); 
+				float newArmor=armorPenetration * dmgMultCurve.Evaluate(armorPenetration / HPArmor); 
+				return newArmor;
 			}else{
 				return 0;
 			}
 		}
 		public static float getRemainingPenetrationAfterDamagePawn(Pawn pawn,float armorPenetration){
 			float HPArmor=pawn.BodySize*PawnBodyToArmorRate;
-			return armorPenetration * dmgMultCurve.Evaluate(armorPenetration / HPArmor); 
+			float newArmor=armorPenetration * dmgMultCurve.Evaluate(armorPenetration / HPArmor); 
+			return newArmor;
 		}
 
         private static ToolCE DistinguishBodyPartGroups(this IEnumerable<ToolCE> tools, DamageInfo dinfo)

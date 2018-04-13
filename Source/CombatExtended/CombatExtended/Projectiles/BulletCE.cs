@@ -77,30 +77,34 @@ namespace CombatExtended
                 dinfo.SetBodyRegion(partHeight, partDepth);
                 if (damDefCE != null && damDefCE.harmOnlyOutsideLayers) dinfo.SetBodyRegion(BodyPartHeight.Undefined, BodyPartDepth.Outside);
 
-				Log.Message("debug at impact start: \npen: "+ArmorPenetration+"\nThing: "+hitThing);
                 // Apply primary damage
 				BulletCE.currentBullet=this;
 				hitThing.TakeDamage(dinfo).InsertIntoLog(logEntry);
 				BulletCE.currentBullet=null;
-				Log.Message("debug at impact before HP armor: \npen: "+ArmorPenetration);
 				float lastArmorPenetration=ArmorPenetration;
-				float newHeight;
+
 				if(hitThing is Pawn){
 					Pawn pawn=(Pawn)hitThing;
 					ArmorPenetration=ArmorUtilityCE.getRemainingPenetrationAfterDamagePawn(pawn,ArmorPenetration);
-					newHeight=shotHeight*pawn.BodySize*0.75f;
 				}else{
 					ArmorPenetration=ArmorUtilityCE.getRemainingPenetrationAfterDamageThing(hitThing,ArmorPenetration);
-					newHeight=shotHeight;
 				}
-				float newSpeed=ArmorPenetration/lastArmorPenetration*shotSpeed;
-				this.shotSpeed=newSpeed;
-				this.shotHeight=newHeight;
-				relaunch();
-				Log.Message("debug at impact end: \npen: "+ArmorPenetration);
+
+
 				if(ArmorPenetration<StuckPenetrationAmount){
 					landed=true;
-					Log.Message("debug at impact stuck");
+				}else{
+					float newHeight;
+					if(hitThing is Pawn){
+						Pawn pawn=(Pawn)hitThing;
+						newHeight=shotHeight*pawn.BodySize*0.75f;
+					}else{
+						newHeight=shotHeight;
+					}
+					float newSpeed=ArmorPenetration/lastArmorPenetration*shotSpeed;
+					this.shotSpeed=newSpeed;
+					this.shotHeight=newHeight;
+					relaunch();
 				}
 
                 // Apply secondary to non-pawns (pawn secondary damage is handled in the damage worker)

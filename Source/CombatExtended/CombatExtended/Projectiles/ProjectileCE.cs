@@ -416,7 +416,6 @@ namespace CombatExtended
                 SoundInfo info = SoundInfo.InMap(this, MaintenanceType.PerTick);
                 ambientSustainer = def.projectile.soundAmbient.TrySpawnSustainer(info);
             }
-			Log.Message("start debug at launch: \nposition: "+Position+"\ndestination: "+Destination+"\ntarget: "+intendedTarget+"\ntarget position: "+intendedTarget.Position);
         }
 
 		protected void relaunch(){
@@ -800,9 +799,6 @@ namespace CombatExtended
 			if(landed){
 				if(comp==null){
 					ReuseNeolithicAmmo();
-				}
-				if(landed){
-					Log.Message("debug at landed: \nPosition: "+Position);
 				}
 				this.Destroy();
 			}
