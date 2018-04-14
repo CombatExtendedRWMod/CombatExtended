@@ -94,16 +94,8 @@ namespace CombatExtended
 				if(ArmorPenetration<StuckPenetrationAmount){
 					landed=true;
 				}else{
-					float newHeight;
-					if(hitThing is Pawn){
-						Pawn pawn=(Pawn)hitThing;
-						newHeight=shotHeight*pawn.BodySize*0.75f;
-					}else{
-						newHeight=shotHeight;
-					}
 					float newSpeed=ArmorPenetration/lastArmorPenetration*shotSpeed;
 					this.shotSpeed=newSpeed;
-					this.shotHeight=newHeight;
 					relaunch();
 				}
 
