@@ -15,7 +15,7 @@ namespace CombatExtended
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
 		private const float PawnBodyToArmorRate=0.2f;
-		private const int ThingHPToBodyRate=40;
+		private const int ThingHPToBodyRate=50;
 
         #endregion
 
