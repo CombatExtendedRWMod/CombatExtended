@@ -14,6 +14,9 @@ namespace CombatExtended
 
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
+        public const float ArmorPerHealthScale = 0.5f;      // When calculate whether a bullet can penetrate, use this number to generate an armor penetration value from HealScale
+        public const float ArmorPer100MaxHP = 1f;       // When calculate whether a bullet can penetrate, use this value to generate an armor penetration value per 100 maxHP
+        public const float RequiredAPToPenetrate = 0.2f;      // After calculate whether a bullet can penetrate, compare the result with this value
 
         #endregion
 
@@ -52,7 +55,9 @@ namespace CombatExtended
                 return dinfo;
             }
 
-            float penAmount = GetPenetrationValue(originalDinfo);
+            // read out armor penetration value of a bullet. If success, means this a bullet damage, then need to write remaining armor penetration before return
+            Bullet_ArmorPenetrationTrackerCE.Bullet_ArmorPenetrationRecordCE record = Bullet_ArmorPenetrationTrackerCE.records.Find((r) => r.launcher == pawn && r.bulletDef == dinfo.Weapon && r.damageDef == dinfo.Def && r.hitPart == hitPart);
+            float penAmount = record == null ? GetPenetrationValue(originalDinfo) : record.armorPenetration;
 
             // Apply worn armor
             if (involveArmor && pawn.apparel != null && !pawn.apparel.WornApparel.NullOrEmpty())
@@ -102,6 +107,10 @@ namespace CombatExtended
                             }
                         }
 
+                        if (record != null)
+                        {
+                            record.armorPenetration = penAmount;
+                        }
                         return dinfo;
                     }
                 }
@@ -118,6 +127,10 @@ namespace CombatExtended
                     }
                     if (dmgAmount <= 0)
                     {
+                        if (record != null)
+                        {
+                            record.armorPenetration = penAmount;
+                        }
                         dinfo.SetAmount(0);
                         return dinfo;
                     }
@@ -160,11 +173,19 @@ namespace CombatExtended
                 }
                 if (dmgAmount <= 0)
                 {
+                    if (record != null)
+                    {
+                        record.armorPenetration = penAmount;
+                    }
                     dinfo.SetAmount(0);
                     return dinfo;
                 }
             }
 
+            if (record != null)
+            {
+                record.armorPenetration = penAmount;
+            }
             dinfo.SetAmount(Mathf.CeilToInt(dmgAmount));
             return dinfo;
         }
@@ -347,7 +368,7 @@ namespace CombatExtended
         /// <param name="dmgAmount">The pre-armor amount of damage</param>
         /// <param name="armor">The armor apparel</param>
         /// <returns>False if the attack is deflected, true otherwise</returns>
-        private static bool TryPenetrateArmor(DamageDef def, float armorAmount, ref float penAmount, ref float dmgAmount, Thing armor = null)
+        public static bool TryPenetrateArmor(DamageDef def, float armorAmount, ref float penAmount, ref float dmgAmount, Thing armor = null)
         {
             // Calculate deflection
             bool isSharpDmg = def.armorCategory == DamageArmorCategoryDefOf.Sharp;
