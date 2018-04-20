@@ -17,6 +17,7 @@ namespace CombatExtended
         private int curMagCountInt = 0;
         private AmmoDef currentAmmoInt = null;
         private AmmoDef selectedAmmo;
+        public bool AllowChangeBarrel = false;		// JobDriver use this var to decide whether to create change barrel toil
         
         private Thing ammoToBeDeleted;
 
@@ -95,7 +96,7 @@ namespace CombatExtended
         {
             get
             {
-                return CompInventory != null && CompInventory.ammoList.Any(x => Props.ammoSet.ammoTypes.Any(a => a.ammo == x.def));
+                return CompInventory != null && CompInventory.ammoList.Any(ammo => hasAmmoType(Props.ammoSet, ammo.def));
             }
         }
         public bool HasMagazine { get { return Props.magazineSize > 0; } }
@@ -272,7 +273,8 @@ namespace CombatExtended
         /// <summary>
         /// Overrides a Pawn's current activities to start reloading a gun or turret.  Has a code path to resume the interrupted job.
         /// </summary>
-        public void TryStartReload()
+        /// <param name="allowChangeBarrel">Whether allow JobDriver to check and change to another barrel.</param>
+        public void TryStartReload(bool allowChangeBarrel = false)
         {
             if (!HasMagazine)
             {
@@ -307,6 +309,7 @@ namespace CombatExtended
             	if (reloadJob == null)
             		return;
             	reloadJob.playerForced = true;
+                this.AllowChangeBarrel = allowChangeBarrel;
                 Wielder.jobs.StartJob(reloadJob, JobCondition.InterruptForced, null, Wielder.CurJob?.def != reloadJob.def, true);
             }
         }
@@ -453,6 +456,18 @@ namespace CombatExtended
             curMagCountInt = Props.magazineSize;
         }
 
+		/// <summary>
+		/// JobDriver will finally call this method to change barrel. This is NOT a Job creating method.
+		/// </summary>
+        /// <param name="barrel">Which barrel to switch to.</param> 
+        /// <param name="ammoDef">Set CurrentAmmo to this value.</param>
+        public void ChangeBarrel(CompProperties_AmmoUser.ChangeableBarrel barrel, AmmoDef ammoDef)
+        {
+            Props.ammoSet = barrel.ammoSet;
+            Props.magazineSize = barrel.magazineSize;
+            currentAmmoInt = ammoDef;
+        }
+
         public bool TryFindAmmoInInventory(out Thing ammoThing)
         {
             ammoThing = null;
@@ -461,24 +476,62 @@ namespace CombatExtended
                 return false;
             }
 
+            // If not in current ammoSet, it means need to change barrel. Finish this method, to allow JobDriver to continue to barrel changing job.
+            if (!hasAmmoType(Props.ammoSet, selectedAmmo)) return false;
+
             // Try finding suitable ammoThing for currently set ammo first
             ammoThing = CompInventory.ammoList.Find(thing => thing.def == selectedAmmo);
-            if (ammoThing != null)
+            if (ammoThing != null && hasAmmoType(Props.ammoSet, ammoThing.def))
             {
                 return true;
             }
 
             // Try finding ammo from different type
-            foreach (AmmoLink link in Props.ammoSet.ammoTypes)
+            foreach(Thing ammo in CompInventory.ammoList)
             {
-                ammoThing = CompInventory.ammoList.Find(thing => thing.def == link.ammo);
-                if (ammoThing != null)
+                ammoThing = ammo;
+                AmmoLink ammoType = findAmmoType(Props.ammoSet, ammoThing.def);
+                if (ammoType != null)
                 {
-                    selectedAmmo = (AmmoDef)link.ammo;
+                    selectedAmmo = ammoType.ammo;
                     return true;
                 }
             }
+
             return false;
+        }
+		/// <summary>
+		/// Check whether inventory has ammos to fit other barrel for this gun.
+		/// </summary>
+		/// <param name="ammoThing">If successfully found an usable ammo, it will be passed out from here.</param>
+        public CompProperties_AmmoUser.ChangeableBarrel TryFindAmmoInOtherCaliber(out Thing ammoThing)
+        {
+            ammoThing = null;
+            if (CompInventory == null || Props.changeableBarrels == null)
+            {
+                return null;
+            }
+
+            if (hasAmmoType(Props.ammoSet, selectedAmmo)) return null;
+
+            CompProperties_AmmoUser.ChangeableBarrel barrel = Props.changeableBarrels.Find(b => b.ammoSet.ammoTypes.Any(ammoType => ammoType.ammo == selectedAmmo));
+            if (barrel != null)
+            {
+                ammoThing = getAmmoThing(selectedAmmo);
+                if (ammoThing != null) return barrel;
+            }
+            Thing foundedAmmo = null;
+            barrel = Props.changeableBarrels.Find(b => b.ammoSet.ammoTypes.Any(ammoType => {
+                foundedAmmo = getAmmoThing(ammoType.ammo);
+                selectedAmmo = ammoType.ammo;
+                return foundedAmmo != null;
+            }));
+            if (barrel != null)
+            {
+                ammoThing = foundedAmmo;
+                return barrel;
+            }
+            return null;
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -519,11 +572,26 @@ namespace CombatExtended
             }
         }
 
-		public override string TransformLabel(string label)
-		{
+        public override string TransformLabel(string label)
+        {
             string ammoSet = UseAmmo && Controller.settings.ShowCaliberOnGuns ? " (" + Props.ammoSet.LabelCap + ") " : "";
-            return  label + ammoSet;
-		}
+            return label + ammoSet;
+        }
+
+        private bool hasAmmoType(AmmoSetDef ammoSetDef, ThingDef ammoDef)
+        {
+	        return ammoSetDef != null && ammoSetDef.ammoTypes.Any(a => a.ammo == ammoDef);
+        }
+        
+        private AmmoLink findAmmoType(AmmoSetDef ammoSetDef, ThingDef ammoDef)
+        {
+            return ammoSetDef?.ammoTypes.Find(a => a.ammo == ammoDef);
+        }
+
+        private Thing getAmmoThing(ThingDef ammoDef)
+        {
+            return CompInventory?.ammoList.Find(thing => thing.def == ammoDef);
+        }
 
         /*
         public override string GetDescriptionPart()
