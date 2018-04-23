@@ -142,6 +142,7 @@ namespace CombatExtended
                 else
                 {
                     relaunchSpeed = shotSpeed * (record.armorPenetration / ArmorPenetration);
+                    if (hitThing is Building) suppressionModifier *= 1.5f;
                 }
 
                 ArmorPenetration = record.armorPenetration;

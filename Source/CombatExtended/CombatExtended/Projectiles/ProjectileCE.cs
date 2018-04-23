@@ -75,6 +75,7 @@ namespace CombatExtended
         #endregion
         
         private float suppressionAmount;
+        protected float suppressionModifier = 1f;
         
         #region FreeIntercept
         private static List<IntVec3> checkedCells = new List<IntVec3>();
@@ -541,7 +542,7 @@ namespace CombatExtended
                 if (thing == launcher && !canTargetSelf) continue;
 				
                 // Check for collision
-                if (TryCollideWith(thing))
+                if (TryCollideWith(thing) && landed)
                 	return true;
 				
                 // Apply suppression. The height here is NOT that of the bullet in CELL,
@@ -668,7 +669,7 @@ namespace CombatExtended
                 suppressionAmount = def.projectile.damageAmountBase;
                 var propsCE = def.projectile as ProjectilePropertiesCE;
                 float penetrationAmount = propsCE == null ? 0f : propsCE.armorPenetration;
-                suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1);
+                suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1) * suppressionModifier;
                 compSuppressable.AddSuppression(suppressionAmount, OriginIV3);
             }
         }
