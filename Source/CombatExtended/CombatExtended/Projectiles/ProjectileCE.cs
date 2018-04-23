@@ -75,7 +75,6 @@ namespace CombatExtended
         #endregion
         
         private float suppressionAmount;
-        protected float suppressionModifier = 1f;
         
         #region FreeIntercept
         private static List<IntVec3> checkedCells = new List<IntVec3>();
@@ -536,14 +535,25 @@ namespace CombatExtended
             	}
             	roofChecked = true;
             }
-            
+
+            float suppressionModifier = 1f;
+
             foreach (Thing thing in mainThingList.Distinct().OrderBy(x => (x.DrawPos - LastPos).sqrMagnitude))
             {
                 if (thing == launcher && !canTargetSelf) continue;
 				
                 // Check for collision
-                if (TryCollideWith(thing) && landed)
-                	return true;
+                if (TryCollideWith(thing))
+                {
+                    if (landed)
+                    {
+                        return true;
+                    }
+                    else if (thing is Building)
+                    {
+                        suppressionModifier *= 1.5f;
+                    }
+                }
 				
                 // Apply suppression. The height here is NOT that of the bullet in CELL,
                 // it is the height at the END OF THE PATH. This is because SuppressionRadius
@@ -553,7 +563,7 @@ namespace CombatExtended
 	                Pawn pawn = thing as Pawn;
 	                if (pawn != null)
 	                {
-	                    ApplySuppression(pawn);
+	                    ApplySuppression(pawn, suppressionModifier);
 	                }
                 }
             }
@@ -642,7 +652,7 @@ namespace CombatExtended
         }
         #endregion
 
-        private void ApplySuppression(Pawn pawn)
+        private void ApplySuppression(Pawn pawn, float modifier = 1f)
         {
             ShieldBelt shield = null;
             if (pawn.RaceProps.Humanlike)
@@ -669,7 +679,7 @@ namespace CombatExtended
                 suppressionAmount = def.projectile.damageAmountBase;
                 var propsCE = def.projectile as ProjectilePropertiesCE;
                 float penetrationAmount = propsCE == null ? 0f : propsCE.armorPenetration;
-                suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1) * suppressionModifier;
+                suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1) * modifier;
                 compSuppressable.AddSuppression(suppressionAmount, OriginIV3);
             }
         }
