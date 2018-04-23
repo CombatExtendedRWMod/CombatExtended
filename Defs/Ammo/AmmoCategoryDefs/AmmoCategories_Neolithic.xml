@@ -36,6 +36,7 @@
 		<label>stone sling bullet</label>
     <labelShort>stone</labelShort>
 		<description>A streamlined stone designed to fly far and hit hard. Not particularly effective against armor.</description>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
 	</CombatExtended.AmmoCategoryDef>
 
 	<CombatExtended.AmmoCategoryDef>
@@ -44,6 +45,7 @@
     <labelShort>steel</labelShort>
 		<description>A refined sling bullet made out of steel to enhance armor penetration.</description>
 		<advanced>true</advanced>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
 	</CombatExtended.AmmoCategoryDef>
 
 	<CombatExtended.AmmoCategoryDef>
@@ -52,6 +54,7 @@
     <labelShort>plasteel</labelShort>
 		<description>A highly-refined sling bullet made out of plasteel to maximize penetration.</description>
 		<advanced>true</advanced>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
 	</CombatExtended.AmmoCategoryDef>
 
 	<CombatExtended.AmmoCategoryDef>

@@ -17,6 +17,7 @@
 			<armorPenetration>2.1</armorPenetration>
       <speed>40</speed>
       <soundAmbient>RocketPropelledLoop_Small</soundAmbient>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
 		</projectile>
 		<comps>
 			<li Class="CombatExtended.CompProperties_ExplosiveCE">

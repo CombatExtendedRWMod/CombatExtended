@@ -104,6 +104,7 @@
       <armorPenetration>0.35</armorPenetration>
       <pelletCount>9</pelletCount>
       <spreadMult>17.8</spreadMult>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
 
@@ -119,6 +120,7 @@
         </li>
       </secondaryDamage>
       <armorPenetration>0.6</armorPenetration>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
 

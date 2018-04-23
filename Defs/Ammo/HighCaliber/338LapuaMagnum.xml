@@ -123,6 +123,7 @@
           <amount>5</amount>
         </li>
       </secondaryDamage>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
   

@@ -25,6 +25,7 @@
     <defName>IncendiaryFuel</defName>
     <label>incendiary</label>
     <description>Filled with incendiary agent that ignites after impact.</description>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
    <CombatExtended.AmmoCategoryDef>
@@ -32,6 +33,7 @@
     <label>thermobaric</label>
     <description>Filled with high-explosive aerosol that causes a large explosion and ignites flammable materials.</description>
 	<advanced>true</advanced>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
    <CombatExtended.AmmoCategoryDef>
@@ -39,6 +41,7 @@
     <label>foam</label>
     <description>Special round designed for civilian fire-fighting purposes. Filled with fire-retardant foam to suppress fires in a large area.</description>
 	<advanced>true</advanced>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
   <!-- ========== For Vanilla-Friendly Weapons Expansion ========== -->

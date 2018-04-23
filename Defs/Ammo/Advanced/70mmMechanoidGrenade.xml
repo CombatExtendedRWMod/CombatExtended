@@ -84,6 +84,7 @@
 		</graphicData>
 		<projectile>
 			<speed>50</speed>
+            <allowPenetrateTrough>false</allowPenetrateTrough>
 		</projectile>
 	</ThingDef>
 

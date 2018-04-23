@@ -6,6 +6,7 @@
     <label>high-explosive anti-tank</label>
     <labelShort>HEAT</labelShort>
     <description>Shaped charge warhead. Detonates on impact, creating a super-heated stream of molten metal that punches through enemy armor.</description>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
    <CombatExtended.AmmoCategoryDef>
@@ -13,6 +14,7 @@
     <label>thermobaric</label>
     <description>Disperses and subsequently ignites a fuel-air explosive mix, creating a powerful explosion and potentially igniting flammable objects.</description>
 	<advanced>true</advanced>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
    <CombatExtended.AmmoCategoryDef>
@@ -20,6 +22,7 @@
     <label>fragmentation</label>
     <labelShort>Frag</labelShort>
     <description>Designed to explode into a cloud of deadly shrapnel, shredding soft targets in a large area.</description>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
   
 </Defs>
