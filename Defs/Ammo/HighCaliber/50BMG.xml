@@ -140,6 +140,7 @@
           <amount>18</amount>
         </li>
       </secondaryDamage>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
 
@@ -155,6 +156,7 @@
           <amount>9</amount>
         </li>
       </secondaryDamage>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
   

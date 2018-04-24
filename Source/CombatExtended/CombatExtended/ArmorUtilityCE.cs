@@ -14,6 +14,8 @@ namespace CombatExtended
 
         private const float PenetrationRandVariation = 0.05f;    // Armor penetration will be randomized by +- this amount
         private const float SoftArmorMinDamageFactor = 0.2f;    // Soft body armor will always take at least original damage * this number from sharp attacks
+        public const float HPToArmorRate = 0.006f;       // When calculate whether a bullet can penetrate, use this value to generate an armor penetration value per 100 maxHP
+        public const float RequiredAPToPenetrate = 0.15f;      //After calculate whether a bullet can penetrate, compare the result with this value.
 
         #endregion
 
@@ -38,11 +40,18 @@ namespace CombatExtended
         {
             shieldAbsorbed = false;
 
-            if (originalDinfo.Def.armorCategory == null) return originalDinfo;
+            Bullet_ArmorPenetrationTrackerCE.Bullet_ArmorPenetrationRecordCE record = Bullet_ArmorPenetrationTrackerCE.records.Find((r) => r.launcher == originalDinfo.Instigator && r.bulletDef == originalDinfo.Weapon && r.damageDef == originalDinfo.Def && r.hitPart == hitPart);
+            float penAmount = record == null ? GetPenetrationValue(originalDinfo) : record.armorPenetration;
+            bool involveArmor = originalDinfo.Def.harmAllLayersUntilOutside;
+
+            if (originalDinfo.Def.armorCategory == null)
+            {
+                tryPenetrateBodyWithBullet(originalDinfo, record, pawn, hitPart, penAmount, involveArmor);
+                return originalDinfo;   
+            }
 
             DamageInfo dinfo = new DamageInfo(originalDinfo);
             float dmgAmount = dinfo.Amount;
-            bool involveArmor = dinfo.Def.harmAllLayersUntilOutside;
             bool isAmbientDamage = dinfo.IsAmbientDamage();
 
             // In case of ambient damage (fire, electricity) we apply a percentage reduction formula based on the sum of all applicable armor
@@ -51,8 +60,6 @@ namespace CombatExtended
                 dinfo.SetAmount(Mathf.CeilToInt(GetAmbientPostArmorDamage(dmgAmount, originalDinfo.Def.armorCategory.deflectionStat, pawn, hitPart)));
                 return dinfo;
             }
-
-            float penAmount = GetPenetrationValue(originalDinfo);
 
             // Apply worn armor
             if (involveArmor && pawn.apparel != null && !pawn.apparel.WornApparel.NullOrEmpty())
@@ -101,7 +108,7 @@ namespace CombatExtended
                                 TryPenetrateArmor(secDinfo.Def, shield.GetStatValue(secDinfo.Def.armorCategory.deflectionStat), ref pen, ref dmg, shield);
                             }
                         }
-
+                        tryPenetrateBodyWithBullet(dinfo, record, pawn, hitPart, penAmount, involveArmor);
                         return dinfo;
                     }
                 }
@@ -118,6 +125,7 @@ namespace CombatExtended
                     }
                     if (dmgAmount <= 0)
                     {
+                        tryPenetrateBodyWithBullet(dinfo, record, pawn, hitPart, penAmount, involveArmor);
                         dinfo.SetAmount(0);
                         return dinfo;
                     }
@@ -160,13 +168,50 @@ namespace CombatExtended
                 }
                 if (dmgAmount <= 0)
                 {
+                    tryPenetrateBodyWithBullet(dinfo, record, pawn, hitPart, penAmount, involveArmor);
                     dinfo.SetAmount(0);
                     return dinfo;
                 }
             }
 
+            tryPenetrateBodyWithBullet(dinfo, record, pawn, hitPart, penAmount, involveArmor);
             dinfo.SetAmount(Mathf.CeilToInt(dmgAmount));
             return dinfo;
+        }
+
+        private static void tryPenetrateBodyWithBullet(DamageInfo dinfo, Bullet_ArmorPenetrationTrackerCE.Bullet_ArmorPenetrationRecordCE record, Pawn pawn, BodyPartRecord hitPart, float armorPenetration, bool involveArmor)
+        {
+            if (record != null)
+            {
+
+                // Apply natural armor
+                List<BodyPartRecord> partsToHit = new List<BodyPartRecord>() { hitPart };
+                if (involveArmor)
+                {
+                    BodyPartRecord curPart = hitPart;
+                    while (curPart.parent != null && curPart.depth == BodyPartDepth.Inside)
+                    {
+                        curPart = curPart.parent;
+                        partsToHit.Add(curPart);
+                    }
+                }
+                int i;
+                int overallHP = 0;
+                for (i = partsToHit.Count - 1; i >= 0; i--)
+                {
+                    BodyPartRecord curPart = partsToHit[i];
+                    overallHP += curPart.def.hitPoints;
+                }
+                for (i = 1; i <= partsToHit.Count - 1; i++)
+                {
+                    BodyPartRecord curPart = partsToHit[i];
+                    overallHP += curPart.def.hitPoints;
+                }
+                float partArmor = overallHP * pawn.HealthScale * HPToArmorRate;     // How much armor is provided by sheer meat
+                float useless = -1f;
+                TryPenetrateArmor(dinfo.Def, partArmor, ref armorPenetration,ref useless);
+                record.armorPenetration = armorPenetration;
+            }
         }
 
         private static ToolCE DistinguishBodyPartGroups(this IEnumerable<ToolCE> tools, DamageInfo dinfo)
@@ -347,7 +392,7 @@ namespace CombatExtended
         /// <param name="dmgAmount">The pre-armor amount of damage</param>
         /// <param name="armor">The armor apparel</param>
         /// <returns>False if the attack is deflected, true otherwise</returns>
-        private static bool TryPenetrateArmor(DamageDef def, float armorAmount, ref float penAmount, ref float dmgAmount, Thing armor = null)
+        public static bool TryPenetrateArmor(DamageDef def, float armorAmount, ref float penAmount, ref float dmgAmount, Thing armor = null)
         {
             // Calculate deflection
             bool isSharpDmg = def.armorCategory == DamageArmorCategoryDefOf.Sharp;

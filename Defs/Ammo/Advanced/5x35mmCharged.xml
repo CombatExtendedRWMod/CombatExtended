@@ -66,6 +66,7 @@
         </li>
       </secondaryDamage>
       <armorPenetration>0.95</armorPenetration>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
   

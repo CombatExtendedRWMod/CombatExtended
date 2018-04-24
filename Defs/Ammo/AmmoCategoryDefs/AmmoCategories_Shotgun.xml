@@ -26,6 +26,7 @@
     <label>beanbag</label>
     <labelShort>bean</labelShort>
     <description>Non-lethal rubber round originally designed for riot control. Accurate over short ranges only. Designed to temporarily incapacitate a target, it does not cause bleeding or damage to internal organs.</description>
+	<allowPenetrateTrough>false</allowPenetrateTrough>
   </CombatExtended.AmmoCategoryDef>
 
    <CombatExtended.AmmoCategoryDef>

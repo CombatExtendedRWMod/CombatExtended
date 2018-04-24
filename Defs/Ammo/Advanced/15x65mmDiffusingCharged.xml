@@ -52,6 +52,7 @@
 			<damageDef>Bullet</damageDef>
 			<speed>112</speed>
 			<casingMoteDefname>Mote_ShotgunShell</casingMoteDefname>
+            <allowPenetrateTrough>false</allowPenetrateTrough>
 		</projectile>
 	</ThingDef>
 

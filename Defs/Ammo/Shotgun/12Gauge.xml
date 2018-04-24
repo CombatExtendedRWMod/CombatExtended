@@ -179,6 +179,7 @@
 			<damageAmountBase>6</damageAmountBase>
 			<armorPenetration>0.151</armorPenetration>
 			<spreadMult>2</spreadMult>
+            <allowPenetrateTrough>false</allowPenetrateTrough>
 		</projectile>
 	</ThingDef>
 

@@ -78,6 +78,7 @@
       <soundHitThickRoof>ArtilleryHitThickRoof</soundHitThickRoof>
       <soundImpactAnticipate>MortarRound_PreImpact</soundImpactAnticipate>
       <soundAmbient>MortarRound_Ambient</soundAmbient>
+      <allowPenetrateTrough>false</allowPenetrateTrough>
     </projectile>
   </ThingDef>
   
