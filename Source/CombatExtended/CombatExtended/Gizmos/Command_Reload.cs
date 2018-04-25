@@ -38,6 +38,7 @@ namespace CombatExtended
         private FloatMenu MakeAmmoMenu()
         {
             List<ThingDef> ammoList = new List<ThingDef>();      // List of all ammo types the gun can use and the pawn has in his inventory
+            Dictionary<ThingDef, CompProperties_AmmoUser.ChangeableBarrel> ammoBarrel = null;	// Tells which ammo def belongs to which barrel
             if (compAmmo.turret != null)
             {
                 // If we have no inventory available (e.g. manned turret), add all possible ammo types to the selection
@@ -49,10 +50,28 @@ namespace CombatExtended
             else
             {
                 // Iterate through all suitable ammo types and check if they're in our inventory
-                foreach (AmmoLink curLink in compAmmo.Props.ammoSet.ammoTypes)
+                if (compAmmo.Props.changeableBarrels != null)
                 {
-                    if (compAmmo.CompInventory.ammoList.Any(x => x.def == curLink.ammo))
-                        ammoList.Add(curLink.ammo);
+                    ammoBarrel = new Dictionary<ThingDef, CompProperties_AmmoUser.ChangeableBarrel>();
+                    //from ammoThing in compAmmo.CompInventory.ammoList
+                    foreach (var i in (from barrel in compAmmo.Props.changeableBarrels
+                        let ammoTypes = barrel.ammoSet.ammoTypes
+                        from ammoLink in ammoTypes
+                        from ammo in compAmmo.CompInventory.ammoList
+                        where ammoLink.ammo == ammo.def
+                        select new { ammoDef = ammo.def, barrel }))
+                    {
+                        ammoList.Add(i.ammoDef);
+                        ammoBarrel[i.ammoDef] = i.barrel;
+                    }
+                }
+                else
+                {
+                    foreach (AmmoLink curLink in compAmmo.Props.ammoSet.ammoTypes)
+                    {
+                        if (compAmmo.CompInventory.ammoList.Any(x => x.def == curLink.ammo))
+                            ammoList.Add(curLink.ammo);
+                    }
                 }
             }
 
@@ -68,7 +87,10 @@ namespace CombatExtended
                 foreach (ThingDef curDef in ammoList)
                 {
                     AmmoDef ammoDef = (AmmoDef)curDef;
-                    floatOptionList.Add(new FloatMenuOption(ammoDef.ammoClass.LabelCap, new Action(delegate {
+                    string label = ammoDef.ammoClass.LabelCap;
+                    if (compAmmo.Props.changeableBarrels != null) label += " - " + ammoBarrel[ammoDef].ammoSet.LabelCap;
+
+                    floatOptionList.Add(new FloatMenuOption(label, new Action(delegate {
                         bool shouldReload = Controller.settings.AutoReloadOnChangeAmmo && (compAmmo.SelectedAmmo != ammoDef || compAmmo.CurMagCount < compAmmo.Props.magazineSize) && compAmmo.turret?.MannableComp == null;
 		               	compAmmo.SelectedAmmo = ammoDef;
 		               	if (shouldReload)
@@ -79,7 +101,8 @@ namespace CombatExtended
 			               	}
 			               	else
 			               	{
-			               		compAmmo.TryStartReload();
+			               		// Check to change barrel first, then reload
+			               		compAmmo.TryStartReload(true);
 			               	}
 		               	}
 	               	})));

@@ -132,22 +132,50 @@ namespace CombatExtended
             // choose ammo to be loaded and set failstate for no ammo in inventory
             if (compReloader.UseAmmo)
             {
-                this.FailOn(() => !compReloader.TryFindAmmoInInventory(out initAmmo));
+                this.FailOn(() =>
+                {
+                    if (compReloader.TryFindAmmoInInventory(out initAmmo)) return false;
+                    if (compReloader.AllowChangeBarrel && compReloader.TryFindAmmoInOtherCaliber(out initAmmo) != null) return false;
+                    return true;
+                });
             }
-
             // setup fail states, if something goes wrong with the pawn performing the reload, the weapon, or something else that we want to fail on.
             this.FailOnDespawnedOrNull(indReloader);
             this.FailOnMentalState(indReloader);
             this.FailOnDestroyedOrNull(indWeapon);
             this.FailOn(HasNoGunOrAmmo);
 
-            // Throw mote
-            if (compReloader.ShouldThrowMote)
-                MoteMaker.ThrowText(pawn.Position.ToVector3Shifted(), Find.VisibleMap, string.Format("CE_ReloadingMote".Translate(), weapon.def.LabelCap));
+            CompProperties_AmmoUser.ChangeableBarrel changingBarrel = compReloader.TryFindAmmoInOtherCaliber(out initAmmo);
+            if (changingBarrel != null)
+            {
+                //Toil of waiting for change barrel
+                Toil changeBarrelWaitToil = new Toil() { actor = pawn }; // actor was always null in testing...
+                changeBarrelWaitToil.initAction = () =>
+                {
+                    // Throw mote
+                    if (compReloader.ShouldThrowMote)
+                        MoteMaker.ThrowText(pawn.Position.ToVector3Shifted(), Find.VisibleMap, string.Format("CE_ChangingBarrelMote".Translate(), weapon.def.LabelCap));
+                    changeBarrelWaitToil.actor.pather.StopDead();
+                };
+                changeBarrelWaitToil.defaultCompleteMode = ToilCompleteMode.Delay;
+                changeBarrelWaitToil.defaultDuration = Mathf.CeilToInt(compReloader.Props.changeBarrelTime.SecondsToTicks() / pawn.GetStatValue(CE_StatDefOf.ReloadSpeed));
+                yield return changeBarrelWaitToil.WithProgressBarToilDelay(indReloader);
+
+                //Actually change the barrel
+                Toil changeBarrelToil = new Toil();
+                changeBarrelToil.AddFinishAction(() => compReloader.ChangeBarrel(changingBarrel,initAmmo.def as AmmoDef));
+                yield return changeBarrelToil;
+            }
 
             //Toil of do-nothing		
             Toil waitToil = new Toil() { actor = pawn }; // actor was always null in testing...
-            waitToil.initAction = () => waitToil.actor.pather.StopDead();
+            waitToil.initAction = () =>
+            {
+                // Throw mote
+                if (compReloader.ShouldThrowMote)
+                    MoteMaker.ThrowText(pawn.Position.ToVector3Shifted(), Find.VisibleMap, string.Format("CE_ReloadingMote".Translate(), weapon.def.LabelCap));
+                waitToil.actor.pather.StopDead();
+            };
             waitToil.defaultCompleteMode = ToilCompleteMode.Delay;
             waitToil.defaultDuration = Mathf.CeilToInt(compReloader.Props.reloadTime.SecondsToTicks() / pawn.GetStatValue(CE_StatDefOf.ReloadSpeed));
             yield return waitToil.WithProgressBarToilDelay(indReloader);

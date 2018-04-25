@@ -30,6 +30,9 @@
   <CE_CoverHeight>Cover height</CE_CoverHeight>
   <CE_TargetHeight>Target height</CE_TargetHeight>
   <CE_TargetWidth>Target width</CE_TargetWidth>
+  
+  <!-- Change barrel -->
+  <CE_ChangingBarrelMote>changing barrel</CE_ChangingBarrelMote>
 
   <!-- Reloading -->
   <CE_ReloadingEquipment>equipped</CE_ReloadingEquipment>

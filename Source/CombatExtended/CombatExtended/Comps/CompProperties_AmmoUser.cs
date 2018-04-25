@@ -15,10 +15,20 @@ namespace CombatExtended
         public bool throwMote = true;
         public AmmoSetDef ammoSet = null;
         public bool spawnUnloaded = false;
+        public float changeBarrelTime = 0f;		// How much time in seconds need to change barrel
+        public List<ChangeableBarrel> changeableBarrels = null;		// Changeable barrels
 
         public CompProperties_AmmoUser()
         {
             compClass = typeof(CompAmmoUser);
+        }
+        /// <summary>
+        /// Represents a barrel.
+        /// </summary>
+        public class ChangeableBarrel
+        {
+            public AmmoSetDef ammoSet = null;	// Which ammo set this barrel support
+            public int magazineSize = 0;		// Magazine size of this barrel
         }
     }
 }
