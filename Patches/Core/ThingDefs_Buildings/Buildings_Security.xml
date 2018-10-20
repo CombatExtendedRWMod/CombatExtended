@@ -297,5 +297,15 @@
 		</value>
 	</Operation>
 
+	<!-- ========== Patch out Autocannon and Uranium Slug turrets ========== -->
+
+	<Operation Class="PatchOperationRemove">
+		<xpath>*/ThingDef[defName="Turret_Autocannon"]</xpath>
+	</Operation>
+
+	<Operation Class="PatchOperationRemove">
+		<xpath>*/ThingDef[defName="Turret_Sniper"]</xpath>
+	</Operation>
+
 </Patch>
 

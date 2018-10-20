@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <!-- ========== Charge rifle ========== -->
+
+    <Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
+        <defName>Gun_ChargeRifle</defName>
+        <statBases>
+            <Mass>3.0</Mass>
+            <RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
+            <SightsEfficiency>1.10</SightsEfficiency>
+            <ShotSpread>0.08</ShotSpread>
+            <SwayFactor>1.20</SwayFactor>
+            <Bulk>9.00</Bulk>
+            <WorkToMake>48000</WorkToMake>
+        </statBases>
+        <costList>
+            <Steel>45</Steel>
+            <Plasteel>25</Plasteel>
+            <Component>10</Component>
+            <Chemfuel>10</Chemfuel>
+        </costList>
+        <Properties>
+            <recoilAmount>1.51</recoilAmount>
+            <verbClass>CombatExtended.Verb_ShootCE</verbClass>
+            <hasStandardCommand>true</hasStandardCommand>
+            <defaultProjectile>Bullet_6x24mmCharged</defaultProjectile>
+            <warmupTime>1.0</warmupTime>
+            <range>55</range>
+            <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+            <burstShotCount>6</burstShotCount>
+            <soundCast>ShotChargeRifle</soundCast>
+            <soundCastTail>GunTail_Medium</soundCastTail>
+            <muzzleFlashScale>9</muzzleFlashScale>
+        </Properties>
+        <AmmoUser>
+            <magazineSize>30</magazineSize>
+            <reloadTime>4</reloadTime>
+            <ammoSet>AmmoSet_6x24mmCharged</ammoSet>
+        </AmmoUser>
+        <FireModes>
+            <aimedBurstShotCount>3</aimedBurstShotCount>
+            <aiUseBurstMode>TRUE</aiUseBurstMode>
+            <aiAimMode>AimedShot</aiAimMode>
+        </FireModes>
+        <weaponTags>
+            <li>CE_AI_Rifle</li>
+        </weaponTags>
+        <researchPrerequisite>ChargedShot</researchPrerequisite>
+    </Operation>
+
+    <Operation Class="PatchOperationReplace">
+        <xpath>*/ThingDef[defName="Gun_ChargeRifle"]/tools</xpath>
+        <value>
+            <tools>
+                <li Class="CombatExtended.ToolCE">
+                    <label>stock</label>
+                    <capacities>
+                        <li>Blunt</li>
+                    </capacities>
+                    <power>9</power>
+                    <cooldownTime>1.8</cooldownTime>
+                    <commonality>1.5</commonality>
+                    <armorPenetration>0.11</armorPenetration>
+                    <linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
+                </li>
+                <li Class="CombatExtended.ToolCE">
+                    <id>barrelblunt</id>
+                    <label>barrel</label>
+                    <capacities>
+                        <li>Blunt</li>
+                    </capacities>
+                    <power>10</power>
+                    <cooldownTime>1.9</cooldownTime>
+                    <armorPenetration>0.118</armorPenetration>
+                    <linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
+                </li>
+                <li Class="CombatExtended.ToolCE">
+                    <id>barrelpoke</id>
+                    <label>muzzle</label>
+                    <capacities>
+                        <li>Poke</li>
+                    </capacities>
+                    <power>10</power>
+                    <cooldownTime>1.9</cooldownTime>
+                    <armorPenetration>0.086</armorPenetration>
+                    <linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
+                </li>
+            </tools>
+        </value>
+    </Operation>
+
+    <!-- ========== Charge lance ========== -->
+
+    <Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
+        <defName>Gun_ChargeLance</defName>
+        <statBases>
+            <Mass>8.00</Mass>
+            <RangedWeapon_Cooldown>0.35</RangedWeapon_Cooldown>
+            <SightsEfficiency>1</SightsEfficiency>
+            <ShotSpread>0.01</ShotSpread>
+            <SwayFactor>2.10</SwayFactor>
+            <Bulk>13.00</Bulk>
+        </statBases>
+        <costList>
+            <Steel>110</Steel>
+            <Plasteel>35</Plasteel>
+            <Component>10</Component>
+        </costList>
+        <Properties>
+            <verbClass>CombatExtended.Verb_ShootCE</verbClass>
+            <hasStandardCommand>true</hasStandardCommand>
+            <defaultProjectile>Bullet_5x35mmCharged</defaultProjectile>
+            <warmupTime>1.1</warmupTime>
+            <range>62</range>
+            <burstShotCount>1</burstShotCount>
+            <soundCast>ChargeLance_Fire</soundCast>
+            <soundCastTail>GunTail_Heavy</soundCastTail>
+            <muzzleFlashScale>9</muzzleFlashScale>
+        </Properties>
+        <AmmoUser>
+            <magazineSize>1</magazineSize>
+            <reloadTime>1.6</reloadTime>
+            <ammoSet>AmmoSet_5x35mmCharged</ammoSet>
+        </AmmoUser>
+        <FireModes>
+            <aiAimMode>AimedShot</aiAimMode>
+        </FireModes>
+        <weaponTags>
+            <li>CE_AI_Rifle</li>
+        </weaponTags>
+    </Operation>
+
+    <Operation Class="PatchOperationReplace">
+        <xpath>*/ThingDef[defName="Gun_ChargeLance"]/tools</xpath>
+        <value>
+            <tools>
+                <li Class="CombatExtended.ToolCE">
+                    <label>barrel</label>
+                    <capacities>
+                        <li>Blunt</li>
+                    </capacities>
+                    <power>10</power>
+                    <cooldownTime>1.9</cooldownTime>
+                    <armorPenetration>0.118</armorPenetration>
+                    <linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
+                </li>
+            </tools>
+        </value>
+    </Operation>
+
+</Patch>
