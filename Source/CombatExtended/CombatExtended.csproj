@@ -90,7 +90,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorld1722Win_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -100,7 +100,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorld1722Win_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -164,7 +164,6 @@
     <Compile Include="CombatExtended\PatchOperationMakeGunCECompatible.cs" />
     <Compile Include="CombatExtended\Settings.cs" />
     <Compile Include="CombatExtended\Projectiles\Projectile_FireTrail.cs" />
-    <Compile Include="CombatExtended\StatPart_LoadedAmmo.cs" />
     <Compile Include="CombatExtended\StatWorkers\StatWorker_Caliber.cs" />
     <Compile Include="CombatExtended\StatWorkers\StatWorker_MeleeArmorPenetration.cs" />
     <Compile Include="CombatExtended\StatWorkers\StatWorker_Magazine.cs" />

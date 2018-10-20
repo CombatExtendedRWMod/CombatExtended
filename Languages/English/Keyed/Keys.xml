@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
 
-  <!-- StatParts -->
-  <CE_LoadedAmmo>Loaded ammo</CE_LoadedAmmo>
-
   <!-- Suppression -->
   <CE_SuppressedMote>Suppressed!</CE_SuppressedMote>
   <CE_HunkeringMote>Hunkering!</CE_HunkeringMote>
