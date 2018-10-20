@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
+	<!-- ========== General ========== -->
+
+	<!-- Mass -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/StatDef[defName="Mass"]/parts</xpath>
+		<value>
+			<li Class="CombatExtended.StatPart_LoadedAmmo"/>
+		</value>
+	</Operation>
+
 	<!-- ========== Apparel ========== -->
 
 	<!-- Armor Rating -->
