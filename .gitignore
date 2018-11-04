@@ -10,6 +10,7 @@
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+.idea/
  
 # Ignore RimWorld assemblies 
 Assembly-CSharp.dll 
