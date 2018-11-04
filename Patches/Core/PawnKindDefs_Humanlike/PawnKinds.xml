@@ -8,14 +8,14 @@
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-  	<xpath>*/PawnKindDef[defName="Centipede"]/combatPower</xpath>
+  	<xpath>*/PawnKindDef[defName="Mech_Centipede"]/combatPower</xpath>
   	<value>
   		<combatPower>580</combatPower>
   	</value>
   </Operation>
 
   <Operation Class="PatchOperationAddModExtension">
-  	<xpath>*/PawnKindDef[defName="Scyther" or defName="Centipede"]</xpath>
+  	<xpath>*/PawnKindDef[defName="Scyther" or defName="Mech_Centipede"]</xpath>
   	<value>
       <li Class="CombatExtended.LoadoutPropertiesExtension">
         <primaryMagazineCount>
