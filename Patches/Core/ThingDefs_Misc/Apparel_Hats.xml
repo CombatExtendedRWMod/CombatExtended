@@ -10,15 +10,15 @@
     </value>
   </Operation>
 
-	<Operation Class="PatchOperationReplace">
-		<xpath>*/ThingDef[defName="Apparel_SimpleHelmet"]/statBases/ArmorRating_Blunt</xpath>
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="Apparel_SimpleHelmet"]/statBases</xpath>
 		<value>
       <ArmorRating_Blunt>0.15</ArmorRating_Blunt>
     </value>
   </Operation>
 
-	<Operation Class="PatchOperationReplace">
-		<xpath>*/ThingDef[defName="Apparel_SimpleHelmet"]/statBases/ArmorRating_Sharp</xpath>
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="Apparel_SimpleHelmet"]/statBases</xpath>
 		<value>
       <ArmorRating_Sharp>0.40</ArmorRating_Sharp>
     </value>
@@ -68,15 +68,15 @@
     </value>
   </Operation>
 
-	<Operation Class="PatchOperationReplace">
-		<xpath>*/ThingDef[defName="Apparel_AdvancedHelmet"]/statBases/ArmorRating_Blunt</xpath>
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="Apparel_AdvancedHelmet"]/statBases</xpath>
 		<value>
       <ArmorRating_Blunt>0.2</ArmorRating_Blunt>
     </value>
   </Operation>
 
-	<Operation Class="PatchOperationReplace">
-		<xpath>*/ThingDef[defName="Apparel_AdvancedHelmet"]/statBases/ArmorRating_Sharp</xpath>
+	<Operation Class="PatchOperationAdd">
+		<xpath>*/ThingDef[defName="Apparel_AdvancedHelmet"]/statBases</xpath>
 		<value>
       <ArmorRating_Sharp>0.55</ArmorRating_Sharp>
     </value>
@@ -132,11 +132,13 @@
   </Operation>
 
   <Operation Class="PatchOperationAdd">
-  	<xpath>*/ThingDef[defName="Apparel_PowerArmorHelmet"]/equippedStatOffsets</xpath>
+  	<xpath>*/ThingDef[defName="Apparel_PowerArmorHelmet"]</xpath>
 		<value>
-			<PsychicSensitivity>-0.2</PsychicSensitivity>
-			<AimingAccuracy>0.15</AimingAccuracy>
-			<ToxicSensitivity>-0.50</ToxicSensitivity>
+      <equippedStatOffsets>
+        <PsychicSensitivity>-0.2</PsychicSensitivity>
+        <AimingAccuracy>0.15</AimingAccuracy>
+        <ToxicSensitivity>-0.50</ToxicSensitivity>
+      </equippedStatOffsets>
     </value>
   </Operation>
 
