@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Reflection;
 using System.Reflection.Emit;
 using Verse;
 using RimWorld;
-using UnityEngine;
 using Harmony;
 
 namespace CombatExtended.Harmony
@@ -44,7 +40,7 @@ namespace CombatExtended.Harmony
             if (armorBlockStart == -1)
             {
                 Log.Error("CE failed to transpile DamageWorker_AddInjury: could not identify armor block start");
-                return instructions;
+                return codes;
             }
 
             // Replace armor block with our new instructions
@@ -56,6 +52,10 @@ namespace CombatExtended.Harmony
             curCode = codes[armorBlockStart + 2];
             curCode.opcode = OpCodes.Call;
             curCode.operand = typeof(Harmony_DamageWorker_AddInjury_ApplyDamageToPart).GetMethod(nameof(Harmony_DamageWorker_AddInjury_ApplyDamageToPart.ArmorReroute), AccessTools.all);
+
+            curCode = codes[armorBlockStart + 3];
+            curCode.opcode = OpCodes.Ldarga_S;
+            curCode.operand = 1;
 
             // OpCode + 3 loads the dinfo we just modified and we want to access its damage value to store in the vanilla local variable at the end of the block
             curCode = codes[armorBlockStart + 4];
