@@ -147,7 +147,7 @@ namespace CombatExtended
             // Remove unused vanilla stats
             if (statBasesElement.HasChildNodes)
             {
-                var vanillaStats = statBasesElement.SelectNodes("AccuracyTouch | AccuracyShort | AccuracyMedium | AccuracyLong");
+                var vanillaStats = statBasesElement.SelectNodes("AccuracyTouch | AccuracyShort | AccuracyMedium | AccuracyLong | Mass | RangedWeapon_Cooldown");
                 foreach(XmlNode cur in vanillaStats)
                 {
                     statBasesElement.RemoveChild(cur);
