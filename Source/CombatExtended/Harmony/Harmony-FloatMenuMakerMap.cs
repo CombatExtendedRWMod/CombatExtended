@@ -182,6 +182,7 @@ namespace CombatExtended.Harmony
         
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-FloatMenuMakerMap started");
             string targetString = "CannotPickUp";
             int stringIndex = -1;
             List<CodeInstruction> codes = Modify_ForceWear(instructions).ToList();

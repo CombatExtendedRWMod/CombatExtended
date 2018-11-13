@@ -28,6 +28,7 @@ namespace CombatExtended.Harmony
 
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler DamageWorker_AddInjury started");
             var codes = instructions.ToList();
 
             // Find armor block

@@ -39,6 +39,7 @@ namespace CombatExtended.Harmony
         /// <returns>IEnumerable of CodeInstruction containing the changes to the method's IL code.</returns>
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-JobDriverWait started");
             int verbLocalIndex = -1;
             int indexKeyCall = 0;
 

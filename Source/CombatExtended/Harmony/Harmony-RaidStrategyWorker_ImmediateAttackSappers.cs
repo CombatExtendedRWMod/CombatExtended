@@ -28,6 +28,7 @@ namespace CombatExtended.Harmony
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-RaidStrategyWorker_ImmediateAttackSappers started");
             var codes = instructions.ToList();
             for (int i = 0; i < codes.Count - 1; i++)
             {

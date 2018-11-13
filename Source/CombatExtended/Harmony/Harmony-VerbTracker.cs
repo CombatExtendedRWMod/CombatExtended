@@ -55,6 +55,7 @@ namespace CombatExtended.Harmony
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-VerbTracker started");
             int patchPhase = 0;
             var verb = il.DeclareLocal(typeof(VerbTracker));
             var verbCE = il.DeclareLocal(typeof(Verb_LaunchProjectileCE));

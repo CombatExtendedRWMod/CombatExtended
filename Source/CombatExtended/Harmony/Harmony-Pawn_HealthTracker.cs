@@ -26,6 +26,7 @@ namespace CombatExtended.Harmony
 
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-Pawn_HealthTracker started");
             int patchPhase = 0;
             List<CodeInstruction> previous = new List<CodeInstruction>();
             List<Label> removed = new List<Label>();

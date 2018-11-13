@@ -18,6 +18,7 @@ namespace CombatExtended.Harmony
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-TradeDeal started");
             MethodBase from = typeof(Mathf).GetMethod("RoundToInt", AccessTools.all);
             MethodBase to = typeof(Mathf).GetMethod("CeilToInt", AccessTools.all);
             return instructions.MethodReplacer(from, to);

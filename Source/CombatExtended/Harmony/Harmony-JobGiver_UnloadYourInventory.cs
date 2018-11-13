@@ -28,6 +28,7 @@ namespace CombatExtended.Harmony
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase source, ILGenerator il)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-JobGiver_UnloadYourInventory started");
             // another new thing, find the desired parameter instead of assuming it will be the same.
             ParameterInfo[] args = source.GetParameters();
             int argIndex = -1;

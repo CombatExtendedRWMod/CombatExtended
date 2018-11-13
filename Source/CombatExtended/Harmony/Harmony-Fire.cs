@@ -14,7 +14,8 @@ namespace CombatExtended.Harmony
     {
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            foreach(CodeInstruction code in instructions)
+            Log.Warning("CE-DEBUG: Transpiler Harmony_Fire started");
+            foreach (CodeInstruction code in instructions)
             {
                 if (code.opcode == OpCodes.Ldc_R4 && code.operand is float && (float)code.operand == 150f)
                 {

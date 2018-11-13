@@ -36,6 +36,7 @@ namespace CombatExtended.Harmony
 
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-HediffComp_GetsOld started");
             object tendLocal = null;
             // trying something different, asking the ILGenerator about the local variables to find the one with the desired type... (got the idea from Harmony source)
             foreach (LocalBuilder local in Traverse.Create(il).Field("locals").GetValue<LocalBuilder[]>())

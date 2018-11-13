@@ -18,7 +18,8 @@ namespace CombatExtended.Harmony
 		// can name the method something else but then requires the attribute [HarmonyTranspiler]
 		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
 		{
-			int countReplace = 0;
+            Log.Warning("CE-DEBUG: Transpiler Harmony-HediffComp_TendDuration started");
+            int countReplace = 0;
 			foreach (CodeInstruction instruction in instructions)
 			{
 				if (countReplace < 2 && instruction.opcode == OpCodes.Ldc_R4)

@@ -11,6 +11,7 @@ namespace CombatExtended.Harmony
     {
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            Log.Warning("CE-DEBUG: Transpiler Harmony-LordToil_Siege started");
             return instructions.MethodReplacer(typeof(ThingDef).GetMethod("get_IsShell"),
                 typeof(AmmoUtility).GetMethod(nameof(AmmoUtility.IsShell), BindingFlags.Public | BindingFlags.Static));
         }

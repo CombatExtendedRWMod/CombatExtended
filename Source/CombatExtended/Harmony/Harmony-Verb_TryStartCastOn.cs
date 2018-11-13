@@ -22,6 +22,7 @@ using Verse.AI;
 		[HarmonyTranspiler]
 		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
 		{
+            Log.Warning("CE-DEBUG: Transpiler Harmony-Verb_TryStartCastOn started");
             // targetting after the lines
             // if (!this.TryFindShootLineFromTo(this.caster.Position, castTarg, out line))
             // {

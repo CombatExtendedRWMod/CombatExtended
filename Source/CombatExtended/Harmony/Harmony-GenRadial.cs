@@ -65,7 +65,8 @@ namespace CombatExtended.Harmony
 		
 		static IEnumerable<CodeInstruction> Transpiler_RadialPatternCount(IEnumerable<CodeInstruction> instructions)
 		{
-			const int defaultVal = 10000;
+            Log.Warning("CE-DEBUG: Transpiler_RadialPatternCount Harmony-GenRadial started");
+            const int defaultVal = 10000;
 			
 			foreach (CodeInstruction instruction in instructions)
 			{
@@ -78,7 +79,8 @@ namespace CombatExtended.Harmony
 		// This transpiler converts the -60 and 60 values in the first couple of loops.  May need to change opcodes to int if SByte.MaxValue is insufficient.
 		static IEnumerable<CodeInstruction> Transpiler_Range(IEnumerable<CodeInstruction> instructions)
 		{
-			const sbyte defaultVal = 60;
+            Log.Warning("CE-DEBUG: Transpiler_Range Harmony-GenRadial started");
+            const sbyte defaultVal = 60;
 			int foundNeg = 0;
 			int foundPos = 0;
 			
