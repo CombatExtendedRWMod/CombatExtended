@@ -74,7 +74,7 @@ namespace CombatExtended.Harmony
                 curCode.opcode = OpCodes.Nop;
                 curCode.operand = null;
             }
-
+            Log.Warning("CE-DEBUG: Transpiler DamageWorker_AddInjury returning");
             return codes;
         }
 

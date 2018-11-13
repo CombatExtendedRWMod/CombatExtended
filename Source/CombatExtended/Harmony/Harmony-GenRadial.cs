@@ -73,7 +73,8 @@ namespace CombatExtended.Harmony
 				if (instruction.opcode == OpCodes.Ldc_I4 && (Int32)instruction.operand == defaultVal)
 					instruction.operand = newRadialPatternCount;
 			}
-			return instructions;
+            Log.Warning("CE-DEBUG: Transpiler_RadialPatternCount Harmony-GenRadial returning");
+            return instructions;
 		}
 		
 		// This transpiler converts the -60 and 60 values in the first couple of loops.  May need to change opcodes to int if SByte.MaxValue is insufficient.
@@ -101,8 +102,9 @@ namespace CombatExtended.Harmony
 					foundPos++;
 				}
 			}
-			
-			return instructions;
+
+            Log.Warning("CE-DEBUG: Transpiler_Range Harmony-GenRadial returning");
+            return instructions;
 		}
 	}
 }

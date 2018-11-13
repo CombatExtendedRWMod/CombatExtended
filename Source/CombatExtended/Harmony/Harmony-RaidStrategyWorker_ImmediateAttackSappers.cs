@@ -35,10 +35,12 @@ namespace CombatExtended.Harmony
                 if (codes[i].operand as FieldInfo != null && (codes[i].operand as FieldInfo) == AccessTools.Field(typeof(FactionDef), "techLevel"))
                 {
                     codes[i + 1].opcode = OpCodes.Ldc_I4_0;
+                    Log.Warning("CE-DEBUG: Transpiler Harmony-RaidStrategyWorker_ImmediateAttackSappers returning");
                     return codes;
                 }
             }
             Log.Error("CE failed to transpile RaidStrategyWorker_ImmediateAttackSappers.CanUseWith() :: failed to find tech level check");
+            Log.Warning("CE-DEBUG: Transpiler Harmony-RaidStrategyWorker_ImmediateAttackSappers returning");
             return instructions;
         }
     }

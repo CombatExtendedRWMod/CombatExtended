@@ -56,7 +56,8 @@ using Verse.AI;
             	
             	yield return instruction;
             }
-		}
+            Log.Warning("CE-DEBUG: Transpiler Harmony-Verb_TryStartCastOn returning");
+        }
 		
 		// Functions like a prefix.  If this has something to do return false. if nothing to do return true.
 		static bool CheckReload(Verb __instance)

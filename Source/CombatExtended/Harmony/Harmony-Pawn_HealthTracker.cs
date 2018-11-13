@@ -77,6 +77,7 @@ namespace CombatExtended.Harmony
                     patchPhase = 2;
                 }
             }
+            Log.Warning("CE-DEBUG: Transpiler Harmony-Pawn_HealthTracker returning");
         }
 
         /// <summary>

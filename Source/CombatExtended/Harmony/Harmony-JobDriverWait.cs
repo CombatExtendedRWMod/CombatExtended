@@ -80,7 +80,7 @@ namespace CombatExtended.Harmony
                     break;
                 }
             }
-
+            Log.Warning("CE-DEBUG: Transpiler Harmony-JobDriverWait returning");
             return code;
         }
 

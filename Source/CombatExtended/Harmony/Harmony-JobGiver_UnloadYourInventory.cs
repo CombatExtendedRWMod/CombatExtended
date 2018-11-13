@@ -77,6 +77,7 @@ namespace CombatExtended.Harmony
                 yield return instruction;
 
             }
+            Log.Warning("CE-DEBUG: Transpiler Harmony-JobGiver_UnloadYourInventory returning");
         }
     }
 }

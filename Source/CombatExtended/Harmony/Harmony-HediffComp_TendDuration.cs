@@ -29,6 +29,7 @@ namespace CombatExtended.Harmony
 				}
 				yield return instruction;
 			}
-		}
+            Log.Warning("CE-DEBUG: Transpiler Harmony-HediffComp_TendDuration returning");
+        }
 	}
 }

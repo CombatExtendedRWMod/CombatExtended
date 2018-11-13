@@ -105,6 +105,7 @@ namespace CombatExtended.Harmony
                         patchPhase = 5;
                     }
                 }
+
             }
             else
             {
@@ -112,6 +113,7 @@ namespace CombatExtended.Harmony
                 foreach (CodeInstruction instruction in instructions)
                     yield return instruction;
             }
+            Log.Warning("CE-DEBUG: Transpiler Harmony-HediffComp_GetsOld returning");
         }
 
         /// <summary>

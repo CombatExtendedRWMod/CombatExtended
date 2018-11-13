@@ -21,6 +21,7 @@ namespace CombatExtended.Harmony
                 {
                     code.operand = 300f;
                 }
+                Log.Warning("CE-DEBUG: Transpiler Harmony_Fire returning");
                 yield return code;
             }
         }

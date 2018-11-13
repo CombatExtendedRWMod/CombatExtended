@@ -211,11 +211,13 @@ namespace CombatExtended.Harmony
                         // Change value to always true
                         code.opcode = OpCodes.Ldc_I4_1;
                         code.operand = null;
+                        Log.Warning("CE-DEBUG: Transpiler Harmony-FloatMenuMakerMap returning");
                         return codes;
                     }
                 }
                 Log.Error("CE failed to patch FloatMenuMakerMap: get_IsPlayerHome not found");
             }
+            Log.Warning("CE-DEBUG: Transpiler Harmony-FloatMenuMakerMap returning");
             return instructions;
         }
 
