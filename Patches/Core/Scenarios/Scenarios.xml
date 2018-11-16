@@ -16,6 +16,118 @@
 		</value>
 	</Operation>
 
+<!-- Remove Starting Armor from Crashlanded-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>*/ScenarioDef[defName="Crashlanded"]/scenario/parts</xpath>
+			<value>
+				  <parts>
+					<!-- Config pages -->
+					<li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
+					  <def>ConfigPage_ConfigureStartingPawns</def>
+					  <pawnCount>3</pawnCount>
+					  <pawnChoiceCount>8</pawnChoiceCount>
+					</li>
+
+					<!-- Player starting stuff spawn method-->
+					<li Class="ScenPart_PlayerPawnsArriveMethod">
+					  <def>PlayerPawnsArriveMethod</def>
+					  <method>DropPods</method>
+					  <visible>false</visible>
+					</li>
+
+					<!-- Player pawns modifiers -->
+					<li Class="ScenPart_ForcedHediff">
+					  <def>ForcedHediff</def>
+					  <visible>false</visible>
+					  <context>PlayerStarter</context>
+					  <chance>0.5</chance>
+					  <hediff>CryptosleepSickness</hediff>
+					  <hideOffMap>true</hideOffMap>
+					  <severityRange>
+						<min>1</min>
+						<max>1</max>
+					  </severityRange>
+					</li>
+					
+					<!-- Player starting things -->
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>Silver</thingDef>
+					  <count>800</count>
+					</li>
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>MealSurvivalPack</thingDef>
+					  <count>50</count>
+					</li>
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>MedicineIndustrial</thingDef>
+					  <count>30</count>
+					</li>
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>ComponentIndustrial</thingDef>
+					  <count>30</count>
+					</li>
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>Gun_BoltActionRifle</thingDef>
+					</li>
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>Gun_Revolver</thingDef>
+					</li>
+					<li Class="ScenPart_StartingThing_Defined">
+					  <def>StartingThing_Defined</def>
+					  <thingDef>MeleeWeapon_Knife</thingDef>
+					  <stuff>Plasteel</stuff>
+					</li>
+					<li Class="ScenPart_StartingAnimal">
+					  <def>StartingAnimal</def>
+					  <count>1</count>
+					  <bondToRandomPlayerPawnChance>1.0</bondToRandomPlayerPawnChance>
+					</li>
+
+					<!-- Scatter some things near player start -->
+					<li Class="ScenPart_ScatterThingsNearPlayerStart">
+					  <def>ScatterThingsNearPlayerStart</def>
+					  <thingDef>Steel</thingDef>
+					  <count>450</count>
+					</li>
+					<li Class="ScenPart_ScatterThingsNearPlayerStart">
+					  <def>ScatterThingsNearPlayerStart</def>
+					  <thingDef>WoodLog</thingDef>
+					  <count>300</count>
+					</li>      
+
+					<!-- Scatter some things anywhere -->
+					<li Class="ScenPart_ScatterThingsAnywhere">
+					  <def>ScatterThingsAnywhere</def>
+					  <thingDef>ShipChunk</thingDef>
+					  <count>3</count>
+					</li>
+					<li Class="ScenPart_ScatterThingsAnywhere">
+					  <def>ScatterThingsAnywhere</def>
+					  <thingDef>Steel</thingDef>
+					  <count>720</count>
+					</li>
+					<li Class="ScenPart_ScatterThingsAnywhere">
+					  <def>ScatterThingsAnywhere</def>
+					  <thingDef>MealSurvivalPack</thingDef>
+					  <count>7</count>
+					</li>
+					
+					<!-- Game start dialog -->
+					<li Class="ScenPart_GameStartDialog">
+					  <def>GameStartDialog</def>
+					  <textKey>GameStartDialog</textKey>
+					  <closeSound>GameStartSting</closeSound>
+					</li>
+				</parts>
+			</value>
+	</Operation>	
+	
 	<Operation Class="PatchOperationAdd">
 		<xpath>*/ScenarioDef[defName="TheRichExplorer"]/scenario/parts</xpath>
 		<value>
