@@ -125,7 +125,6 @@ namespace CombatExtended
             }
             // Added this next line.
             TooltipHandler.TipRegion(assignTabRect, new TipSignal(textGetter("CE_Loadouts"), pawn.GetHashCode() * 613));
-            num3 += (float)num2;
         }
 
         public override int GetMinWidth(PawnTable table)

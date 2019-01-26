@@ -470,8 +470,8 @@ namespace CombatExtended
 
             //Check for minimum PAWN collision distance
             float distFromOrigin = (cell - OriginIV3).LengthHorizontalSquared;
-            if (!def.projectile.alwaysFreeIntercept
-                && minCollisionSqr <= 1f
+            if ((!def.projectile.alwaysFreeIntercept
+                && minCollisionSqr <= 1f)
                 ? distFromOrigin < 1f
                 : distFromOrigin < Mathf.Min(144f, minCollisionSqr / 4))
             {
@@ -638,7 +638,7 @@ namespace CombatExtended
             var compSuppressable = pawn.TryGetComp<CompSuppressable>();
             if (compSuppressable != null
                 && pawn.Faction != launcher?.Faction
-                && (shield == null || shield?.ShieldState == ShieldState.Resetting))
+                && (shield == null || shield.ShieldState == ShieldState.Resetting))
             {
                 suppressionAmount = def.projectile.GetDamageAmount(1);
                 var propsCE = def.projectile as ProjectilePropertiesCE;

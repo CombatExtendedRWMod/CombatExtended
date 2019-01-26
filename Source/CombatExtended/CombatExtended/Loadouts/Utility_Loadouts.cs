@@ -270,7 +270,7 @@ namespace CombatExtended
             else if (ys.Length % 2 == 0)
                 return (ys[(int)(ys.Length / 2) - 1] + ys[(int)(ys.Length / 2)])/2;
             else
-                return ys[Mathf.FloorToInt(ys.Length / 2)];
+                return ys[Mathf.FloorToInt(ys.Length / 2f)];
         }
         
         /// <summary>

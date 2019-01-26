@@ -210,7 +210,7 @@ namespace CombatExtended
             {
                 return false;
             }
-            if (hediff.BleedRate == 0f || hediff.IsTended() || hediff.IsPermanent())
+            if (Mathf.Approximately(hediff.BleedRate, 0f) || hediff.IsTended() || hediff.IsPermanent())
             {
                 return false;
             }

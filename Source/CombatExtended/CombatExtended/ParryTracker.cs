@@ -54,7 +54,7 @@ namespace CombatExtended
                 return false;
             }
 
-            int parriesLeft = Mathf.RoundToInt(pawn.skills.GetSkill(SkillDefOf.Melee).Level / SkillPerParry) - GetUsedParriesFor(pawn);
+            int parriesLeft = Mathf.RoundToInt((float)pawn.skills.GetSkill(SkillDefOf.Melee).Level / SkillPerParry) - GetUsedParriesFor(pawn);
             return parriesLeft > 0;
         }
 

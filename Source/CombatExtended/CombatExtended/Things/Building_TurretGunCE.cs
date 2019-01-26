@@ -176,7 +176,7 @@ namespace CombatExtended
             {
                 return mannableComp == null && CompAmmo != null
                     && CompAmmo.HasMagazine
-                    && (ticksUntilAutoReload == 0 || CompAmmo.CurMagCount <= Mathf.CeilToInt(CompAmmo.Props.magazineSize / 6));
+                    && (ticksUntilAutoReload == 0 || CompAmmo.CurMagCount <= Mathf.CeilToInt((float)CompAmmo.Props.magazineSize / 6));
             }
         }
         public CompMannable MannableComp => mannableComp;

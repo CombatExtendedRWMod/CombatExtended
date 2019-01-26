@@ -38,7 +38,7 @@ namespace CombatExtended
 
                 infectionModifier /= Mathf.Pow(compTended.tendQuality + 0.75f, 2);  // Adjust infection chance based on tend quality
             }
-            float infectChance = Props.infectionChancePerHourUntended * (ticksUntended / GenDate.TicksPerHour); // Calculate base chance from time untreated
+            float infectChance = Props.infectionChancePerHourUntended * ((float)ticksUntended / GenDate.TicksPerHour); // Calculate base chance from time untreated
             if (parent.Part.depth == BodyPartDepth.Inside) infectChance *= infectionInnerModifier;  // Increase chance of infection for inner organs
             if (Rand.Value < infectChance * infectionModifier)
             {

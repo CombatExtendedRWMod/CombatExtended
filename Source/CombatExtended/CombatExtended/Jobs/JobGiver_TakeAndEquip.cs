@@ -368,7 +368,7 @@ namespace CombatExtended
                         }
 
                         // else if no ranged weapons with nearby ammo was found, lets consider a melee weapon.
-                        if (allWeapons != null && allWeapons.Count > 0)
+                        if (allWeapons.Count > 0)
                         {
                             // since we don't need to worry about ammo, just pick one.
                             Thing meleeWeapon = allWeapons.FirstOrDefault(w => !w.def.IsRangedWeapon && w.def.IsMeleeWeapon);

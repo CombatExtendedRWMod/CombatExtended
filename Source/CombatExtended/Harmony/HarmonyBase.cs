@@ -37,7 +37,7 @@ namespace CombatExtended.Harmony
             get
             {
                 if (harmony == null)
-                    harmony = harmony = HarmonyInstance.Create("CombatExtended.Harmony");
+                    harmony = HarmonyInstance.Create("CombatExtended.Harmony");
                 return harmony;
             }
         }

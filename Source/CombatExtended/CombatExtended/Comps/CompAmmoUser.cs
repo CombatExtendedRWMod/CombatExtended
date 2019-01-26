@@ -434,7 +434,7 @@ namespace CombatExtended
                     newMagCount = (Props.reloadOneAtATime) ? curMagCountInt + 1 : ammoThing.stackCount;
                     if (ammoFromInventory)
                     {
-                        CompInventory.container.Remove(ammoThing);
+                        CompInventory?.container.Remove(ammoThing);
                     }
                     else if (!ammoThing.Destroyed)
                     {

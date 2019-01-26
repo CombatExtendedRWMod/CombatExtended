@@ -61,7 +61,7 @@ namespace CombatExtended
                 {
                     numToCookOff += Mathf.RoundToInt(def.stackLimit * ((float)dinfo.Amount / HitPoints) * (def.smallVolume ? Rand.Range(1f, 2f) : Rand.Range(0.0f, 1f)));
                 }
-                else TryDetonate(Mathf.Lerp(1, Mathf.Min(5, stackCount), stackCount / def.stackLimit));
+                else TryDetonate(Mathf.Lerp(1, Mathf.Min(5, stackCount), (float)stackCount / def.stackLimit));
             }
         }
 
@@ -97,7 +97,7 @@ namespace CombatExtended
             CompExplosiveCE comp = this.TryGetComp<CompExplosiveCE>();
             if (comp != null)
             {
-            	if(Rand.Chance(Mathf.Clamp01(0.75f - Mathf.Pow(HitPoints / MaxHitPoints, 2)))) comp.Explode(this, Position.ToVector3Shifted(), Map, scale);
+            	if(Rand.Chance(Mathf.Clamp01(0.75f - Mathf.Pow((float)HitPoints / MaxHitPoints, 2)))) comp.Explode(this, Position.ToVector3Shifted(), Map, scale);
                 return true;
             }
             return false;

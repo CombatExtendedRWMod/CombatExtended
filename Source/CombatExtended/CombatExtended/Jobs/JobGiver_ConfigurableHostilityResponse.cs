@@ -77,8 +77,7 @@ namespace CombatExtended
             		if (compAmmo.HasAmmo)
             		{
                         Job job = new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary);
-                        if (job != null)
-                            return job;
+                        return job;
             		}
             		
             		return new Job(JobDefOf.AttackMelee, thing);

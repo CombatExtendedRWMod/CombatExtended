@@ -37,10 +37,8 @@ namespace CombatExtended
             
             if (logMisses
                 || 
-                (!logMisses
-                    && hitThing != null
-                    && (hitThing is Pawn
-                        || hitThing is Building_Turret)
+                (hitThing != null
+             && (hitThing is Pawn || hitThing is Building_Turret)
                  ))
             {
                 if (!cookOff)

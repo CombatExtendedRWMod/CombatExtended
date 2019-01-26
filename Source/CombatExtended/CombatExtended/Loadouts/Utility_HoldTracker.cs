@@ -196,7 +196,7 @@ namespace CombatExtended
         {
         	Loadout loadout = pawn.GetLoadout();
         	dropEquipment = null;
-        	if (loadout == null || (loadout != null && loadout.Slots.NullOrEmpty()) || pawn.equipment?.Primary == null)
+        	if (loadout == null ||  loadout.Slots.NullOrEmpty() || pawn.equipment?.Primary == null)
         		return false;
         	
         	LoadoutSlot eqSlot = loadout.Slots.FirstOrDefault(s => s.count >= 1 && ((s.thingDef != null && s.thingDef == pawn.equipment.Primary.def) 

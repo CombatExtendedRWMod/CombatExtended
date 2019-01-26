@@ -40,7 +40,7 @@ namespace CombatExtended
 			{
 				float num = allWeaponPairs.Where((ThingStuffPair pa) => pa.thing == thingDef).Sum((ThingStuffPair pa) => pa.Commonality);
 				float num2 = thingDef.generateCommonality / num;
-				if (num2 != 1f)
+				if (!Mathf.Approximately(num2, 1f)) 
 				{
 					for (int i = 0; i < allWeaponPairs.Count; i++)
 					{
