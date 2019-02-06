@@ -68,10 +68,18 @@ namespace CombatExtended
             yield return Toils_Jump.JumpIfTargetDespawnedOrNull(VictimInd, startCollectCorpse);
 
             var startExecuteDowned = Toils_Goto.GotoThing(VictimInd, PathEndMode.Touch).JumpIfDespawnedOrNull(VictimInd, startCollectCorpse);
+
+            var startExecuteDownedRanged = Toils_Combat.CastVerb(VictimInd);
+
+            yield return Toils_Jump
+                .JumpIf(startExecuteDowned, () => Victim.Downed && Victim.RaceProps.executionRange <= 2);
+
+            // For dangerous creatures like Boomalopes, will shoot them instead of meleeing.
+            yield return Toils_Jump
+                .JumpIf(startExecuteDownedRanged, () => Victim.Downed && Victim.RaceProps.executionRange >= 3);
+
             
-            yield return Toils_Jump.JumpIf(startExecuteDowned, () => Victim.Downed && Victim.RaceProps.executionRange <= 2);
-            
-            yield return Toils_Jump.JumpIfTargetDowned(VictimInd, gotoCastPos);
+           // yield return Toils_Jump.JumpIfTargetDowned(VictimInd, gotoCastPos);
             
             yield return Toils_Combat.CastVerb(VictimInd, false).JumpIfDespawnedOrNull(VictimInd, startCollectCorpse)
                 .FailOn(() =>
