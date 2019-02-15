@@ -21,7 +21,7 @@
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
-					<defaultProjectile>Bullet_40x46mmGrenade_HE</defaultProjectile>
+					<defaultProjectile>Bullet_25x40mmGrenade_HE</defaultProjectile>
 					<warmupTime>3.0</warmupTime>
 					<range>35.9</range>
 					<burstShotCount>3</burstShotCount>
@@ -39,7 +39,7 @@
 				<AmmoUser>
 					<magazineSize>6</magazineSize>
 					<reloadTime>2.40</reloadTime>
-					<ammoSet>AmmoSet_40x46mmGrenade</ammoSet>
+					<ammoSet>AmmoSet_25x40mmGrenade</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>

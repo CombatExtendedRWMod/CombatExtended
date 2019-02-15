@@ -40,6 +40,7 @@
 					<magazineSize>1</magazineSize>
 					<reloadTime>2.80</reloadTime>
 					<ammoSet>AmmoSet_84x246mmR</ammoSet>
+					<!-- requires custom 83 mm rocket ammoset-->
 				</AmmoUser>
 				
 				<FireModes>

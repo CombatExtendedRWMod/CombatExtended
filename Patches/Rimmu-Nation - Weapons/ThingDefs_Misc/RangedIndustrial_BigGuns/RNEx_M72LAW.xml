@@ -39,7 +39,8 @@
 				<AmmoUser>
 					<magazineSize>1</magazineSize>
 					<reloadTime>2.80</reloadTime>
-					<ammoSet>AmmoSet_M72LAW</ammoSet>
+					<!--ammoSet>AmmoSet_M72LAW</ammoSet-->
+					<!--no ammo set present for this def, uses RPG7 as base-->
 				</AmmoUser>
 				
 				<FireModes>
