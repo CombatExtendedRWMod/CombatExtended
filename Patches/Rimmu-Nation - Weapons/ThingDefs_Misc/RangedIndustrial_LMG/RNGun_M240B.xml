@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_M240B</defName>
 				<statBases>
-					
+					<Mass>12.50</Mass>
+					<RangedWeapon_Cooldown>0.56</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.15</SightsEfficiency>
 					<ShotSpread>0.066</ShotSpread>
 					<SwayFactor>0.76</SwayFactor>
 					<Bulk>10.90</Bulk>
+					<WorkToMake>46000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>90</Steel>
+					<ComponentIndustrial>7</ComponentIndustrial>
+					<Chemfuel>20</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.3</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

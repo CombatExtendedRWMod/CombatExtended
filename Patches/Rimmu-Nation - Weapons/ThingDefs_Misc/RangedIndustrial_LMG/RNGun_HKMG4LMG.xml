@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_HKMG4LMG</defName>
 				<statBases>
-					
+					<Mass>8.15</Mass>
+					<RangedWeapon_Cooldown>0.55</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.10</SightsEfficiency>
 					<ShotSpread>0.069</ShotSpread>
 					<SwayFactor>0.73</SwayFactor>
 					<Bulk>10.03</Bulk>
+					<WorkToMake>44500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>65</Steel>
+					<ComponentIndustrial>7</ComponentIndustrial>
+					<Chemfuel>15</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.19</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

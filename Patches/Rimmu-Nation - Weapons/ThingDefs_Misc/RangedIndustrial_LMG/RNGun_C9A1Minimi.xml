@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_C9A1Minimi</defName>
 				<statBases>
-					
+					<Mass>7.12</Mass>
+					<RangedWeapon_Cooldown>0.56</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.10</SightsEfficiency>
 					<ShotSpread>0.069</ShotSpread>
 					<SwayFactor>0.73</SwayFactor>
 					<Bulk>10.03</Bulk>
+					<WorkToMake>40500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>80</Steel>
+					<ComponentIndustrial>7</ComponentIndustrial>
+					<Chemfuel>5</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.19</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

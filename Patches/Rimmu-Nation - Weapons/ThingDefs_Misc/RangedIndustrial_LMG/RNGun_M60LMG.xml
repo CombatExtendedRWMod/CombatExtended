@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_M60LMG</defName>
 				<statBases>
-					
+					<Mass>10.50</Mass>
+					<RangedWeapon_Cooldown>0.56</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.2</SightsEfficiency>
 					<ShotSpread>0.063</ShotSpread>
 					<SwayFactor>0.73</SwayFactor>
 					<Bulk>11.00</Bulk>
+					<WorkToMake>40500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>85</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<Chemfuel>15</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.35</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
