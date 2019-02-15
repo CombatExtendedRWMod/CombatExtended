@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_C8A2AR</defName>
 				<statBases>
-					
+					<Mass>3.2</Mass>
+					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.05</SightsEfficiency>
 					<ShotSpread>0.055</ShotSpread>
 					<SwayFactor>1.16</SwayFactor>
 					<Bulk>10.03</Bulk>
+					<WorkToMake>35000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>40</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
