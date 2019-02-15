@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_Mateba</defName>
 				<statBases>
-					
+					<Mass>1.25</Mass>
+					<RangedWeapon_Cooldown>0.41</RangedWeapon_Cooldown>
 					<SightsEfficiency>.90</SightsEfficiency>
 					<ShotSpread>0.10</ShotSpread>
 					<SwayFactor>1.26</SwayFactor>
 					<Bulk>3.00</Bulk>
+					<WorkToMake>5500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>30</Steel>
+					<ComponentIndustrial>2</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.43</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

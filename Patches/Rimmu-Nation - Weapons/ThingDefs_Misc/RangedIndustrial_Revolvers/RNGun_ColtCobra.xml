@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_ColtCobra</defName>
 				<statBases>
-					
+					<Mass>0.43</Mass>
+					<RangedWeapon_Cooldown>0.41</RangedWeapon_Cooldown>
 					<SightsEfficiency>.95</SightsEfficiency>
 					<ShotSpread>0.09</ShotSpread>
 					<SwayFactor>1.19</SwayFactor>
 					<Bulk>3.00</Bulk>
+					<WorkToMake>4500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>20</Steel>
+					<ComponentIndustrial>2</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

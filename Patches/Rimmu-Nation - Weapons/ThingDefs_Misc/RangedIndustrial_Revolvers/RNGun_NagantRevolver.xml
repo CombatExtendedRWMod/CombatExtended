@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_NagantRevolver</defName>
 				<statBases>
-					
+					<Mass>0.80</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>.90</SightsEfficiency>
 					<ShotSpread>0.10</ShotSpread>
 					<SwayFactor>1.26</SwayFactor>
 					<Bulk>3.00</Bulk>
+					<WorkToMake>4500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>25</Steel>
+					<ComponentIndustrial>2</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

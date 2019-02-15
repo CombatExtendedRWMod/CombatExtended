@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_ColtPython</defName>
 				<statBases>
-					
+					<Mass>1.23</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>.95</SightsEfficiency>
 					<ShotSpread>0.09</ShotSpread>
 					<SwayFactor>1.22</SwayFactor>
 					<Bulk>3.00</Bulk>
+					<WorkToMake>5000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>30</Steel>
+					<ComponentIndustrial>2</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
