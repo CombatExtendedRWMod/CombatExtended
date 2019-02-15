@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+		
+			<li Class="CombatExtended.PatchOperationFindMod">
+				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
+			</li>
+
+			<li Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RN_BallisticKnife"]/tools</xpath>
+				<value>
+					<tools>
+					  <li Class="CombatExtended.ToolCE">
+						<label>handle</label>
+						<capacities>
+						  <li>Blunt</li>
+						</capacities>
+						<power>6</power>
+						<cooldownTime>2.5</cooldownTime>
+						<armorPenetration>0.1</armorPenetration>
+						<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
+					  </li>
+					  <li Class="CombatExtended.ToolCE">
+						<label>point</label>
+						<capacities>
+						  <li>Stab</li>
+						</capacities>
+						<power>17</power>
+						<cooldownTime>2.5</cooldownTime>
+						<armorPenetration>0.18</armorPenetration>
+						<linkedBodyPartsGroup>Blade</linkedBodyPartsGroup>
+					  </li>
+					  <li Class="CombatExtended.ToolCE">
+						<label>edge</label>
+						<capacities>
+						  <li>Cut</li>
+						</capacities>
+						<power>9</power>
+						<cooldownTime>0.95</cooldownTime>
+						<armorPenetration>0.22</armorPenetration>
+						<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
+					  </li>
+					</tools>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+</Patch>

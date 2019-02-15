@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+		
+			<li Class="CombatExtended.PatchOperationFindMod">
+				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
+			</li>
+
+			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
+				<defName>RNEx_RPG7V2RL</defName>
+				<statBases>
+					<SightsEfficiency>1</SightsEfficiency>
+					<ShotSpread>0.1</ShotSpread>
+					<SwayFactor>1.50</SwayFactor>
+					<Bulk>7.50</Bulk>
+				</statBases>
+				<Properties>
+					<recoilAmount>1.13</recoilAmount>
+					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+					<hasStandardCommand>true</hasStandardCommand>
+					<defaultProjectile>Bullet_RPG7Grenade_HEAT</defaultProjectile>
+					<warmupTime>3.5</warmupTime>
+					<range>40.9</range>
+					<burstShotCount>1</burstShotCount>
+					<ticksBetweenBurstShots>20</ticksBetweenBurstShots>
+					<soundCast>RNShotRPG</soundCast>
+					<soundCastTail>GunTail_Heavy</soundCastTail>
+					<onlyManualCast>true</onlyManualCast>
+					<stopBurstWithoutLos>false</stopBurstWithoutLos>
+					<muzzleFlashScale>15</muzzleFlashScale>
+					<targetParams>
+						<canTargetLocations>true</canTargetLocations>
+					</targetParams>
+				</Properties>
+				
+				<AmmoUser>
+					<magazineSize>1</magazineSize>
+					<reloadTime>2.80</reloadTime>
+					<ammoSet>AmmoSet_RPG7Grenade</ammoSet>
+				</AmmoUser>
+				
+				<FireModes>
+					<aiUseBurstMode>FALSE</aiUseBurstMode>
+					<aiAimMode>AimedShot</aiAimMode>
+					<aimedBurstShotCount>1</aimedBurstShotCount>
+				</FireModes>
+				
+				<weaponTags>
+					<li>RN_RPG7V2</li>
+				</weaponTags>
+			</li>
+			
+			<li Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RNEx_RPG7V2RL"]/tools</xpath>
+				<value>
+					<tools>
+						<li Class="CombatExtended.ToolCE">
+							<label>stock</label>
+							<capacities>
+								<li>Blunt</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.12</armorPenetration>
+							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
+						</li>
+						<li Class="CombatExtended.ToolCE">
+							<label>barrel</label>
+							<capacities>
+								<li>Blunt</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.15</armorPenetration>
+							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
+						</li>
+						<li Class="CombatExtended.ToolCE">
+							<label>muzzle</label>
+							<capacities>
+								<li>Poke</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.1</armorPenetration>
+							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
+						</li>
+					</tools>
+				</value>
+			</li>	
+			<li Class="PatchOperationAdd">
+			<xpath>Defs/ThingDef[defName="RNEx_RPG7V2RL"]/comps</xpath>
+				<value>
+						<li Class="WHands.WhandCompProps">
+							<MainHand>(-0.225,0.3,-0.08625)</MainHand>
+							<SecHand>(-0.25,0,-0.125)</SecHand>
+						</li>
+						<li Class="CompProperties_Forbiddable"></li>
+				</value>
+			</li>	
+		</operations>
+	</Operation>
+</Patch>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+		
+			<li Class="CombatExtended.PatchOperationFindMod">
+				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
+			</li>
+
+			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
+				<defName>RNGun_SNIPEXM75Sn</defName>
+				<statBases>
+					
+					<SightsEfficiency>1.85</SightsEfficiency>
+					<ShotSpread>0.010</ShotSpread>
+					<SwayFactor>0.50</SwayFactor>
+					<Bulk>13.07</Bulk>
+				</statBases>
+				<Properties>
+					<recoilAmount>1.53</recoilAmount>
+					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+					<hasStandardCommand>true</hasStandardCommand>
+					<defaultProjectile>Bullet_50BMG_FMJ</defaultProjectile>
+					<warmupTime>4.0</warmupTime>
+					<range>71.9</range>
+					<soundCast>RNShot_SNIPEX</soundCast>
+					<soundCastTail>GunTail_Heavy</soundCastTail>
+					<muzzleFlashScale>9</muzzleFlashScale>
+				</Properties>
+				
+				<AmmoUser>
+					<magazineSize>10</magazineSize>
+					<reloadTime>3.00</reloadTime>
+					<ammoSet>AmmoSet_50BMG</ammoSet>
+				</AmmoUser>
+				
+				<FireModes>
+					<aiUseBurstMode>FALSE</aiUseBurstMode>
+					<aiAimMode>AimedShot</aiAimMode>
+				</FireModes>
+				
+				<weaponTags>
+					<li>RN_SNIPEXM75</li>
+				</weaponTags>
+			</li>
+			
+			<li Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RNGun_SNIPEXM75Sn"]/tools</xpath>
+				<value>
+					<tools>
+						<li Class="CombatExtended.ToolCE">
+							<label>stock</label>
+							<capacities>
+								<li>Blunt</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.12</armorPenetration>
+							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
+						</li>
+						<li Class="CombatExtended.ToolCE">
+							<label>barrel</label>
+							<capacities>
+								<li>Blunt</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.15</armorPenetration>
+							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
+						</li>
+						<li Class="CombatExtended.ToolCE">
+							<label>muzzle</label>
+							<capacities>
+								<li>Poke</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.1</armorPenetration>
+							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
+						</li>
+					</tools>
+				</value>
+			</li>	
+			<li Class="PatchOperationAdd">
+			<xpath>Defs/ThingDef[defName="RNGun_SNIPEXM75Sn"]/comps</xpath>
+				<value>
+						<li Class="WHands.WhandCompProps">
+							<MainHand>(-0.26125,0.3,-0.1)</MainHand>
+							<SecHand>(0.18125,0,-0.025)</SecHand>
+						</li>
+						<li Class="CompProperties_Forbiddable"></li>
+				</value>
+			</li>	
+		</operations>
+	</Operation>
+</Patch>

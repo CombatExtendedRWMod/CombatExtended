@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+		
+			<li Class="CombatExtended.PatchOperationFindMod">
+				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
+			</li>
+
+			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
+				<defName>RNGun_MP5A2SDHRT_PDW</defName>
+				<statBases>
+					
+					<SightsEfficiency>1.05</SightsEfficiency>
+					<ShotSpread>0.065</ShotSpread>
+					<SwayFactor>1.2</SwayFactor>
+					<Bulk>8.07</Bulk>
+				</statBases>
+				<Properties>
+					<recoilAmount>1.05</recoilAmount>
+					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+					<hasStandardCommand>true</hasStandardCommand>
+					<defaultProjectile>Bullet_9x19mmPara_FMJ</defaultProjectile>
+					<warmupTime>0.5</warmupTime>
+					<range>23.9</range>
+					<burstShotCount>3</burstShotCount>
+					<ticksBetweenBurstShots>7</ticksBetweenBurstShots>
+					<soundCast>RNShotSMG2SD</soundCast>
+					<soundCastTail>GunTail_Heavy</soundCastTail>
+					<muzzleFlashScale>9</muzzleFlashScale>
+				</Properties>
+				
+				<AmmoUser>
+					<magazineSize>30</magazineSize>
+					<reloadTime>1.90</reloadTime>
+					<ammoSet>AmmoSet_9x19mmPara</ammoSet>
+				</AmmoUser>
+				
+				<FireModes>
+					<aiUseBurstMode>FALSE</aiUseBurstMode>
+					<aiAimMode>AimedShot</aiAimMode>
+					<aimedBurstShotCount>3</aimedBurstShotCount>
+				</FireModes>
+				
+				<weaponTags>
+					<li>RN_MP5A2HRT</li>
+				</weaponTags>
+			</li>
+			
+			<li Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RNGun_MP5A2SDHRT_PDW"]/tools</xpath>
+				<value>
+					<tools>
+						<li Class="CombatExtended.ToolCE">
+							<label>stock</label>
+							<capacities>
+								<li>Blunt</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.12</armorPenetration>
+							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
+						</li>
+						<li Class="CombatExtended.ToolCE">
+							<label>barrel</label>
+							<capacities>
+								<li>Blunt</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.15</armorPenetration>
+							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
+						</li>
+						<li Class="CombatExtended.ToolCE">
+							<label>muzzle</label>
+							<capacities>
+								<li>Poke</li>
+							</capacities>
+							<power>9</power>
+							<cooldownTime>2</cooldownTime>
+							<armorPenetration>0.1</armorPenetration>
+							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
+						</li>
+					</tools>
+				</value>
+			</li>	
+			<li Class="PatchOperationAdd">
+			<xpath>Defs/ThingDef[defName="RNGun_MP5A2SDHRT_PDW"]/comps</xpath>
+				<value>
+						<li Class="WHands.WhandCompProps">
+							<MainHand>(-0.26125,0.3,-0.1)</MainHand>
+							<SecHand>(0.18125,0,-0.025)</SecHand>
+						</li>
+						<li Class="CompProperties_Forbiddable"></li>
+				</value>
+			</li>	
+		</operations>
+	</Operation>
+</Patch>
