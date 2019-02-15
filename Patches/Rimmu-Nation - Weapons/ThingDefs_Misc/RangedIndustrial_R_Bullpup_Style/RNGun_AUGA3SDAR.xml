@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_AUGA3SDAR</defName>
 				<statBases>
-					
+					<Mass>3.2</Mass>
+					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.15</SightsEfficiency>
 					<ShotSpread>0.045</ShotSpread>
 					<SwayFactor>1.10</SwayFactor>
 					<Bulk>10.03</Bulk>
 				</statBases>
+				<costList>
+					<Steel>45</Steel>
+					<ComponentIndustrial>7</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
