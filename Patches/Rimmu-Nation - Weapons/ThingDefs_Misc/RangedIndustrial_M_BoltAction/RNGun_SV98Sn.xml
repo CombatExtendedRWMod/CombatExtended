@@ -82,17 +82,7 @@
 						</li>
 					</tools>
 				</value>
-			</li>	
-			<li Class="PatchOperationAdd">
-			<xpath>Defs/ThingDef[defName="RNGun_SV98Sn"]/comps</xpath>
-				<value>
-						<li Class="WHands.WhandCompProps">
-							<MainHand>(-0.3,0.3,-0.05)</MainHand>
-							<SecHand>(0.2,0,-0.05)</SecHand>
-						</li>
-						<li Class="CompProperties_Forbiddable"></li>
-				</value>
-			</li>	
+			</li>
 		</operations>
 	</Operation>
 </Patch>
