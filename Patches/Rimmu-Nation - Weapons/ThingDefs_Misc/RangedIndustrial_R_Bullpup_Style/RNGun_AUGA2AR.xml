@@ -18,6 +18,7 @@
 					<ShotSpread>0.045</ShotSpread>
 					<SwayFactor>1.10</SwayFactor>
 					<Bulk>10.03</Bulk>
+					<WorkToMake>40500</WorkToMake>
 				</statBases>
 				<costList>
 					<Steel>45</Steel>
