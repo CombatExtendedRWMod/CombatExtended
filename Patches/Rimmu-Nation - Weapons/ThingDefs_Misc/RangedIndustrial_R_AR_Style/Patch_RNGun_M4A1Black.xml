@@ -29,7 +29,7 @@
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
-					<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
+					<defaultProjectile>Bullet_300AACBlackout_FMJ</defaultProjectile>
 					<warmupTime>0.90</warmupTime>
 					<range>39.9</range>
 					<burstShotCount>3</burstShotCount>
@@ -42,7 +42,7 @@
 				<AmmoUser>
 					<magazineSize>30</magazineSize>
 					<reloadTime>2.40</reloadTime>
-					<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
+					<ammoSet>AmmoSet_300AACBlackout</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>

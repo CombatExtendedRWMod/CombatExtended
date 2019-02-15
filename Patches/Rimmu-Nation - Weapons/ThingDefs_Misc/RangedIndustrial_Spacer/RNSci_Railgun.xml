@@ -21,7 +21,7 @@
 					<recoilAmount>1.0</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
-					<defaultProjectile>Bullet_ChargeLance</defaultProjectile>
+					<defaultProjectile>Bullet_8x35mmCharged</defaultProjectile>
 					<warmupTime>2.2</warmupTime>
 					<range>40.9</range>
 					<burstShotCount>1</burstShotCount>
@@ -36,7 +36,7 @@
 				<AmmoUser>
 					<magazineSize>30</magazineSize>
 					<reloadTime>2.40</reloadTime>
-					<ammoSet>AmmoSet_RailRay</ammoSet>
+					<ammoSet>AmmoSet_8x35mmCharged</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
