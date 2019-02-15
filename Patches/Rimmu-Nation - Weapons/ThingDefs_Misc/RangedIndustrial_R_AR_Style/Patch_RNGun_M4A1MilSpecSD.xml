@@ -85,19 +85,7 @@
 						</li>
 					</tools>
 				</value>
-			</li>	
-			<li Class="PatchOperationAdd">
-			<xpath>Defs/ThingDef[defName="RNGun_M4A1MilSpecSD"]/comps</xpath>
-				<value>
-
-						<li Class="WHands.WhandCompProps">
-							<MainHand>(-0.3,0.3,-0.1)</MainHand>
-							<SecHand>(0.1,0,-0.1)</SecHand>
-						</li>
-						<li Class="CompProperties_Forbiddable"></li>
-
-				</value>
-			</li>	
+			</li>
 		</operations>
 	</Operation>
 </Patch>
