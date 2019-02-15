@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  
+  <ThingDef Class="AnestheticGunMod.ThingDef_AnestheticBullet" ParentName="SK_BaseBullet">
+		<defName>Bullet_AnestheticGun</defName>
+		<label>anesthetic gun bullet</label>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
+		<damageDef>Bullet</damageDef>
+		<damageAmountBase>1</damageAmountBase>
+		<stoppingPower>1.5</stoppingPower>
+		<speed>70</speed>
+		<armorPenetrationBase>0.36</armorPenetrationBase>
+    </projectile>
+    <graphicData>
+      <texPath>Things/Projectile/Bullet_big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <!-- configuration for anesthetic gun bullet -->
+		<thingClass>AnestheticGunMod.Projectile_AnestheticBullet</thingClass>
+		<AnestheticBulletPower>21.0</AnestheticBulletPower>
+		<AnestheticBulletExcludedes>
+			<li><pawnKindDef>Mech_Scyther</pawnKindDef></li>
+			<li><pawnKindDef>Mech_Centipede</pawnKindDef></li>
+			<li><pawnKindDef>Mech_Lancer</pawnKindDef></li>
+		</AnestheticBulletExcludedes>
+  </ThingDef>
+  
+</Defs>
