@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_M45A1_Pistol</defName>
 				<statBases>
-					
+					<Mass>1.11</Mass>
+					<RangedWeapon_Cooldown>0.38</RangedWeapon_Cooldown>
 					<SightsEfficiency>.95</SightsEfficiency>
 					<ShotSpread>0.09</ShotSpread>
 					<SwayFactor>1.19</SwayFactor>
 					<Bulk>3.00</Bulk>
+					<WorkToMake>7000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>25</Steel>
+					<ComponentIndustrial>3</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
