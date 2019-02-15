@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_AK103AR</defName>
 				<statBases>
-					
+					<Mass>3.40</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.05</SightsEfficiency>
 					<ShotSpread>0.065</ShotSpread>
 					<SwayFactor>1.2</SwayFactor>
 					<Bulk>11.07</Bulk>
+					<WorkToMake>33500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>40</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
