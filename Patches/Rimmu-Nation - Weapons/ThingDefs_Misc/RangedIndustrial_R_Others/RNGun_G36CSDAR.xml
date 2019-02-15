@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_G36CSDAR</defName>
 				<statBases>
-					
+					<Mass>3.42</Mass>
+					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.1</SightsEfficiency>
 					<ShotSpread>0.045</ShotSpread>
 					<SwayFactor>1.10</SwayFactor>
 					<Bulk>9.03</Bulk>
+					<WorkToMake>35000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>40</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.10</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

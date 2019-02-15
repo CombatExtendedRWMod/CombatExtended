@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_SCARHAR</defName>
 				<statBases>
-					
+					<Mass>3.58</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.1</SightsEfficiency>
 					<ShotSpread>0.050</ShotSpread>
 					<SwayFactor>1.12</SwayFactor>
 					<Bulk>10.03</Bulk>
+					<WorkToMake>35500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>40</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.25</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

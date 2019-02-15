@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_FNFALAR</defName>
 				<statBases>
-					
+					<Mass>4.30</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.1</SightsEfficiency>
 					<ShotSpread>0.055</ShotSpread>
 					<SwayFactor>1.15</SwayFactor>
 					<Bulk>10.03</Bulk>
+					<WorkToMake>30500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>55</Steel>
+					<ComponentIndustrial>5</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.25</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
