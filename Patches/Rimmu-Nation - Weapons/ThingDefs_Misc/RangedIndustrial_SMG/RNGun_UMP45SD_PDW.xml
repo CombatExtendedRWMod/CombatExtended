@@ -86,16 +86,6 @@
 					</tools>
 				</value>
 			</li>	
-			<li Class="PatchOperationAdd">
-			<xpath>Defs/ThingDef[defName="RNGun_UMP45SD_PDW"]/comps</xpath>
-				<value>
-						<li Class="WHands.WhandCompProps">
-							<MainHand>(-0.26125,0.3,-0.1)</MainHand>
-							<SecHand>(0.18125,0,-0.025)</SecHand>
-						</li>
-						<li Class="CompProperties_Forbiddable"></li>
-				</value>
-			</li>	
 		</operations>
 	</Operation>
 </Patch>
