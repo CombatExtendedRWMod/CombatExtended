@@ -12,11 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNEx_JavelinRL</defName>
 				<statBases>
+					<Mass>22.30</Mass>
+					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
 					<SightsEfficiency>1</SightsEfficiency>
 					<ShotSpread>0.1</ShotSpread>
 					<SwayFactor>1.50</SwayFactor>
 					<Bulk>7.50</Bulk>
+					<WorkToMake>36500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>95</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<FSX>17</FSX>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

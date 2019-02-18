@@ -12,11 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNEx_SMAWRL</defName>
 				<statBases>
+					<Mass>7.54</Mass>
+					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
 					<SightsEfficiency>1</SightsEfficiency>
 					<ShotSpread>0.1</ShotSpread>
 					<SwayFactor>1.50</SwayFactor>
 					<Bulk>7.50</Bulk>
+					<WorkToMake>31500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>20</Chemfuel>
+					<Steel>70</Steel>
+					<ComponentIndustrial>4</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

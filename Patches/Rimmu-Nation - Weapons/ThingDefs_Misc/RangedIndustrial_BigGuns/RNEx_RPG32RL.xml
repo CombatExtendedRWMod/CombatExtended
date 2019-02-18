@@ -12,11 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNEx_RPG32RL</defName>
 				<statBases>
+					<Mass>3.00</Mass>
+					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
 					<SightsEfficiency>1</SightsEfficiency>
 					<ShotSpread>0.1</ShotSpread>
 					<SwayFactor>1.50</SwayFactor>
 					<Bulk>7.50</Bulk>
+					<WorkToMake>26500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>10</Chemfuel>
+					<Steel>60</Steel>
+					<ComponentIndustrial>4</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
