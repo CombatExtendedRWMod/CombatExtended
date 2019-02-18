@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_Remington870HRT</defName>
 				<statBases>
-					
+					<Mass>2.72</Mass>
+					<RangedWeapon_Cooldown>1.02</RangedWeapon_Cooldown>
 					<SightsEfficiency>0.7</SightsEfficiency>
 					<ShotSpread>0.18</ShotSpread>
 					<SwayFactor>1.94</SwayFactor>
 					<Bulk>9.50</Bulk>
+					<WorkToMake>14500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>40</Steel>
+					<ComponentIndustrial>1</ComponentIndustrial>
+					<Chemfuel>10</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

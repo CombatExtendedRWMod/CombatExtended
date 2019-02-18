@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_MP5A2SDHRT_PDW</defName>
 				<statBases>
-					
+					<Mass>2.50</Mass>
+					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.05</SightsEfficiency>
 					<ShotSpread>0.065</ShotSpread>
 					<SwayFactor>1.2</SwayFactor>
 					<Bulk>8.07</Bulk>
+					<WorkToMake>29000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>40</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+					<Chemfuel>5</Chemfuel>
+				</costList>
 				<Properties>
 					<recoilAmount>1.05</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
