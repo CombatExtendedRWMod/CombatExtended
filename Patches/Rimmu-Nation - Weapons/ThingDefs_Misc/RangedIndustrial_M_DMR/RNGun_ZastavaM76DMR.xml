@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_ZastavaM76DMR</defName>
 				<statBases>
-					
+					<Mass>4.60</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.45</SightsEfficiency>
 					<ShotSpread>0.065</ShotSpread>
 					<SwayFactor>1.2</SwayFactor>
 					<Bulk>10.07</Bulk>
+					<WorkToMake>23000</WorkToMake>
 				</statBases>
+				<costList>
+					<WoodLog>10</WoodLog>
+					<Steel>60</Steel>
+					<ComponentIndustrial>4</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.25</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

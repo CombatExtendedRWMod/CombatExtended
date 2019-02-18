@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_RFBDMR</defName>
 				<statBases>
-					
+					<Mass>5.10</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.85</SightsEfficiency>
 					<ShotSpread>0.014</ShotSpread>
 					<SwayFactor>0.64</SwayFactor>
 					<Bulk>9.50</Bulk>
+					<WorkToMake>41000</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>15</Chemfuel>
+					<Steel>50</Steel>
+					<ComponentIndustrial>7</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.15</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

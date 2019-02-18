@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_SCARMk20DMR</defName>
 				<statBases>
-					
+					<Mass>4.85</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.85</SightsEfficiency>
 					<ShotSpread>0.014</ShotSpread>
 					<SwayFactor>0.64</SwayFactor>
 					<Bulk>10.50</Bulk>
+					<WorkToMake>35500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>15</Chemfuel>
+					<Steel>50</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.15</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

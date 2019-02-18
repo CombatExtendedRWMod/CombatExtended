@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_PSG1DMR</defName>
 				<statBases>
-					
+					<Mass>7.20</Mass>
+					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.85</SightsEfficiency>
 					<ShotSpread>0.016</ShotSpread>
 					<SwayFactor>0.50</SwayFactor>
 					<Bulk>10.90</Bulk>
+					<WorkToMake>30500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>15</Chemfuel>
+					<Steel>65</Steel>
+					<ComponentIndustrial>5</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.25</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

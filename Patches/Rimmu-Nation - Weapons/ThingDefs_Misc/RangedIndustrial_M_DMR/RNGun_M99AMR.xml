@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_M99AMR</defName>
 				<statBases>
-					
+					<Mass>12.00</Mass>
+					<RangedWeapon_Cooldown>0.58</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.65</SightsEfficiency>
 					<ShotSpread>0.035</ShotSpread>
 					<SwayFactor>0.69</SwayFactor>
 					<Bulk>14.07</Bulk>
+					<WorkToMake>36500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>110</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.59</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
