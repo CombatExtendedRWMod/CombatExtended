@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_Mossberg500S</defName>
 				<statBases>
-					
+					<Mass>3.40</Mass>
+					<RangedWeapon_Cooldown>1.00</RangedWeapon_Cooldown>
 					<SightsEfficiency>0.7</SightsEfficiency>
 					<ShotSpread>0.18</ShotSpread>
 					<SwayFactor>1.94</SwayFactor>
 					<Bulk>9.50</Bulk>
+					<WorkToMake>11500</WorkToMake>
 				</statBases>
+				<costList>
+					<WoodLog>10</WoodLog>
+					<Steel>60</Steel>
+					<ComponentIndustrial>1</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

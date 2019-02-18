@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_Saiga12S</defName>
 				<statBases>
-					
+					<Mass>3.50</Mass>
+					<RangedWeapon_Cooldown>0.39</RangedWeapon_Cooldown>
 					<SightsEfficiency>0.9</SightsEfficiency>
 					<ShotSpread>0.14</ShotSpread>
 					<SwayFactor>1.64</SwayFactor>
 					<Bulk>10.50</Bulk>
+					<WorkToMake>20500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>10</Chemfuel>
+					<Steel>50</Steel>
+					<ComponentIndustrial>3</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

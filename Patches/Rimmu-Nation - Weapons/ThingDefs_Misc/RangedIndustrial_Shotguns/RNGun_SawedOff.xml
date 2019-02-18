@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_SawedOff</defName>
 				<statBases>
-					
+					<Mass>1.90</Mass>
+					<RangedWeapon_Cooldown>0.93</RangedWeapon_Cooldown>
 					<SightsEfficiency>0.7</SightsEfficiency>
 					<ShotSpread>0.2</ShotSpread>
 					<SwayFactor>1.94</SwayFactor>
 					<Bulk>4.50</Bulk>
+					<WorkToMake>8500</WorkToMake>
 				</statBases>
+				<costList>
+					<WoodLog>5</WoodLog>
+					<Steel>40</Steel>
+					<ComponentIndustrial>1</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

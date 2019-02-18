@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_Supernova</defName>
 				<statBases>
-					
+					<Mass>3.45</Mass>
+					<RangedWeapon_Cooldown>0.99</RangedWeapon_Cooldown>
 					<SightsEfficiency>0.7</SightsEfficiency>
 					<ShotSpread>0.18</ShotSpread>
 					<SwayFactor>1.94</SwayFactor>
 					<Bulk>9.50</Bulk>
+					<WorkToMake>12500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>10</Chemfuel>
+					<Steel>50</Steel>
+					<ComponentIndustrial>1</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

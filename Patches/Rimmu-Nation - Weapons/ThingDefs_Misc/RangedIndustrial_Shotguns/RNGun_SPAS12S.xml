@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_SPAS12S</defName>
 				<statBases>
-					
+					<Mass>4.40</Mass>
+					<RangedWeapon_Cooldown>0.38</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.0</SightsEfficiency>
 					<ShotSpread>0.11</ShotSpread>
 					<SwayFactor>1.54</SwayFactor>
 					<Bulk>9.50</Bulk>
+					<WorkToMake>18500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>5</Chemfuel>
+					<Steel>55</Steel>
+					<ComponentIndustrial>2</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.33</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
