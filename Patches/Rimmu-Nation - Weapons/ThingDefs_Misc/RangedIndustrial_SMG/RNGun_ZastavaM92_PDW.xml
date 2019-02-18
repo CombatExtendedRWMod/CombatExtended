@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_ZastavaM92_PDW</defName>
 				<statBases>
-					
+					<Mass>3.57</Mass>
+					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.05</SightsEfficiency>
 					<ShotSpread>0.065</ShotSpread>
 					<SwayFactor>1.2</SwayFactor>
 					<Bulk>8.07</Bulk>
+					<WorkToMake>29500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>45</Steel>
+					<ComponentIndustrial>5</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

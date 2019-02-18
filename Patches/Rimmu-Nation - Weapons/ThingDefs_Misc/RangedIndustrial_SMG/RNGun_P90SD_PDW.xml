@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_P90SD_PDW</defName>
 				<statBases>
-					
+					<Mass>2.94</Mass>
+					<RangedWeapon_Cooldown>0.35</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.05</SightsEfficiency>
 					<ShotSpread>0.065</ShotSpread>
 					<SwayFactor>1.1</SwayFactor>
 					<Bulk>6.07</Bulk>
+					<WorkToMake>38500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>10</Chemfuel>
+					<Steel>40</Steel>
+					<ComponentIndustrial>7</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>0.90</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
