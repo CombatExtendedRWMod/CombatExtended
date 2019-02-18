@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_CDX33PatriotLiteSn</defName>
 				<statBases>
-					
+					<Mass>6.58</Mass>
+					<RangedWeapon_Cooldown>1.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.9</SightsEfficiency>
 					<ShotSpread>0.006</ShotSpread>
 					<SwayFactor>0.49</SwayFactor>
 					<Bulk>10.50</Bulk>
+					<WorkToMake>39500</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>75</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.15</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

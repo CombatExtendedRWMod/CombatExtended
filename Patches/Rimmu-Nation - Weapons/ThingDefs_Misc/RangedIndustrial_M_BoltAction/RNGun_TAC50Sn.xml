@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_TAC50Sn</defName>
 				<statBases>
-					
+					<Mass>11.80</Mass>
+					<RangedWeapon_Cooldown>1.38</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.85</SightsEfficiency>
 					<ShotSpread>0.010</ShotSpread>
 					<SwayFactor>0.50</SwayFactor>
 					<Bulk>13.07</Bulk>
+					<WorkToMake>44500</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>20</Chemfuel>
+					<Steel>90</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.53</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

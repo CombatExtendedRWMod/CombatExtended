@@ -12,12 +12,19 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_L115A3Sn</defName>
 				<statBases>
-					
+					<Mass>7.18</Mass>
+					<RangedWeapon_Cooldown>1.37</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.9</SightsEfficiency>
 					<ShotSpread>0.006</ShotSpread>
 					<SwayFactor>0.49</SwayFactor>
 					<Bulk>10.50</Bulk>
+					<WorkToMake>42000</WorkToMake>
 				</statBases>
+				<costList>
+					<Chemfuel>20</Chemfuel>
+					<Steel>70</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.15</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

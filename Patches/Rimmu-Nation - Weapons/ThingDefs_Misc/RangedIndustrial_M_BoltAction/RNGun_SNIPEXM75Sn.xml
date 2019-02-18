@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_SNIPEXM75Sn</defName>
 				<statBases>
-					
+					<Mass>13.50</Mass>
+					<RangedWeapon_Cooldown>1.38</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.85</SightsEfficiency>
 					<ShotSpread>0.010</ShotSpread>
 					<SwayFactor>0.50</SwayFactor>
 					<Bulk>13.07</Bulk>
+					<WorkToMake>48000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>105</Steel>
+					<ComponentIndustrial>6</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.53</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>

@@ -12,12 +12,18 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_SSG08Sn</defName>
 				<statBases>
-					
+					<Mass>6.50</Mass>
+					<RangedWeapon_Cooldown>1.36</RangedWeapon_Cooldown>
 					<SightsEfficiency>1.85</SightsEfficiency>
 					<ShotSpread>0.014</ShotSpread>
 					<SwayFactor>0.64</SwayFactor>
 					<Bulk>10.50</Bulk>
+					<WorkToMake>31000</WorkToMake>
 				</statBases>
+				<costList>
+					<Steel>75</Steel>
+					<ComponentIndustrial>5</ComponentIndustrial>
+				</costList>
 				<Properties>
 					<recoilAmount>1.15</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
