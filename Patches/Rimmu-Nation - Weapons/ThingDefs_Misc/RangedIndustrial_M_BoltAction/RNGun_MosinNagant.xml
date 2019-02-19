@@ -35,6 +35,7 @@
 					<soundCast>RNShot_BoltActionOldie</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

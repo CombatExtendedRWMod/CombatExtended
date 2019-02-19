@@ -42,6 +42,7 @@
 					<targetParams>
 						<canTargetLocations>true</canTargetLocations>
 					</targetParams>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

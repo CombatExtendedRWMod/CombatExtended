@@ -35,6 +35,7 @@
 					<soundCast>RNShot_GenericDMR_II</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Mounted</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

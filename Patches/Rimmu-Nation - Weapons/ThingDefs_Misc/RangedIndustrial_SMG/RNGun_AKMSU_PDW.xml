@@ -36,6 +36,7 @@
 					<soundCast>RNShot_AKM</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

@@ -35,6 +35,7 @@
 					<soundCast>RNShot_AWP</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Mounted</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

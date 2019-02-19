@@ -24,6 +24,7 @@
 					<warmupTime>1</warmupTime>
 					<range>30</range>
 					<soundCast>RNCrossbow</soundCast>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				<AmmoUser>
 					<ammoSet>AmmoSet_Bolt</ammoSet>

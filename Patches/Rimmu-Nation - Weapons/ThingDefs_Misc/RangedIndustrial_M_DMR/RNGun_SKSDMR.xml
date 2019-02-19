@@ -35,6 +35,7 @@
 					<soundCast>RNShotSKS</soundCast>
 					<soundCastTail>GunTail_Medium</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Mounted</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

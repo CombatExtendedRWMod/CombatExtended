@@ -31,6 +31,7 @@
 					<soundCastTail>GunTail_Medium</soundCastTail>
 					<stopBurstWithoutLos>false</stopBurstWithoutLos>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

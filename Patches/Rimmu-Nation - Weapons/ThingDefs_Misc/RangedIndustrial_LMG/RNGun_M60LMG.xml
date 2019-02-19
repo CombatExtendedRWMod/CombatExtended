@@ -37,6 +37,7 @@
 					<soundCast>RNShotM60LMG</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Mounted</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

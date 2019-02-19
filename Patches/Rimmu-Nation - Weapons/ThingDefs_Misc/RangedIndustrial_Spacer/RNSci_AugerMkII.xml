@@ -30,6 +30,7 @@
 					<soundCast>RNAugerMkIIShot</soundCast>
 					<soundCastTail>GunTail_Medium</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
 				<AmmoUser>

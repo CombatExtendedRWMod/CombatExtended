@@ -24,6 +24,7 @@
 					<warmupTime>1.25</warmupTime>
 					<range>27</range>
 					<soundCast>Bow_Recurve</soundCast>
+					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				<AmmoUser>
 					<ammoSet>AmmoSet_Arrow</ammoSet>
