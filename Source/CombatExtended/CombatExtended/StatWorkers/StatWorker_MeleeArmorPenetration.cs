@@ -17,16 +17,21 @@ namespace CombatExtended
             {
                 return 0;
             }
+            if (tools.Any(x=> !(x is ToolCE))
+            {
+                Log.Error($"Trying to get stat MeleePenetration from {req.Thing.def.defName} which has no support for Combat Extended.");
+                return 0;
+            }
 
             float totalSelectionWeight = 0f;
             for (int i = 0; i < tools.Count; i++)
             {
-                totalSelectionWeight += tools[i].commonality;
+                totalSelectionWeight += tools[i].chanceFactor;
             }
             float totalAveragePen = 0f;
             foreach (ToolCE tool in tools)
             {
-                var weightFactor = tool.commonality / totalSelectionWeight;
+                var weightFactor = tool.chanceFactor / totalSelectionWeight;
                 totalAveragePen += weightFactor * tool.armorPenetration;
             }
             var penMult = req.Thing.GetStatValue(CE_StatDefOf.MeleePenetrationFactor);

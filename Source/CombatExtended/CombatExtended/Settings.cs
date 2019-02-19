@@ -23,7 +23,7 @@ namespace CombatExtended
 
         // Ammo settings
         private bool enableAmmoSystem = true;
-        private bool rightClickAmmoSelect = false;
+        // private bool rightClickAmmoSelect = false;
         private bool autoReloadOnChangeAmmo = true;
         private bool autoTakeAmmo = true;
         private bool showCaliberOnGuns = true;
@@ -31,7 +31,7 @@ namespace CombatExtended
         private bool realisticCookOff = false;
 
         public bool EnableAmmoSystem => enableAmmoSystem;
-        public bool RightClickAmmoSelect => rightClickAmmoSelect;
+        // public bool RightClickAmmoSelect => rightClickAmmoSelect;
         public bool AutoReloadOnChangeAmmo => autoReloadOnChangeAmmo;
         public bool AutoTakeAmmo => autoTakeAmmo;
         public bool ShowCaliberOnGuns => showCaliberOnGuns;
@@ -44,7 +44,9 @@ namespace CombatExtended
         private bool debugDrawTargetCoverChecks = false;
         private bool debugShowTreeCollisionChance = false;
         private bool debugShowSuppressionBuildup = false;
+        private bool debugDrawInterceptChecks = false;
 
+        public bool DebugDrawInterceptChecks => debugDrawInterceptChecks;
         public bool DebugDrawPartialLoSChecks => debugDrawPartialLoSChecks;
         public bool DebugEnableInventoryValidation => debugEnableInventoryValidation;
         public bool DebugDrawTargetCoverChecks => debugDrawTargetCoverChecks;
@@ -66,6 +68,7 @@ namespace CombatExtended
 
 #if DEBUG
             // Debug settings
+            Scribe_Values.Look(ref debugDrawInterceptChecks, "drawPartialLoSChecks", false);
             Scribe_Values.Look(ref debugDrawPartialLoSChecks, "drawPartialLoSChecks", false);
             Scribe_Values.Look(ref debugEnableInventoryValidation, "enableInventoryValidation", false);
             Scribe_Values.Look(ref debugDrawTargetCoverChecks, "debugDrawTargetCoverChecks", false);
@@ -75,7 +78,7 @@ namespace CombatExtended
 
             // Ammo settings
             Scribe_Values.Look(ref enableAmmoSystem, "enableAmmoSystem", true);
-            Scribe_Values.Look(ref rightClickAmmoSelect, "rightClickAmmoSelect", false);
+            // Scribe_Values.Look(ref rightClickAmmoSelect, "rightClickAmmoSelect", false);
             Scribe_Values.Look(ref autoReloadOnChangeAmmo, "autoReloadOnChangeAmmo", true);
             Scribe_Values.Look(ref autoTakeAmmo, "autoTakeAmmo", true);
             Scribe_Values.Look(ref showCaliberOnGuns, "showCaliberOnGuns", true);
@@ -109,6 +112,7 @@ namespace CombatExtended
             Text.Font = GameFont.Small;
             list.Gap();
 
+            list.CheckboxLabeled("Draw intercept checks", ref debugDrawInterceptChecks, "Displays projectile checks for intercept.");
             list.CheckboxLabeled("Draw partial LoS checks", ref debugDrawPartialLoSChecks, "Displays line of sight checks against partial cover.");
             list.CheckboxLabeled("Draw target cover checks", ref debugDrawTargetCoverChecks, "Displays highest cover of target as it is selected.");
             list.CheckboxLabeled("Enable inventory validation", ref debugEnableInventoryValidation, "Inventory will refresh its cache every tick and log any discrepancies.");
@@ -128,7 +132,7 @@ namespace CombatExtended
             list.GapLine();
             if (enableAmmoSystem)
             {
-                list.CheckboxLabeled("CE_Settings_RightClickAmmoSelect_Title".Translate(), ref rightClickAmmoSelect, "CE_Settings_RightClickAmmoSelect_Desc".Translate());
+                // list.CheckboxLabeled("CE_Settings_RightClickAmmoSelect_Title".Translate(), ref rightClickAmmoSelect, "CE_Settings_RightClickAmmoSelect_Desc".Translate());
                 list.CheckboxLabeled("CE_Settings_AutoReloadOnChangeAmmo_Title".Translate(), ref autoReloadOnChangeAmmo, "CE_Settings_AutoReloadOnChangeAmmo_Desc".Translate());
                 list.CheckboxLabeled("CE_Settings_AutoTakeAmmo_Title".Translate(), ref autoTakeAmmo, "CE_Settings_AutoTakeAmmo_Desc".Translate());
                 list.CheckboxLabeled("CE_Settings_ShowCaliberOnGuns_Title".Translate(), ref showCaliberOnGuns, "CE_Settings_ShowCaliberOnGuns_Desc".Translate());

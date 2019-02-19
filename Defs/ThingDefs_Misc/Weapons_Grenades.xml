@@ -69,7 +69,7 @@
       <texPath>Things/Projectile/Grenades/Flashbang</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <projectile>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
       <explosionRadius>3.5</explosionRadius>
       <damageDef>Stun</damageDef>
       <damageAmountBase>50</damageAmountBase>
@@ -80,7 +80,7 @@
     </projectile>
   </ThingDef>
 
-  <ThingDef ParentName="BaseGrenadeEquipment">
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="BaseGrenadeEquipment">
     <defName>Weapon_GrenadeFlashbang</defName>
     <equipmentType>Primary</equipmentType>
     <label>flashbang grenade</label>
@@ -89,11 +89,11 @@
       <texPath>Things/Ammo/HandGrenades/Flashbang</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
-    <soundInteract>InteractGrenade</soundInteract>
+    <soundInteract>Interact_Grenade</soundInteract>
     <techLevel>Industrial</techLevel>
     <statBases>
       <MarketValue>4.85</MarketValue>
-      <SightsEfficiency>0.45</SightsEfficiency>
+      <SightsEfficiency>1</SightsEfficiency>
       <RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
     </statBases>
     <weaponTags>
@@ -141,7 +141,7 @@
       <texPath>Things/Projectile/Grenades/StickBomb</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <projectile>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
       <explosionRadius>1.5</explosionRadius >
       <damageDef>Bomb</damageDef>
       <damageAmountBase>40</damageAmountBase>
@@ -150,7 +150,7 @@
     </projectile>
   </ThingDef>
 
-  <ThingDef ParentName="BaseGrenadeEquipment">
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="BaseGrenadeEquipment">
     <defName>Weapon_GrenadeStickBomb</defName>
     <equipmentType>Primary</equipmentType>
     <label>stick bomb</label>
@@ -159,11 +159,11 @@
       <texPath>Things/Ammo/HandGrenades/StickBomb</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
-    <soundInteract>InteractGrenade</soundInteract>
+    <soundInteract>Interact_Grenade</soundInteract>
     <techLevel>Industrial</techLevel>
     <statBases>
       <MarketValue>5.25</MarketValue>
-      <SightsEfficiency>0.45</SightsEfficiency>
+      <SightsEfficiency>1</SightsEfficiency>
       <RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
     </statBases>
     <weaponTags>
@@ -209,7 +209,7 @@
       <texPath>Things/Projectile/Grenades/Smoke</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <projectile>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
       <explosionRadius>4</explosionRadius>
       <damageDef>Smoke</damageDef>
       <explosionDelay>30</explosionDelay>
@@ -220,7 +220,7 @@
     </projectile>
   </ThingDef>
 
-  <ThingDef ParentName="BaseGrenadeEquipment">
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="BaseGrenadeEquipment">
     <defName>Weapon_GrenadeSmoke</defName>
     <equipmentType>Primary</equipmentType>
     <label>smoke grenade</label>
@@ -229,7 +229,7 @@
       <texPath>Things/Ammo/HandGrenades/Smoke</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
-    <soundInteract>InteractGrenade</soundInteract>
+    <soundInteract>Interact_Grenade</soundInteract>
     <techLevel>Industrial</techLevel>
     <statBases>
       <MarketValue>4.85</MarketValue>
@@ -280,19 +280,19 @@
       <texPath>Things/Projectile/Grenades/Firefoam</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <projectile>
+    <projectile Class="CombatExtended.ProjectilePropertiesCE">
       <explosionRadius>4</explosionRadius>
       <damageAmountBase>50</damageAmountBase>
       <damageDef>Extinguish</damageDef>
       <explosionDelay>30</explosionDelay>
       <dropsCasings>true</dropsCasings>
       <casingMoteDefname>Mote_GrenadePin</casingMoteDefname>
-      <postExplosionSpawnThingDef>FilthFireFoam</postExplosionSpawnThingDef>
+      <postExplosionSpawnThingDef>Filth_FireFoam</postExplosionSpawnThingDef>
       <preExplosionSpawnChance>1</preExplosionSpawnChance>
     </projectile>
   </ThingDef>
 
-  <ThingDef ParentName="BaseGrenadeEquipment">
+  <ThingDef Class="CombatExtended.AmmoDef" ParentName="BaseGrenadeEquipment">
     <defName>Weapon_GrenadeFirefoam</defName>
     <equipmentType>Primary</equipmentType>
     <label>firefoam grenade</label>
@@ -301,11 +301,11 @@
       <texPath>Things/Ammo/HandGrenades/Firefoam</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
-    <soundInteract>InteractGrenade</soundInteract>
+    <soundInteract>Interact_Grenade</soundInteract>
     <techLevel>Industrial</techLevel>
     <statBases>
       <MarketValue>4.85</MarketValue>
-      <SightsEfficiency>0.45</SightsEfficiency>
+      <SightsEfficiency>1</SightsEfficiency>
       <RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
     </statBases>
     <weaponTags>
@@ -336,7 +336,7 @@
       <li Class="CombatExtended.CompProperties_ExplosiveCE">
         <explosionDamageDef>Extinguish</explosionDamageDef>
         <explosionRadius>4</explosionRadius>
-        <postExplosionSpawnThingDef>FilthFireFoam</postExplosionSpawnThingDef>
+        <postExplosionSpawnThingDef>Filth_FireFoam</postExplosionSpawnThingDef>
         <postExplosionSpawnChance>1</postExplosionSpawnChance>
         <postExplosionSpawnThingCount>3</postExplosionSpawnThingCount>
       </li>

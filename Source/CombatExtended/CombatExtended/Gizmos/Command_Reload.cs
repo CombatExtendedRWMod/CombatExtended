@@ -20,9 +20,8 @@ namespace CombatExtended
                 Log.Error("Command_Reload without ammo comp");
                 return;
             }
-            if (((ev.button == 1 || !Controller.settings.RightClickAmmoSelect) 
-                && compAmmo.UseAmmo 
-                && (compAmmo.CompInventory != null || compAmmo.turret != null))
+            if (compAmmo.UseAmmo 
+                && (compAmmo.CompInventory != null || compAmmo.turret != null)
                 || action == null)
             {
                 Find.WindowStack.Add(MakeAmmoMenu());
@@ -92,7 +91,7 @@ namespace CombatExtended
                 floatOptionList.Add(new FloatMenuOption("CE_UnloadLabel".Translate(), new Action(delegate { compAmmo.TryUnload(); })));
             }
             // Append reload command
-            if (compAmmo.HasMagazine && !Controller.settings.RightClickAmmoSelect && hasOperator)
+            if (compAmmo.HasMagazine && hasOperator)
             {
                 floatOptionList.Add(new FloatMenuOption("CE_ReloadLabel".Translate(), new Action(action)));
             }
