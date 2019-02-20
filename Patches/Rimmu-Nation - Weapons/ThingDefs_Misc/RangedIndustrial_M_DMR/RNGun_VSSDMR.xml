@@ -53,9 +53,7 @@
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_VSS</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
