@@ -49,9 +49,8 @@
 				</FireModes>
 				
 				<weaponTags>
-				  <li>SimpleGun</li>
-				  <li>Revolver</li>
-				  <li>RN_ColtPeacemaker</li>
+				  <li>CE_AI_Pistol</li>
+				  <li>CE_Sidearm</li>
 				</weaponTags>
 			</li>
 			
