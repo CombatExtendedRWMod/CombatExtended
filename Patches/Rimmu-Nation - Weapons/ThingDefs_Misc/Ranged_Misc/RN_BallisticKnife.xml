@@ -8,6 +8,43 @@
 			<li Class="CombatExtended.PatchOperationFindMod">
 				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
 			</li>
+			
+			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
+				<defName>RN_BallisticKnife</defName>
+				<statBases>
+					<Mass>0.560</Mass>
+					<RangedWeapon_Cooldown>0.85</RangedWeapon_Cooldown>
+					<SightsEfficiency>0.70</SightsEfficiency>
+					<ShotSpread>0.2</ShotSpread>
+					<SwayFactor>0.85</SwayFactor>
+					<Bulk>1.00</Bulk>
+					<WorkToMake>7000</WorkToMake>
+				</statBases>
+				<costList>
+					<Steel>25</Steel>
+					<ComponentIndustrial>3</ComponentIndustrial>
+				</costList>
+				<Properties>
+					<recoilAmount>0.32</recoilAmount>
+					<verbClass>CombatExtended.Verb_ShootCEOneUse</verbClass>
+					<hasStandardCommand>true</hasStandardCommand>
+					<defaultProjectile>Projectile_BallisticKnifeBlade</defaultProjectile>
+					<warmupTime>0.6</warmupTime>
+					<range>3</range>
+					<burstShotCount>1</burstShotCount>
+					<ticksBetweenBurstShots>0</ticksBetweenBurstShots>
+					<soundCast>RNShotBallistic</soundCast>
+					<muzzleFlashScale>0</muzzleFlashScale>
+					<recoilPattern>Regular</recoilPattern>
+				</Properties>
+				
+				<FireModes>
+					<aiUseBurstMode>FALSE</aiUseBurstMode>
+					<aiAimMode>AimedShot</aiAimMode>
+				</FireModes>
+				
+				<!-- No additional CE weaponTags needed -->
+			</li>
 
 			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RN_BallisticKnife"]/tools</xpath>
