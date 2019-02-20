@@ -48,9 +48,7 @@
 					<aiAimMode>AimedShot</aiAimMode>
 				</FireModes>
 				
-				<weaponTags>
-				  <li>RN_M9HRT</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

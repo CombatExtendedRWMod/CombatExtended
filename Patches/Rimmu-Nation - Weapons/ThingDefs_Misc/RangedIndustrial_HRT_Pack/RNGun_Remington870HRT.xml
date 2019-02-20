@@ -49,10 +49,7 @@
 					<aiAimMode>AimedShot</aiAimMode>
 				</FireModes>
 				
-				<weaponTags>
-					<li>Gun</li>
-					<li>RN_Remington870HRT</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
