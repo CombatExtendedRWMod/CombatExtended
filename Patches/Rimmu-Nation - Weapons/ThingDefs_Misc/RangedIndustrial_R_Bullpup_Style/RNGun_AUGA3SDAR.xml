@@ -52,9 +52,7 @@
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_AUG_A3SD</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
