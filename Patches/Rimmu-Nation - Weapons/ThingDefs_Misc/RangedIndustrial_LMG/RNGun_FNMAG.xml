@@ -52,9 +52,7 @@
 					<aimedBurstShotCount>8</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RNGun_FNMAG</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

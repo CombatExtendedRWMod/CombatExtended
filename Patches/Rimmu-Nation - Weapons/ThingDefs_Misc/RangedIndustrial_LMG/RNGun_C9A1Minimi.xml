@@ -52,9 +52,7 @@
 					<aimedBurstShotCount>7</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RNGun_FNMinimiC9</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
