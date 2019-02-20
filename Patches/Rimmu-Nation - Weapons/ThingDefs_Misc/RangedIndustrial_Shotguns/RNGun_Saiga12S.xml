@@ -53,8 +53,7 @@
 				</FireModes>
 				
 				<weaponTags>
-					<li>Gun</li>
-					<li>RN_Saiga12</li>
+					<li>CE_AI_AssaultWeapon</li>
 				</weaponTags>
 			</li>
 			

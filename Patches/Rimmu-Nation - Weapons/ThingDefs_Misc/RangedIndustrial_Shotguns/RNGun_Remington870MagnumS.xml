@@ -50,8 +50,7 @@
 				</FireModes>
 				
 				<weaponTags>
-					<li>Gun</li>
-					<li>RN_Remington870Magnum</li>
+					<li>CE_AI_AssaultWeapon</li>
 				</weaponTags>
 			</li>
 			

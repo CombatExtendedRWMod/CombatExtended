@@ -50,8 +50,7 @@
 				</FireModes>
 				
 				<weaponTags>
-					<li>Gun</li>
-					<li>RN_M1014</li>
+					<li>CE_AI_AssaultWeapon</li>
 				</weaponTags>
 			</li>
 			
