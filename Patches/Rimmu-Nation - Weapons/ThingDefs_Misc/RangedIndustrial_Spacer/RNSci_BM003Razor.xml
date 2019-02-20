@@ -45,9 +45,7 @@
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_BM003Razor</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
