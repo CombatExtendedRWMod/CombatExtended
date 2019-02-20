@@ -49,9 +49,7 @@
 					<aiAimMode>AimedShot</aiAimMode>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_L115A1</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

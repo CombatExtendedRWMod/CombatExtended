@@ -49,9 +49,7 @@
 					<aiAimMode>AimedShot</aiAimMode>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RNShot_CSLR4Sn</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
