@@ -49,9 +49,7 @@
 					<aiAimMode>AimedShot</aiAimMode>
 				</FireModes>
 				
-				<weaponTags>
-				  <li>RN_FiveSeven</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

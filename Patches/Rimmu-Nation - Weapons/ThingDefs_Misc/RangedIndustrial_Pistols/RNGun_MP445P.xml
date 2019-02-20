@@ -50,7 +50,8 @@
 				</FireModes>
 				
 				<weaponTags>
-				  <li>RN_MP445</li>
+					<li>CE_AI_Pistol</li>
+					<li>CE_Sidearm</li>
 				</weaponTags>
 			</li>
 			
