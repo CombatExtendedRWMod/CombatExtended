@@ -51,9 +51,7 @@
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_AKMSU</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

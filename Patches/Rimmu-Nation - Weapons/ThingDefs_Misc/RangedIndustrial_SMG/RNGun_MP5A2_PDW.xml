@@ -53,8 +53,8 @@
 				</FireModes>
 				
 				<weaponTags>
-					<li>Gun</li>
-					<li>RN_MP5A2</li>
+					<li>CE_AI_AssaultWeapon</li>
+					<li>CE_SMG</li>
 				</weaponTags>
 			</li>
 			

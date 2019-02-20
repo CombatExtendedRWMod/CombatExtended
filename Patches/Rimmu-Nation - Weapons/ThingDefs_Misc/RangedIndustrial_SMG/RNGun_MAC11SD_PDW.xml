@@ -51,10 +51,7 @@
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>Gun</li>
-					<li>RN_MAC11SD</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

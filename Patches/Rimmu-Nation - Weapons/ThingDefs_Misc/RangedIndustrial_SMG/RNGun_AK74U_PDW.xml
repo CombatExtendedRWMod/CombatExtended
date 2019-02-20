@@ -4,7 +4,7 @@
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
-		
+
 			<li Class="CombatExtended.PatchOperationFindMod">
 				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
 			</li>
@@ -38,24 +38,25 @@
 					<muzzleFlashScale>9</muzzleFlashScale>
 					<recoilPattern>Regular</recoilPattern>
 				</Properties>
-				
+
 				<AmmoUser>
 					<magazineSize>30</magazineSize>
 					<reloadTime>2.40</reloadTime>
 					<ammoSet>AmmoSet_545x39mmSoviet</ammoSet>
 				</AmmoUser>
-				
+
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
-				
+
 				<weaponTags>
-					<li>RN_AK74U</li>
+					<li>CE_AI_AssaultWeapon</li>
+					<li>CE_SMG</li>
 				</weaponTags>
 			</li>
-			
+
 			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RNGun_AK74U_PDW"]/tools</xpath>
 				<value>

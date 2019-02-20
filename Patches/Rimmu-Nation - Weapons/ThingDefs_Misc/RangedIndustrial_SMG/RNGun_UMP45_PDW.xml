@@ -53,7 +53,8 @@
 				</FireModes>
 				
 				<weaponTags>
-					<li>RN_UMP45</li>
+					<li>CE_AI_AssaultWeapon</li>
+					<li>CE_SMG</li>
 				</weaponTags>
 			</li>
 			

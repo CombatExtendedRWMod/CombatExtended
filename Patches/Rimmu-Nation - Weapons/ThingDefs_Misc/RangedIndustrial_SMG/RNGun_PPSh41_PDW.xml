@@ -51,9 +51,10 @@
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
-				
+
 				<weaponTags>
-					<li>RN_PPSh41</li>
+					<li>CE_AI_AssaultWeapon</li>
+					<li>CE_SMG</li>
 				</weaponTags>
 			</li>
 			
