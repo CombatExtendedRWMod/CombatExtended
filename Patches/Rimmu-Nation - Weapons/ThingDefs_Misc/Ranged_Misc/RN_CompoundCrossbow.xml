@@ -32,9 +32,8 @@
 				<FireModes>
 					<aiAimMode>AimedShot</aiAimMode>
 				</FireModes>
-				<weaponTags>
-					<li>RN_CompoundCrossbow</li>
-				</weaponTags>
+				
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
