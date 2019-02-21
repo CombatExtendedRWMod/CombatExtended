@@ -167,7 +167,6 @@
 				<range>3</range>
 				<warmupTime>2.5</warmupTime>
 				<noiseRadius>4</noiseRadius>
-				<forcedMissRadius>1.0</forcedMissRadius>
 				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
 				<soundCast>CSGOC4Shot</soundCast>
 				<soundAiming>CSGOC4_Aiming</soundAiming>
