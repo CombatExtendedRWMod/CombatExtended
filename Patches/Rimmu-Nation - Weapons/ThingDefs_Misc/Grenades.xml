@@ -11,36 +11,36 @@
 			
 			<!-- ========== Remove Grenades and their projectiles ========== -->
 
-			<Operation Class="PatchOperationRemove">
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNThrown_HeNade"]</xpath>
-			</Operation>
-			<Operation Class="PatchOperationRemove">
+			</li>
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNProj_HEGrenade"]</xpath>
-			</Operation>
-			<Operation Class="PatchOperationRemove">
+			</li>
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNThrown_Vodka"]</xpath>
-			</Operation>
-			<Operation Class="PatchOperationRemove">
+			</li>
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNProj_Molotov"]</xpath>
-			</Operation>
-			<Operation Class="PatchOperationRemove">
+			</li>
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNThrown_Flashbang"]</xpath>
-			</Operation>
-			<Operation Class="PatchOperationRemove">
+			</li>
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNProj_Flash"]</xpath>
-			</Operation>
-			<Operation Class="PatchOperationRemove">
+			</li>
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNThrown_Incendiary"]</xpath>
-			</Operation>			
-			<Operation Class="PatchOperationRemove">
+			</li>		
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNProj_Incendiary"]</xpath>
-			</Operation>			
-			<Operation Class="PatchOperationRemove">
+			</li>			
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNThrown_Smoke"]</xpath>
-			</Operation>			
-			<Operation Class="PatchOperationRemove">
+			</li>			
+			<li Class="PatchOperationRemove">
 				<xpath>Defs/ThingDef[defName="RNProj_Smoke"]</xpath>
-			</Operation>			
+			</li>		
 			
 			
 			
@@ -48,21 +48,21 @@
 		
 			<!-- Projectile def -->
 
-			<Operation Class="PatchOperationReplace">
+			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/thingClass</xpath>
 				<value>
 					<thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
 				</value>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationReplace">
+			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/graphicData/texPath</xpath>
 				<value>
 					<texPath>Things/Projectile/Proj_CSGOC4</texPath>
 				</value>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationReplace">
+			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/projectile</xpath>
 				<value>
 					<projectile Class="CombatExtended.ProjectilePropertiesCE">
@@ -77,9 +77,9 @@
 					  <applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
 					</projectile>
 				</value>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationSequence">
+			<li Class="PatchOperationSequence">
 			<success>Always</success>
 			<operations>
 				<li Class="PatchOperationTest">
@@ -93,9 +93,9 @@
 				</value>
 				</li>
 			</operations>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationAdd">
+			<li Class="PatchOperationAdd">
 				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/comps</xpath>
 				<value>
 					<li Class="CombatExtended.CompProperties_ExplosiveCE">
@@ -105,26 +105,26 @@
 					  </fragments>
 					</li>
 				</value>
-			</Operation>
+			</li>
 
 			<!-- Weapon def -->
 
-			<Operation Class="PatchOperationAdd">
+			<li Class="PatchOperationAdd">
 				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]</xpath>
 				<value>
 					<thingClass>CombatExtended.AmmoThing</thingClass>
 					<stackLimit>10</stackLimit><!-- arbitrary number for now but seems appropriate -->
 					<resourceReadoutPriority>First</resourceReadoutPriority>
 				</value>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationAttributeSet">
+			<li Class="PatchOperationAttributeSet">
 				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]</xpath>
 				<attribute>Class</attribute>
 				<value>CombatExtended.AmmoDef</value>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationSequence">
+			<li Class="PatchOperationSequence">
 			<success>Always</success>
 			<operations>
 				<li Class="PatchOperationTest">
@@ -138,9 +138,9 @@
 				</value>
 				</li>
 			</operations>
-			</Operation>
+			</li>
 
-			<Operation Class="PatchOperationAdd">
+			<li Class="PatchOperationAdd">
 				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]/comps</xpath>
 				<value>
 					<li Class="CombatExtended.CompProperties_ExplosiveCE">
@@ -153,9 +153,8 @@
 					  </fragments>
 					</li>
 				</value>
-			</Operation>
-
-		  <Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
+			</li>
+			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 			<defName>RNThrown_C4CSGO</defName>
 			<statBases>
 				<MarketValue>5.25</MarketValue>
@@ -182,7 +181,7 @@
 			<weaponTags>
 					<li>RN_CSGOC4</li>
 			</weaponTags>
-		  </Operation>
+			</li>
 
 		</operations>
 	</Operation>
