@@ -57,9 +57,7 @@
 					<aimedBurstShotCount>1</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_ChinaLake</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

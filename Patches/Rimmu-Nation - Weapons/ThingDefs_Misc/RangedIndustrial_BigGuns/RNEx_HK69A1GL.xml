@@ -56,9 +56,7 @@
 					<aimedBurstShotCount>1</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_HK69A1</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">

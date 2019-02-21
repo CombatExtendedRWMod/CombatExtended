@@ -59,9 +59,7 @@
 					<aimedBurstShotCount>1</aimedBurstShotCount>
 				</FireModes>
 				
-				<weaponTags>
-					<li>RN_MARADOR</li>
-				</weaponTags>
+				<!-- No additional CE weaponTags needed -->
 			</li>
 			
 			<li Class="PatchOperationReplace">
