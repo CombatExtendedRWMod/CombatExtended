@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+		
+			<li Class="CombatExtended.PatchOperationFindMod">
+				<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
+			</li>			
+			
+			<!-- ========== Remove Grenades and their projectiles ========== -->
+
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNThrown_HeNade"]</xpath>
+			</Operation>
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNProj_HEGrenade"]</xpath>
+			</Operation>
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNThrown_Vodka"]</xpath>
+			</Operation>
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNProj_Molotov"]</xpath>
+			</Operation>
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNThrown_Flashbang"]</xpath>
+			</Operation>
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNProj_Flash"]</xpath>
+			</Operation>
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNThrown_Incendiary"]</xpath>
+			</Operation>			
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNProj_Incendiary"]</xpath>
+			</Operation>			
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNThrown_Smoke"]</xpath>
+			</Operation>			
+			<Operation Class="PatchOperationRemove">
+				<xpath>Defs/ThingDef[defName="RNProj_Smoke"]</xpath>
+			</Operation>			
+			
+			
+			
+			<!-- ========== Patch C4 ========== -->
+		
+			<!-- Projectile def -->
+
+			<Operation Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/thingClass</xpath>
+				<value>
+					<thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>
+				</value>
+			</Operation>
+
+			<Operation Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/graphicData/texPath</xpath>
+				<value>
+					<texPath>Things/Projectile/Proj_CSGOC4</texPath>
+				</value>
+			</Operation>
+
+			<Operation Class="PatchOperationReplace">
+				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/projectile</xpath>
+				<value>
+					<projectile Class="CombatExtended.ProjectilePropertiesCE">
+					  <explosionRadius>8</explosionRadius>
+					  <damageDef>Bomb</damageDef>
+					  <damageAmountBase>250</damageAmountBase>
+					  <explosionDelay>500</explosionDelay>
+					  <dropsCasings>true</dropsCasings>
+					  <casingMoteDefname>Mote_GrenadePin</casingMoteDefname>
+					  <stoppingPower>4</stoppingPower>
+					  <preExplosionSpawnThingDef>Gas_Smoke</preExplosionSpawnThingDef>
+					  <applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+					</projectile>
+				</value>
+			</Operation>
+
+			<Operation Class="PatchOperationSequence">
+			<success>Always</success>
+			<operations>
+				<li Class="PatchOperationTest">
+				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/comps</xpath>
+				<success>Invert</success>
+				</li>
+				<li Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]</xpath>
+				<value>
+					<comps />
+				</value>
+				</li>
+			</operations>
+			</Operation>
+
+			<Operation Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="RNProj_C4CSGO"]/comps</xpath>
+				<value>
+					<li Class="CombatExtended.CompProperties_ExplosiveCE">
+					  <fragments>
+						<Fragment_GrenadeFrag>250</Fragment_GrenadeFrag>
+						<!--Might not be enough for this explosive, 250 was for a standard grenade-->
+					  </fragments>
+					</li>
+				</value>
+			</Operation>
+
+			<!-- Weapon def -->
+
+			<Operation Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]</xpath>
+				<value>
+					<thingClass>CombatExtended.AmmoThing</thingClass>
+					<stackLimit>10</stackLimit><!-- arbitrary number for now but seems appropriate -->
+					<resourceReadoutPriority>First</resourceReadoutPriority>
+				</value>
+			</Operation>
+
+			<Operation Class="PatchOperationAttributeSet">
+				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]</xpath>
+				<attribute>Class</attribute>
+				<value>CombatExtended.AmmoDef</value>
+			</Operation>
+
+			<Operation Class="PatchOperationSequence">
+			<success>Always</success>
+			<operations>
+				<li Class="PatchOperationTest">
+				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]/comps</xpath>
+				<success>Invert</success>
+				</li>
+				<li Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]</xpath>
+				<value>
+					<comps />
+				</value>
+				</li>
+			</operations>
+			</Operation>
+
+			<Operation Class="PatchOperationAdd">
+				<xpath>Defs/ThingDef[defName="RNThrown_C4CSGO"]/comps</xpath>
+				<value>
+					<li Class="CombatExtended.CompProperties_ExplosiveCE">
+					  <explosionDamage>250</explosionDamage>
+					  <!--might need more dmg-->
+					  <explosionDamageDef>Bomb</explosionDamageDef>
+					  <explosionRadius>8</explosionRadius>
+					  <fragments>
+						<Fragment_GrenadeFrag>250</Fragment_GrenadeFrag>
+					  </fragments>
+					</li>
+				</value>
+			</Operation>
+
+		  <Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
+			<defName>RNThrown_C4CSGO</defName>
+			<statBases>
+				<MarketValue>5.25</MarketValue>
+				<SightsEfficiency>0.45</SightsEfficiency>
+			</statBases>
+			<Properties>
+				<label>arm and throw C4</label>
+				<verbClass>CombatExtended.Verb_ShootCEOneUse</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<range>3</range>
+				<warmupTime>2.5</warmupTime>
+				<noiseRadius>4</noiseRadius>
+				<forcedMissRadius>1.0</forcedMissRadius>
+				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+				<soundCast>CSGOC4Shot</soundCast>
+				<soundAiming>CSGOC4_Aiming</soundAiming>
+				<targetParams>
+				  <canTargetLocations>true</canTargetLocations>
+				</targetParams>
+				<defaultProjectile>RNProj_C4CSGO</defaultProjectile>
+				<onlyManualCast>true</onlyManualCast>
+			  <ignorePartialLoSBlocker>true</ignorePartialLoSBlocker>
+			</Properties>
+			<weaponTags>
+					<li>RN_CSGOC4</li>
+			</weaponTags>
+		  </Operation>
+
+		</operations>
+	</Operation>
+</Patch>
