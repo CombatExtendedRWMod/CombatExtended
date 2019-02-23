@@ -29,7 +29,7 @@
 					<recoilAmount>1.13</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
-					<defaultProjectile>Bullet_84x246mmR_HEAT</defaultProjectile>
+					<defaultProjectile>Bullet_83mmSMAW_HEAT</defaultProjectile>
 					<warmupTime>5</warmupTime>
 					<range>40.9</range>
 					<burstShotCount>1</burstShotCount>
@@ -48,14 +48,14 @@
 				<AmmoUser>
 					<magazineSize>1</magazineSize>
 					<reloadTime>2.80</reloadTime>
-					<ammoSet>AmmoSet_84x246mmR</ammoSet>
-					<!-- requires custom 83 mm rocket ammoset-->
+					<ammoSet>AmmoSet_83mmSMAW</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->
@@ -66,16 +66,6 @@
 				<value>
 					<tools>
 						<li Class="CombatExtended.ToolCE">
-							<label>stock</label>
-							<capacities>
-								<li>Blunt</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.12</armorPenetration>
-							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
-						</li>
-						<li Class="CombatExtended.ToolCE">
 							<label>barrel</label>
 							<capacities>
 								<li>Blunt</li>
@@ -84,16 +74,6 @@
 							<cooldownTime>2</cooldownTime>
 							<armorPenetration>0.15</armorPenetration>
 							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
-						</li>
-						<li Class="CombatExtended.ToolCE">
-							<label>muzzle</label>
-							<capacities>
-								<li>Poke</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.1</armorPenetration>
-							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 						</li>
 					</tools>
 				</value>

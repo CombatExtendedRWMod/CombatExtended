@@ -54,6 +54,7 @@
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->
@@ -64,16 +65,6 @@
 				<value>
 					<tools>
 						<li Class="CombatExtended.ToolCE">
-							<label>stock</label>
-							<capacities>
-								<li>Blunt</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.12</armorPenetration>
-							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
-						</li>
-						<li Class="CombatExtended.ToolCE">
 							<label>barrel</label>
 							<capacities>
 								<li>Blunt</li>
@@ -82,16 +73,6 @@
 							<cooldownTime>2</cooldownTime>
 							<armorPenetration>0.15</armorPenetration>
 							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
-						</li>
-						<li Class="CombatExtended.ToolCE">
-							<label>muzzle</label>
-							<capacities>
-								<li>Poke</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.1</armorPenetration>
-							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 						</li>
 					</tools>
 				</value>
