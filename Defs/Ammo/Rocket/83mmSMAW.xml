@@ -106,7 +106,7 @@
 		<defName>Bullet_83mmSMAW_HEAT</defName>
 		<label>83mm SMAW rocket (HEAT)</label>
 		<graphicData>
-			<texPath>Things/Projectile/RPG/HEAT</texPath>
+			<texPath>Things/Projectile/RPG/SMAW_HEAT</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
@@ -133,7 +133,7 @@
 		<label>83mm SMAW rocket (Thermobaric)</label>
 		<thingClass>CombatExtended.ProjectileCE_Explosive</thingClass>    
 		<graphicData>
-			<texPath>Things/Projectile/RPG/Thermobaric</texPath>
+			<texPath>Things/Projectile/RPG/SMAW_Thermobaric</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">

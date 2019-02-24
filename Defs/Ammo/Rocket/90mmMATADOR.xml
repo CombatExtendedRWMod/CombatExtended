@@ -7,7 +7,7 @@
 		<defName>Bullet_90mmMATADOR</defName>
 		<label>FGM-148 Javelin missile</label>
 		<graphicData>
-			<texPath>Things/Projectile/RPG/HEAT</texPath>
+			<texPath>Things/Projectile/RPG/MATADOR</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 			<shaderType>TransparentPostLight</shaderType>
 		</graphicData>

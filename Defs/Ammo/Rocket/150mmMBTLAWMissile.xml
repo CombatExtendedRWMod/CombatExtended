@@ -7,7 +7,7 @@
 		<defName>Bullet_150mmMBTLAWMissile</defName>
 		<label>MBT LAW missile</label>
 		<graphicData>
-			<texPath>Things/Projectile/RPG/HEAT</texPath>
+			<texPath>Things/Projectile/Missile/MBTLAW</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 			<shaderType>TransparentPostLight</shaderType>
 		</graphicData>
