@@ -52,6 +52,8 @@
 				<weaponTags>
 					<li>CE_AI_Rifle</li>
 				</weaponTags>
+				
+				<AllowWithRunAndGun>false</AllowWithRunAndGun>
 			</li>
 			
 			<li Class="PatchOperationReplace">

@@ -27,9 +27,9 @@
 				</costList>
 				<Properties>
 					<recoilAmount>1.13</recoilAmount>
-					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+					<verbClass>CombatExtended.Verb_ShootCEOneUse</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
-					<defaultProjectile>Bullet_84x246mmR_HEAT</defaultProjectile>
+					<defaultProjectile>Bullet_127mmJavelinMissile</defaultProjectile>
 					<warmupTime>5</warmupTime>
 					<range>40.9</range>
 					<burstShotCount>1</burstShotCount>
@@ -45,35 +45,24 @@
 					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
-				<AmmoUser>
-					<magazineSize>1</magazineSize>
-					<reloadTime>2.80</reloadTime>
-					<ammoSet>AmmoSet_84x246mmR</ammoSet>
-				</AmmoUser>
+				<!-- RN Weapons version of FGM-148 Javelin is single-use only -->
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->
+				
+				<AllowWithRunAndGun>false</AllowWithRunAndGun>
 			</li>
 			
 			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RNEx_JavelinRL"]/tools</xpath>
 				<value>
 					<tools>
-						<li Class="CombatExtended.ToolCE">
-							<label>stock</label>
-							<capacities>
-								<li>Blunt</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.12</armorPenetration>
-							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
-						</li>
 						<li Class="CombatExtended.ToolCE">
 							<label>barrel</label>
 							<capacities>
@@ -83,16 +72,6 @@
 							<cooldownTime>2</cooldownTime>
 							<armorPenetration>0.15</armorPenetration>
 							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
-						</li>
-						<li Class="CombatExtended.ToolCE">
-							<label>muzzle</label>
-							<capacities>
-								<li>Poke</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.1</armorPenetration>
-							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 						</li>
 					</tools>
 				</value>

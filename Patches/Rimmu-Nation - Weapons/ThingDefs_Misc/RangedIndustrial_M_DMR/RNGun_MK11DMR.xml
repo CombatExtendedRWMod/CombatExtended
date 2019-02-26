@@ -50,6 +50,8 @@
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->
+				
+				<AllowWithRunAndGun>false</AllowWithRunAndGun>
 			</li>
 			
 			<li Class="PatchOperationReplace">

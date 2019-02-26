@@ -46,7 +46,7 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>5</magazineSize>
+					<magazineSize>3</magazineSize>
 					<reloadTime>2.40</reloadTime>
 					<ammoSet>AmmoSet_40x46mmGrenade</ammoSet>
 				</AmmoUser>
@@ -58,6 +58,8 @@
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->
+				
+				<AllowWithRunAndGun>false</AllowWithRunAndGun>
 			</li>
 			
 			<li Class="PatchOperationReplace">

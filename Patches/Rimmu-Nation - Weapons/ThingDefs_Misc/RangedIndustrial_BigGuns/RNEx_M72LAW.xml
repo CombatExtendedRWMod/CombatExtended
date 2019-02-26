@@ -26,8 +26,8 @@
 					<FSX>3</FSX>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
-					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+					<recoilAmount>0.00</recoilAmount>
+					<verbClass>CombatExtended.Verb_ShootCEOneUse</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_M72LAW</defaultProjectile>
 					<warmupTime>5</warmupTime>
@@ -45,36 +45,22 @@
 					<recoilPattern>Regular</recoilPattern>
 				</Properties>
 				
-				<AmmoUser>
-					<magazineSize>1</magazineSize>
-					<reloadTime>2.80</reloadTime>
-					<!--ammoSet>AmmoSet_M72LAW</ammoSet-->
-					<!--no ammo set present for this def, uses RPG7 as base-->
-				</AmmoUser>
-				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->
+				
+				<AllowWithRunAndGun>false</AllowWithRunAndGun>
 			</li>
 			
 			<li Class="PatchOperationReplace">
 				<xpath>Defs/ThingDef[defName="RNEx_M72LAW"]/tools</xpath>
 				<value>
 					<tools>
-						<li Class="CombatExtended.ToolCE">
-							<label>stock</label>
-							<capacities>
-								<li>Blunt</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.12</armorPenetration>
-							<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
-						</li>
 						<li Class="CombatExtended.ToolCE">
 							<label>barrel</label>
 							<capacities>
@@ -84,16 +70,6 @@
 							<cooldownTime>2</cooldownTime>
 							<armorPenetration>0.15</armorPenetration>
 							<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
-						</li>
-						<li Class="CombatExtended.ToolCE">
-							<label>muzzle</label>
-							<capacities>
-								<li>Poke</li>
-							</capacities>
-							<power>9</power>
-							<cooldownTime>2</cooldownTime>
-							<armorPenetration>0.1</armorPenetration>
-							<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 						</li>
 					</tools>
 				</value>
