@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>0.59</Mass>
 					<RangedWeapon_Cooldown>0.38</RangedWeapon_Cooldown>
-					<SightsEfficiency>.95</SightsEfficiency>
-					<ShotSpread>0.09</ShotSpread>
-					<SwayFactor>1.19</SwayFactor>
-					<Bulk>3.00</Bulk>
+					<SightsEfficiency>0.70</SightsEfficiency>
+					<ShotSpread>0.19</ShotSpread>
+					<SwayFactor>0.71</SwayFactor>
+					<Bulk>1.55</Bulk>
 					<WorkToMake>7000</WorkToMake>
 				</statBases>
 				<costList>
@@ -25,12 +25,12 @@
 					<ComponentIndustrial>3</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>2.30</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_380ACP_FMJ</defaultProjectile>
-					<warmupTime>0.25</warmupTime>
-					<range>18</range>
+					<warmupTime>0.6</warmupTime>
+					<range>8</range>
 					<soundCast>RNShotGlock17</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -38,8 +38,8 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>6</magazineSize>
-					<reloadTime>2.0</reloadTime>
+					<magazineSize>7</magazineSize>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_380ACP</ammoSet>
 				</AmmoUser>
 				

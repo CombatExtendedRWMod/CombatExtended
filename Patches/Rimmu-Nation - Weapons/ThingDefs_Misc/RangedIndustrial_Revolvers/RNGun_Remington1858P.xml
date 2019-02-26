@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>1.18</Mass>
 					<RangedWeapon_Cooldown>0.90</RangedWeapon_Cooldown>
-					<SightsEfficiency>.90</SightsEfficiency>
-					<ShotSpread>0.10</ShotSpread>
-					<SwayFactor>1.26</SwayFactor>
-					<Bulk>3.00</Bulk>
+					<SightsEfficiency>0.70</SightsEfficiency>
+					<ShotSpread>0.14</ShotSpread>
+					<SwayFactor>1.56</SwayFactor>
+					<Bulk>3.51</Bulk>
 					<WorkToMake>3500</WorkToMake>
 				</statBases>
 				<costList>
@@ -25,12 +25,12 @@
 					<ComponentIndustrial>1</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.33</recoilAmount>
+					<recoilAmount>3.28</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_45Colt_FMJ</defaultProjectile>
-					<warmupTime>0.70</warmupTime>
-					<range>26.9</range>
+					<warmupTime>0.6</warmupTime>
+					<range>12</range>
 					<soundCast>RNShot_GenericRevolver</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -39,7 +39,7 @@
 				
 				<AmmoUser>
 					<magazineSize>6</magazineSize>
-					<reloadTime>2.0</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_45Colt</ammoSet>
 				</AmmoUser>
 				

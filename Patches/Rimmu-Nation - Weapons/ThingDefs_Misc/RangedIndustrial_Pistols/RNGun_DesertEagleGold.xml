@@ -12,12 +12,12 @@
 			<li Class="CombatExtended.PatchOperationMakeGunCECompatible">
 				<defName>RNGun_DesertEagleGold</defName>
 				<statBases>
-					<Mass>2.00</Mass>
+					<Mass>1.63</Mass>
 					<RangedWeapon_Cooldown>0.39</RangedWeapon_Cooldown>
-					<SightsEfficiency>.95</SightsEfficiency>
-					<ShotSpread>0.09</ShotSpread>
-					<SwayFactor>1.19</SwayFactor>
-					<Bulk>3.00</Bulk>
+					<SightsEfficiency>0.70</SightsEfficiency>
+					<ShotSpread>0.16</ShotSpread>
+					<SwayFactor>1.58</SwayFactor>
+					<Bulk>3.92</Bulk>
 					<WorkToMake>7500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>3</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>3.01</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_50AE_FMJ</defaultProjectile>
-					<warmupTime>0.3</warmupTime>
-					<range>26.9</range>
+					<warmupTime>0.6</warmupTime>
+					<range>12</range>
 					<soundCast>RNDeagleShot</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -39,8 +39,8 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>12</magazineSize>
-					<reloadTime>2.0</reloadTime>
+					<magazineSize>7</magazineSize>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_50AE</ammoSet>
 				</AmmoUser>
 				

@@ -13,11 +13,11 @@
 				<defName>RNGun_Glock34CM</defName>
 				<statBases>
 					<Mass>0.66</Mass>
-					<RangedWeapon_Cooldown>0.40</RangedWeapon_Cooldown>
-					<SightsEfficiency>.95</SightsEfficiency>
-					<ShotSpread>0.09</ShotSpread>
-					<SwayFactor>1.19</SwayFactor>
-					<Bulk>3.00</Bulk>
+					<RangedWeapon_Cooldown>0.38</RangedWeapon_Cooldown>
+					<SightsEfficiency>0.70</SightsEfficiency>
+					<ShotSpread>0.16</ShotSpread>
+					<SwayFactor>0.96</SwayFactor>
+					<Bulk>2.23</Bulk>
 					<WorkToMake>7500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>3</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>3.02</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_9x19mmPara_FMJ</defaultProjectile>
-					<warmupTime>0.25</warmupTime>
-					<range>26.9</range>
+					<warmupTime>0.6</warmupTime>
+					<range>13</range>
 					<soundCast>RNShotPistol_II</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>

@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>1.23</Mass>
 					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
-					<SightsEfficiency>.95</SightsEfficiency>
-					<ShotSpread>0.09</ShotSpread>
-					<SwayFactor>1.22</SwayFactor>
-					<Bulk>3.00</Bulk>
+					<SightsEfficiency>0.70</SightsEfficiency>
+					<ShotSpread>0.16</ShotSpread>
+					<SwayFactor>1.38</SwayFactor>
+					<Bulk>2.92</Bulk>
 					<WorkToMake>5000</WorkToMake>
 				</statBases>
 				<costList>
@@ -25,12 +25,12 @@
 					<ComponentIndustrial>2</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.33</recoilAmount>
+					<recoilAmount>2.15</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_357Magnum_FMJ</defaultProjectile>
-					<warmupTime>0.70</warmupTime>
-					<range>25.9</range>
+					<warmupTime>0.6</warmupTime>
+					<range>12</range>
 					<soundCast>RNShotColtPython</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -39,7 +39,7 @@
 				
 				<AmmoUser>
 					<magazineSize>6</magazineSize>
-					<reloadTime>2.0</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_357Magnum</ammoSet>
 				</AmmoUser>
 				
