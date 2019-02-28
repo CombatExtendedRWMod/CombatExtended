@@ -42,7 +42,7 @@
 		<defName>Ammo_RPG32Rocket_HEAT</defName>
 		<label>RPG-32 grenade (HEAT)</label>
 		<graphicData>
-			<texPath>Things/Ammo/RPG/HEAT</texPath>
+			<texPath>Things/Ammo/RPG/RPG32_HEAT</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<statBases>
@@ -70,7 +70,7 @@
 		<defName>Ammo_RPG32Rocket_Thermobaric</defName>
 		<label>RPG-32 grenade (Thermobaric)</label>
 		<graphicData>
-			<texPath>Things/Ammo/RPG/Thermobaric</texPath>
+			<texPath>Things/Ammo/RPG/RPG32_Thermobaric</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<statBases>

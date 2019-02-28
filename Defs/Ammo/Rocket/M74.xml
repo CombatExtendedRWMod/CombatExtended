@@ -41,7 +41,7 @@
     <defName>Ammo_M74_Incendiary</defName>
     <label>M74 Rocket (Incendiary)</label>
     <graphicData>
-      <texPath>Things/Ammo/RPG/Thermobaric</texPath>
+      <texPath>Things/Ammo/RPG/M74</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>

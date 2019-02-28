@@ -42,7 +42,7 @@
 		<defName>Ammo_83mmSMAW_HEAT</defName>
 		<label>83mm SMAW rocket (HEAT)</label>
 		<graphicData>
-			<texPath>Things/Ammo/RPG/HEAT</texPath>
+			<texPath>Things/Ammo/RPG/SMAW_HEAT</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<statBases>
@@ -70,7 +70,7 @@
 		<defName>Ammo_83mmSMAW_Thermobaric</defName>
 		<label>83mm SMAW rocket (Thermobaric)</label>
 		<graphicData>
-			<texPath>Things/Ammo/RPG/Thermobaric</texPath>
+			<texPath>Things/Ammo/RPG/SMAW_Thermobaric</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<statBases>
