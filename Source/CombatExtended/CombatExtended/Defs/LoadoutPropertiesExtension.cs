@@ -32,7 +32,7 @@ namespace CombatExtended
         public static void Reset()
 		{
             // Initialize weapons
-			Predicate<ThingDef> isWeapon = (ThingDef td) => td.equipmentType == EquipmentType.Primary && !td.weaponTags.NullOrEmpty<string>();
+			Predicate<ThingDef> isWeapon = td => td.equipmentType == EquipmentType.Primary && !td.weaponTags.NullOrEmpty<string>();
             allWeaponPairs = ThingStuffPair.AllWith(isWeapon);
 			foreach (ThingDef thingDef in from td in DefDatabase<ThingDef>.AllDefs
 			where isWeapon(td)
@@ -108,12 +108,12 @@ namespace CombatExtended
             // Generate weapon - mostly based on PawnWeaponGenerator.TryGenerateWeaponFor()
             // START 1:1 COPY
             float randomInRange = pawn.kindDef.weaponMoney.RandomInRange;
-            for (int i = 0; i < allWeaponPairs.Count; i++)
+            foreach (var w in allWeaponPairs)
             {
-                ThingStuffPair w = allWeaponPairs[i];
                 if (w.Price <= randomInRange)
                 {
-                    if (option.weaponTags == null || option.weaponTags.Any((string tag) => w.thing.weaponTags.Contains(tag)))
+                    var w1 = w;
+                    if (option.weaponTags == null || option.weaponTags.Any((string tag) => w1.thing.weaponTags.Contains(tag)))
                     {
                         if (w.thing.generateAllowChance >= 1f || Rand.ChanceSeeded(w.thing.generateAllowChance, pawn.thingIDNumber ^ (int)w.thing.shortHash ^ 28554824))
                         {

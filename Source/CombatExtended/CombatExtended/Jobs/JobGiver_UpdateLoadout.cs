@@ -75,7 +75,7 @@ namespace CombatExtended
             carriedBy = null;
 
             CompInventory inventory = pawn.TryGetComp<CompInventory>();
-            if (inventory != null && inventory.container != null)
+            if (inventory?.container != null)
             {
                 Loadout loadout = pawn.GetLoadout();
                 if (loadout != null && !loadout.Slots.NullOrEmpty())
@@ -273,9 +273,9 @@ namespace CombatExtended
                     if (closestThing.TryGetComp<CompEquippable>() != null
                         && !(pawn.story != null && pawn.story.WorkTagIsDisabled(WorkTags.Violent))
                         && (pawn.health != null && pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
-                        && (pawn.equipment == null || pawn.equipment.Primary == null || !loadout.Slots.Any(s => s.thingDef == pawn.equipment.Primary.def
-                                                                                                           || (s.genericDef != null && s.countType == LoadoutCountType.pickupDrop
-                                                                                                               && s.genericDef.lambda(pawn.equipment.Primary.def)))))
+                        && (pawn.equipment?.Primary == null || !loadout.Slots.Any(s => s.thingDef == pawn.equipment.Primary.def
+                                                                                       || (s.genericDef != null && s.countType == LoadoutCountType.pickupDrop
+                                                                                                                && s.genericDef.lambda(pawn.equipment.Primary.def)))))
                         doEquip = true;
                     if (carriedBy == null)
                     {

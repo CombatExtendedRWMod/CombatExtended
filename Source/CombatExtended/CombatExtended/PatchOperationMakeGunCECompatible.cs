@@ -128,8 +128,7 @@ namespace CombatExtended
                 var verb_shoot_nodes = verbs.SelectNodes("li[verbClass=\"Verb_Shoot\" or verbClass=\"Verb_ShootOneUse\" or verbClass=\"Verb_LaunchProjectile\"]");
                 foreach (var verb_shoot_current in verb_shoot_nodes)
                 {
-                    var verb_shoot = verb_shoot_current as XmlNode;
-                    if (verb_shoot != null)
+                    if (verb_shoot_current is XmlNode verb_shoot)
                     {
                         verbs.RemoveChild(verb_shoot);
                     }

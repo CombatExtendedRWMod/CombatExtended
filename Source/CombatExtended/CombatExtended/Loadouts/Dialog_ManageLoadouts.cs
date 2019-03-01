@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
@@ -24,13 +23,8 @@ namespace CombatExtended
     {
         #region Fields
 
-        private static Texture2D
-            _arrowBottom = ContentFinder<Texture2D>.Get("UI/Icons/arrowBottom"),
-            _arrowDown = ContentFinder<Texture2D>.Get("UI/Icons/arrowDown"),
-            _arrowTop = ContentFinder<Texture2D>.Get("UI/Icons/arrowTop"),
-            _arrowUp = ContentFinder<Texture2D>.Get("UI/Icons/arrowUp"),
+        private static readonly Texture2D
             _darkBackground = SolidColorMaterials.NewSolidColorTexture(0f, 0f, 0f, .2f),
-            _iconEdit = ContentFinder<Texture2D>.Get("UI/Icons/edit"),
             _iconClear = ContentFinder<Texture2D>.Get("UI/Icons/clear"),
             _iconAmmo = ContentFinder<Texture2D>.Get("UI/Icons/ammo"),
             _iconRanged = ContentFinder<Texture2D>.Get("UI/Icons/ranged"),
@@ -44,11 +38,10 @@ namespace CombatExtended
             _iconPickupDrop = ContentFinder<Texture2D>.Get("UI/Icons/loadoutPickupDrop"),
             _iconDropExcess = ContentFinder<Texture2D>.Get("UI/Icons/loadoutDropExcess");
 
-        private static Regex validNameRegex = Outfit.ValidNameRegex;
+        private static readonly Regex validNameRegex = Outfit.ValidNameRegex;
         private Vector2 _availableScrollPosition = Vector2.zero;
         private const float _barHeight = 24f;
-        private Vector2 _countFieldSize = new Vector2(40f, 24f);
-        private Loadout _currentLoadout;
+        private readonly Vector2 _countFieldSize = new Vector2(40f, 24f);
         private LoadoutSlot _draggedSlot;
         private bool _dragging;
         private string _filter = "";
@@ -60,7 +53,6 @@ namespace CombatExtended
         private List<SelectableItem> _source;
         private List<LoadoutGenericDef> _sourceGeneric;
         private SourceSelection _sourceType = SourceSelection.Ranged;
-        private readonly List<ThingDef> _allSuitableDefs;
         private readonly List<LoadoutGenericDef> _allDefsGeneric;
         private readonly List<SelectableItem> _selectableItems;
 
@@ -70,13 +62,13 @@ namespace CombatExtended
 
         public Dialog_ManageLoadouts(Loadout loadout)
         {
-        	CurrentLoadout = null;
+            CurrentLoadout = null;
         	if (loadout != null && !loadout.defaultLoadout)
             	CurrentLoadout = loadout;
-            _allSuitableDefs = DefDatabase<ThingDef>.AllDefs.Where(td => !td.menuHidden && IsSuitableThingDef(td)).ToList();
+            var allSuitableDefs = DefDatabase<ThingDef>.AllDefs.Where(td => !td.menuHidden && IsSuitableThingDef(td)).ToList();
             _allDefsGeneric = DefDatabase<LoadoutGenericDef>.AllDefs.OrderBy(g => g.label).ToList();
             _selectableItems = new List<SelectableItem>();
-            foreach (var td in _allSuitableDefs)
+            foreach (var td in allSuitableDefs)
             {
                 _selectableItems.Add(new SelectableItem()
                 {
@@ -98,43 +90,19 @@ namespace CombatExtended
 
         #region Properties
 
-        public Loadout CurrentLoadout
-        {
-            get
-            {
-                return _currentLoadout;
-            }
-            set
-            {
-                _currentLoadout = value;
-            }
-        }
+        public Loadout CurrentLoadout { get; set; }
 
         public LoadoutSlot Dragging
         {
-            get
-            {
-                if (_dragging)
-                    return _draggedSlot;
-                return null;
-            }
+            get => _dragging ? _draggedSlot : null;
             set
             {
-                if (value == null)
-                    _dragging = false;
-                else
-                    _dragging = true;
+                _dragging = value != null;
                 _draggedSlot = value;
             }
         }
 
-        public override Vector2 InitialSize
-        {
-            get
-            {
-                return new Vector2(700, 700);
-            }
-        }
+        public override Vector2 InitialSize => new Vector2(700, 700);
 
         #endregion Properties
 
@@ -357,7 +325,7 @@ namespace CombatExtended
             GUI.color = Color.white;
         }
 
-        public void FilterSource(string filter)
+        private void FilterSource(string filter)
         {
             // reset source
             SetSource(_sourceType, true);
@@ -366,7 +334,7 @@ namespace CombatExtended
             _source = _source.Where(td => td.thingDef.label.ToUpperInvariant().Contains(_filter.ToUpperInvariant())).ToList();
         }
 
-        public void SetSource(SourceSelection source, bool preserveFilter = false)
+        private void SetSource(SourceSelection source, bool preserveFilter = false)
         {
             _sourceGeneric = _allDefsGeneric;
             if (!preserveFilter)
@@ -503,7 +471,7 @@ namespace CombatExtended
                 // make sure there's an ammoset defined
                 AmmoSetDef ammoSet = ((slot.thingDef.GetCompProperties<CompProperties_AmmoUser>() == null) ? null : slot.thingDef.GetCompProperties<CompProperties_AmmoUser>().ammoSet);
 
-                bool? temp = !((((ammoSet == null) ? null : ammoSet.ammoTypes)).NullOrEmpty());
+                bool? temp = !((ammoSet?.ammoTypes).NullOrEmpty());
 
                 if (temp ?? false)
                 {

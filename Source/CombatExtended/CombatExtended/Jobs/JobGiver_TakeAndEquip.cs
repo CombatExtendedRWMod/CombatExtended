@@ -41,7 +41,7 @@ namespace CombatExtended
             }
             #endregion
            	
-			bool hasPrimary = (pawn.equipment != null && pawn.equipment.Primary != null);
+			bool hasPrimary = (pawn.equipment?.Primary != null);
             CompAmmoUser primaryAmmoUser = hasPrimary ? pawn.equipment.Primary.TryGetComp<CompAmmoUser>() : null;
             
             #region Colonists with primary ammo-user and a loadout have no work priority
@@ -177,9 +177,9 @@ namespace CombatExtended
 
             // Log.Message(pawn.ToString() +  " - priority:" + (GetPriorityWork(pawn)).ToString() + " capacityWeight: " + pawn.TryGetComp<CompInventory>().capacityWeight.ToString() + " currentWeight: " + pawn.TryGetComp<CompInventory>().currentWeight.ToString() + " capacityBulk: " + pawn.TryGetComp<CompInventory>().capacityBulk.ToString() + " currentBulk: " + pawn.TryGetComp<CompInventory>().currentBulk.ToString());
 
-            var brawler = (pawn.story != null && pawn.story.traits != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler));
+            var brawler = (pawn.story?.traits != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler));
             CompInventory inventory = pawn.TryGetComp<CompInventory>();
-            bool hasPrimary = (pawn.equipment != null && pawn.equipment.Primary != null);
+            bool hasPrimary = (pawn.equipment?.Primary != null);
             CompAmmoUser primaryammouser = hasPrimary ? pawn.equipment.Primary.TryGetComp<CompAmmoUser>() : null;
 
             if (inventory != null)
@@ -236,7 +236,7 @@ namespace CombatExtended
 
                     if (WrongammoThing != null)
                     {
-                        Thing InvListGun = inventory.rangedWeaponList.Find(thing => hasPrimary && thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
+                        Thing InvListGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
                         if (InvListGun != null)
                         {
                             Thing ammoInvListGun = null;
@@ -293,7 +293,7 @@ namespace CombatExtended
                     {
                         Predicate<Thing> validatorWS = (Thing w) => w.def.IsWeapon
                             && w.MarketValue > 500 && pawn.CanReserve(w, 1)
-                            && (DangerInPosRadius(pawn, w.Position, pawn.Map, 30f).Count() <= 0
+                            && (!DangerInPosRadius(pawn, w.Position, pawn.Map, 30f).Any()
                                                     ? pawn.Position.InHorDistOf(w.Position, 25f)
                                                     : pawn.Position.InHorDistOf(w.Position, 6f))
                             && pawn.CanReach(w, PathEndMode.Touch, Danger.Deadly, true)
@@ -334,7 +334,7 @@ namespace CombatExtended
 
                                     Predicate<Thing> validatorA = (Thing t) => t.def.category == ThingCategory.Item
                                         && t is AmmoThing && pawn.CanReserve(t, 1)
-                                        && (DangerInPosRadius(pawn, t.Position, pawn.Map, 30f).Count() <= 0
+                                        && (!DangerInPosRadius(pawn, t.Position, pawn.Map, 30f).Any()
                                                                 ? pawn.Position.InHorDistOf(t.Position, 25f)
                                                                 : pawn.Position.InHorDistOf(t.Position, 6f))
                                         && pawn.CanReach(t, PathEndMode.Touch, Danger.Deadly, true)
@@ -368,7 +368,7 @@ namespace CombatExtended
                         }
 
                         // else if no ranged weapons with nearby ammo was found, lets consider a melee weapon.
-                        if (allWeapons != null && allWeapons.Count > 0)
+                        if (allWeapons.Count > 0)
                         {
                             // since we don't need to worry about ammo, just pick one.
                             Thing meleeWeapon = allWeapons.FirstOrDefault(w => !w.def.IsRangedWeapon && w.def.IsMeleeWeapon);
@@ -396,7 +396,7 @@ namespace CombatExtended
                     {
                         Predicate<Thing> validator = (Thing t) => t is AmmoThing && pawn.CanReserve(t, 1)
                                         && pawn.CanReach(t, PathEndMode.Touch, Danger.Deadly, true)
-                                        && ((pawn.Faction.IsPlayer && !ForbidUtility.IsForbidden(t, pawn)) || (!pawn.Faction.IsPlayer && DangerInPosRadius(pawn, t.Position, pawn.Map, 30f).Count() <= 0
+                                        && ((pawn.Faction.IsPlayer && !t.IsForbidden(pawn)) || (!pawn.Faction.IsPlayer && !DangerInPosRadius(pawn, t.Position, pawn.Map, 30f).Any()
                                                                 ? pawn.Position.InHorDistOf(t.Position, 25f)
                                                                 : pawn.Position.InHorDistOf(t.Position, 6f)))
                                         && (pawn.Faction.HostileTo(Faction.OfPlayer) || pawn.Faction == Faction.OfPlayer || !pawn.Map.areaManager.Home[t.Position]);
@@ -418,8 +418,7 @@ namespace CombatExtended
                                         if (pawn.Faction.IsPlayer)
                                         {
                                             int SearchRadius = 0;
-                                            if (GetPriorityWork(pawn) == WorkPriority.LowAmmo) SearchRadius = 70;
-                                            else SearchRadius = 30;
+                                            SearchRadius = GetPriorityWork(pawn) == WorkPriority.LowAmmo ? 70 : 30;
 
                                             Thing closestThing = GenClosest.ClosestThingReachable(
                                             pawn.Position,
@@ -570,7 +569,7 @@ namespace CombatExtended
 
         private static IEnumerable<Pawn> DangerInPosRadius(Pawn pawn, IntVec3 position, Map map, float distance)
         {
-            return Enumerable.Where<Pawn>(map.mapPawns.AllPawns, (p => p.Position.InHorDistOf(position, distance) && !p.RaceProps.Animal && !p.Downed && !p.Dead && FactionUtility.HostileTo(p.Faction, pawn.Faction)));
+            return map.mapPawns.AllPawns.Where<Pawn>((p => p.Position.InHorDistOf(position, distance) && !p.RaceProps.Animal && !p.Downed && !p.Dead && p.Faction.HostileTo(pawn.Faction)));
         }
 
         private static Job MeleeOrWaitJob(Pawn pawn, Thing blocker, IntVec3 cellBeforeBlocker)

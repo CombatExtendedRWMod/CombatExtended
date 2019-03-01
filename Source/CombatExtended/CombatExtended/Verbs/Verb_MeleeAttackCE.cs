@@ -83,9 +83,9 @@ namespace CombatExtended
 
             // Award XP as per vanilla
             bool targetImmobile = IsTargetImmobile(currentTarget);
-            if (!targetImmobile && casterPawn.skills != null)
+            if (!targetImmobile)
             {
-                casterPawn.skills.Learn(SkillDefOf.Melee, HitXP, false);
+                casterPawn.skills?.Learn(SkillDefOf.Melee, HitXP, false);
             }
 
             // Hit calculations
@@ -187,10 +187,7 @@ namespace CombatExtended
                 }
             }
             casterPawn.rotationTracker.FaceCell(targetThing.Position);
-            if (casterPawn.caller != null)
-            {
-                casterPawn.caller.Notify_DidMeleeAttack();
-            }
+            casterPawn.caller?.Notify_DidMeleeAttack();
             return result;
         }
 
@@ -229,15 +226,9 @@ namespace CombatExtended
                     damDef = DamageDefOf.Blunt;
                 }
             }
-            ThingDef source;
-            if (base.EquipmentSource != null)
-            {
-                source = base.EquipmentSource.def;
-            }
-            else
-            {
-                source = base.CasterPawn.def;
-            }
+
+            ThingDef source = base.EquipmentSource != null ? base.EquipmentSource.def : base.CasterPawn.def;
+
             Vector3 direction = (target.Thing.Position - base.CasterPawn.Position).ToVector3();
             DamageDef def = damDef;
             //END 1:1 COPY
@@ -313,8 +304,7 @@ namespace CombatExtended
             // Apply animal knockdown
             if (isCrit && CasterPawn.def.race.Animal)
             {
-                var pawn = target.Thing as Pawn;
-                if (pawn != null && !pawn.Dead)
+                if (target.Thing is Pawn pawn && !pawn.Dead)
                 {
                     //pawn.stances?.stunner.StunFor(KnockdownDuration);
                     pawn.stances?.SetStance(new Stance_Cooldown(KnockdownDuration, pawn, null));
@@ -425,7 +415,7 @@ namespace CombatExtended
         // unmodified
         private SoundDef SoundHitPawn()
         {
-            if (this.EquipmentSource != null && this.EquipmentSource.Stuff != null)
+            if (EquipmentSource?.Stuff != null)
             {
                 if (this.verbProps.meleeDamageDef.armorCategory == DamageArmorCategoryDefOf.Sharp)
                 {
@@ -449,7 +439,7 @@ namespace CombatExtended
         // unmodified
         private SoundDef SoundHitBuilding()
         {
-            if (this.EquipmentSource != null && this.EquipmentSource.Stuff != null)
+            if (EquipmentSource?.Stuff != null)
             {
                 if (this.verbProps.meleeDamageDef.armorCategory == DamageArmorCategoryDefOf.Sharp)
                 {

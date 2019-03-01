@@ -57,8 +57,7 @@ namespace CombatExtended
             get
             {
                 float armorValue = 0f;
-                Pawn pawn = parent as Pawn;
-                if (pawn != null)
+                if (parent is Pawn pawn)
                 {
                     //Get most protective piece of armor
                     if (pawn.apparel.WornApparel != null && pawn.apparel.WornApparel.Count > 0)
@@ -86,8 +85,7 @@ namespace CombatExtended
             get
             {
                 float threshold = 0f;
-                Pawn pawn = parent as Pawn;
-                if (pawn != null)
+                if (parent is Pawn pawn)
                 {
                     //Get morale
                     float hardBreakThreshold = pawn.mindState?.mentalBreaker?.BreakThresholdMajor ?? 0;
@@ -251,7 +249,7 @@ namespace CombatExtended
             else if (currentSuppression > 0)
             {
                 //Decay global suppression
-                if (Controller.settings.DebugShowSuppressionBuildup && Gen.IsHashIntervalTick(parent, 30))
+                if (Controller.settings.DebugShowSuppressionBuildup && parent.IsHashIntervalTick(30))
                 {
                     MoteMaker.ThrowText(parent.DrawPos, parent.Map, "-" + (SuppressionDecayRate * 30), Color.red);
                 }

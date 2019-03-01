@@ -13,10 +13,7 @@ namespace CombatExtended
         public override void WarmupComplete()
         {
             base.WarmupComplete();
-            if (ShooterPawn != null && ShooterPawn.skills != null)
-            {
-                ShooterPawn.skills.Learn(SkillDefOf.Shooting, 200);
-            }
+            ShooterPawn?.skills?.Learn(SkillDefOf.Shooting, 200);
         }
 
         protected override bool TryCastShot()

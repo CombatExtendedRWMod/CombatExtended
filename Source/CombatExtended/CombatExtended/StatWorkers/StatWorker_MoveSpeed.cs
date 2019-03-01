@@ -34,8 +34,7 @@ namespace CombatExtended
                 if (suppressComp != null && suppressComp.IsCrouchWalking)
                 {
                     stringBuilder.AppendLine();
-                    stringBuilder.AppendLine(
-                        $"{"CE_CrouchWalking".Translate()}: x{CrouchWalkFactor.ToStringPercent()}");
+                    stringBuilder.AppendLine($"{"CE_CrouchWalking".Translate()}: x{CrouchWalkFactor.ToStringPercent()}");
                 }
             }
 

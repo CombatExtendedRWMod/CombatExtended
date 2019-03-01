@@ -55,48 +55,13 @@ namespace CombatExtended
                 return this.GunCompEq.verbTracker.PrimaryVerb;
             }
         }
-        private bool CanSetForcedTarget
-        {
-            get
-            {
-                return MannedByColonist;
-            }
-        }
-        public override LocalTargetInfo CurrentTarget
-        {
-            get
-            {
-                return this.currentTargetInt;
-            }
-        }
-        public CompEquippable GunCompEq
-        {
-            get
-            {
-                return Gun.TryGetComp<CompEquippable>();
-            }
-        }
-        private bool WarmingUp
-        {
-            get
-            {
-                return this.burstWarmupTicksLeft > 0;
-            }
-        }
-        private bool CanToggleHoldFire
-        {
-            get
-            {
-                return base.Faction == Faction.OfPlayer || this.MannedByColonist;
-            }
-        }
-        private bool MannedByColonist
-        {
-            get
-            {
-                return this.mannableComp != null && this.mannableComp.ManningPawn != null && this.mannableComp.ManningPawn.Faction == Faction.OfPlayer;
-            }
-        }
+        private bool CanSetForcedTarget => MannedByColonist;
+        public override LocalTargetInfo CurrentTarget => currentTargetInt;
+        public CompEquippable GunCompEq => Gun.TryGetComp<CompEquippable>();
+        private bool WarmingUp => this.burstWarmupTicksLeft > 0;
+        private bool CanToggleHoldFire => base.Faction == Faction.OfPlayer || this.MannedByColonist;
+        private bool MannedByColonist => mannableComp?.ManningPawn != null && this.mannableComp.ManningPawn.Faction == Faction.OfPlayer;
+
         public Thing Gun
         {
             get
@@ -109,9 +74,9 @@ namespace CombatExtended
                     InitGun();
                     
                     // FIXME: Hack to make player-crafted turrets spawn unloaded
-                    if (Map != null && !Map.IsPlayerHome && compAmmo != null)
+                    if (Map != null && !Map.IsPlayerHome)
                     {
-                        compAmmo.ResetAmmoCount();
+                        compAmmo?.ResetAmmoCount();
                     }
                 }
                 return this.gunInt;
@@ -123,7 +88,7 @@ namespace CombatExtended
         {
             get
             {
-                if (CompAmmo != null && CompAmmo.CurrentAmmo != null)
+                if (CompAmmo?.CurrentAmmo != null)
                 {
                 	return CompAmmo.CurAmmoProjectile;
                 }
@@ -261,7 +226,7 @@ namespace CombatExtended
                     b = this.forcedTarget.Cell.ToVector3Shifted();
                 }
                 Vector3 a = this.TrueCenter();
-                b.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays);
+                b.y = AltitudeLayer.MetaOverlays.AltitudeFor();
                 a.y = b.y;
                 GenDraw.DrawLineBetween(a, b, Building_TurretGun.ForcedTargetLineMat);
             }
@@ -325,7 +290,7 @@ namespace CombatExtended
                 stringBuilder.AppendLine("CanFireIn".Translate() + ": " + this.burstCooldownTicksLeft.ToStringSecondsFromTicks());
             }
 
-            if (CompAmmo != null && CompAmmo.Props.ammoSet != null)
+            if (CompAmmo?.Props.ammoSet != null)
             {
                 stringBuilder.AppendLine("CE_AmmoSet".Translate() + ": " + CompAmmo.Props.ammoSet.LabelCap);
             }
@@ -347,8 +312,7 @@ namespace CombatExtended
 
         private bool IsValidTarget(Thing t)
         {
-            Pawn pawn = t as Pawn;
-            if (pawn != null)
+            if (t is Pawn pawn)
             {
                 //if (this.GunCompEq.PrimaryVerb.verbProps.projectileDef.projectile.flyOverhead)
             	if (Projectile.projectile.flyOverhead)
@@ -653,16 +617,18 @@ namespace CombatExtended
                 // Stop forced attack gizmo
                 if (forcedTarget.IsValid)
                 {
-                    Command_Action stop = new Command_Action();
-                    stop.defaultLabel = "CommandStopForceAttack".Translate();
-                    stop.defaultDesc = "CommandStopForceAttackDesc".Translate();
-                    stop.icon = ContentFinder<Texture2D>.Get("UI/Commands/Halt", true);
-                    stop.action = delegate
+                    Command_Action stop = new Command_Action
                     {
-                        ResetForcedTarget();
-                        SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                        defaultLabel = "CommandStopForceAttack".Translate(),
+                        defaultDesc = "CommandStopForceAttackDesc".Translate(),
+                        icon = ContentFinder<Texture2D>.Get("UI/Commands/Halt", true),
+                        action = delegate
+                        {
+                            ResetForcedTarget();
+                            SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                        }
                     };
-                    if (!this.forcedTarget.IsValid)
+                    if (!forcedTarget.IsValid)
                     {
                         stop.Disable("CommandStopAttackFailNotForceAttacking".Translate());
                     }

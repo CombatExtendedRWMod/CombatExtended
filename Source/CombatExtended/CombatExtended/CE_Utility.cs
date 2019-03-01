@@ -310,9 +310,8 @@ namespace CombatExtended
         	{
         		return (thing as Plant).def.graphicData.shadowData.volume.x;
         	}*/
-        	
-            var pawn = thing as Pawn;
-            if (pawn != null)
+
+            if (thing is Pawn pawn)
             {
             	return GetCollisionBodyFactors(pawn).x;
             }
@@ -386,17 +385,13 @@ namespace CombatExtended
             if (pawn != null)
             {
                 CompInventory comp = pawn.TryGetComp<CompInventory>();
-                if (comp != null)
-                {
-                    comp.UpdateInventory();
-                }
+                comp?.UpdateInventory();
             }
         }
 
         public static void TryUpdateInventory(ThingOwner owner)
         {
-            Pawn pawn = owner?.Owner?.ParentHolder as Pawn;
-            if (pawn != null)
+            if (owner?.Owner?.ParentHolder is Pawn pawn)
             {
                 TryUpdateInventory(pawn);
             }

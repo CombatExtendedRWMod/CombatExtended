@@ -75,7 +75,7 @@ namespace CombatExtended
                         var shieldDef = shield.def.GetModExtension<ShieldDefExtension>();
                         if (shieldDef == null)
                         {
-                            Log.ErrorOnce("CE :: shield " + shield.def.ToString() + " is Apparel_Shield but has no ShieldDefExtension", shield.def.GetHashCode() + 12748102);
+                            Log.ErrorOnce("CE :: shield " + shield.def + " is Apparel_Shield but has no ShieldDefExtension", shield.def.GetHashCode() + 12748102);
                         }
                         else
                         {
@@ -95,15 +95,14 @@ namespace CombatExtended
                         dinfo.SetAmount(0);
 
                         // Apply secondary damage to shield
-                        var props = dinfo.Weapon?.projectile as ProjectilePropertiesCE;
-                        if (props != null && !props.secondaryDamage.NullOrEmpty())
+                        if (dinfo.Weapon?.projectile is ProjectilePropertiesCE props && !props.secondaryDamage.NullOrEmpty())
                         {
                             foreach(SecondaryDamage sec in props.secondaryDamage)
                             {
                                 if (shield.Destroyed) break;
                                 var secDinfo = sec.GetDinfo();
                                 var pen = originalDinfo.ArmorPenetrationInt; //GetPenetrationValue(originalDinfo);
-                                var dmg = (float)secDinfo.Amount;
+                                var dmg = secDinfo.Amount;
                                 TryPenetrateArmor(secDinfo.Def, shield.GetStatValue(secDinfo.Def.armorCategory.armorRatingStat), ref pen, ref dmg, shield);
                             }
                         }
@@ -210,9 +209,9 @@ namespace CombatExtended
             bool deflected = isSharpDmg && armorAmount > rand;
 
             // Apply damage reduction
-            float dmgMult = 1;
+            float dmgMult;
             DamageDefExtensionCE defCE = def.GetModExtension<DamageDefExtensionCE>() ?? new DamageDefExtensionCE();
-            if (deflected && defCE != null && defCE.noDamageOnDeflect) dmgMult = 0;
+            if (deflected && defCE.noDamageOnDeflect) dmgMult = 0;
             else dmgMult = dmgMultCurve.Evaluate(penAmount / armorAmount);
             float newDmgAmount = dmgAmount * dmgMult;
             float newPenAmount = penAmount * dmgMult;
@@ -322,8 +321,7 @@ namespace CombatExtended
         /// <param name="parryThing">Thing taking the damage</param>
         public static void ApplyParryDamage(DamageInfo dinfo, Thing parryThing)
         {
-            Pawn pawn = parryThing as Pawn;
-            if (pawn != null)
+            if (parryThing is Pawn pawn)
             {
                 // Pawns run their own armor calculations
                 dinfo.SetAmount(Mathf.CeilToInt(dinfo.Amount * Rand.Range(0f, 0.5f)));

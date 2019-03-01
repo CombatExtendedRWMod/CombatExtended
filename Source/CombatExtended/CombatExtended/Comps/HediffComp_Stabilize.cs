@@ -19,8 +19,9 @@ namespace CombatExtended
         private bool stabilized = false;
         private float bleedModifier = 1;
 
-        public HediffCompProperties_Stabilize Props { get { return props as HediffCompProperties_Stabilize; } }
-        public bool Stabilized { get { return stabilized; } }
+        public HediffCompProperties_Stabilize Props => props as HediffCompProperties_Stabilize;
+        public bool Stabilized => stabilized;
+
         public float BleedModifier
         {
             get

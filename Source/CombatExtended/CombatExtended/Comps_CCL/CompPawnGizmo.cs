@@ -7,8 +7,7 @@ namespace CombatExtended
     {
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            var pawn = parent as Pawn;
-            var equip = pawn != null
+            var equip = parent is Pawn pawn
                 ? pawn.equipment.Primary
                 : null;
 
@@ -19,10 +18,8 @@ namespace CombatExtended
             {
                 foreach( var comp in equip.AllComps )
                 {
-                    var gizmoGiver = comp as CompRangedGizmoGiver;
-                    if(
-                        ( gizmoGiver != null )&&
-                        ( gizmoGiver.isRangedGiver )
+                    if(( comp is CompRangedGizmoGiver gizmoGiver ) &&
+                       ( gizmoGiver.isRangedGiver )
                     )
                     {
                         foreach( var gizmo in gizmoGiver.CompGetGizmosExtra() )

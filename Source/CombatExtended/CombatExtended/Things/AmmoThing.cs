@@ -25,7 +25,7 @@ namespace CombatExtended
         {
             get
             {
-                if (AmmoDef != null && AmmoDef.ammoClass != null)
+                if (AmmoDef?.ammoClass != null)
                 {
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.AppendLine(base.DescriptionFlavor);
@@ -59,7 +59,7 @@ namespace CombatExtended
             {
                 if (HitPoints - dinfo.Amount > 0)
                 {
-                    numToCookOff += Mathf.RoundToInt(def.stackLimit * ((float)dinfo.Amount / HitPoints) * (def.smallVolume ? Rand.Range(1f, 2f) : Rand.Range(0.0f, 1f)));
+                    numToCookOff += Mathf.RoundToInt(def.stackLimit * (dinfo.Amount / HitPoints) * (def.smallVolume ? Rand.Range(1f, 2f) : Rand.Range(0.0f, 1f)));
                 }
                 else TryDetonate(Mathf.Lerp(1, Mathf.Min(5, stackCount), stackCount / def.stackLimit));
             }
@@ -127,8 +127,8 @@ namespace CombatExtended
             }
             // Create sound and flash effects
             if (AmmoDef.cookOffFlashScale > 0.01) MoteMaker.MakeStaticMote(Position, Map, ThingDefOf.Mote_ShotFlash, AmmoDef.cookOffFlashScale);
-            if (AmmoDef.cookOffSound != null) AmmoDef.cookOffSound.PlayOneShot(new TargetInfo(Position, Map));
-            if (AmmoDef.cookOffTailSound != null) AmmoDef.cookOffTailSound.PlayOneShotOnCamera();
+            AmmoDef.cookOffSound?.PlayOneShot(new TargetInfo(Position, Map));
+            AmmoDef.cookOffTailSound?.PlayOneShotOnCamera();
 
             return true;
         }

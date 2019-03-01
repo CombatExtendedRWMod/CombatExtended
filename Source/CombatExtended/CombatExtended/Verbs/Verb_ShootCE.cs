@@ -121,8 +121,7 @@ namespace CombatExtended
                 }
                 else
                 {
-                    Building_TurretGunCE turret = caster as Building_TurretGunCE;
-                    if (turret != null)
+                    if (caster is Building_TurretGunCE turret)
                     {
                         turret.burstWarmupTicksLeft += aimTicks;
                         this.isAiming = true;
@@ -158,20 +157,12 @@ namespace CombatExtended
             else if (this.xpTicks > 0)
             {
                 // Reward XP to shooter pawn
-                if (this.ShooterPawn != null && this.ShooterPawn.skills != null)
+                if (ShooterPawn?.skills != null)
                 {
                     float xpPerTick = objectXP;
-                    Pawn targetPawn = this.currentTarget.Thing as Pawn;
-                    if (targetPawn != null)
+                    if (this.currentTarget.Thing is Pawn targetPawn)
                     {
-                        if (targetPawn.HostileTo(Shooter.Faction))
-                        {
-                            xpPerTick = hostileXP;
-                        }
-                        else
-                        {
-                            xpPerTick = pawnXP;
-                        }
+                        xpPerTick = targetPawn.HostileTo(Shooter.Faction) ? hostileXP : pawnXP;
                     }
                     this.ShooterPawn.skills.Learn(SkillDefOf.Shooting, Mathf.Max(xpPerTick * xpTicks, 1));
                 }
@@ -185,10 +176,7 @@ namespace CombatExtended
         public override void Notify_EquipmentLost()
         {
             base.Notify_EquipmentLost();
-            if (this.CompFireModes != null)
-            {
-                this.CompFireModes.ResetModes();
-            }
+            CompFireModes?.ResetModes();
             caster = null;
         }
 
@@ -218,10 +206,7 @@ namespace CombatExtended
             if (base.TryCastShot())
             {
 				//Required since Verb_Shoot does this but Verb_LaunchProjectileCE doesn't when calling base.TryCastShot() because Shoot isn't its base
-				if (ShooterPawn != null)
-				{
-					ShooterPawn.records.Increment(RecordDefOf.ShotsFired);
-				}
+                ShooterPawn?.records.Increment(RecordDefOf.ShotsFired);
                 //Drop casings
                 if (VerbPropsCE.ejectsCasings && projectilePropsCE.dropsCasings)
                 {
@@ -236,22 +221,14 @@ namespace CombatExtended
 						{
 							MoteMaker.MakeStaticMote(caster.Position, caster.Map, ThingDefOf.Mote_ShotFlash, VerbPropsCE.muzzleFlashScale);
 						}
-						if (VerbPropsCE.soundCast != null)
-						{
-							VerbPropsCE.soundCast.PlayOneShot(new TargetInfo(caster.Position, caster.Map));
-						}
-						if (VerbPropsCE.soundCastTail != null)
-						{
-							VerbPropsCE.soundCastTail.PlayOneShotOnCamera();
-						}
-						if (ShooterPawn != null)
-						{
-							if (ShooterPawn.thinker != null)
-							{
-								ShooterPawn.mindState.lastEngageTargetTick = Find.TickManager.TicksGame;
-							}
-						}
-                	}
+
+                        VerbPropsCE.soundCast?.PlayOneShot(new TargetInfo(caster.Position, caster.Map));
+                        VerbPropsCE.soundCastTail?.PlayOneShotOnCamera();
+                        if (ShooterPawn?.thinker != null)
+                        {
+                            ShooterPawn.mindState.lastEngageTargetTick = Find.TickManager.TicksGame;
+                        }
+                    }
                 	return CompAmmo.Notify_PostShotFired();
                 }
                 return true;

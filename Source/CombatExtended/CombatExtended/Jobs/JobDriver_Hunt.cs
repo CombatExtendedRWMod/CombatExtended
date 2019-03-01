@@ -36,16 +36,15 @@ namespace CombatExtended
 
             yield return Toils_Reserve.Reserve(VictimInd, 1);
 
-            var init = new Toil();
-            init.initAction = delegate
+            var init = new Toil
             {
-                jobStartTick = Find.TickManager.TicksGame;
+                initAction = delegate { jobStartTick = Find.TickManager.TicksGame; }
             };
             yield return init;
             
             yield return Toils_Combat.TrySetJobToUseAttackVerb(TargetIndex.A);
 
-            var comp = (pawn.equipment != null && pawn.equipment.Primary != null) ? pawn.equipment.Primary.TryGetComp<CompAmmoUser>() : null;
+            var comp = pawn.equipment?.Primary?.TryGetComp<CompAmmoUser>();
             var startCollectCorpse = StartCollectCorpseToil();
             var gotoCastPos = GotoCastPosition(VictimInd, true).JumpIfDespawnedOrNull(VictimInd, startCollectCorpse).FailOn(() => Find.TickManager.TicksGame > jobStartTick + MaxHuntTicks);
             
@@ -131,13 +130,7 @@ namespace CombatExtended
             }
         }
 
-        Corpse Corpse
-        {
-            get
-            {
-                return job.GetTarget(TargetIndex.A).Thing as Corpse;
-            }
-        }
+        Corpse Corpse => job.GetTarget(TargetIndex.A).Thing as Corpse;
 
         public override void ExposeData()
         {

@@ -26,20 +26,13 @@ namespace CombatExtended
         private TargetIndex indWeapon => TargetIndex.B;
         private ThingWithComps weapon => TargetThingB as ThingWithComps; //intentionally non-caching.
 
-        private bool weaponEquipped { get { return pawn?.equipment?.Primary == weapon; } }
-        private bool weaponInInventory { get { return pawn?.inventory?.innerContainer.Contains(weapon) ?? false; } }
+        private bool weaponEquipped => pawn?.equipment?.Primary == weapon;
+        private bool weaponInInventory => pawn?.inventory?.innerContainer.Contains(weapon) ?? false;
 
         /// <summary>
         /// Gets and caches the CompAmmoUser.
         /// </summary>
-        private CompAmmoUser compReloader
-        {
-            get
-            {
-                if (_compReloader == null) _compReloader = weapon.TryGetComp<CompAmmoUser>();
-                return _compReloader;
-            }
-        }
+        private CompAmmoUser compReloader => _compReloader ?? (_compReloader = weapon.TryGetComp<CompAmmoUser>());
 
         #endregion Properties
 

@@ -26,71 +26,31 @@ namespace CombatExtended
 
         #region Properties
 
-        public CompProperties_AmmoUser Props
-        {
-            get
-            {
-                return (CompProperties_AmmoUser)props;
-            }
-        }
+        public CompProperties_AmmoUser Props => (CompProperties_AmmoUser)props;
+        public int CurMagCount => curMagCountInt;
+        public CompEquippable CompEquippable => parent.GetComp<CompEquippable>();
 
-        public int CurMagCount
-        {
-            get
-            {
-                return curMagCountInt;
-            }
-        }
-        public CompEquippable CompEquippable
-        {
-            get { return parent.GetComp<CompEquippable>(); }
-        }
         public Pawn Wielder
         {
             get
             {
-                if (CompEquippable == null || CompEquippable.PrimaryVerb == null || CompEquippable.PrimaryVerb.caster == null)
+                if (CompEquippable?.PrimaryVerb?.caster == null)
                 {
                     return null;
                 }
                 return CompEquippable.PrimaryVerb.CasterPawn;
             }
         }
-        public Pawn Holder
-        {
-            get
-            {
-                return Wielder ?? (CompEquippable.parent.ParentHolder as Pawn_InventoryTracker)?.pawn;
-            }
-        }
-        public bool UseAmmo
-        {
-            get
-            {
-                return Controller.settings.EnableAmmoSystem && Props.ammoSet != null;
-            }
-        }
-        public bool HasAndUsesAmmoOrMagazine
-        {
-            get
-            {
-                return !UseAmmo || HasAmmoOrMagazine;
-            }
-        }
-        public bool HasAmmoOrMagazine
-        {
-            get
-            {
-                return (HasMagazine && CurMagCount > 0) || HasAmmo;
-            }
-        }
-        public bool CanBeFiredNow
-        {
-            get
-            {
-                return !UseAmmo || ((HasMagazine && CurMagCount > 0) || (!HasMagazine && HasAmmo));
-            }
-        }
+        public Pawn Holder => Wielder ?? (CompEquippable.parent.ParentHolder as Pawn_InventoryTracker)?.pawn;
+
+        public bool UseAmmo => Controller.settings.EnableAmmoSystem && Props.ammoSet != null;
+
+        public bool HasAndUsesAmmoOrMagazine => !UseAmmo || HasAmmoOrMagazine;
+
+        public bool HasAmmoOrMagazine => (HasMagazine && CurMagCount > 0) || HasAmmo;
+
+        public bool CanBeFiredNow => !UseAmmo || ((HasMagazine && CurMagCount > 0) || (!HasMagazine && HasAmmo));
+
         public bool HasAmmo
         {
             get
@@ -98,22 +58,12 @@ namespace CombatExtended
                 return CompInventory != null && CompInventory.ammoList.Any(x => Props.ammoSet.ammoTypes.Any(a => a.ammo == x.def));
             }
         }
-        public bool HasMagazine { get { return Props.magazineSize > 0; } }
-        public AmmoDef CurrentAmmo
-        {
-            get
-            {
-                return UseAmmo ? currentAmmoInt : null;
-            }
-        }
+        public bool HasMagazine => Props.magazineSize > 0;
+
+        public AmmoDef CurrentAmmo => UseAmmo ? currentAmmoInt : null;
         public ThingDef CurAmmoProjectile => Props.ammoSet?.ammoTypes?.FirstOrDefault(x => x.ammo == CurrentAmmo).projectile;
-        public CompInventory CompInventory
-        {
-            get
-            {
-                return Holder.TryGetComp<CompInventory>();
-            }
-        }
+        public CompInventory CompInventory => Holder.TryGetComp<CompInventory>();
+
         private IntVec3 Position
         {
             get
@@ -137,10 +87,7 @@ namespace CombatExtended
 
         public AmmoDef SelectedAmmo
         {
-            get
-            {
-                return selectedAmmo;
-            }
+            get => selectedAmmo;
             set
             {
                 selectedAmmo = value;
@@ -260,10 +207,7 @@ namespace CombatExtended
             }
             // Reduce ammo count and update inventory
             curMagCountInt--;
-            if (CompInventory != null)
-            {
-                CompInventory.UpdateInventory();
-            }
+            CompInventory?.UpdateInventory();
             if (curMagCountInt < 0) TryStartReload();
             return true;
         }
@@ -425,7 +369,7 @@ namespace CombatExtended
                         newMagCount = Props.magazineSize;
                         ammoThing.stackCount -= Props.magazineSize;
                     }
-                    if (CompInventory != null) CompInventory.UpdateInventory();
+                    CompInventory?.UpdateInventory();
                 }
 
                 // If there's less ammo in inventory than the weapon can hold, or if there's only one bullet left if reloading one at a time
@@ -448,7 +392,7 @@ namespace CombatExtended
             }
             curMagCountInt = newMagCount;
             if (turret != null) turret.isReloading = false;
-            if (parent.def.soundInteract != null) parent.def.soundInteract.PlayOneShot(new TargetInfo(Position, Find.CurrentMap, false));
+            parent.def.soundInteract?.PlayOneShot(new TargetInfo(Position, Find.CurrentMap, false));
         }
 
         /// <summary>

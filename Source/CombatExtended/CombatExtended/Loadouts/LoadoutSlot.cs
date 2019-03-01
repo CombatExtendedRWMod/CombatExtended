@@ -74,19 +74,19 @@ namespace CombatExtended
 
         #region Properties
 
-        public int count { get { return _count; } set { _count = value; } }
-        public LoadoutCountType countType { get { return _countType; } set { _countType = value; } }
-        public ThingDef thingDef { get { return (_def is ThingDef) ? (ThingDef)_def : null; } }
-        public LoadoutGenericDef genericDef { get { return (_def is LoadoutGenericDef) ? (LoadoutGenericDef)_def : null; } }
-        
+        public int count { get => _count; set => _count = value;}
+        public LoadoutCountType countType { get => _countType; set => _countType = value;}
+        public ThingDef thingDef => (_def is ThingDef def) ? def : null;
+        public LoadoutGenericDef genericDef => (_def is LoadoutGenericDef) ? (LoadoutGenericDef)_def : null;
+
         // hand out some properties/fields of internal def for when user doesn't need to know specific/generic.
-        public string label { get { return _def.label; } }
-        public string LabelCap { get { return _def.LabelCap; } }
-        
+        public string label => _def.label;
+        public string LabelCap => _def.LabelCap;
+
         // hide where the bulk/mass came from.  Higher level doesn't care as long as it has a number.
-        public float bulk { get { return (thingDef != null ? thingDef.GetStatValueAbstract(CE_StatDefOf.Bulk) : genericDef.bulk); } }
-        public float mass { get { return (thingDef != null ? thingDef.GetStatValueAbstract(StatDefOf.Mass) : genericDef.mass); } }
-        
+        public float bulk => thingDef?.GetStatValueAbstract(CE_StatDefOf.Bulk) ?? genericDef.bulk;
+        public float mass => thingDef?.GetStatValueAbstract(StatDefOf.Mass) ?? genericDef.mass;
+
         //public ThingDef def { get { return _def; } set { _def = value; } }
 
         #endregion Properties

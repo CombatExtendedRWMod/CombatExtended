@@ -119,11 +119,10 @@ namespace CombatExtended
             yield return waitToil.WithProgressBarToilDelay(TargetIndex.A);
 
             //Actual reloader
-            Toil reloadToil = new Toil();
-            reloadToil.defaultCompleteMode = ToilCompleteMode.Instant;
-            reloadToil.initAction = delegate
+            Toil reloadToil = new Toil
             {
-                compReloader.LoadAmmo(ammo);
+                defaultCompleteMode = ToilCompleteMode.Instant,
+                initAction = delegate { compReloader.LoadAmmo(ammo); }
             };
             //if (compReloader.useAmmo) reloadToil.EndOnDespawnedOrNull(TargetIndex.B);
             yield return reloadToil;

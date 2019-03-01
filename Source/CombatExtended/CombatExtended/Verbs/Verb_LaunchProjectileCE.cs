@@ -120,7 +120,7 @@ namespace CombatExtended
         {
             get
             {
-                if (CompAmmo != null && CompAmmo.CurrentAmmo != null)
+                if (CompAmmo?.CurrentAmmo != null)
                 {
                     return CompAmmo.CurAmmoProjectile;
                 }
@@ -165,7 +165,7 @@ namespace CombatExtended
         /// </summary>
         /// <param name="caster">What thing is equipping the projectile launcher</param>
         private float CasterShootingAccuracyValue(Thing caster) => // ShootingAccuracy was split into ShootingAccuracyPawn and ShootingAccuracyTurret
-            (caster as Pawn != null) ? caster.GetStatValue(StatDefOf.ShootingAccuracyPawn) : caster.GetStatValue(StatDefOf.ShootingAccuracyTurret);
+            (caster is Pawn) ? caster.GetStatValue(StatDefOf.ShootingAccuracyPawn) : caster.GetStatValue(StatDefOf.ShootingAccuracyTurret);
 
         /// <summary>
         /// Resets current burst shot count and estimated distance at beginning of the burst
@@ -185,7 +185,7 @@ namespace CombatExtended
                 new BattleLogEntry_RangedFire(
                     Shooter,
                     (!currentTarget.HasThing) ? null : currentTarget.Thing,
-                    (EquipmentSource == null) ? null : EquipmentSource.def,
+                    EquipmentSource?.def,
                     Projectile,
                     VerbPropsCE.burstShotCount > 1)
             );
@@ -198,7 +198,7 @@ namespace CombatExtended
         {
             if (!calculateMechanicalOnly)
             {
-                Vector3 u = CasterPawn != null ? CasterPawn.DrawPos : caster.Position.ToVector3Shifted();
+                Vector3 u = CasterPawn?.DrawPos ?? caster.Position.ToVector3Shifted();
                 sourceLoc.Set(u.x, u.z);
 
                 if (numShotsFired == 0)
@@ -337,21 +337,23 @@ namespace CombatExtended
         public virtual ShiftVecReport ShiftVecReportFor(LocalTargetInfo target)
         {
             IntVec3 targetCell = target.Cell;
-            ShiftVecReport report = new ShiftVecReport();
-            report.target = target;
-            report.aimingAccuracy = AimingAccuracy;
-            report.sightsEfficiency = SightsEfficiency;
-            report.shotDist = (targetCell - caster.Position).LengthHorizontal;
-            report.maxRange = verbProps.range;
+            ShiftVecReport report = new ShiftVecReport
+            {
+                target = target,
+                aimingAccuracy = AimingAccuracy,
+                sightsEfficiency = SightsEfficiency,
+                shotDist = (targetCell - caster.Position).LengthHorizontal,
+                maxRange = verbProps.range,
+                lightingShift = 1 - caster.Map.glowGrid.GameGlowAt(targetCell)
+            };
 
-            report.lightingShift = 1 - caster.Map.glowGrid.GameGlowAt(targetCell);
             if (!caster.Position.Roofed(caster.Map) || !targetCell.Roofed(caster.Map))  //Change to more accurate algorithm?
             {
                 report.weatherShift = 1 - caster.Map.weatherManager.CurWeatherAccuracyMultiplier;
             }
             report.shotSpeed = ShotSpeed;
             report.swayDegrees = SwayAmplitude;
-            var spreadmult = projectilePropsCE != null ? projectilePropsCE.spreadMult : 0f;
+            var spreadmult = projectilePropsCE?.spreadMult ?? 0f;
             report.spreadDegrees = EquipmentSource.GetStatValue(StatDef.Named("ShotSpread")) * spreadmult;
             Thing cover;
             float smokeDensity;
@@ -401,7 +403,7 @@ namespace CombatExtended
                 if (i <= cells.Length / 2)
                 {
                     Pawn pawn = cell.GetFirstPawn(map);
-                    Thing newCover = pawn == null ? cell.GetCover(map) : pawn;
+                    Thing newCover = pawn ?? cell.GetCover(map);
                     float newCoverHeight = new CollisionVertical(newCover).Max;
 
                     // Cover check, if cell has cover compare collision height and get the highest piece of cover, ignore if cover is the target (e.g. solar panels, crashed ship, etc)
@@ -682,8 +684,7 @@ namespace CombatExtended
                 {
                     Vector3 targDrawPos = targetThing.DrawPos;
                     targetPos = new Vector3(targDrawPos.x, new CollisionVertical(targetThing).Max, targDrawPos.z);
-                    var targPawn = targetThing as Pawn;
-                    if (targPawn != null)
+                    if (targetThing is Pawn targPawn)
                     {
                         targetPos += targPawn.Drawer.leaner.LeanOffset * 0.5f;
                     }

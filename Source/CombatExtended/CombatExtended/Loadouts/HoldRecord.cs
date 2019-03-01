@@ -45,11 +45,11 @@ namespace CombatExtended
 		/// <summary>
 		/// If the item hasn't been picked up is it still valid to remember?
 		/// </summary>
-		public bool isTimeValid	{ get { return !pickedUp && ((GenTicks.TicksAbs - _tickJobIssued) <= INVALIDTICKS); } }
-		
-		public ThingDef thingDef { get { return this._def; } }
-		
-		#endregion
+		public bool isTimeValid => !pickedUp && ((GenTicks.TicksAbs - _tickJobIssued) <= INVALIDTICKS);
+
+        public ThingDef thingDef => this._def;
+
+        #endregion
 		
 		#region Methods
 		/// <summary>

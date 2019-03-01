@@ -18,107 +18,27 @@ namespace CombatExtended
         private int ticksToNextCleanUp = GenTicks.TicksAbs;
         private float currentWeightCached;
         private float currentBulkCached;
-        private List<Thing> ammoListCached = new List<Thing>();
-        private List<ThingWithComps> meleeWeaponListCached = new List<ThingWithComps>();
-        private List<ThingWithComps> rangedWeaponListCached = new List<ThingWithComps>();
+        private readonly List<Thing> ammoListCached = new List<Thing>();
+        private readonly List<ThingWithComps> meleeWeaponListCached = new List<ThingWithComps>();
+        private readonly List<ThingWithComps> rangedWeaponListCached = new List<ThingWithComps>();
 
         #endregion
 
         #region Properties
 
-        public CompProperties_Inventory Props
-        {
-            get
-            {
-                return (CompProperties_Inventory)props;
-            }
-        }
+        public CompProperties_Inventory Props => (CompProperties_Inventory)props;
 
-        public float currentWeight
-        {
-            get
-            {
-                return currentWeightCached;
-            }
-        }
-        public float currentBulk
-        {
-            get
-            {
-                return currentBulkCached;
-            }
-        }
-        private float availableWeight
-        {
-            get
-            {
-                return capacityWeight - currentWeight;
-            }
-        }
-        private float availableBulk
-        {
-            get
-            {
-                return capacityBulk - currentBulk;
-            }
-        }
-        public float capacityBulk
-        {
-            get
-            {
-                return parentPawn.GetStatValue(CE_StatDefOf.CarryBulk);
-            }
-        }
-        public float capacityWeight
-        {
-            get
-            {
-                return parentPawn.GetStatValue(CE_StatDefOf.CarryWeight);
-            }
-        }
-        private Pawn parentPawn
-        {
-            get
-            {
-                if (parentPawnInt == null)
-                {
-                    parentPawnInt = parent as Pawn;
-                }
-                return parentPawnInt;
-            }
-        }
-        public float moveSpeedFactor
-        {
-            get
-            {
-                return MassBulkUtility.MoveSpeedFactor(currentWeight, capacityWeight);
-            }
-        }
-        public float workSpeedFactor
-        {
-            get
-            {
-                return MassBulkUtility.WorkSpeedFactor(currentBulk, capacityBulk);
-            }
-        }
-        public float encumberPenalty
-        {
-            get
-            {
-                return MassBulkUtility.EncumberPenalty(currentWeight, capacityWeight);
-            }
-        }
-        public ThingOwner container
-        {
-            get
-            {
-                if (parentPawn.inventory != null)
-                {
-                    return parentPawn.inventory.innerContainer;
-                }
-                return null;
-            }
-        }
+        public float currentWeight => currentWeightCached;
+        public float currentBulk => currentBulkCached;
+        private float availableWeight => capacityWeight - currentWeight;
+        private float availableBulk => capacityBulk - currentBulk;
+        public float capacityBulk => parentPawn.GetStatValue(CE_StatDefOf.CarryBulk);
+        public float capacityWeight => parentPawn.GetStatValue(CE_StatDefOf.CarryWeight);
+        private Pawn parentPawn => parentPawnInt ?? (parentPawnInt = parent as Pawn);
+        public float moveSpeedFactor => MassBulkUtility.MoveSpeedFactor(currentWeight, capacityWeight);
+        public float workSpeedFactor => MassBulkUtility.WorkSpeedFactor(currentBulk, capacityBulk);
+        public float encumberPenalty => MassBulkUtility.EncumberPenalty(currentWeight, capacityWeight);
+        public ThingOwner container => parentPawn.inventory?.innerContainer;
         public List<Thing> ammoList => ammoListCached;
         public List<ThingWithComps> meleeWeaponList => meleeWeaponListCached;
         public List<ThingWithComps> rangedWeaponList => rangedWeaponListCached;
@@ -157,7 +77,7 @@ namespace CombatExtended
             float newWeight = 0f;
 
             // Add equipped weapon
-            if (parentPawn.equipment != null && parentPawn.equipment.Primary != null)
+            if (parentPawn.equipment?.Primary != null)
             {
                 GetEquipmentStats(parentPawn.equipment.Primary, out newWeight, out newBulk);
             }
@@ -165,7 +85,7 @@ namespace CombatExtended
             // Add apparel
             if (parentPawn.apparel != null && parentPawn.apparel.WornApparelCount > 0)
             {
-                foreach (Thing apparel in parentPawn.apparel.WornApparel)
+                foreach (Apparel apparel in parentPawn.apparel.WornApparel)
                 {
                     float apparelBulk = apparel.GetStatValue(CE_StatDefOf.WornBulk);
                     float apparelWeight = apparel.GetStatValue(StatDefOf.Mass);
@@ -177,7 +97,7 @@ namespace CombatExtended
             }
 
             // Add inventory items
-            if (parentPawn.inventory != null && parentPawn.inventory.innerContainer != null)
+            if (parentPawn.inventory?.innerContainer != null)
             {
                 ammoListCached.Clear();
                 meleeWeaponListCached.Clear();
@@ -217,12 +137,9 @@ namespace CombatExtended
                     {
                         ammoListCached.Add(thing);
                     }
-                    if (recs != null)
-					{
-                    	HoldRecord rec = recs.FirstOrDefault(hr => hr.thingDef == thing.def);
-						if (rec != null && !rec.pickedUp)
-							rec.pickedUp = true;
-					}
+                    HoldRecord rec = recs?.FirstOrDefault(hr => hr.thingDef == thing.def);
+                    if (rec != null && !rec.pickedUp)
+                        rec.pickedUp = true;
                 }
             }
             currentBulkCached = newBulk;
@@ -264,7 +181,7 @@ namespace CombatExtended
             // Subtract weight of currently equipped weapon
             float eqBulk = 0f;
             float eqWeight = 0f;
-            if (ignoreEquipment && parentPawn.equipment != null && parentPawn.equipment.Primary != null)
+            if (ignoreEquipment && parentPawn.equipment?.Primary != null)
             {
                 ThingWithComps eq = parentPawn.equipment.Primary;
                 GetEquipmentStats(eq, out eqWeight, out eqBulk);
@@ -282,7 +199,7 @@ namespace CombatExtended
             //old     weight = eq.GetStatValue(CE_StatDefOf.Weight);
                  bulk = eq.GetStatValue(CE_StatDefOf.Bulk);
             CompAmmoUser comp = eq.TryGetComp<CompAmmoUser>();
-            if (comp != null && comp.CurrentAmmo != null)
+            if (comp?.CurrentAmmo != null)
             {
                 weight += comp.CurrentAmmo.GetStatValueAbstract(StatDefOf.Mass) * comp.CurMagCount;
                 //old     weight += comp.currentAmmo.GetStatValueAbstract(CE_StatDefOf.Weight) * comp.curMagCount;
@@ -299,8 +216,7 @@ namespace CombatExtended
             ThingWithComps newEq = null;
 
             // Stop current job
-            if (parentPawn.jobs != null)
-                parentPawn.jobs.StopAll();
+            parentPawn.jobs?.StopAll();
 
             // Cycle through available ranged weapons
             foreach (ThingWithComps gun in rangedWeaponListCached)
@@ -358,8 +274,7 @@ namespace CombatExtended
             }
 
             // Stop current job
-            if (parentPawn.jobs != null)
-                parentPawn.jobs.StopAll();
+            parentPawn.jobs?.StopAll();
 
             if (parentPawn.equipment.Primary != null)
             {
@@ -377,8 +292,7 @@ namespace CombatExtended
                 }
             }
             parentPawn.equipment.AddEquipment((ThingWithComps)container.Take(newEq, 1));
-            if (newEq.def.soundInteract != null)
-                newEq.def.soundInteract.PlayOneShot(new TargetInfo(parent.Position, parent.MapHeld, false));
+            newEq.def.soundInteract?.PlayOneShot(new TargetInfo(parent.Position, parent.MapHeld, false));
         }
 
         public override void CompTick()

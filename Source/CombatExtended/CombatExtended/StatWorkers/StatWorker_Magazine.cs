@@ -25,14 +25,14 @@ namespace CombatExtended
             StringBuilder stringBuilder = new StringBuilder();
             var ammoProps = (req.Def as ThingDef)?.GetCompProperties<CompProperties_AmmoUser>();
             stringBuilder.AppendLine("CE_MagazineSize".Translate() + ": " + GenText.ToStringByStyle(ammoProps.magazineSize, ToStringStyle.Integer));
-            stringBuilder.AppendLine("CE_ReloadTime".Translate() + ": " + GenText.ToStringByStyle((ammoProps.reloadTime), ToStringStyle.FloatTwo) + " s");
+            stringBuilder.AppendLine("CE_ReloadTime".Translate() + ": " + ammoProps.reloadTime.ToStringByStyle(ToStringStyle.FloatTwo) + " s");
             return stringBuilder.ToString().TrimEndNewlines();
         }
 
         public override string GetStatDrawEntryLabel(StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq)
         {
             var ammoProps = (optionalReq.Def as ThingDef)?.GetCompProperties<CompProperties_AmmoUser>();
-            return ammoProps.magazineSize + " / " + GenText.ToStringByStyle((ammoProps.reloadTime), ToStringStyle.FloatTwo) + " s";
+            return ammoProps.magazineSize + " / " + (ammoProps.reloadTime).ToStringByStyle(ToStringStyle.FloatTwo) + " s";
         }
     }
 }

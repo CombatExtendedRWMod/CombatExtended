@@ -54,57 +54,68 @@ namespace CombatExtended
 			
 			// need to generate a list as that's how new defs are taken by DefDatabase.
 			List<LoadoutGenericDef> defs = new List<LoadoutGenericDef>();
-			
-			
-			LoadoutGenericDef generic = new LoadoutGenericDef();
-			generic.defName = "GenericMeal";
-			generic.description = "Generic Loadout for Meals.  Intended for compatibility with pawns automatically picking up a meal for themself.";
-			generic.label = "CE_Generic_Meal".Translate();
-            generic.defaultCountType = LoadoutCountType.pickupDrop; // Fits with disabling of RimWorld Pawn behavior of fetching meals themselves.
-            generic._lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability >= FoodPreferability.MealAwful && !td.IsDrug;
-			generic.isBasic = true;
-			
-			defs.Add(generic);
+
+
+            LoadoutGenericDef generic = new LoadoutGenericDef
+            {
+                defName = "GenericMeal",
+                description = "Generic Loadout for Meals.  Intended for compatibility with pawns automatically picking up a meal for themself.",
+                label = "CE_Generic_Meal".Translate(),
+                defaultCountType = LoadoutCountType.pickupDrop,
+                _lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability >= FoodPreferability.MealAwful && !td.IsDrug,
+                isBasic = true
+            };
+            // Fits with disabling of RimWorld Pawn behavior of fetching meals themselves.
+
+            defs.Add(generic);
 			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			
 			
 			float targetNutrition = 0.85f;
-			generic = new LoadoutGenericDef();
-			generic.defName = "GenericRawFood";
-			generic.description = "Generic Loadout for Raw Food.  Intended for compatibility with pawns automatically picking up raw food to train animals.";
-			generic.label = "CE_Generic_RawFood".Translate();
-			// Exclude drugs and corpses.  Also exclude any food worse than RawBad as in testing the pawns would not even pick it up for training.
-			generic._lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability <= FoodPreferability.RawTasty && td.ingestible.HumanEdible && td.plant == null && !td.IsDrug && !td.IsCorpse;
-			generic.defaultCount = Convert.ToInt32(Math.Floor(targetNutrition / everything.Where(td => generic.lambda(td)).Average(td => td.ingestible.CachedNutrition)));
+            generic = new LoadoutGenericDef
+            {
+                defName = "GenericRawFood",
+                description = "Generic Loadout for Raw Food.  Intended for compatibility with pawns automatically picking up raw food to train animals.",
+                label = "CE_Generic_RawFood".Translate(),
+                _lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability <= FoodPreferability.RawTasty &&
+                                td.ingestible.HumanEdible && td.plant == null && !td.IsDrug && !td.IsCorpse
+            };
+            // Exclude drugs and corpses.  Also exclude any food worse than RawBad as in testing the pawns would not even pick it up for training.
+            generic.defaultCount = Convert.ToInt32(Math.Floor(targetNutrition / everything.Where(td => generic.lambda(td)).Average(td => td.ingestible.CachedNutrition)));
 			//generic.defaultCount = 1;
 			generic.isBasic = false; // doesn't need to be in loadouts by default as animal interaction talks to HoldTracker now.
 			//TODO: Test pawns fetching raw food if no meal is available, if so then add a patch to have that talk to HoldTracker too.
 			
 			defs.Add(generic);
 			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label + " B(" + t.GetStatValueAbstract(CE_StatDefOf.Bulk) + ") M(" + t.GetStatValueAbstract(StatDefOf.Mass) + ")").ToArray())));
-			
-			
-			generic = new LoadoutGenericDef();
-			generic.defName = "GenericDrugs";
-			generic.defaultCount = 3;
-			generic.description = "Generic Loadout for Drugs.  Intended for compatibility with pawns automatically picking up drugs in compliance with drug policies.";
-			generic.label = "CE_Generic_Drugs".Translate();
-			generic.thingRequestGroup = ThingRequestGroup.Drug;
-			generic.isBasic = true;
-			
-			defs.Add(generic);
+
+
+            generic = new LoadoutGenericDef
+            {
+                defName = "GenericDrugs",
+                defaultCount = 3,
+                description = "Generic Loadout for Drugs.  Intended for compatibility with pawns automatically picking up drugs in compliance with drug policies.",
+                label = "CE_Generic_Drugs".Translate(),
+                thingRequestGroup = ThingRequestGroup.Drug,
+                isBasic = true
+            };
+
+            defs.Add(generic);
             //Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 
 
-            generic = new LoadoutGenericDef();
-            generic.defName = "GenericMedicine";
-            generic.defaultCount = 5;
-            generic.defaultCountType = LoadoutCountType.pickupDrop;
-            generic.description = "Generic Loadout for Medicine.  Intended for pawns which will handle triage activities.";
-            generic.label = "CE_Generic_Medicine".Translate();
-            generic.thingRequestGroup = ThingRequestGroup.Medicine;
+            generic = new LoadoutGenericDef
+            {
+                defName = "GenericMedicine",
+                defaultCount = 5,
+                defaultCountType = LoadoutCountType.pickupDrop,
+                description =
+                    "Generic Loadout for Medicine.  Intended for pawns which will handle triage activities.",
+                label = "CE_Generic_Medicine".Translate(),
+                thingRequestGroup = ThingRequestGroup.Medicine
+            };
 
-			// now for the guns and ammo...
+            // now for the guns and ammo...
 			
 			// Get a list of guns that are player acquireable (not menuHidden but could also go with not dropOnDeath) which have expected comps/compProperties/verbs.
 			List<ThingDef> guns = everything.Where(td => !td.menuHidden &&
@@ -117,16 +128,19 @@ namespace CombatExtended
 				// make sure the gun has ammo defined...
 				if (gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Count <= 0)
 					continue;
-				generic = new LoadoutGenericDef();
-				generic.defName = "GenericAmmo-" + gun.defName;
-				generic.description = string.Format(ammoDescription, gun.LabelCap);
-				generic.label = string.Format(ammoLabel, gun.LabelCap);
-				generic.defaultCount = gun.GetCompProperties<CompProperties_AmmoUser>().magazineSize;
-				generic.defaultCountType = LoadoutCountType.pickupDrop; // we want ammo to get picked up.
-				//generic._lambda = td => td is AmmoDef && gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Contains(td);
-				generic.thingRequestGroup = ThingRequestGroup.HaulableEver;
-				generic._lambda = td => td is AmmoDef && gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Any(al => al.ammo == td);
-				defs.Add(generic);
+                generic = new LoadoutGenericDef
+                {
+                    defName = "GenericAmmo-" + gun.defName,
+                    description = string.Format(ammoDescription, gun.LabelCap),
+                    label = string.Format(ammoLabel, gun.LabelCap),
+                    defaultCount = gun.GetCompProperties<CompProperties_AmmoUser>().magazineSize,
+                    defaultCountType = LoadoutCountType.pickupDrop,
+                    thingRequestGroup = ThingRequestGroup.HaulableEver,
+                    _lambda = td => td is AmmoDef && gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Any(al => al.ammo == td)
+                };
+                // we want ammo to get picked up.
+                //generic._lambda = td => td is AmmoDef && gun.GetCompProperties<CompProperties_AmmoUser>().ammoSet.ammoTypes.Contains(td);
+                defs.Add(generic);
 				//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			}
 			
@@ -141,9 +155,9 @@ namespace CombatExtended
 		/// <summary>
 		/// Property gets/runs the lambda defining what ThingDefs are accepted by this def.
 		/// </summary>
-		public Predicate<ThingDef> lambda { get { return _lambda; } }
-		
-		/// <summary>
+		public Predicate<ThingDef> lambda => _lambda;
+
+        /// <summary>
 		/// Property gets the calculated bulk of this def.  This is determined at runtime based on stored Lambda rather than a static value.
 		/// </summary>
 		public float bulk
@@ -177,8 +191,7 @@ namespace CombatExtended
 		/// <remarks>Can be a bit expensive but only done once per def the first time such values are requested.</remarks>
 		private void updateVars()
 		{
-			IEnumerable<ThingDef> matches;
-			matches = DefDatabase<ThingDef>.AllDefs.Where(td => lambda(td) && thingRequestGroup.Includes(td));
+            var matches = DefDatabase<ThingDef>.AllDefs.Where(td => lambda(td) && thingRequestGroup.Includes(td));
         	_bulk = matches.Max(t => t.GetStatValueAbstract(CE_StatDefOf.Bulk));
         	_mass = matches.Max(t => t.GetStatValueAbstract(StatDefOf.Mass));
         	_cachedVars = true;

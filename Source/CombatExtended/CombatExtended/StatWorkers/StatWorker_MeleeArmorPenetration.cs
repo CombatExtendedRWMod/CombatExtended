@@ -15,18 +15,18 @@ namespace CombatExtended
             var tools = req.Thing?.def.tools;
             if (tools.NullOrEmpty())
             {
-                return 0;
+                return 0f;
             }
             if (tools.Any(x=> !(x is ToolCE)))
             {
                 Log.Error($"Trying to get stat MeleePenetration from {req.Thing.def.defName} which has no support for Combat Extended.");
-                return 0;
+                return 0f;
             }
 
             float totalSelectionWeight = 0f;
-            for (int i = 0; i < tools.Count; i++)
+            foreach (var tool in tools)
             {
-                totalSelectionWeight += tools[i].chanceFactor;
+                totalSelectionWeight += tool.chanceFactor;
             }
             float totalAveragePen = 0f;
             foreach (ToolCE tool in tools)

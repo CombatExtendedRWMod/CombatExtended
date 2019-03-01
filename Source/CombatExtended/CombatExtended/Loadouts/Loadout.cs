@@ -74,9 +74,9 @@ namespace CombatExtended
         #region Properties
 
         public float Bulk { get { return _slots.Sum(slot => slot.bulk * slot.count); } }
-        public string LabelCap { get { return label.CapitalizeFirst(); } }
-        public int SlotCount { get { return _slots.Count; } }
-        public List<LoadoutSlot> Slots { get { return _slots; } }
+        public string LabelCap => label.CapitalizeFirst();
+        public int SlotCount => _slots.Count;
+        public List<LoadoutSlot> Slots => _slots;
         public float Weight { get { return _slots.Sum(slot => slot.mass * slot.count); } }
 
         #endregion Properties
@@ -102,12 +102,14 @@ namespace CombatExtended
         	if (reNum.IsMatch(newName))
         		newName = reNum.Replace(newName, @"$1");
         	newName = LoadoutManager.GetUniqueLabel(newName);
-        	
-        	Loadout dest = new Loadout(newName);
-        	dest.defaultLoadout = source.defaultLoadout;
-        	dest.canBeDeleted = source.canBeDeleted;
-        	dest._slots = new List<LoadoutSlot>();
-        	foreach(LoadoutSlot slot in source.Slots)
+
+            Loadout dest = new Loadout(newName)
+            {
+                defaultLoadout = source.defaultLoadout,
+                canBeDeleted = source.canBeDeleted,
+                _slots = new List<LoadoutSlot>()
+            };
+            foreach(LoadoutSlot slot in source.Slots)
         		dest.AddSlot(slot.Copy());
         	return dest;
         }

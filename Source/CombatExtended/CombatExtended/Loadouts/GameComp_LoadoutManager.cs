@@ -50,7 +50,7 @@ namespace CombatExtended
 
         public static Loadout DefaultLoadout { get { return _current != null ? _current._loadouts.First(l => l.defaultLoadout) : MakeDefaultLoadout(); } }
 
-        public static List<Loadout> Loadouts => _current != null ? _current._loadouts : null;
+        public static List<Loadout> Loadouts => _current?._loadouts;
 
         #endregion Properties
 
@@ -175,8 +175,7 @@ namespace CombatExtended
 
         public static void AddLoadout(Loadout loadout)
         {
-            if (_current == null) return;
-            _current._loadouts.Add(loadout);
+            _current?._loadouts.Add(loadout);
         }
 
         public static void RemoveLoadout(Loadout loadout)
@@ -195,8 +194,7 @@ namespace CombatExtended
         /// </summary>
         public static void SortLoadouts()
         {
-            if (_current == null) return;
-            _current._loadouts.Sort();
+            _current?._loadouts.Sort();
         }
 
         /// <summary>

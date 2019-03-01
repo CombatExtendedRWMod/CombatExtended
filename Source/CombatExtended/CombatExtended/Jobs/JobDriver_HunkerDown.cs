@@ -30,10 +30,12 @@ namespace CombatExtended
                 toilWait.actor.pather.StopDead();
             };
 
-            Toil toilNothing = new Toil();
-            //toilNothing.initAction = () => {};
-            toilNothing.defaultCompleteMode = ToilCompleteMode.Delay;
-            toilNothing.defaultDuration = GetUpCheckInterval;
+            Toil toilNothing = new Toil
+            {
+                //toilNothing.initAction = () => {};
+                defaultCompleteMode = ToilCompleteMode.Delay,
+                defaultDuration = GetUpCheckInterval
+            };
 
             // Start Toil
             yield return toilWait;

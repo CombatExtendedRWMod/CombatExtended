@@ -3,7 +3,6 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -87,7 +86,7 @@ namespace CombatExtended
 
         public static void DrawBarThreshold(Rect barRect, float pct, float curLevel = 1f)
         {
-            float thresholdBarWidth = (float)((barRect.width <= 60f) ? 1 : 2);
+            float thresholdBarWidth = (barRect.width <= 60f) ? 1f : 2f;
 
             Rect position = new Rect(barRect.x + barRect.width * pct - (thresholdBarWidth - 1f), barRect.y + barRect.height / 2f, thresholdBarWidth, barRect.height / 2f);
             Texture2D image;
@@ -291,8 +290,8 @@ namespace CombatExtended
         	Loadout loadout = new Loadout(newName);
         	loadout.defaultLoadout = false;
         	loadout.canBeDeleted = true;
-        	
-        	LoadoutSlot slot = null;
+
+            LoadoutSlot slot;
         	
         	// grab the pawn's current equipment as a loadoutslot.
         	if (pawn.equipment?.Primary != null)

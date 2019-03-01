@@ -9,13 +9,7 @@ namespace CombatExtended
 
         private string                      growthLabel = "MilkFullness".Translate();
 
-        private CompProperties_MilkableRenameable properties
-        {
-            get
-            {
-                return props as CompProperties_MilkableRenameable;
-            }
-        }
+        private CompProperties_MilkableRenameable properties => props as CompProperties_MilkableRenameable;
 
         public override void                Initialize( CompProperties props )
         {

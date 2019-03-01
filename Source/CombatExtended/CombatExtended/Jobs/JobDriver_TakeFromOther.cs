@@ -23,21 +23,13 @@ namespace CombatExtended
         /// <summary>
         /// Property that converts TargetIndex.A into a Thing object.
         /// </summary>
-		private Thing targetItem
-		{
-			get {
-				return pawn.CurJob.GetTarget(thingInd).Thing;
-			}
-		}
+		private Thing targetItem => pawn.CurJob.GetTarget(thingInd).Thing;
+
         /// <summary>
         /// Property that converts TargetIndex.B into a Thing object.
         /// </summary>
-		private Pawn takePawn
-		{
-			get {
-				return (Pawn)pawn.CurJob.GetTarget(sourceInd).Thing;
-			}
-		}
+		private Pawn takePawn => (Pawn)pawn.CurJob.GetTarget(sourceInd).Thing;
+
         /// <summary>
         /// Property which is used to indicate that the job was created with the expectation that the Pawn doing the job is to equip the thing they are taking.
         /// </summary>
@@ -46,13 +38,7 @@ namespace CombatExtended
         /// (in which case doesn't have a thing).  See the JobGiver_UpdateLoadout.cs file for how this is set as it's rather non-standard but we
         /// needed a way to store a bool value that could be saved into a Job.
         /// </remarks>
-		private bool doEquip
-		{
-			get
-			{
-				return pawn.CurJob.GetTarget(flagInd).HasThing;
-			}
-		}
+		private bool doEquip => pawn.CurJob.GetTarget(flagInd).HasThing;
 
         /// <summary>
         /// Generates the Job Report string displayed when clicking on a pawn working on this job.
@@ -114,8 +100,7 @@ namespace CombatExtended
                         if (doEquip)
                         {
                             CompInventory compInventory = pawn.TryGetComp<CompInventory>();
-                            if (compInventory != null)
-                                compInventory.TrySwitchToWeapon((ThingWithComps)targetItem);
+                            compInventory?.TrySwitchToWeapon((ThingWithComps)targetItem);
                         }
                     } else
                     {

@@ -50,12 +50,13 @@ namespace CombatExtended
             float maxDist = num;
 			Thing thing = (Thing)AttackTargetFinder.BestAttackTarget(pawn, TargetScanFlags.NeedLOSToPawns | TargetScanFlags.NeedLOSToNonPawns | TargetScanFlags.NeedReachableIfCantHitFromMyPos | TargetScanFlags.NeedThreat, null, 0f, maxDist, default(IntVec3), 3.40282347E+38f, false);
             // TODO evaluate if this is necessary?
-            Pawn o = thing as Pawn;
-            if (o != null) if
-                    (o.Downed || o.health.InPainShock)
+            if (thing is Pawn o)
+            {
+                if(o.Downed || o.health.InPainShock)
                 {
                     return null;
                 }
+            }
 
             if (thing == null)
             {
@@ -76,9 +77,7 @@ namespace CombatExtended
                 {
             		if (compAmmo.HasAmmo)
             		{
-                        Job job = new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary);
-                        if (job != null)
-                            return job;
+                        return new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary);
             		}
             		
             		return new Job(JobDefOf.AttackMelee, thing);

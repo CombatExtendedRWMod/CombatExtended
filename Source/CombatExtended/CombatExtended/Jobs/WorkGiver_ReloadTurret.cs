@@ -11,13 +11,7 @@ namespace CombatExtended
 {
     public class WorkGiver_ReloadTurret : WorkGiver_Scanner
     {
-        public override ThingRequest PotentialWorkThingRequest
-        {
-            get
-            {
-                return ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial); ;
-            }
-        }
+        public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial);
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
@@ -43,7 +37,7 @@ namespace CombatExtended
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Building_TurretGunCE turret = t as Building_TurretGunCE;
-            if (turret == null || turret.CompAmmo == null) return null;
+            if (turret?.CompAmmo == null) return null;
 
             if (!turret.CompAmmo.UseAmmo)
             {

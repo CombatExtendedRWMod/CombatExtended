@@ -21,7 +21,7 @@ namespace CombatExtended
      */
     internal static class AmmoInjector
     {
-        public static readonly FieldInfo _allRecipesCached = typeof(ThingDef).GetField("allRecipesCached", BindingFlags.Instance | BindingFlags.NonPublic);
+        private static readonly FieldInfo _allRecipesCached = typeof(ThingDef).GetField("allRecipesCached", BindingFlags.Instance | BindingFlags.NonPublic);
     	
         private const string enableTradeTag = "CE_AutoEnableTrade";             // The trade tag which designates ammo defs for being automatically switched to Tradeability.Stockable
         private const string enableCraftingTag = "CE_AutoEnableCrafting";        // The trade tag which designates ammo defs for having their crafting recipes automatically added to the crafting table
@@ -50,7 +50,7 @@ namespace CombatExtended
             }
         }
 
-        public static bool InjectAmmos()
+        private static bool InjectAmmos()
         {
         	bool enabled = Controller.settings.EnableAmmoSystem;
             if (enabled)
@@ -89,7 +89,7 @@ namespace CombatExtended
             foreach (ThingDef weaponDef in CE_Utility.allWeaponDefs)
             {
                 CompProperties_AmmoUser props = weaponDef.GetCompProperties<CompProperties_AmmoUser>();
-                if (props != null && props.ammoSet != null && !props.ammoSet.ammoTypes.NullOrEmpty())
+                if (props?.ammoSet != null && !props.ammoSet.ammoTypes.NullOrEmpty())
                 {
                     ammoDefs.UnionWith(props.ammoSet.ammoTypes.Select<AmmoLink, ThingDef>(x => x.ammo));
                 }
@@ -226,8 +226,7 @@ namespace CombatExtended
                     IEnumerable<Building> enumerable = Find.Maps.SelectMany(x => x.listerBuildings.AllBuildingsColonistOfDef(benchDef));
                     foreach (Building current in enumerable)
                     {
-                        var billGiver = current as IBillGiver;
-                        if (billGiver != null)
+                        if (current is IBillGiver billGiver)
                         {
                             for (int i = 0; i < billGiver.BillStack.Count; i++)
                             {

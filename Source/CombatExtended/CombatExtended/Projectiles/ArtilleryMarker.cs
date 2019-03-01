@@ -19,10 +19,7 @@ namespace CombatExtended
 
         private int lifetimeTicks = 1800;
 
-        public override string InspectStringAddon
-        {
-            get { return "CE_MarkedForArtillery".Translate() + " " + ((int)(lifetimeTicks / 60)).ToString() + " s"; }
-        }
+        public override string InspectStringAddon => "CE_MarkedForArtillery".Translate() + " " + lifetimeTicks / 60 + " s";
 
         public override void ExposeData()
         {
@@ -45,16 +42,13 @@ namespace CombatExtended
 
         public override void AttachTo(Thing parent)
         {
-            if (parent != null)
+            CompAttachBase comp = parent?.TryGetComp<CompAttachBase>();
+            if (comp != null)
             {
-                CompAttachBase comp = parent.TryGetComp<CompAttachBase>();
-                if (comp != null)
+                if (parent.HasAttachment(ThingDef.Named(ArtilleryMarker.MarkerDef)))
                 {
-                    if (parent.HasAttachment(ThingDef.Named(ArtilleryMarker.MarkerDef)))
-                    {
-                        ArtilleryMarker oldMarker = (ArtilleryMarker)parent.GetAttachment(ThingDef.Named(ArtilleryMarker.MarkerDef));
-                        oldMarker.Destroy();
-                    }
+                    ArtilleryMarker oldMarker = (ArtilleryMarker)parent.GetAttachment(ThingDef.Named(ArtilleryMarker.MarkerDef));
+                    oldMarker.Destroy();
                 }
             }
             base.AttachTo(parent);

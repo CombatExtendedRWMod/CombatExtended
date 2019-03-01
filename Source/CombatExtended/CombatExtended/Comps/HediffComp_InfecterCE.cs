@@ -18,7 +18,7 @@ namespace CombatExtended
         private float infectionModifier = 1;
         private int ticksTended = 0;
 
-        public HediffCompProperties_InfecterCE Props { get { return (HediffCompProperties_InfecterCE)props; } }
+        public HediffCompProperties_InfecterCE Props => (HediffCompProperties_InfecterCE)props;
 
         private void CheckMakeInfection()
         {
@@ -93,7 +93,7 @@ namespace CombatExtended
             if (Pawn.Spawned)
             {
                 Room room = Pawn.GetRoom();
-                infectionModifier *= room == null ? 1.5f : room.GetStat(RoomStatDefOf.InfectionChanceFactor);
+                infectionModifier *= room?.GetStat(RoomStatDefOf.InfectionChanceFactor) ?? 1.5f;
             }
         }
     }

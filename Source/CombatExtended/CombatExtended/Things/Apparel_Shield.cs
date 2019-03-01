@@ -27,7 +27,7 @@ namespace CombatExtended
 
             float num = 0f;
             Vector3 vector = this.Wearer.Drawer.DrawPos;
-            vector.y = Altitudes.AltitudeFor(AltitudeLayer.Pawn);
+            vector.y = AltitudeLayer.Pawn.AltitudeFor();
             Vector3 s = new Vector3(1f, 1f, 1f);
             if (this.Wearer.Rotation == Rot4.North)
             {

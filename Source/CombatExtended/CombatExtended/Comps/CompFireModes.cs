@@ -23,13 +23,7 @@ namespace CombatExtended
 
         #region Properties
 
-        public CompProperties_FireModes Props
-        {
-            get
-            {
-                return (CompProperties_FireModes)props;
-            }
-        }
+        public CompProperties_FireModes Props => (CompProperties_FireModes)props;
 
         // Fire mode variables
         private Verb Verb
@@ -51,20 +45,10 @@ namespace CombatExtended
                 return verbInt;
             }
         }
-        public Thing Caster
-        {
-            get
-            {
-                return Verb.caster;
-            }
-        }
-        public Pawn CasterPawn
-        {
-            get
-            {
-                return Caster as Pawn;
-            }
-        }
+        public Thing Caster => Verb.caster;
+
+        public Pawn CasterPawn => Caster as Pawn;
+
         public FireMode CurrentFireMode
         {
             get

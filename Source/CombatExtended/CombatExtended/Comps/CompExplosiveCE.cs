@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using RimWorld;
-using Verse;
+﻿using Verse;
 using UnityEngine;
 
 namespace CombatExtended
@@ -13,14 +7,8 @@ namespace CombatExtended
     {
     	private const float FragmentShadowChance = 0.2f;
     	
-        public CompProperties_ExplosiveCE Props
-        {
-            get
-            {
-                return (CompProperties_ExplosiveCE)props;
-            }
-        }
-		
+        public CompProperties_ExplosiveCE Props => (CompProperties_ExplosiveCE)props;
+
         /// <summary>
         /// Produces a secondary explosion on impact using the explosion values from the projectile's projectile def. Requires the projectile's launcher to be passed on due to protection level. 
         /// Intended use is for HEAT and similar weapons that spawn secondary explosions while also penetrating, NOT explosive ammo of anti-materiel rifles as the explosion just spawns 
@@ -98,7 +86,7 @@ namespace CombatExtended
             #endregion
             
             // Regular explosion stuff
-            if (Props.explosionRadius > 0 && Props.explosionDamage > 0 && parent.def != null && GenGrid.InBounds(posIV, map))
+            if (Props.explosionRadius > 0 && Props.explosionDamage > 0 && parent.def != null && posIV.InBounds(map))
             {
                 // Copy-paste from GenExplosion
                 ExplosionCE explosion = GenSpawn.Spawn(CE_ThingDefOf.ExplosionCE, posIV, map) as ExplosionCE;

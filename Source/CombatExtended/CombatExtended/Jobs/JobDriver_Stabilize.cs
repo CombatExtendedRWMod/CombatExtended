@@ -13,8 +13,8 @@ namespace CombatExtended
     {
         private const float baseTendDuration = 60f;
 
-        private Pawn Patient { get { return pawn.CurJob.targetA.Thing as Pawn; } }
-        private Medicine Medicine { get { return pawn.CurJob.targetB.Thing as Medicine; } }
+        private Pawn Patient => pawn.CurJob.targetA.Thing as Pawn;
+        private Medicine Medicine => pawn.CurJob.targetB.Thing as Medicine;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -44,22 +44,26 @@ namespace CombatExtended
             int duration = (int)(1f / this.pawn.GetStatValue(StatDefOf.MedicalTendSpeed, true) * baseTendDuration);
             Toil waitToil = Toils_General.Wait(duration).WithProgressBarToilDelay(TargetIndex.A).PlaySustainerOrSound(SoundDefOf.Interact_Tend);
             yield return waitToil;
-            Toil stabilizeToil = new Toil();
-            stabilizeToil.initAction = delegate
+            Toil stabilizeToil = new Toil
             {
-                float xp = (!Patient.RaceProps.Animal) ? 125f : 50f * Medicine.def.MedicineTendXpGainFactor;
-                pawn.skills.Learn(SkillDefOf.Medicine, xp);
-                foreach(Hediff curInjury in from x in Patient.health.hediffSet.GetHediffsTendable() orderby x.BleedRate descending select x)
+                initAction = delegate
                 {
-                    if (curInjury.CanBeStabilized())
+                    float xp = (!Patient.RaceProps.Animal) ? 125f : 50f * Medicine.def.MedicineTendXpGainFactor;
+                    pawn.skills.Learn(SkillDefOf.Medicine, xp);
+                    foreach (Hediff curInjury in from x in Patient.health.hediffSet.GetHediffsTendable()
+                        orderby x.BleedRate descending
+                        select x)
                     {
-                        HediffComp_Stabilize comp = curInjury.TryGetComp<HediffComp_Stabilize>();
-                        comp.Stabilize(pawn, Medicine);
-                        break;
+                        if (curInjury.CanBeStabilized())
+                        {
+                            HediffComp_Stabilize comp = curInjury.TryGetComp<HediffComp_Stabilize>();
+                            comp.Stabilize(pawn, Medicine);
+                            break;
+                        }
                     }
-                }
+                },
+                defaultCompleteMode = ToilCompleteMode.Instant
             };
-            stabilizeToil.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return stabilizeToil;
             yield return Toils_Jump.Jump(waitToil);
         }

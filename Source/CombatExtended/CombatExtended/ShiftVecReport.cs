@@ -11,13 +11,7 @@ namespace CombatExtended
     public class ShiftVecReport
     {
         public LocalTargetInfo target = null;
-        public Pawn targetPawn
-        {
-            get
-            {
-                return target.Thing as Pawn;
-            }
-        }
+        public Pawn targetPawn => target.Thing as Pawn;
         public float aimingAccuracy = 1f;
         public float sightsEfficiency = 1f;
 
@@ -55,13 +49,7 @@ namespace CombatExtended
 
         // Leading variables
         public float shotSpeed = 0f;
-        private bool targetIsMoving
-        {
-            get
-            {
-                return targetPawn != null && targetPawn.pather != null && targetPawn.pather.Moving;
-            }
-        }
+        private bool targetIsMoving => targetPawn?.pather != null && targetPawn.pather.Moving;
         private float leadDistInt = -1f;
         public float leadDist
         {
@@ -83,24 +71,12 @@ namespace CombatExtended
                 return leadDistInt;
             }
         }
-        public float leadShift
-        {
-            get
-            {
-                return leadDist * Mathf.Min(accuracyFactor * 0.25f, 3);
-            }
-        }
+        public float leadShift => leadDist * Mathf.Min(accuracyFactor * 0.25f, 3);
 
         // Range variables
         public float shotDist = 0f;
         public float maxRange;
-        public float distShift
-        {
-            get
-            {
-                return shotDist * (shotDist / maxRange) * Mathf.Min(accuracyFactor * 0.5f, 0.8f);
-            }
-        }
+        public float distShift => shotDist * (shotDist / maxRange) * Mathf.Min(accuracyFactor * 0.5f, 0.8f);
 
         public bool isAiming = false;
         public float swayDegrees = 0f;
@@ -221,8 +197,7 @@ namespace CombatExtended
                 {
                     stringBuilder.AppendLine("   " + "CE_TargetHeight".Translate() + "\t" + GenText.ToStringByStyle(new CollisionVertical(target.Thing).HeightRange.Span, ToStringStyle.FloatTwo) + " c");
                     stringBuilder.AppendLine("   " + "CE_TargetWidth".Translate() + "\t" + GenText.ToStringByStyle(CE_Utility.GetCollisionWidth(target.Thing), ToStringStyle.FloatTwo) + " c");
-                    var pawn = target.Thing as Pawn;
-                    if (pawn != null && pawn.IsCrouching())
+                    if (target.Thing is Pawn pawn && pawn.IsCrouching())
                     {
                     	LessonAutoActivator.TeachOpportunity(CE_ConceptDefOf.CE_Crouching, OpportunityType.GoodToKnow);
                     }

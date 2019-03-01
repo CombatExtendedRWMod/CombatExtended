@@ -66,8 +66,8 @@ namespace CombatExtended
     		try {	vBoundsHead = Def_Extensions.CropVertical((headGraphic.MatEast.mainTexture as Texture2D).GetColorSafe(out vWidthHead, out vHeightHead), vWidthHead, vHeightHead);	}
     		catch(Exception ex) {	throw new Exception("CombatExtended :: CropVertical error while cropping Textures/"+headGraphic.path+"_side",ex);	}
 			
-			vBoundsHead.min -= (int)(headOffset.y * (float)vHeightHead);
-			vBoundsHead.max -= (int)(headOffset.y * (float)vHeightHead);
+			vBoundsHead.min -= (int)(headOffset.y * vHeightHead);
+			vBoundsHead.max -= (int)(headOffset.y * vHeightHead);
 			
 			vBounds.min = Math.Min(vBounds.min, (int)((float)vBoundsHead.min * (float)vHeight / (float)vHeightHead));
 			vBounds.max = Math.Max(vBounds.max, (int)((float)vBoundsHead.max * (float)vHeight / (float)vHeightHead));
@@ -129,15 +129,15 @@ namespace CombatExtended
     			{
     				PawnKindLifeStage lifeStage = def.lifeStages[i];
     				
-    				try {	if (lifeStage.bodyGraphicData != null && lifeStage.bodyGraphicData.Graphic != null)
+    				try {	if (lifeStage.bodyGraphicData?.Graphic != null)
     						BoundMap(lifeStage.bodyGraphicData.Graphic, GraphicType.Pawn);	}
     				catch (Exception e) {	throw new Exception(def+".lifeStages["+i+"].bodyGraphicData", e);	}
 			    	
-    				try {	if (lifeStage.femaleGraphicData != null && lifeStage.femaleGraphicData.Graphic != null)
+    				try {	if (lifeStage.femaleGraphicData?.Graphic != null)
     						BoundMap(lifeStage.femaleGraphicData.Graphic, GraphicType.Pawn);	}
     				catch (Exception e) {	throw new Exception(def+".lifeStages["+i+"].femaleGraphicData", e);	}
 			    	
-    				try {	if (lifeStage.dessicatedBodyGraphicData != null && lifeStage.dessicatedBodyGraphicData.Graphic != null)
+    				try {	if (lifeStage.dessicatedBodyGraphicData?.Graphic != null)
     						BoundMap(lifeStage.dessicatedBodyGraphicData.Graphic, GraphicType.Pawn);	}
     				catch (Exception e) {	throw new Exception(def+".lifeStages["+i+"].dessicatedBodyGraphicData", e);	}
     			}
@@ -145,7 +145,7 @@ namespace CombatExtended
     		
     		foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs.Where<ThingDef>(x => x.plant != null))
     		{
-				try {	if (def.graphicData != null && def.graphicData.Graphic != null)
+				try {	if (def.graphicData?.Graphic != null)
     					BoundMap(def.graphicData.Graphic, GraphicType.Plant);	}
 				catch (Exception e) {	throw new Exception(def+".graphicData", e);	}
 				

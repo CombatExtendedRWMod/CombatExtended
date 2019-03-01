@@ -59,10 +59,7 @@ namespace CombatExtended
             }
 
             // if def built != def listed.
-            if (
-                (tdef != null) &&
-                (tdef.entityDefToBuild != null)
-            )
+            if (tdef?.entityDefToBuild != null)
             {
             	try
             	{

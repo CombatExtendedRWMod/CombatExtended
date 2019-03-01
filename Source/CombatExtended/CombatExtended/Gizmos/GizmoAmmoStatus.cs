@@ -17,7 +17,7 @@ namespace CombatExtended
 
         private static Texture2D FullTex;
         private static Texture2D EmptyTex;
-        private static new Texture2D BGTex;
+        private new static Texture2D BGTex;
 
         public override float GetWidth(float maxWidth)
         {

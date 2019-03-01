@@ -38,9 +38,8 @@ namespace CombatExtended
             {
                 return;
             }
-            
-            var plant = thing as Plant;
-            if (plant != null)
+
+            if (thing is Plant plant)
             {
             		//Height matches up exactly with visual size
             	heightRange = new FloatRange(0f, BoundsInjector.ForPlant(plant).y);
@@ -67,8 +66,7 @@ namespace CombatExtended
             
             float collisionHeight = 0f;
             float shotHeightOffset = 0;
-            var pawn = thing as Pawn;
-            if (pawn != null)
+            if (thing is Pawn pawn)
             {
             	collisionHeight = CE_Utility.GetCollisionBodyFactors(pawn).y;
             	

@@ -40,7 +40,7 @@ namespace CombatExtended
                     Loadout loadout = enu.Current;
                     yield return new Widgets.DropdownMenuElement<Loadout>
                     {
-                        option = new FloatMenuOption(loadout.LabelCap, delegate ()
+                        option = new FloatMenuOption(loadout.LabelCap, delegate
                         {
                             pawn.SetLoadout(loadout);
                         }),

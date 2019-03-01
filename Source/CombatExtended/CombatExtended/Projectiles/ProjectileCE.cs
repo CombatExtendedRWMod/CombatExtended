@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -122,11 +121,11 @@ namespace CombatExtended
                             return 0f;
                         }
                         // Multiplied by ticksPerSecond since the calculated time is actually in seconds.
-                        startingTicksToImpactInt = (float)((origin - Destination).magnitude / (Mathf.Cos(shotAngle) * shotSpeed)) * (float)GenTicks.TicksPerRealSecond;
+                        startingTicksToImpactInt = (origin - Destination).magnitude / (Mathf.Cos(shotAngle) * shotSpeed) * GenTicks.TicksPerRealSecond;
                         return startingTicksToImpactInt;
                     }
 
-                    startingTicksToImpactInt = GetFlightTime() * (float)GenTicks.TicksPerRealSecond;
+                    startingTicksToImpactInt = GetFlightTime() * GenTicks.TicksPerRealSecond;
                 }
                 return startingTicksToImpactInt;
             }
@@ -151,23 +150,13 @@ namespace CombatExtended
         /// <summary>
         /// The amount of integer ticks this projectile has remained in the air for, ignoring impact.
         /// </summary>
-        protected int FlightTicks
-        {
-            get
-            {
-                return IntTicksToImpact - ticksToImpact;
-            }
-        }
+        protected int FlightTicks => IntTicksToImpact - ticksToImpact;
+
         /// <summary>
         /// The amount of float ticks the projectile has remained in the air for, including impact.
         /// </summary>
-        protected float fTicks
-        {
-            get
-            {
-                return (ticksToImpact == 0 ? StartingTicksToImpact : (float)FlightTicks);
-            }
-        }
+        protected float fTicks => (ticksToImpact == 0 ? StartingTicksToImpact : FlightTicks);
+
         #endregion
 
         #region Position
@@ -202,13 +191,7 @@ namespace CombatExtended
             }
         }
 
-        public Vector2 DrawPosV2
-        {
-            get
-            {
-                return Vec2Position() + new Vector2(0, Height - shotHeight * ((StartingTicksToImpact - fTicks) / StartingTicksToImpact));
-            }
-        }
+        public Vector2 DrawPosV2 => Vec2Position() + new Vector2(0, Height - shotHeight * ((StartingTicksToImpact - fTicks) / StartingTicksToImpact));
 
         public override Vector3 DrawPos
         {
@@ -222,10 +205,7 @@ namespace CombatExtended
         private Vector3 lastExactPos = new Vector3(-1000, 0, 0);
         private Vector3 LastPos
         {
-            set
-            {
-                lastExactPos = value;
-            }
+            set => lastExactPos = value;
             get
             {
                 if (lastExactPos.x < -999)
@@ -237,13 +217,7 @@ namespace CombatExtended
             }
         }
 
-        public Vector3 ExactMinusLastPos
-        {
-            get
-            {
-                return (ExactPosition - LastPos);
-            }
-        }
+        public Vector3 ExactMinusLastPos => (ExactPosition - LastPos);
 
         private int lastShotLine = -1;
         private Ray shotLine;
@@ -283,13 +257,8 @@ namespace CombatExtended
             }
         }
 
-        public virtual Quaternion ExactRotation
-        {
-            get
-            {
-                return Quaternion.AngleAxis(shotRotation, Vector3.down);
-            }
-        }
+        public virtual Quaternion ExactRotation => Quaternion.AngleAxis(shotRotation, Vector3.down);
+
         #endregion
 
         /// <summary>
@@ -321,8 +290,8 @@ namespace CombatExtended
                 if (_gravityFactor < 0)
                 {
                     _gravityFactor = CE_Utility.gravityConst;
-                    var props = def.projectile as ProjectilePropertiesCE;
-                    if (props != null) _gravityFactor = props.Gravity;
+                    if (def.projectile is ProjectilePropertiesCE props)
+                        _gravityFactor = props.Gravity;
                 }
                 return _gravityFactor;
             }
@@ -411,7 +380,7 @@ namespace CombatExtended
             this.launcher = launcher;
             this.origin = origin;
             //For explosives/bullets, equipmentDef is important
-            equipmentDef = (equipment != null) ? equipment.def : null;
+            equipmentDef = equipment?.def;
 
             if (!def.projectile.soundAmbient.NullOrUndefined())
             {
@@ -527,8 +496,7 @@ namespace CombatExtended
                 // is not considered an EXACT limit.
                 if (!justWallsRoofs && ExactPosition.y < SuppressionRadius)
                 {
-                    var pawn = thing as Pawn;
-                    if (pawn != null)
+                    if (thing is Pawn pawn)
                     {
                         ApplySuppression(pawn);
                     }
@@ -623,10 +591,9 @@ namespace CombatExtended
                 // check for shield user
 
                 var wornApparel = pawn.apparel.WornApparel;
-                for (var i = 0; i < wornApparel.Count; i++)
+                foreach (var t in wornApparel)
                 {
-                    var personalShield = wornApparel[i] as ShieldBelt;
-                    if (personalShield != null)
+                    if (t is ShieldBelt personalShield)
                     {
                         shield = personalShield;
                         break;
@@ -637,11 +604,11 @@ namespace CombatExtended
             var compSuppressable = pawn.TryGetComp<CompSuppressable>();
             if (compSuppressable != null
                 && pawn.Faction != launcher?.Faction
-                && (shield == null || shield?.ShieldState == ShieldState.Resetting))
+                && (shield == null || shield.ShieldState == ShieldState.Resetting))
             {
                 suppressionAmount = def.projectile.GetDamageAmount(1);
                 var propsCE = def.projectile as ProjectilePropertiesCE;
-                var penetrationAmount = propsCE == null ? 0f : propsCE.GetArmorPenetration(1);
+                var penetrationAmount = propsCE?.GetArmorPenetration(1) ?? 0f;
                 suppressionAmount *= 1 - Mathf.Clamp(compSuppressable.ParentArmor - penetrationAmount, 0, 1);
                 compSuppressable.AddSuppression(suppressionAmount, OriginIV3);
             }
@@ -670,10 +637,9 @@ namespace CombatExtended
                 return;
             }
             Position = ExactPosition.ToIntVec3();
-            if (ticksToImpact == 60 && Find.TickManager.CurTimeSpeed == TimeSpeed.Normal &&
-                def.projectile.soundImpactAnticipate != null)
+            if (ticksToImpact == 60 && Find.TickManager.CurTimeSpeed == TimeSpeed.Normal)
             {
-                def.projectile.soundImpactAnticipate.PlayOneShot(this);
+                def.projectile.soundImpactAnticipate?.PlayOneShot(this);
             }
             //TODO : It appears that the final steps in the arc (past ticksToImpact == 0) don't CheckForCollisionBetween.
             if (ticksToImpact <= 0)
@@ -681,10 +647,8 @@ namespace CombatExtended
                 ImpactSomething();
                 return;
             }
-            if (ambientSustainer != null)
-            {
-                ambientSustainer.Maintain();
-            }
+
+            ambientSustainer?.Maintain();
         }
 
         /// <summary>
@@ -692,7 +656,7 @@ namespace CombatExtended
         /// </summary>
         public override void Draw()
         {
-            if (FlightTicks == 0 && launcher != null && launcher is Pawn)
+            if (FlightTicks == 0 && launcher is Pawn)
             {
                 //TODO: Draw at the end of the barrel on the pawn
             }
@@ -805,8 +769,7 @@ namespace CombatExtended
                 var suppressThings = GenRadial.RadialDistinctThingsAround(ExactPosition.ToIntVec3(), Map, SuppressionRadius + def.projectile.explosionRadius, true);
                 foreach (var thing in suppressThings)
                 {
-                    var pawn = thing as Pawn;
-                    if (pawn != null) ApplySuppression(pawn);
+                    if (thing is Pawn pawn) ApplySuppression(pawn);
                 }
             }
 

@@ -17,11 +17,6 @@ namespace CombatExtended
         private static int _MinWidth = 40;
         private static int _OptimalWidth = 50;
 
-        public override void DoHeader(Rect rect, PawnTable table)
-        {
-            base.DoHeader(rect, table);
-        }
-
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
             CompInventory inventory = pawn.TryGetComp<CompInventory>();

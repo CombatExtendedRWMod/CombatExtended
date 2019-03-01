@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Verse;
+﻿using Verse;
 using Verse.Sound;
 using RimWorld;
 using UnityEngine;
@@ -64,20 +60,20 @@ namespace CombatExtended
                     def);
                 
                 // Set impact height
-                BodyPartDepth partDepth = damDefCE != null && damDefCE.harmOnlyOutsideLayers ? BodyPartDepth.Outside : BodyPartDepth.Undefined;
+                BodyPartDepth partDepth = damDefCE.harmOnlyOutsideLayers ? BodyPartDepth.Outside : BodyPartDepth.Undefined;
                 	//NOTE: ExactPosition.y isn't always Height at the point of Impact!
                 BodyPartHeight partHeight = new CollisionVertical(hitThing).GetCollisionBodyHeight(ExactPosition.y);
                 dinfo.SetBodyRegion(partHeight, partDepth);
-                if (damDefCE != null && damDefCE.harmOnlyOutsideLayers) dinfo.SetBodyRegion(BodyPartHeight.Undefined, BodyPartDepth.Outside);
+                if (damDefCE.harmOnlyOutsideLayers) dinfo.SetBodyRegion(BodyPartHeight.Undefined, BodyPartDepth.Outside);
 
                 //The following code excludes turrets etcetera from having cook off projectile impacts recorded in their combat log.
                 //If it is necessary to add cook off to turret logs, a new BattleLogEntry_ must be created, because BattleLogEntry_DamageTaken,
                 //which is the only method capable of handling cookoff and only using pawns, can not take !(hitThing is Pawn).
-                if (cookOff && hitThing is Pawn)
+                if (cookOff && hitThing is Pawn pawn)
                 {
                     logEntry =
                         new BattleLogEntry_DamageTaken(
-                            (Pawn)hitThing,
+                            pawn,
                             DefDatabase<RulePackDef>.GetNamed("DamageEvent_CookOff"));
                     Find.BattleLog.Add(logEntry);
                 }

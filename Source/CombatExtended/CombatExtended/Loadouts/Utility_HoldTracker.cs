@@ -28,7 +28,7 @@ namespace CombatExtended
 	static class Utility_HoldTracker
 	{
 		#region Fields
-		static private int _tickLastPurge = 0;
+		private static int _tickLastPurge = 0;
 		#endregion
 		
 		#region HoldTracker Methods
@@ -38,7 +38,7 @@ namespace CombatExtended
 		/// </summary>
 		/// <param name="pawn"></param>
 		/// <param name="job"></param>
-		static public void Notify_HoldTrackerJob(this Pawn pawn, Job job)
+		public static void Notify_HoldTrackerJob(this Pawn pawn, Job job)
 		{
 			// make sure it's the right kind of job.
 			if (job.def != JobDefOf.TakeInventory)
@@ -178,7 +178,7 @@ namespace CombatExtended
 		/// Does a check on the pawn's inventory to determine if there is something that should be dropped.  See GetExcessEquipment and GetExcessThing.
 		/// </summary>
 		/// <returns>bool, true if there is something the pawn needs to drop.</returns>
-        static public bool HasExcessThing(this Pawn pawn)
+        public static bool HasExcessThing(this Pawn pawn)
         {
         	Thing ignore1;
         	int ignore2;
@@ -192,11 +192,11 @@ namespace CombatExtended
 		/// <param name="pawn"></param>
         /// <param name="dropEquipment">Thing which should be unequiped.</param>
         /// <returns>bool, true if there is equipment that should be unequipped.</returns>
-        static public bool GetExcessEquipment(this Pawn pawn, out ThingWithComps dropEquipment)
+        public static bool GetExcessEquipment(this Pawn pawn, out ThingWithComps dropEquipment)
         {
         	Loadout loadout = pawn.GetLoadout();
         	dropEquipment = null;
-        	if (loadout == null || (loadout != null && loadout.Slots.NullOrEmpty()) || pawn.equipment?.Primary == null)
+        	if (loadout == null || loadout.Slots.NullOrEmpty() || pawn.equipment?.Primary == null)
         		return false;
         	
         	LoadoutSlot eqSlot = loadout.Slots.FirstOrDefault(s => s.count >= 1 && ((s.thingDef != null && s.thingDef == pawn.equipment.Primary.def) 
@@ -228,12 +228,12 @@ namespace CombatExtended
         /// <param name="dropThing">Thing to be dropped from inventory.</param>
         /// <param name="dropCount">Amount to drop from inventory.</param>
         /// <returns></returns>
-        static public bool GetAnythingForDrop(this Pawn pawn, out Thing dropThing, out int dropCount)
+        public static bool GetAnythingForDrop(this Pawn pawn, out Thing dropThing, out int dropCount)
         {
         	dropThing = null;
         	dropCount = 0;
         	
-        	if (pawn.inventory == null || pawn.inventory.innerContainer == null)
+        	if (pawn.inventory?.innerContainer == null)
         		return false;
         	
         	Loadout loadout = pawn.GetLoadout();
@@ -322,7 +322,7 @@ namespace CombatExtended
         /// <returns>bool, true indicates that the out variables are filled with something to do work on (drop).</returns>
         // NOTE (ProfoundDarkness): Ended up doing this by nibbling away at the pawn's inventory (or dictionary representation of ThingDefs/Count).
         //  Probably not efficient but was easier to handle atm.
-        static public bool GetExcessThing(this Pawn pawn, out Thing dropThing, out int dropCount)
+        public static bool GetExcessThing(this Pawn pawn, out Thing dropThing, out int dropCount)
         {
 	        //(ProfoundDarkness) Thanks to erdelf on the RimWorldMod discord for helping me figure out some dictionary stuff and C# concepts related to 'Primitives' (pass by Value).
         	CompInventory inventory = pawn.TryGetComp<CompInventory>();
@@ -331,7 +331,7 @@ namespace CombatExtended
         	dropThing = null;
         	dropCount = 0;
         	
-        	if (inventory == null || inventory.container == null || loadout == null || loadout.Slots.NullOrEmpty())
+        	if (inventory?.container == null || loadout == null || loadout.Slots.NullOrEmpty())
         		return false;
         	
         	Dictionary<ThingDef, Integer> listing = GetStorageByThingDef(pawn);

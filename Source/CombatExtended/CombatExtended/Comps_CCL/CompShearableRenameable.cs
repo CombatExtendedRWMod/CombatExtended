@@ -9,13 +9,7 @@ namespace CombatExtended
 
         private string growthLabel = "WoolGrowth".Translate();
 
-        private CompProperties_ShearableRenameable properties
-        {
-            get
-            {
-                return props as CompProperties_ShearableRenameable;
-            }
-        }
+        private CompProperties_ShearableRenameable properties => props as CompProperties_ShearableRenameable;
 
         public override void Initialize(CompProperties props)
         {

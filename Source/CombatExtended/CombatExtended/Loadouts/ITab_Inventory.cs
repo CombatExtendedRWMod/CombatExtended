@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using RimWorld;
+﻿using RimWorld;
 using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
@@ -23,18 +22,17 @@ namespace CombatExtended
         private const float _topPadding = 20f;
         private const float _standardLineHeight = 22f;
         private static readonly Color _highlightColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-        private static readonly Color _thingLabelColor = new Color(0.9f, 0.9f, 0.9f, 1f);
         private Vector2 _scrollPosition = Vector2.zero;
 
         private float _scrollViewHeight;
 
-        private static List<Thing> workingInvList = new List<Thing>();
+        private static readonly List<Thing> workingInvList = new List<Thing>();
 
         #endregion Fields
 
         #region Constructors
 
-        public ITab_Inventory() : base()
+        public ITab_Inventory()
         {
             size = new Vector2(480f, 550f);
         }
@@ -48,18 +46,12 @@ namespace CombatExtended
         {
             get
             {
-                Pawn selPawnForGear = this.SelPawnForGear;
+                Pawn selPawnForGear = SelPawnForGear;
                 return !selPawnForGear.Downed && !selPawnForGear.InMentalState && (selPawnForGear.Faction == Faction.OfPlayer || selPawnForGear.IsPrisonerOfColony) && (!selPawnForGear.IsPrisonerOfColony || !selPawnForGear.Spawned || selPawnForGear.Map.mapPawns.AnyFreeColonistSpawned) && (!selPawnForGear.IsPrisonerOfColony || (!PrisonBreakUtility.IsPrisonBreaking(selPawnForGear) && (selPawnForGear.CurJob == null || !selPawnForGear.CurJob.exitMapOnArrival)));
             }
         }
 
-        private bool CanControlColonist
-        {
-            get
-            {
-                return this.CanControl && this.SelPawnForGear.IsColonistPlayerControlled;
-            }
-        }
+        private bool CanControlColonist => CanControl && SelPawnForGear.IsColonistPlayerControlled;
 
         private Pawn SelPawnForGear
         {
@@ -69,8 +61,8 @@ namespace CombatExtended
                 {
                     return SelPawn;
                 }
-                Corpse corpse = SelThing as Corpse;
-                if (corpse != null)
+
+                if (SelThing is Corpse corpse)
                 {
                     return corpse.InnerPawn;
                 }
@@ -193,9 +185,9 @@ namespace CombatExtended
 
                 workingInvList.Clear();
                 workingInvList.AddRange(SelPawnForGear.inventory.innerContainer);
-                for (int i = 0; i < workingInvList.Count; i++)
+                foreach (Thing t in workingInvList)
                 {
-                    DrawThingRow(ref num, viewRect.width, workingInvList[i].GetInnerIfMinified(), true);
+                    DrawThingRow(ref num, viewRect.width, t.GetInnerIfMinified(), true);
                 }
             }
             if (Event.current.type == EventType.Layout)
@@ -227,7 +219,7 @@ namespace CombatExtended
             }
             if (CanControlColonist)
             {
-                if ((thing.def.IsNutritionGivingIngestible || thing.def.IsNonMedicalDrug) && thing.IngestibleNow && base.SelPawn.WillEat(thing, null))
+                if ((thing.def.IsNutritionGivingIngestible || thing.def.IsNonMedicalDrug) && thing.IngestibleNow && SelPawn.WillEat(thing, null))
                 {
                     Rect rect3 = new Rect(rect.width - 24f, y, 24f, 24f);
                     TooltipHandler.TipRegion(rect3, "ConsumeThing".Translate(thing.LabelNoCount, thing));
@@ -257,7 +249,7 @@ namespace CombatExtended
             GUI.color = ThingLabelColor;
             Rect thingLabelRect = new Rect(_thingLeftX, y, rect.width - _thingLeftX, _thingRowHeight);
             string thingLabel = thing.LabelCap;
-            if ((thing is Apparel && SelPawnForGear.outfits != null && SelPawnForGear.outfits.forcedHandler.IsForced((Apparel)thing))
+            if ((thing is Apparel ap && SelPawnForGear.outfits != null && SelPawnForGear.outfits.forcedHandler.IsForced(ap))
                 || (SelPawnForGear.inventory != null && SelPawnForGear.HoldTrackerIsHeld(thing)))
             {
                 thingLabel = thingLabel + ", " + "ApparelForcedLower".Translate();
@@ -277,16 +269,7 @@ namespace CombatExtended
             if (thing.def.useHitPoints)
             {
                 string text3 = text2;
-                text2 = string.Concat(new object[]
-                {
-                    text3,
-                    "\n",
-                    "HitPointsBasic".Translate().CapitalizeFirst(),
-                    ": ",
-                    thing.HitPoints,
-                    " / ",
-                    thing.MaxHitPoints
-                });
+                text2 = string.Concat(text3, "\n", "HitPointsBasic".Translate().CapitalizeFirst(), ": ", thing.HitPoints, " / ", thing.MaxHitPoints);
             }
             TooltipHandler.TipRegion(thingLabelRect, text2);
             y += 28f;
@@ -294,16 +277,16 @@ namespace CombatExtended
             // RMB menu
             if (Widgets.ButtonInvisible(thingLabelRect) && Event.current.button == 1)
             {
-                List<FloatMenuOption> floatOptionList = new List<FloatMenuOption>();
-                floatOptionList.Add(new FloatMenuOption("ThingInfo".Translate(), delegate
+                List<FloatMenuOption> floatOptionList = new List<FloatMenuOption>
                 {
-                    Find.WindowStack.Add(new Dialog_InfoCard(thing));
-                }, MenuOptionPriority.Default, null, null));
+                    new FloatMenuOption("ThingInfo".Translate(),
+                        delegate { Find.WindowStack.Add(new Dialog_InfoCard(thing)); }, MenuOptionPriority.Default,
+                        null, null)
+                };
                 if (CanControl)
                 {
                     // Equip option
-                    ThingWithComps eq = thing as ThingWithComps;
-                    if (eq != null && eq.TryGetComp<CompEquippable>() != null)
+                    if (thing is ThingWithComps eq && eq.TryGetComp<CompEquippable>() != null)
                     {
                         CompInventory compInventory = SelPawnForGear.TryGetComp<CompInventory>();
                         if (compInventory != null)
@@ -313,10 +296,10 @@ namespace CombatExtended
                             if (SelPawnForGear.equipment.AllEquipmentListForReading.Contains(eq) && SelPawnForGear.inventory != null)
                             {
                                 equipOption = new FloatMenuOption("CE_PutAway".Translate(eqLabel),
-                                    new Action(delegate
+                                    delegate
                                     {
                                         SelPawnForGear.equipment.TryTransferEquipmentToContainer(SelPawnForGear.equipment.Primary, SelPawnForGear.inventory.innerContainer);
-                                    }));
+                                    });
                             }
                             else if (!SelPawnForGear.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
                             {
@@ -352,7 +335,7 @@ namespace CombatExtended
                         SoundDefOf.Tick_High.PlayOneShotOnCamera();
                         InterfaceDropHaul(thing);
                     };
-                    if (CanControl && thing.IngestibleNow && base.SelPawn.RaceProps.CanEverEat(thing))
+                    if (CanControl && thing.IngestibleNow && SelPawn.RaceProps.CanEverEat(thing))
                     {
                         Action eatFood = delegate
                         {
@@ -389,21 +372,20 @@ namespace CombatExtended
             }
             float num = 0f;
             List<Apparel> wornApparel = SelPawnForGear.apparel.WornApparel;
-            for (int i = 0; i < wornApparel.Count; i++)
+            foreach (var t in wornApparel)
             {
-                num += Mathf.Clamp01(wornApparel[i].GetStatValue(stat, true)) * wornApparel[i].def.apparel.HumanBodyCoverage;
+                num += Mathf.Clamp01(t.GetStatValue(stat, true)) * t.def.apparel.HumanBodyCoverage;
             }
             num = Mathf.Clamp01(num);
             if (num > 0.005f)
             {
                 Rect rect = new Rect(0f, curY, width, _standardLineHeight);
-                BodyPartRecord bpr = new BodyPartRecord();
-                List<BodyPartRecord> bpList = SelPawnForGear.RaceProps.body.AllParts;
                 string text = "";
-                for (int i = 0; i < bpList.Count; i++)
+
+                List<BodyPartRecord> bpList = SelPawnForGear.RaceProps.body.AllParts;
+                foreach (BodyPartRecord part in bpList)
                 {
                     float armorValue = 0f;
-                    BodyPartRecord part = bpList[i];
                     if (part.depth == BodyPartDepth.Outside && (part.coverage >= 0.1 || (part.def == BodyPartDefOf.Eye || part.def == BodyPartDefOf.Neck)))
                     {
                         text += part.LabelCap + ": ";
@@ -435,16 +417,9 @@ namespace CombatExtended
                 return;
             }
             Rect rect = new Rect(0f, curY, width, _standardLineHeight);
-            float statValue = SelPawnForGear.GetStatValue(StatDefOf.ComfyTemperatureMin, true);
-            float statValue2 = SelPawnForGear.GetStatValue(StatDefOf.ComfyTemperatureMax, true);
-            Widgets.Label(rect, string.Concat(new string[]
-            {
-                "ComfyTemperatureRange".Translate(),
-                ": ",
-                statValue.ToStringTemperature("F0"),
-                " ~ ",
-                statValue2.ToStringTemperature("F0")
-            }));
+            string comfyTemperatureMin = SelPawnForGear.GetStatValue(StatDefOf.ComfyTemperatureMin, true).ToStringTemperature("F0");
+            string comfyTemperatureMax = SelPawnForGear.GetStatValue(StatDefOf.ComfyTemperatureMax, true).ToStringTemperature("F0");
+            Widgets.Label(rect, $"{"ComfyTemperatureRange".Translate()}: {comfyTemperatureMin} ~ {comfyTemperatureMax}");
             curY += _standardLineHeight;
          }
 
@@ -454,8 +429,7 @@ namespace CombatExtended
             if (SelPawnForGear.HoldTrackerIsHeld(t))
                 SelPawnForGear.HoldTrackerForget(t);
             ThingWithComps thingWithComps = t as ThingWithComps;
-            Apparel apparel = t as Apparel;
-            if (apparel != null && SelPawnForGear.apparel != null && SelPawnForGear.apparel.WornApparel.Contains(apparel))
+            if (t is Apparel apparel && SelPawnForGear.apparel != null && SelPawnForGear.apparel.WornApparel.Contains(apparel))
             {
                 SelPawnForGear.jobs.TryTakeOrderedJob(new Job(JobDefOf.RemoveApparel, apparel));
             }
@@ -478,8 +452,7 @@ namespace CombatExtended
             if (SelPawnForGear.HoldTrackerIsHeld(t))
                 SelPawnForGear.HoldTrackerForget(t);
             ThingWithComps thingWithComps = t as ThingWithComps;
-            Apparel apparel = t as Apparel;
-            if (apparel != null && SelPawnForGear.apparel != null && SelPawnForGear.apparel.WornApparel.Contains(apparel))
+            if (t is Apparel apparel && SelPawnForGear.apparel != null && SelPawnForGear.apparel.WornApparel.Contains(apparel))
             {
                 SelPawnForGear.jobs.TryTakeOrderedJob(new Job(JobDefOf.RemoveApparel, apparel) { haulDroppedApparel = true });
             }

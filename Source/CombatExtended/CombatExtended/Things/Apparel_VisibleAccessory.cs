@@ -59,13 +59,13 @@ namespace CombatExtended
 		            drawVec += bedRotation.FacingCell.ToVector3() * (-Wearer.Drawer.renderer.BaseHeadOffsetAt(Rot4.South).z);
                 } else {
             		drawVec.y = Wearer.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.LayingPawn).y;
-	                if (Wearer.Downed)  // Wearer.Spawned == false when Pawn.Dead == true.
-	                {
-	                    float? newAngle = (((((Wearer.Drawer == null) ? null : Wearer.Drawer.renderer) == null) ? null : Wearer.Drawer.renderer.wiggler) == null) ? (float?)null : Wearer.Drawer.renderer.wiggler.downedAngle;
-	                    if (newAngle != null)
-	                        angle = newAngle.Value;
-	                }
-	                else
+                    if (Wearer.Downed)  // Wearer.Spawned == false when Pawn.Dead == true.
+                    {
+                        float? newAngle = Wearer.Drawer?.renderer?.wiggler?.downedAngle;
+                        if (newAngle != null)
+                            angle = newAngle.Value;
+                    }
+                    else
 	                {
 	                    angle = rotation.FacingCell.AngleFlat;
 	                }
@@ -79,7 +79,7 @@ namespace CombatExtended
             drawVec.y += GetAltitudeOffset(rotation);
             
             // Get the graphic path
-            string path = def.graphicData.texPath + "_" + ((Wearer == null) ? null : Wearer.story.bodyType.ToString());
+            string path = def.graphicData.texPath + "_" + Wearer?.story.bodyType;
             Graphic graphic = GraphicDatabase.Get<Graphic_Multi>(path, ShaderDatabase.CutoutComplex, def.graphicData.drawSize, DrawColor);
             ApparelGraphicRecord apparelGraphic = new ApparelGraphicRecord(graphic, this);
 
@@ -193,8 +193,7 @@ namespace CombatExtended
 		   				_OnHeadCache.Add(def.defName, false);
 		   			}
        			}
-       			bool ret;
-       			_OnHeadCache.TryGetValue(def.defName, out ret);  // is there a better way? Dictionary.Item isn't there.  Didn't bother with try/catch as by now it should have the key.
+                _OnHeadCache.TryGetValue(def.defName, out var ret);  // is there a better way? Dictionary.Item isn't there.  Didn't bother with try/catch as by now it should have the key.
        			return ret;
        		}
     	}
