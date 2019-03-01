@@ -372,9 +372,9 @@ namespace CombatExtended
             }
             float num = 0f;
             List<Apparel> wornApparel = SelPawnForGear.apparel.WornApparel;
-            foreach (var t in wornApparel)
+            foreach (Apparel apparel in wornApparel)
             {
-                num += Mathf.Clamp01(t.GetStatValue(stat, true)) * t.def.apparel.HumanBodyCoverage;
+                num += Mathf.Clamp01(apparel.GetStatValue(stat, true)) * apparel.def.apparel.HumanBodyCoverage;
             }
             num = Mathf.Clamp01(num);
             if (num > 0.005f)
