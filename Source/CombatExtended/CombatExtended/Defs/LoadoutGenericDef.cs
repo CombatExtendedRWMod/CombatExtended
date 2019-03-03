@@ -61,12 +61,10 @@ namespace CombatExtended
                 defName = "GenericMeal",
                 description = "Generic Loadout for Meals.  Intended for compatibility with pawns automatically picking up a meal for themself.",
                 label = "CE_Generic_Meal".Translate(),
-                defaultCountType = LoadoutCountType.pickupDrop,
+                defaultCountType = LoadoutCountType.pickupDrop, // Fits with disabling of RimWorld Pawn behavior of fetching meals themselves.
                 _lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability >= FoodPreferability.MealAwful && !td.IsDrug,
                 isBasic = true
             };
-            // Fits with disabling of RimWorld Pawn behavior of fetching meals themselves.
-
             defs.Add(generic);
 			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 			
@@ -78,14 +76,13 @@ namespace CombatExtended
                 description = "Generic Loadout for Raw Food.  Intended for compatibility with pawns automatically picking up raw food to train animals.",
                 label = "CE_Generic_RawFood".Translate(),
                 _lambda = td => td.IsNutritionGivingIngestible && td.ingestible.preferability <= FoodPreferability.RawTasty &&
-                                td.ingestible.HumanEdible && td.plant == null && !td.IsDrug && !td.IsCorpse
+                                td.ingestible.HumanEdible && td.plant == null && !td.IsDrug && !td.IsCorpse,
+                // Exclude drugs and corpses.  Also exclude any food worse than RawBad as in testing the pawns would not even pick it up for training.
+                defaultCount = Convert.ToInt32(Math.Floor(targetNutrition / everything.Where(td => generic.lambda(td)).Average(td => td.ingestible.CachedNutrition))),
+                //defaultCount = 1,
+                isBasic = false // doesn't need to be in loadouts by default as animal interaction talks to HoldTracker now.
+                //TODO: Test pawns fetching raw food if no meal is available, if so then add a patch to have that talk to HoldTracker too.
             };
-            // Exclude drugs and corpses.  Also exclude any food worse than RawBad as in testing the pawns would not even pick it up for training.
-            generic.defaultCount = Convert.ToInt32(Math.Floor(targetNutrition / everything.Where(td => generic.lambda(td)).Average(td => td.ingestible.CachedNutrition)));
-			//generic.defaultCount = 1;
-			generic.isBasic = false; // doesn't need to be in loadouts by default as animal interaction talks to HoldTracker now.
-			//TODO: Test pawns fetching raw food if no meal is available, if so then add a patch to have that talk to HoldTracker too.
-			
 			defs.Add(generic);
 			//Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label + " B(" + t.GetStatValueAbstract(CE_StatDefOf.Bulk) + ") M(" + t.GetStatValueAbstract(StatDefOf.Mass) + ")").ToArray())));
 
@@ -99,7 +96,6 @@ namespace CombatExtended
                 thingRequestGroup = ThingRequestGroup.Drug,
                 isBasic = true
             };
-
             defs.Add(generic);
             //Log.Message(string.Concat("CombatExtended :: LoadoutGenericDef :: ", generic.LabelCap, " list: ", string.Join(", ", DefDatabase<ThingDef>.AllDefs.Where(t => generic.lambda(t)).Select(t => t.label).ToArray())));
 
