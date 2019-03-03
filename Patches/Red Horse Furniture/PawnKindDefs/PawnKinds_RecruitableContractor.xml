@@ -10,7 +10,7 @@
 			</li>
 
 			<li Class="PatchOperationAddModExtension">
-				<xpath>Defs/PawnKindDef[defName="CP_ANVIL_Contractor"]</xpath>
+				<xpath>Defs/PawnKindDef[defName="CP_ANVIL_Contractor" or defName="CP_Freelance_Contractor"]</xpath>
 				<value>
 					<li Class="CombatExtended.LoadoutPropertiesExtension">
 						<primaryMagazineCount>
@@ -20,18 +20,14 @@
 					</li>
 				</value>
 			</li>
-
-			<li Class="PatchOperationAddModExtension">
-				<xpath>Defs/PawnKindDef[defName="CP_Freelance_Contractor"]</xpath>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/PawnKindDef[defName="CP_ANVIL_Contractor" or defName="CP_Freelance_Contractor"]/apparelRequired</xpath>
 				<value>
-					<li Class="CombatExtended.LoadoutPropertiesExtension">
-						<primaryMagazineCount>
-							<min>2</min>
-							<max>5</max>
-						</primaryMagazineCount>
-					</li>
+					<li>Apparel_Backpack</li>
 				</value>
 			</li>
+			
 
 		</operations>
 	</Operation>
