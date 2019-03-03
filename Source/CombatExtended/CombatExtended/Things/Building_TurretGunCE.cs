@@ -44,17 +44,7 @@ namespace CombatExtended
 
         #region Properties
 
-        public override Verb AttackVerb
-        {
-            get
-            {
-                if (Gun == null)
-                {
-                    return null;
-                }
-                return this.GunCompEq.verbTracker.PrimaryVerb;
-            }
-        }
+        public override Verb AttackVerb => Gun == null ? null : this.GunCompEq.verbTracker.PrimaryVerb;
         private bool CanSetForcedTarget => MannedByColonist;
         public override LocalTargetInfo CurrentTarget => currentTargetInt;
         public CompEquippable GunCompEq => Gun.TryGetComp<CompEquippable>();
@@ -217,14 +207,7 @@ namespace CombatExtended
             if (this.forcedTarget.IsValid && (!this.forcedTarget.HasThing || this.forcedTarget.Thing.Spawned))
             {
                 Vector3 b;
-                if (this.forcedTarget.HasThing)
-                {
-                    b = this.forcedTarget.Thing.TrueCenter();
-                }
-                else
-                {
-                    b = this.forcedTarget.Cell.ToVector3Shifted();
-                }
+                b = forcedTarget.HasThing ? forcedTarget.Thing.TrueCenter() : forcedTarget.Cell.ToVector3Shifted();
                 Vector3 a = this.TrueCenter();
                 b.y = AltitudeLayer.MetaOverlays.AltitudeFor();
                 a.y = b.y;
@@ -258,9 +241,8 @@ namespace CombatExtended
                 //if (def.building.turretShellDef != null && def.building.turretShellDef is AmmoDef) CompAmmo.selectedAmmo = (AmmoDef)def.building.turretShellDef;
             }
             List<Verb> allVerbs = this.gunInt.TryGetComp<CompEquippable>().AllVerbs;
-            for (int i = 0; i < allVerbs.Count; i++)
+            foreach (Verb verb in allVerbs)
             {
-                Verb verb = allVerbs[i];
                 verb.caster = this;
                 verb.castCompleteCallback = new Action(this.BurstComplete);
             }

@@ -86,9 +86,6 @@ namespace CombatExtended
                     // process each loadout slot... (While the LoadoutSlot.countType property only really makes sense in the context of genericDef != null, it should be the correct value (pickupDrop) on .thingDef != null.)
                     foreach (LoadoutSlot curSlot in loadout.Slots.Where(s => s.countType != LoadoutCountType.dropExcess))
                     {
-                        Thing curThing = null;
-                        ItemPriority curPriority = ItemPriority.None;
-                        Pawn curCarrier = null;
                         int wantCount = curSlot.count;
 
                         if (curSlot.thingDef != null)
@@ -121,6 +118,9 @@ namespace CombatExtended
                         }
                         if (wantCount > 0)
                         {
+                            Thing curThing = null;
+                            ItemPriority curPriority = ItemPriority.None;
+                            Pawn curCarrier = null;
                             FindPickup(pawn, curSlot, wantCount, out curPriority, out curThing, out curCarrier);
 
                             if (curPriority > priority && curThing != null && inventory.CanFitInInventory(curThing, out count))
@@ -160,7 +160,7 @@ namespace CombatExtended
             curThing = null;
             curCarrier = null;
 
-            Predicate<Thing> isFoodInPrison = (Thing t) => (t.GetRoom()?.isPrisonCell ?? false) && t.def.IsNutritionGivingIngestible && pawn.Faction.IsPlayer;
+            Predicate<Thing> isFoodInPrison = t => (t.GetRoom()?.isPrisonCell ?? false) && t.def.IsNutritionGivingIngestible && pawn.Faction.IsPlayer;
             // Hint: The following block defines how to find items... pay special attention to the Predicates below.
             ThingRequest req;
             if (curSlot.genericDef != null)
@@ -242,7 +242,7 @@ namespace CombatExtended
                     {
                         if (droppedEq != null)
                             return HaulAIUtility.HaulToStorageJob(pawn, droppedEq);
-                        Log.Error(string.Concat(pawn, " tried dropping ", dropEq, " from loadout but resulting thing is null"));
+                        Log.Error($"{pawn} tried dropping {dropEq} from loadout but resulting thing is null");
                     }
                 }
                 Thing dropThing;
@@ -256,7 +256,7 @@ namespace CombatExtended
                         {
                             return HaulAIUtility.HaulToStorageJob(pawn, droppedThing);
                         }
-                        Log.Error(string.Concat(pawn, " tried dropping ", dropThing, " from loadout but resulting thing is null"));
+                        Log.Error($"{pawn} tried dropping {dropThing} from loadout but resulting thing is null");
                     }
                 }
 

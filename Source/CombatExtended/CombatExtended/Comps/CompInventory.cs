@@ -255,7 +255,7 @@ namespace CombatExtended
                     else
                     {
 #if DEBUG
-                        Log.Warning("CE :: CompInventory :: SwitchToNextViableWeapon :: destroying out of bounds equipment" + eq.ToString());
+                        Log.Warning($"CE :: CompInventory :: SwitchToNextViableWeapon :: destroying out of bounds equipment {eq}");
 #endif
                         if (!eq.Destroyed)
                         {

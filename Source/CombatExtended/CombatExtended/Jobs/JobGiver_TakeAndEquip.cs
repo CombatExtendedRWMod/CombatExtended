@@ -180,7 +180,7 @@ namespace CombatExtended
             var brawler = (pawn.story?.traits != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler));
             CompInventory inventory = pawn.TryGetComp<CompInventory>();
             bool hasPrimary = (pawn.equipment?.Primary != null);
-            CompAmmoUser primaryammouser = hasPrimary ? pawn.equipment.Primary.TryGetComp<CompAmmoUser>() : null;
+            CompAmmoUser primaryAmmoUser = hasPrimary ? pawn.equipment.Primary.TryGetComp<CompAmmoUser>() : null;
 
             if (inventory != null)
             {
@@ -190,34 +190,34 @@ namespace CombatExtended
                     if ((pawn.skills.GetSkill(SkillDefOf.Shooting).Level >= pawn.skills.GetSkill(SkillDefOf.Melee).Level
                          || pawn.skills.GetSkill(SkillDefOf.Shooting).Level >= 6))
                     {
-                        ThingWithComps InvListGun3 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine);
-                        if (InvListGun3 != null)
+                        ThingWithComps invListGun3 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine);
+                        if (invListGun3 != null)
                         {
-                            inventory.TrySwitchToWeapon(InvListGun3);
+                            inventory.TrySwitchToWeapon(invListGun3);
                         }
                     }
                 }
 
                 // Drop excess ranged weapon
-                if (!pawn.Faction.IsPlayer && primaryammouser != null && GetPriorityWork(pawn) == WorkPriority.Unloading && inventory.rangedWeaponList.Count >= 1)
+                if (!pawn.Faction.IsPlayer && primaryAmmoUser != null && GetPriorityWork(pawn) == WorkPriority.Unloading && inventory.rangedWeaponList.Count >= 1)
                 {
-                    Thing ListGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
-                    if (ListGun != null)
+                    Thing listGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
+                    if (listGun != null)
                     {
                         Thing ammoListGun = null;
-                        if (!ListGun.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine)
-                            foreach (AmmoLink link in ListGun.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
+                        if (!listGun.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine)
+                            foreach (AmmoLink link in listGun.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
                             {
                                 if (inventory.ammoList.Find(thing => thing.def == link.ammo) == null)
                                 {
-                                    ammoListGun = ListGun;
+                                    ammoListGun = listGun;
                                     break;
                                 }
                             }
                         if (ammoListGun != null)
                         {
                             Thing droppedWeapon;
-                            if (inventory.container.TryDrop(ListGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, ListGun.stackCount, out droppedWeapon))
+                            if (inventory.container.TryDrop(listGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, listGun.stackCount, out droppedWeapon))
                             {
                                 pawn.jobs.EndCurrentJob(JobCondition.None, true);
                                 pawn.jobs.TryTakeOrderedJob(new Job(JobDefOf.DropEquipment, droppedWeapon, 30, true));
@@ -229,23 +229,22 @@ namespace CombatExtended
                 // Find and drop not need ammo from inventory
                 if (!pawn.Faction.IsPlayer && hasPrimary && inventory.ammoList.Count > 1 && GetPriorityWork(pawn) == WorkPriority.Unloading)
                 {
-                    Thing WrongammoThing = null;
-                    WrongammoThing = primaryammouser != null
-                        ? inventory.ammoList.Find(thing => !primaryammouser.Props.ammoSet.ammoTypes.Any(a => a.ammo == thing.def))
+                    Thing wrongAmmoThing = primaryAmmoUser != null
+                        ? inventory.ammoList.Find(thing => !primaryAmmoUser.Props.ammoSet.ammoTypes.Any(a => a.ammo == thing.def))
                         : inventory.ammoList.RandomElement<Thing>();
 
-                    if (WrongammoThing != null)
+                    if (wrongAmmoThing != null)
                     {
-                        Thing InvListGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
-                        if (InvListGun != null)
+                        Thing invListGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
+                        if (invListGun != null)
                         {
                             Thing ammoInvListGun = null;
-                            foreach (AmmoLink link in InvListGun.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
+                            foreach (AmmoLink link in invListGun.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
                             {
                                 ammoInvListGun = inventory.ammoList.Find(thing => thing.def == link.ammo);
                                 break;
                             }
-                            if (ammoInvListGun != null && ammoInvListGun != WrongammoThing)
+                            if (ammoInvListGun != null && ammoInvListGun != wrongAmmoThing)
                             {
                                 Thing droppedThingAmmo;
                                 if (inventory.container.TryDrop(ammoInvListGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, ammoInvListGun.stackCount, out droppedThingAmmo))
@@ -258,7 +257,7 @@ namespace CombatExtended
                         else
                         {
                             Thing droppedThing;
-                            if (inventory.container.TryDrop(WrongammoThing, pawn.Position, pawn.Map, ThingPlaceMode.Near, WrongammoThing.stackCount, out droppedThing))
+                            if (inventory.container.TryDrop(wrongAmmoThing, pawn.Position, pawn.Map, ThingPlaceMode.Near, wrongAmmoThing.stackCount, out droppedThing))
                             {
                                 pawn.jobs.EndCurrentJob(JobCondition.None, true);
                                 pawn.jobs.TryTakeOrderedJob(new Job(JobDefOf.DropEquipment, 30, true));
@@ -272,19 +271,19 @@ namespace CombatExtended
                 // Find weapon in inventory and try to switch if any ammo in inventory.
                 if (GetPriorityWork(pawn) == WorkPriority.Weapon && !hasPrimary)
                 {
-                    ThingWithComps InvListGun2 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null);
+                    ThingWithComps invListGun2 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null);
 
-                    if (InvListGun2 != null)
+                    if (invListGun2 != null)
                     {
                         Thing ammoInvListGun2 = null;
-                        foreach (AmmoLink link in InvListGun2.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
+                        foreach (AmmoLink link in invListGun2.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
                         {
                             ammoInvListGun2 = inventory.ammoList.Find(thing => thing.def == link.ammo);
                             break;
                         }
                         if (ammoInvListGun2 != null)
                         {
-                            inventory.TrySwitchToWeapon(InvListGun2);
+                            inventory.TrySwitchToWeapon(invListGun2);
                         }
                     }
 
@@ -387,9 +386,9 @@ namespace CombatExtended
 
                 // Find ammo
                 if ((GetPriorityWork(pawn) == WorkPriority.Ammo || GetPriorityWork(pawn) == WorkPriority.LowAmmo)
-                    && primaryammouser != null)
+                    && primaryAmmoUser != null)
                 {
-                    List<ThingDef> curAmmoList = (from AmmoLink g in primaryammouser.Props.ammoSet.ammoTypes
+                    List<ThingDef> curAmmoList = (from AmmoLink g in primaryAmmoUser.Props.ammoSet.ammoTypes
                                                   select g.ammo as ThingDef).ToList();
 
                     if (curAmmoList.Count > 0)
@@ -417,8 +416,8 @@ namespace CombatExtended
                                     {
                                         if (pawn.Faction.IsPlayer)
                                         {
-                                            int SearchRadius = 0;
-                                            SearchRadius = GetPriorityWork(pawn) == WorkPriority.LowAmmo ? 70 : 30;
+                                            int searchRadius = 0;
+                                            searchRadius = GetPriorityWork(pawn) == WorkPriority.LowAmmo ? 70 : 30;
 
                                             Thing closestThing = GenClosest.ClosestThingReachable(
                                             pawn.Position,
@@ -426,7 +425,7 @@ namespace CombatExtended
                                             ThingRequest.ForDef(th.def),
                                             PathEndMode.ClosestTouch,
                                             TraverseParms.For(pawn, Danger.None, TraverseMode.ByPawn),
-                                            SearchRadius,
+                                            searchRadius,
                                             x => !x.IsForbidden(pawn) && pawn.CanReserve(x));
 
                                             if (closestThing != null)
@@ -569,7 +568,7 @@ namespace CombatExtended
 
         private static IEnumerable<Pawn> DangerInPosRadius(Pawn pawn, IntVec3 position, Map map, float distance)
         {
-            return map.mapPawns.AllPawns.Where<Pawn>((p => p.Position.InHorDistOf(position, distance) && !p.RaceProps.Animal && !p.Downed && !p.Dead && p.Faction.HostileTo(pawn.Faction)));
+            return map.mapPawns.AllPawns.Where((p => p.Position.InHorDistOf(position, distance) && !p.RaceProps.Animal && !p.Downed && !p.Dead && p.Faction.HostileTo(pawn.Faction)));
         }
 
         private static Job MeleeOrWaitJob(Pawn pawn, Thing blocker, IntVec3 cellBeforeBlocker)

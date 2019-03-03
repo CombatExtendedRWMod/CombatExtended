@@ -143,7 +143,7 @@ namespace CombatExtended
                                 // Parse tag for bench def
                                 if (curTag.Length <= enableCraftingTag.Length + 1)
                                 {
-                                    Log.Error("CE :: AmmoInjector trying to inject " + ammoDef.ToString() + " but " + curTag + " is not a valid crafting tag, valid formats are: " + enableCraftingTag + " and " + enableCraftingTag + "_defNameOfCraftingBench");
+                                    Log.Error("CE :: AmmoInjector trying to inject " + ammoDef + " but " + curTag + " is not a valid crafting tag, valid formats are: " + enableCraftingTag + " and " + enableCraftingTag + "_defNameOfCraftingBench");
                                     continue;
                                 }
                                 var benchName = curTag.Remove(0, enableCraftingTag.Length + 1);

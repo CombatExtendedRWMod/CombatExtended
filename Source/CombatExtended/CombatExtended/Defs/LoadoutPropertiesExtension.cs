@@ -32,13 +32,13 @@ namespace CombatExtended
         public static void Reset()
 		{
             // Initialize weapons
-			Predicate<ThingDef> isWeapon = td => td.equipmentType == EquipmentType.Primary && !td.weaponTags.NullOrEmpty<string>();
+			Predicate<ThingDef> isWeapon = td => td.equipmentType == EquipmentType.Primary && !td.weaponTags.NullOrEmpty();
             allWeaponPairs = ThingStuffPair.AllWith(isWeapon);
 			foreach (ThingDef thingDef in from td in DefDatabase<ThingDef>.AllDefs
 			where isWeapon(td)
 			select td)
 			{
-				float num = allWeaponPairs.Where((ThingStuffPair pa) => pa.thing == thingDef).Sum((ThingStuffPair pa) => pa.Commonality);
+				float num = allWeaponPairs.Where(pa => pa.thing == thingDef).Sum(pa => pa.Commonality);
 				float num2 = thingDef.generateCommonality / num;
 				if (num2 != 1f)
 				{
@@ -113,7 +113,7 @@ namespace CombatExtended
                 if (w.Price <= randomInRange)
                 {
                     var w1 = w;
-                    if (option.weaponTags == null || option.weaponTags.Any((string tag) => w1.thing.weaponTags.Contains(tag)))
+                    if (option.weaponTags == null || option.weaponTags.Any(tag => w1.thing.weaponTags.Contains(tag)))
                     {
                         if (w.thing.generateAllowChance >= 1f || Rand.ChanceSeeded(w.thing.generateAllowChance, pawn.thingIDNumber ^ (int)w.thing.shortHash ^ 28554824))
                         {
@@ -130,7 +130,7 @@ namespace CombatExtended
             // pawn.equipment.DestroyAllEquipment(DestroyMode.Vanish); --removed compared to sourcecode
             // Some 1:1 COPY below
             ThingStuffPair thingStuffPair;
-            if (workingWeapons.TryRandomElementByWeight((ThingStuffPair w) => w.Commonality * w.Price, out thingStuffPair))
+            if (workingWeapons.TryRandomElementByWeight(w => w.Commonality * w.Price, out thingStuffPair))
             {
                 // Create the actual weapon and put it into inventory
                 ThingWithComps thingWithComps = (ThingWithComps)ThingMaker.MakeThing(thingStuffPair.thing, thingStuffPair.stuff);

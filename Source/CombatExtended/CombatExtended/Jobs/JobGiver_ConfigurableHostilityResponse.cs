@@ -125,50 +125,46 @@ namespace CombatExtended
 				Danger danger = reg.DangerFor(pawn);
 				Map map = pawn.Map;
 				foreach (IntVec3 current in reg.Cells)
-				{
-					if (current.Standable(map))
-					{
-						if (!reg.IsDoorway)
-						{
-							Thing thing = null;
-							float num = 0f;
-							for (int i = 0; i < threats.Count; i++)
-							{
-								float num2 = (float)current.DistanceToSquared(threats[i].Position);
-								if (thing == null || num2 < num)
-								{
-									thing = threats[i];
-									num = num2;
-								}
-							}
-							float num3 = Mathf.Sqrt(num);
-							float f = Mathf.Min(num3, 23f); //Slight alteration
-							float num4 = Mathf.Pow(f, 1.2f);
-							num4 *= Mathf.InverseLerp(50f, 0f, (current - pawn.Position).LengthHorizontal);
-							if (current.GetRoom(map, RegionType.Set_Passable) != thing.GetRoom(RegionType.Set_Passable))
-							{
-								num4 *= 4.2f;
-							}
-							else if (num3 < 8f)
-							{
-								num4 *= 0.05f;
-							}
-							if (!map.pawnDestinationReservationManager.CanReserve(current, pawn, false))
-							{
-								num4 *= 0.5f;
-							}
-							if (danger == Danger.Deadly)
-							{
-								num4 *= 0.8f;
-							}
-							if (num4 > bestScore)
-							{
-								bestPos = current;
-								bestScore = num4;
-							}
-						}
-					}
-				}
+                {
+                    if (!current.Standable(map) || reg.IsDoorway) continue;
+
+                    Thing thing = null;
+                    float num = 0f;
+                    foreach (var threat in threats)
+                    {
+                        float num2 = current.DistanceToSquared(threat.Position);
+                        if (thing == null || num2 < num)
+                        {
+                            thing = threat;
+                            num = num2;
+                        }
+                    }
+                    float num3 = Mathf.Sqrt(num);
+                    float f = Mathf.Min(num3, 23f); //Slight alteration
+                    float num4 = Mathf.Pow(f, 1.2f);
+                    num4 *= Mathf.InverseLerp(50f, 0f, (current - pawn.Position).LengthHorizontal);
+                    if (current.GetRoom(map, RegionType.Set_Passable) != thing.GetRoom(RegionType.Set_Passable))
+                    {
+                        num4 *= 4.2f;
+                    }
+                    else if (num3 < 8f)
+                    {
+                        num4 *= 0.05f;
+                    }
+                    if (!map.pawnDestinationReservationManager.CanReserve(current, pawn, false))
+                    {
+                        num4 *= 0.5f;
+                    }
+                    if (danger == Danger.Deadly)
+                    {
+                        num4 *= 0.8f;
+                    }
+                    if (num4 > bestScore)
+                    {
+                        bestPos = current;
+                        bestScore = num4;
+                    }
+                }
 				return false;
 			}, 20, RegionType.Set_Passable);
 			return bestPos;

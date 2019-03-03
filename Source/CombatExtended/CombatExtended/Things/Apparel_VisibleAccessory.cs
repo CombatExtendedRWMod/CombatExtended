@@ -43,7 +43,7 @@ namespace CombatExtended
             
             // compute drawVec, angle and Rot4 vars
             Rot4 rotation;
-            Rot4 bedRotation = new Rot4();
+            Rot4 bedRotation;
             float angle = 0;
             Vector3 drawVec = Wearer.Drawer.DrawPos;
             if (Wearer.GetPosture() != PawnPosture.Standing) 

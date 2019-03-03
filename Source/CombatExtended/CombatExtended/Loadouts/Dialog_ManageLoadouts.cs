@@ -81,7 +81,6 @@ namespace CombatExtended
             doCloseX = true;
             forcePause = true;
             absorbInputAroundWindow = true;
-            //doCloseButton = true; //Close button is awkward 
             closeOnClickedOutside = true;
             Utility_Loadouts.UpdateColonistCapacities();
         }
@@ -178,8 +177,7 @@ namespace CombatExtended
                     for (int i = 0; i < loadouts.Count; i++)
                     {
                         int local_i = i;
-                    	options.Add(new FloatMenuOption(loadouts[i].LabelCap, delegate
-                    	{ CurrentLoadout = loadouts[local_i]; }));
+                    	options.Add(new FloatMenuOption(loadouts[i].LabelCap, delegate{ CurrentLoadout = loadouts[local_i]; }));
                     }
                 }
 
@@ -331,7 +329,7 @@ namespace CombatExtended
             SetSource(_sourceType, true);
 
             // filter
-            _source = _source.Where(td => td.thingDef.label.ToUpperInvariant().Contains(_filter.ToUpperInvariant())).ToList();
+            _source = _source.Where(td => td.thingDef.label.ToUpperInvariant().Contains(filter.ToUpperInvariant())).ToList();
         }
 
         private void SetSource(SourceSelection source, bool preserveFilter = false)
@@ -469,7 +467,7 @@ namespace CombatExtended
             if (slot.thingDef != null && slot.thingDef.IsRangedWeapon)
             {
                 // make sure there's an ammoset defined
-                AmmoSetDef ammoSet = ((slot.thingDef.GetCompProperties<CompProperties_AmmoUser>() == null) ? null : slot.thingDef.GetCompProperties<CompProperties_AmmoUser>().ammoSet);
+                AmmoSetDef ammoSet = (slot.thingDef.GetCompProperties<CompProperties_AmmoUser>() == null) ? null : slot.thingDef.GetCompProperties<CompProperties_AmmoUser>().ammoSet;
 
                 bool? temp = !((ammoSet?.ammoTypes).NullOrEmpty());
 
@@ -480,7 +478,7 @@ namespace CombatExtended
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
                         int magazineSize = (slot.thingDef.GetCompProperties<CompProperties_AmmoUser>() == null) ? 0 : slot.thingDef.GetCompProperties<CompProperties_AmmoUser>().magazineSize;
 
-                        foreach (AmmoLink link in ((ammoSet == null) ? null : ammoSet.ammoTypes))
+                        foreach (AmmoLink link in ammoSet?.ammoTypes)
                         {
                             options.Add(new FloatMenuOption(link.ammo.LabelCap, delegate
                             {

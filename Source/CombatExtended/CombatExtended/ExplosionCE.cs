@@ -76,24 +76,24 @@ namespace CombatExtended
 						}
 					}
 				}
-				foreach (var intVec2 in openCells) {
-					if (intVec2.Walkable(Map)) {
-						for (int k = 0; k < 4; k++) {
-							IntVec3 intVec3 = intVec2 + GenAdj.CardinalDirections[k];
-							if (intVec3.InHorDistOf(Position, radius)) {
-								if (intVec3.InBounds(Map)) {
-									if (!intVec3.Standable(Map)) {
-										if (intVec3.GetEdifice(Map) != null) {
-											if (!openCells.Contains(intVec3) && adjWallCells.Contains(intVec3)) {
-												adjWallCells.Add(intVec3);
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				foreach (var intVec2 in openCells)
+                {
+                    if (!intVec2.Walkable(Map)) continue;
+
+                    for (int k = 0; k < 4; k++) {
+                        IntVec3 intVec3 = intVec2 + GenAdj.CardinalDirections[k];
+
+                        if (!intVec3.InHorDistOf(Position,radius) ||
+                            !intVec3.InBounds(Map) ||
+                            intVec3.Standable(Map) ||
+                            intVec3.GetEdifice(Map) == null)
+                            continue;
+
+                        if (!openCells.Contains(intVec3) && adjWallCells.Contains(intVec3)) {
+                            adjWallCells.Add(intVec3);
+                        }
+                    }
+                }
 				return openCells.Concat(adjWallCells);
 			}
 		}
@@ -138,12 +138,7 @@ namespace CombatExtended
 					this.AffectCell(this.cellsToAffect[i]);
 				}
 				catch (Exception ex) {
-					Log.Error(string.Concat(new object[] {
-						"Explosion could not affect cell ",
-						this.cellsToAffect[i],
-						": ",
-						ex
-					}));
+					Log.Error($"Explosion could not affect cell {cellsToAffect[i]}: {ex}");
 				}
 				this.cellsToAffect.RemoveAt(i);
 			}

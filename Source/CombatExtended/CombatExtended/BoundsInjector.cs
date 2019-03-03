@@ -143,7 +143,7 @@ namespace CombatExtended
     			}
     		}
     		
-    		foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs.Where<ThingDef>(x => x.plant != null))
+    		foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs.Where(x => x.plant != null))
     		{
 				try {	if (def.graphicData?.Graphic != null)
     					BoundMap(def.graphicData.Graphic, GraphicType.Plant);	}

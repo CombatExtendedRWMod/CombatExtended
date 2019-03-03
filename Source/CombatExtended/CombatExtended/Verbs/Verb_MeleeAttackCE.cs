@@ -71,13 +71,7 @@ namespace CombatExtended
             Thing targetThing = currentTarget.Thing;
             if (!CanHitTarget(targetThing))
             {
-                Log.Warning(string.Concat(new object[]
-                {
-                    casterPawn,
-                    " meleed ",
-                    targetThing,
-                    " from out of melee position."
-                }));
+                Log.Warning($"{casterPawn} meleed {targetThing} from out of melee position.");
             }
             casterPawn.rotationTracker.Face(targetThing.DrawPos);
 
@@ -102,7 +96,7 @@ namespace CombatExtended
                     // Attack is evaded
                     result = false;
                     soundDef = SoundMiss();
-                    CreateCombatLog((ManeuverDef maneuver) => maneuver.combatLogRulesDodge, false);
+                    CreateCombatLog(maneuver => maneuver.combatLogRulesDodge, false);
 
                     moteText = "TextMote_Dodge".Translate();
                     defender.skills?.Learn(SkillDefOf.Melee, DodgeXP, false);
@@ -126,7 +120,7 @@ namespace CombatExtended
                             // Do a riposte
                             DoParry(defender, parryThing, true);
                             moteText = "CE_TextMote_Riposted".Translate();
-                            CreateCombatLog((ManeuverDef maneuver) => maneuver.combatLogRulesDeflect, false); //placeholder
+                            CreateCombatLog(maneuver => maneuver.combatLogRulesDeflect, false); //placeholder
 
                             defender.skills?.Learn(SkillDefOf.Melee, CritXP + ParryXP, false);
                         }
@@ -135,7 +129,7 @@ namespace CombatExtended
                             // Do a parry
                             DoParry(defender, parryThing);
                             moteText = "CE_TextMote_Parried".Translate();
-                            CreateCombatLog((ManeuverDef maneuver) => maneuver.combatLogRulesMiss, false); //placeholder
+                            CreateCombatLog(maneuver => maneuver.combatLogRulesMiss, false); //placeholder
 
                             defender.skills?.Learn(SkillDefOf.Melee, ParryXP, false);
                         }
@@ -145,7 +139,7 @@ namespace CombatExtended
                     }
                     else
                     {
-                        BattleLogEntry_MeleeCombat log = this.CreateCombatLog((ManeuverDef maneuver) => maneuver.combatLogRulesHit, false);
+                        BattleLogEntry_MeleeCombat log = CreateCombatLog(maneuver => maneuver.combatLogRulesHit, false);
 
                         // Attack connects
                         if (surpriseAttack || Rand.Chance(GetComparativeChanceAgainst(casterPawn, defender, CE_StatDefOf.MeleeCritChance, BaseCritChance)))
@@ -171,7 +165,7 @@ namespace CombatExtended
                 // Attack missed
                 result = false;
                 soundDef = SoundMiss();
-                CreateCombatLog((ManeuverDef maneuver) => maneuver.combatLogRulesMiss, false);
+                CreateCombatLog(maneuver => maneuver.combatLogRulesMiss, false);
             }
             if (!moteText.NullOrEmpty())
                 MoteMaker.ThrowText(targetThing.PositionHeld.ToVector3Shifted(), targetThing.MapHeld, moteText);
@@ -258,11 +252,11 @@ namespace CombatExtended
         // unmodified
         private float GetHitChance(LocalTargetInfo target)
         {
-            if (this.surpriseAttack)
+            if (surpriseAttack)
             {
                 return 1f;
             }
-            if (this.IsTargetImmobile(target))
+            if (IsTargetImmobile(target))
             {
                 return 1f;
             }

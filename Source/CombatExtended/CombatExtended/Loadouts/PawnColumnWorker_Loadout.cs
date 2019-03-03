@@ -89,7 +89,7 @@ namespace CombatExtended
 
             // Main loadout button
             string label = pawn.GetLoadout().label.Truncate(loadoutButtonRect.width, null);
-            Widgets.Dropdown<Pawn, Loadout>(loadoutButtonRect, pawn, (Pawn p) => p.GetLoadout(), new Func<Pawn, IEnumerable<Widgets.DropdownMenuElement<Loadout>>>(Button_GenerateMenu), label, null, null, null, null, true);
+            Widgets.Dropdown(loadoutButtonRect, pawn, p => p.GetLoadout(), Button_GenerateMenu, label, null, null, null, null, true);
 
             // Clear forced button
             num3 += loadoutButtonRect.width;

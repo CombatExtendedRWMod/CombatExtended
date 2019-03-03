@@ -151,7 +151,7 @@ namespace CombatExtended
             Pawn pawn = parent as Pawn;
             if (pawn == null)
             {
-                Log.Error("CE trying to suppress non-pawn " + parent.ToString() + ", this should never happen");
+                Log.Error($"CE trying to suppress non-pawn {parent}, this should never happen");
                 return;
             }
 

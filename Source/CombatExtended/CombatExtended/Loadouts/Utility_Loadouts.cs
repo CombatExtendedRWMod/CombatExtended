@@ -287,9 +287,11 @@ namespace CombatExtended
         	newName = LoadoutManager.GetUniqueLabel(newName);
         	
         	// set basic loadout properties.
-        	Loadout loadout = new Loadout(newName);
-        	loadout.defaultLoadout = false;
-        	loadout.canBeDeleted = true;
+            Loadout loadout = new Loadout(newName)
+            {
+                defaultLoadout = false,
+                canBeDeleted = true
+            };
 
             LoadoutSlot slot;
         	

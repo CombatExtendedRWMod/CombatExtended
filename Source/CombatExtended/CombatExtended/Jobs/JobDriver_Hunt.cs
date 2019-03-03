@@ -199,7 +199,7 @@ namespace CombatExtended
                     Victim
                 });
                 Corpse corpse = Victim.Corpse;
-                if (corpse == null || !this.pawn.CanReserveAndReach(corpse, PathEndMode.ClosestTouch, Danger.Deadly, 1))
+                if (corpse == null || !pawn.CanReserveAndReach(corpse, PathEndMode.ClosestTouch, Danger.Deadly, 1))
                 {
                     pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                     return;

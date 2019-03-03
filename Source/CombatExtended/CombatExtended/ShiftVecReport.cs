@@ -146,7 +146,7 @@ namespace CombatExtended
             StringBuilder stringBuilder = new StringBuilder();
             if (visibilityShift > 0)
             {
-                stringBuilder.AppendLine("   " + "CE_VisibilityError".Translate() + "\t" + GenText.ToStringByStyle(visibilityShift, ToStringStyle.FloatTwo) + " c");
+                stringBuilder.AppendLine("   " + "CE_VisibilityError".Translate() + "\t" + visibilityShift.ToStringByStyle(ToStringStyle.FloatTwo) + " c");
 
                 if (lightingShift > 0)
                 {
@@ -163,27 +163,27 @@ namespace CombatExtended
             }
             if (leadShift > 0)
             {
-                stringBuilder.AppendLine("   " + "CE_LeadError".Translate() + "\t" + GenText.ToStringByStyle(leadShift, ToStringStyle.FloatTwo) + " c");
+                stringBuilder.AppendLine("   " + "CE_LeadError".Translate() + "\t" + leadShift.ToStringByStyle(ToStringStyle.FloatTwo) + " c");
             }
             if(distShift > 0)
             {
-                stringBuilder.AppendLine("   " + "CE_RangeError".Translate() + "\t" + GenText.ToStringByStyle(distShift, ToStringStyle.FloatTwo) + " c");
+                stringBuilder.AppendLine("   " + "CE_RangeError".Translate() + "\t" + distShift.ToStringByStyle(ToStringStyle.FloatTwo) + " c");
             }
             if (swayDegrees > 0)
             {
-                stringBuilder.AppendLine("   " + "CE_Sway".Translate() + "\t\t" + GenText.ToStringByStyle(swayDegrees, ToStringStyle.FloatTwo) + "°");
+                stringBuilder.AppendLine("   " + "CE_Sway".Translate() + "\t\t" + swayDegrees.ToStringByStyle(ToStringStyle.FloatTwo) + "°");
             }
             if (spreadDegrees > 0)
             {
-                stringBuilder.AppendLine("   " + "CE_Spread".Translate() + "\t\t" + GenText.ToStringByStyle(spreadDegrees, ToStringStyle.FloatTwo) + "°");
+                stringBuilder.AppendLine("   " + "CE_Spread".Translate() + "\t\t" + spreadDegrees.ToStringByStyle(ToStringStyle.FloatTwo) + "°");
             }
             // Don't display cover and target size if our weapon has a CEP
             if (circularMissRadius > 0)
             {
-                stringBuilder.AppendLine("   " + "CE_MissRadius".Translate() + "\t" + GenText.ToStringByStyle(circularMissRadius, ToStringStyle.FloatTwo) + " c");
+                stringBuilder.AppendLine("   " + "CE_MissRadius".Translate() + "\t" + circularMissRadius.ToStringByStyle(ToStringStyle.FloatTwo) + " c");
                 if (indirectFireShift > 0)
                 {
-                    stringBuilder.AppendLine("   " + "CE_IndirectFire".Translate() + "\t" + GenText.ToStringByStyle(indirectFireShift, ToStringStyle.FloatTwo) + " c");
+                    stringBuilder.AppendLine("   " + "CE_IndirectFire".Translate() + "\t" + indirectFireShift.ToStringByStyle(ToStringStyle.FloatTwo) + " c");
                     PlayerKnowledgeDatabase.KnowledgeDemonstrated(CE_ConceptDefOf.CE_MortarDirectFire, KnowledgeAmount.FrameDisplayed); // Show we learned about indirect fire penalties
                 }
             }
@@ -195,8 +195,8 @@ namespace CombatExtended
                 }
                 if (target.Thing != null)
                 {
-                    stringBuilder.AppendLine("   " + "CE_TargetHeight".Translate() + "\t" + GenText.ToStringByStyle(new CollisionVertical(target.Thing).HeightRange.Span, ToStringStyle.FloatTwo) + " c");
-                    stringBuilder.AppendLine("   " + "CE_TargetWidth".Translate() + "\t" + GenText.ToStringByStyle(CE_Utility.GetCollisionWidth(target.Thing), ToStringStyle.FloatTwo) + " c");
+                    stringBuilder.AppendLine("   " + "CE_TargetHeight".Translate() + "\t" + new CollisionVertical(target.Thing).HeightRange.Span.ToStringByStyle(ToStringStyle.FloatTwo) + " c");
+                    stringBuilder.AppendLine("   " + "CE_TargetWidth".Translate() + "\t" + CE_Utility.GetCollisionWidth(target.Thing).ToStringByStyle(ToStringStyle.FloatTwo) + " c");
                     if (target.Thing is Pawn pawn && pawn.IsCrouching())
                     {
                     	LessonAutoActivator.TeachOpportunity(CE_ConceptDefOf.CE_Crouching, OpportunityType.GoodToKnow);
