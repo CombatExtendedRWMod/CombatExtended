@@ -39,7 +39,7 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>10</magazineSize>
+					<magazineSize>5</magazineSize>
 					<reloadTime>3.00</reloadTime>
 					<ammoSet>AmmoSet_50BMG</ammoSet>
 				</AmmoUser>
