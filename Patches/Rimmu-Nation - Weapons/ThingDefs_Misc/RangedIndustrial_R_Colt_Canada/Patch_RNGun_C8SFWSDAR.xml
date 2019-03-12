@@ -31,7 +31,7 @@
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
 					<warmupTime>1.27</warmupTime>
-					<range>41</range>
+					<range>48</range>
 					<burstShotCount>6</burstShotCount>
 					<ticksBetweenBurstShots>5</ticksBetweenBurstShots>
 					<soundCast>RNShot_SDAR_III</soundCast>
@@ -47,7 +47,7 @@
 				</AmmoUser>
 				
 				<FireModes>
-					<aiUseBurstMode>FALSE</aiUseBurstMode>
+					<aiUseBurstMode>TRUE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
