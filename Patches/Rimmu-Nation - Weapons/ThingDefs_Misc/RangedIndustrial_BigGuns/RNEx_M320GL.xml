@@ -15,9 +15,9 @@
 					<Mass>1.27</Mass>
 					<RangedWeapon_Cooldown>0.53</RangedWeapon_Cooldown>
 					<SightsEfficiency>1</SightsEfficiency>
-					<ShotSpread>0.1</ShotSpread>
-					<SwayFactor>1.50</SwayFactor>
-					<Bulk>7.50</Bulk>
+					<ShotSpread>0.2</ShotSpread>
+					<SwayFactor>0.48</SwayFactor>
+					<Bulk>2.85</Bulk>
 					<WorkToMake>13500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>2</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>5.99</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_40x46mmGrenade_HE</defaultProjectile>
-					<warmupTime>2.0</warmupTime>
-					<range>35.9</range>
+					<warmupTime>1.1</warmupTime>
+					<range>44</range>
 					<burstShotCount>1</burstShotCount>
 					<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
 					<soundCast>RNShotGL</soundCast>
@@ -47,13 +47,13 @@
 				
 				<AmmoUser>
 					<magazineSize>1</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<reloadTime>0.85</reloadTime>
 					<ammoSet>AmmoSet_40x46mmGrenade</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
+					<aiAimMode>SuppressFire</aiAimMode>
 					<aimedBurstShotCount>1</aimedBurstShotCount>
 				</FireModes>
 				

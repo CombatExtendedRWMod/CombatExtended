@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>3.00</Mass>
 					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
-					<SightsEfficiency>1</SightsEfficiency>
-					<ShotSpread>0.1</ShotSpread>
-					<SwayFactor>1.50</SwayFactor>
-					<Bulk>7.50</Bulk>
+					<SightsEfficiency>2.12</SightsEfficiency>
+					<ShotSpread>0.2</ShotSpread>
+					<SwayFactor>1.52</SwayFactor>
+					<Bulk>13.00</Bulk>
 					<WorkToMake>26500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,14 +26,14 @@
 					<ComponentIndustrial>4</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>0</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_RPG32Rocket_HEAT</defaultProjectile>
-					<warmupTime>3.5</warmupTime>
-					<range>40.9</range>
-					<burstShotCount>1</burstShotCount>
-					<ticksBetweenBurstShots>20</ticksBetweenBurstShots>
+					<warmupTime>2</warmupTime>
+					<range>44</range>
+					<burstShotCount>0</burstShotCount>
+					<ticksBetweenBurstShots>0</ticksBetweenBurstShots>
 					<soundCast>RNShotRPG</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<onlyManualCast>true</onlyManualCast>
@@ -47,14 +47,14 @@
 				
 				<AmmoUser>
 					<magazineSize>1</magazineSize>
-					<reloadTime>2.80</reloadTime>
+					<reloadTime>8.6</reloadTime>
 					<ammoSet>AmmoSet_RPG32Rocket</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
-					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<aimedBurstShotCount>0</aimedBurstShotCount>
 					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				

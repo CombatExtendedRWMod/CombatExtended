@@ -15,9 +15,9 @@
 					<Mass>13.00</Mass>
 					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
 					<SightsEfficiency>1</SightsEfficiency>
-					<ShotSpread>0.1</ShotSpread>
-					<SwayFactor>1.50</SwayFactor>
-					<Bulk>7.50</Bulk>
+					<ShotSpread>0.2</ShotSpread>
+					<SwayFactor>2.50</SwayFactor>
+					<Bulk>13.00</Bulk>
 					<WorkToMake>29000</WorkToMake>
 				</statBases>
 				<costList>
@@ -31,10 +31,10 @@
 					<verbClass>CombatExtended.Verb_ShootCEOneUse</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_RPG28Klyukva</defaultProjectile>
-					<warmupTime>3.5</warmupTime>
-					<range>40.9</range>
-					<burstShotCount>1</burstShotCount>
-					<ticksBetweenBurstShots>20</ticksBetweenBurstShots>
+					<warmupTime>1.9</warmupTime>
+					<range>40</range>
+					<burstShotCount>0</burstShotCount>
+					<ticksBetweenBurstShots>0</ticksBetweenBurstShots>
 					<soundCast>RNShotRPG</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<onlyManualCast>true</onlyManualCast>
@@ -49,7 +49,7 @@
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
-					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<aimedBurstShotCount>0</aimedBurstShotCount>
 					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				

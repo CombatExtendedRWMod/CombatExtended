@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>7.54</Mass>
 					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
-					<SightsEfficiency>1</SightsEfficiency>
-					<ShotSpread>0.1</ShotSpread>
-					<SwayFactor>1.50</SwayFactor>
-					<Bulk>7.50</Bulk>
+					<SightsEfficiency>2.23</SightsEfficiency>
+					<ShotSpread>0.2</ShotSpread>
+					<SwayFactor>2.16</SwayFactor>
+					<Bulk>14.71</Bulk>
 					<WorkToMake>31500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,14 +26,12 @@
 					<ComponentIndustrial>4</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>0</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_83mmSMAW_HEAT</defaultProjectile>
-					<warmupTime>5</warmupTime>
-					<range>40.9</range>
-					<burstShotCount>1</burstShotCount>
-					<ticksBetweenBurstShots>20</ticksBetweenBurstShots>
+					<warmupTime>2.09</warmupTime>
+					<range>48</range>
 					<soundCast>RNShotLauncher</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<onlyManualCast>true</onlyManualCast>
@@ -47,14 +45,13 @@
 				
 				<AmmoUser>
 					<magazineSize>1</magazineSize>
-					<reloadTime>2.80</reloadTime>
+					<reloadTime>8.6</reloadTime>
 					<ammoSet>AmmoSet_83mmSMAW</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
-					<aimedBurstShotCount>1</aimedBurstShotCount>
 					<noSnapshot>true</noSnapshot>
 				</FireModes>
 				

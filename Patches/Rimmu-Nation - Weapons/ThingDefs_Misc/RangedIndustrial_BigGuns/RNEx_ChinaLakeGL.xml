@@ -15,9 +15,9 @@
 					<Mass>3.72</Mass>
 					<RangedWeapon_Cooldown>1.01</RangedWeapon_Cooldown>
 					<SightsEfficiency>1</SightsEfficiency>
-					<ShotSpread>0.1</ShotSpread>
-					<SwayFactor>1.50</SwayFactor>
-					<Bulk>7.50</Bulk>
+					<ShotSpread>0.16</ShotSpread>
+					<SwayFactor>1.25</SwayFactor>
+					<Bulk>8.75</Bulk>
 					<WorkToMake>9500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,14 +26,13 @@
 					<ComponentIndustrial>1</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>3.50</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_40x46mmGrenade_HE</defaultProjectile>
-					<warmupTime>2.55</warmupTime>
-					<range>35.9</range>
-					<burstShotCount>1</burstShotCount>
-					<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+					<warmupTime>1.1</warmupTime>
+					<range>44</range>
+					<ticksBetweenBurstShots>120</ticksBetweenBurstShots>
 					<soundCast>RNShot_ChinaLakeGL</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<onlyManualCast>true</onlyManualCast>
@@ -47,14 +46,13 @@
 				
 				<AmmoUser>
 					<magazineSize>3</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<reloadTime>2.55</reloadTime>
 					<ammoSet>AmmoSet_40x46mmGrenade</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
-					<aimedBurstShotCount>1</aimedBurstShotCount>
+					<aiAimMode>SuppressFire</aiAimMode>
 				</FireModes>
 				
 				<!-- No additional CE weaponTags needed -->

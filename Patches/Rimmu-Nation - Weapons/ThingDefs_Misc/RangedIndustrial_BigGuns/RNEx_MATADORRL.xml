@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>8.90</Mass>
 					<RangedWeapon_Cooldown>1.50</RangedWeapon_Cooldown>
-					<SightsEfficiency>1</SightsEfficiency>
-					<ShotSpread>0.1</ShotSpread>
-					<SwayFactor>1.50</SwayFactor>
-					<Bulk>7.50</Bulk>
+					<SightsEfficiency>1.1</SightsEfficiency>
+					<ShotSpread>0.2</ShotSpread>
+					<SwayFactor>1.89</SwayFactor>
+					<Bulk>11.00</Bulk>
 					<WorkToMake>28500</WorkToMake>
 				</statBases>
 				<costList>
@@ -31,10 +31,10 @@
 					<verbClass>CombatExtended.Verb_ShootCEOneUse</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_90mmMATADOR</defaultProjectile>
-					<warmupTime>5</warmupTime>
-					<range>40.9</range>
-					<burstShotCount>1</burstShotCount>
-					<ticksBetweenBurstShots>20</ticksBetweenBurstShots>
+					<warmupTime>1.8</warmupTime>
+					<range>48</range>
+					<burstShotCount>0</burstShotCount>
+					<ticksBetweenBurstShots>0</ticksBetweenBurstShots>
 					<soundCast>RNShotLauncher</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<onlyManualCast>true</onlyManualCast>
