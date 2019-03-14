@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>3.40</Mass>
 					<RangedWeapon_Cooldown>1.00</RangedWeapon_Cooldown>
-					<SightsEfficiency>0.7</SightsEfficiency>
-					<ShotSpread>0.18</ShotSpread>
-					<SwayFactor>1.94</SwayFactor>
-					<Bulk>9.50</Bulk>
+					<SightsEfficiency>1</SightsEfficiency>
+					<ShotSpread>0.14</ShotSpread>
+					<SwayFactor>1.32</SwayFactor>
+					<Bulk>9.78</Bulk>
 					<WorkToMake>12500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>1</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.33</recoilAmount>
+					<recoilAmount>3.25</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_12Gauge_Buck</defaultProjectile>
-					<warmupTime>0.9</warmupTime>
-					<range>17.9</range>
+					<warmupTime>0.6</warmupTime>
+					<range>12</range>
 					<soundCast>RN870Shot</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -40,13 +40,13 @@
 				
 				<AmmoUser>
 					<magazineSize>7</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<reloadTime>5.1</reloadTime>
 					<ammoSet>AmmoSet_12Gauge</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
+					<aiAimMode>Snapshot</aiAimMode>
 				</FireModes>
 				
 				<weaponTags>

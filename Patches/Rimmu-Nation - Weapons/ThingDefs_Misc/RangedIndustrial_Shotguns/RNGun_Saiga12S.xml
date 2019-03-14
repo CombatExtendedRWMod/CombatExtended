@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>3.50</Mass>
 					<RangedWeapon_Cooldown>0.39</RangedWeapon_Cooldown>
-					<SightsEfficiency>0.9</SightsEfficiency>
-					<ShotSpread>0.14</ShotSpread>
-					<SwayFactor>1.64</SwayFactor>
-					<Bulk>10.50</Bulk>
+					<SightsEfficiency>1</SightsEfficiency>
+					<ShotSpread>0.15</ShotSpread>
+					<SwayFactor>1.26</SwayFactor>
+					<Bulk>9.10</Bulk>
 					<WorkToMake>20500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,14 +26,12 @@
 					<ComponentIndustrial>3</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.33</recoilAmount>
+					<recoilAmount>2.93</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_12Gauge_Buck</defaultProjectile>
-					<warmupTime>1.2</warmupTime>
-					<range>16.9</range>
-					<burstShotCount>3</burstShotCount>
-					<ticksBetweenBurstShots>14</ticksBetweenBurstShots>
+					<warmupTime>0.6</warmupTime>
+					<range>16</range>
 					<soundCast>RNShotSAIGA</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -42,14 +40,13 @@
 				
 				<AmmoUser>
 					<magazineSize>20</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_12Gauge</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
-					<aimedBurstShotCount>3</aimedBurstShotCount>
+					<aiAimMode>Snapshot</aiAimMode>
 				</FireModes>
 				
 				<weaponTags>
