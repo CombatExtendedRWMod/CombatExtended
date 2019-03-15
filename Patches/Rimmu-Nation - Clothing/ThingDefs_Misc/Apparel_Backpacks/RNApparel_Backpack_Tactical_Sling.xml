@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <Patch>
-	<Operation Class="PatchOperationSequence">
-		<success>Always</success>
-		<operations>
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>[CP] Rimmu-Nation - Clothing (1.0)</li>
+			<li>[CP] Rimmu-Nation - Clothing (All Craftable!) (1.0)</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<operations>
 
-			<li Class="CombatExtended.PatchOperationFindMod">
-				<modName>[CP] Rimmu-Nation - Clothing (1.0)</modName>
-			</li>
+				<li Class="PatchOperationAdd">
+					<xpath>Defs/ThingDef[defName="RNApparel_Backpack_Tactical_Sling"]/statBases</xpath>
+					<value>
+						<Bulk>3</Bulk>
+					</value>
+				</li>
 
-			<li Class="PatchOperationAdd">
-				<xpath>Defs/ThingDef[defName="RNApparel_Backpack_Tactical_Sling"]/statBases</xpath>
-				<value>
-					<Bulk>3</Bulk>
-				</value>
-			</li>
-			
-			<li Class="PatchOperationAdd">
-				<xpath>Defs/ThingDef[defName="RNApparel_Backpack_Tactical_Sling"]/equippedStatOffsets</xpath>
-				<value>
-					<CarryBulk>15</CarryBulk>
-				</value>
-			</li>
-			
-		</operations>
+				<li Class="PatchOperationAdd">
+					<xpath>Defs/ThingDef[defName="RNApparel_Backpack_Tactical_Sling"]/equippedStatOffsets</xpath>
+					<value>
+						<CarryBulk>15</CarryBulk>
+					</value>
+				</li>
+
+			</operations>
+		</match>
 	</Operation>
 </Patch>

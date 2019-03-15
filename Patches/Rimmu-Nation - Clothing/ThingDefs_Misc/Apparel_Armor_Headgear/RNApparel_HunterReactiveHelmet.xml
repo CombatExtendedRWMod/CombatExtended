@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <Patch>
-	<Operation Class="PatchOperationSequence">
-		<success>Always</success>
-		<operations>
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>[CP] Rimmu-Nation - Clothing (1.0)</li>
+			<li>[CP] Rimmu-Nation - Clothing (All Craftable!) (1.0)</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<operations>
 
-			<li Class="CombatExtended.PatchOperationFindMod">
-				<modName>[CP] Rimmu-Nation - Clothing (1.0)</modName>
-			</li>
+				<li Class="PatchOperationAdd">
+					<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases</xpath>
+					<value>
+						<Bulk>6</Bulk>
+						<WornBulk>1.5</WornBulk>
+					</value>
+				</li>
 
-			<li Class="PatchOperationAdd">
-				<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases</xpath>
-				<value>
-					<Bulk>6</Bulk>
-					<WornBulk>1.5</WornBulk>
-				</value>
-			</li>
+				<li Class="PatchOperationReplace">
+					<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases/ArmorRating_Sharp</xpath>
+					<value>
+						<ArmorRating_Sharp>1</ArmorRating_Sharp>
+					</value>
+				</li>
 
-			<li Class="PatchOperationReplace">
-				<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases/ArmorRating_Sharp</xpath>
-				<value>
-					<ArmorRating_Sharp>1</ArmorRating_Sharp>
-				</value>
-			</li>
+				<li Class="PatchOperationReplace">
+					<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases/ArmorRating_Blunt</xpath>
+					<value>
+						<ArmorRating_Blunt>0.6</ArmorRating_Blunt>
+					</value>
+				</li>
 
-			<li Class="PatchOperationReplace">
-				<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases/ArmorRating_Blunt</xpath>
-				<value>
-					<ArmorRating_Blunt>0.6</ArmorRating_Blunt>
-				</value>
-			</li>
+				<li Class="PatchOperationReplace">
+					<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases/ArmorRating_Heat</xpath>
+					<value>
+						<ArmorRating_Heat>1</ArmorRating_Heat>
+					</value>
+				</li>
 
-			<li Class="PatchOperationReplace">
-				<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases/ArmorRating_Heat</xpath>
-				<value>
-					<ArmorRating_Heat>1</ArmorRating_Heat>
-				</value>
-			</li>
-			
-			<li Class="PatchOperationAdd">
-				<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases</xpath>
-				<value>
-					<ArmorRating_Electric>0.06</ArmorRating_Electric>
-				</value>
-			</li>
+				<li Class="PatchOperationAdd">
+					<xpath>Defs/ThingDef[defName="RNApparel_HunterReactiveHelmet"]/statBases</xpath>
+					<value>
+						<ArmorRating_Electric>0.06</ArmorRating_Electric>
+					</value>
+				</li>
 
-		</operations>
+			</operations>
+		</match>
 	</Operation>
 </Patch>
