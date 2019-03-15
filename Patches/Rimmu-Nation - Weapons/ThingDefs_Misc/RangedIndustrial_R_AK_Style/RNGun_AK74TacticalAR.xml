@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>3.07</Mass>
 					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.05</SightsEfficiency>
-					<ShotSpread>0.065</ShotSpread>
-					<SwayFactor>1.2</SwayFactor>
-					<Bulk>11.07</Bulk>
+					<SightsEfficiency>2.21</SightsEfficiency>
+					<ShotSpread>0.09</ShotSpread>
+					<SwayFactor>1.29</SwayFactor>
+					<Bulk>9.43</Bulk>
 					<WorkToMake>33500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,14 +26,14 @@
 					<Chemfuel>10</Chemfuel>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>1.43</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_545x39mmSoviet_FMJ</defaultProjectile>
-					<warmupTime>1.0</warmupTime>
-					<range>35.9</range>
-					<burstShotCount>3</burstShotCount>
-					<ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+					<warmupTime>1.275</warmupTime>
+					<range>55</range>
+					<burstShotCount>6</burstShotCount>
+					<ticksBetweenBurstShots>6</ticksBetweenBurstShots>
 					<soundCast>RNShotAK74USMG</soundCast>
 					<soundCastTail>GunTail_Medium</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -42,12 +42,12 @@
 				
 				<AmmoUser>
 					<magazineSize>30</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_545x39mmSoviet</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
-					<aiUseBurstMode>FALSE</aiUseBurstMode>
+					<aiUseBurstMode>TRUE</aiUseBurstMode>
 					<aiAimMode>AimedShot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
