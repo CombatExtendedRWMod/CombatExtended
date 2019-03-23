@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>7.18</Mass>
 					<RangedWeapon_Cooldown>1.37</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.9</SightsEfficiency>
-					<ShotSpread>0.006</ShotSpread>
-					<SwayFactor>0.49</SwayFactor>
-					<Bulk>10.50</Bulk>
+					<SightsEfficiency>3.50</SightsEfficiency>
+					<ShotSpread>0.01</ShotSpread>
+					<SwayFactor>1.61</SwayFactor>
+					<Bulk>15.60</Bulk>
 					<WorkToMake>42000</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>6</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.15</recoilAmount>
+					<recoilAmount>2.02</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_338Lapua_FMJ</defaultProjectile>
-					<warmupTime>1.15</warmupTime>
-					<range>75.9</range>
+					<warmupTime>2.35</warmupTime>
+					<range>107</range>
 					<soundCast>RNShot_BoltGenericSD</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -39,8 +39,8 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>20</magazineSize>
-					<reloadTime>1.50</reloadTime>
+					<magazineSize>5</magazineSize>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_338Lapua</ammoSet>
 				</AmmoUser>
 				

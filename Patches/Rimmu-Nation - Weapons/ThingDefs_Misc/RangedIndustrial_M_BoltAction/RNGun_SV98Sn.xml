@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>6.80</Mass>
 					<RangedWeapon_Cooldown>1.36</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.15</SightsEfficiency>
-					<ShotSpread>0.016</ShotSpread>
-					<SwayFactor>1.1</SwayFactor>
-					<Bulk>10.90</Bulk>
+					<SightsEfficiency>2.60</SightsEfficiency>
+					<ShotSpread>0.04</ShotSpread>
+					<SwayFactor>1.39</SwayFactor>
+					<Bulk>13.00</Bulk>
 					<WorkToMake>26500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>5</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.25</recoilAmount>
+					<recoilAmount>1.52</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_762x54mmR_FMJ</defaultProjectile>
-					<warmupTime>1.2</warmupTime>
-					<range>42.9</range>
+					<warmupTime>1.6</warmupTime>
+					<range>86</range>
 					<soundCast>RNShotSV98</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -40,7 +40,7 @@
 				
 				<AmmoUser>
 					<magazineSize>10</magazineSize>
-					<reloadTime>1.80</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_762x54mmR</ammoSet>
 				</AmmoUser>
 				
