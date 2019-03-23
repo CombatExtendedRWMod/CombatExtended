@@ -44,7 +44,7 @@
 					<magazineSize>30</magazineSize>
 					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
-				</AmmoUser>``
+				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>TRUE</aiUseBurstMode>
