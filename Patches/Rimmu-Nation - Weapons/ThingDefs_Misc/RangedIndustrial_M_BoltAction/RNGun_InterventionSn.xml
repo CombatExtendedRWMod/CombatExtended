@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>15.20</Mass>
 					<RangedWeapon_Cooldown>1.36</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.9</SightsEfficiency>
-					<ShotSpread>0.006</ShotSpread>
-					<SwayFactor>0.49</SwayFactor>
-					<Bulk>10.50</Bulk>
+					<SightsEfficiency>3.32</SightsEfficiency>
+					<ShotSpread>0.02</ShotSpread>
+					<SwayFactor>2.06</SwayFactor>
+					<Bulk>12.87</Bulk>
 					<WorkToMake>42500</WorkToMake>
 				</statBases>
 				<costList>
@@ -25,12 +25,12 @@
 					<ComponentIndustrial>6</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.15</recoilAmount>
+					<recoilAmount>1.49</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
-					<defaultProjectile>Bullet_338Lapua_FMJ</defaultProjectile>
-					<warmupTime>1.15</warmupTime>
-					<range>75.9</range>
+					<defaultProjectile>Bullet_408CheyenneTactical_FMJ</defaultProjectile>
+					<warmupTime>2.2</warmupTime>
+					<range>156</range>
 					<soundCast>RNShotIntervention</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -38,9 +38,9 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>20</magazineSize>
-					<reloadTime>1.50</reloadTime>
-					<ammoSet>AmmoSet_338Lapua</ammoSet>
+					<magazineSize>7</magazineSize>
+					<reloadTime>4</reloadTime>
+					<ammoSet>AmmoSet_408CheyenneTactical</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
