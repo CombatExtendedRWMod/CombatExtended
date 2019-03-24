@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>4.10</Mass>
 					<RangedWeapon_Cooldown>0.56</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.05</SightsEfficiency>
-					<ShotSpread>0.065</ShotSpread>
-					<SwayFactor>1.2</SwayFactor>
-					<Bulk>11.07</Bulk>
+					<SightsEfficiency>2.54</SightsEfficiency>
+					<ShotSpread>0.04</ShotSpread>
+					<SwayFactor>0.99</SwayFactor>
+					<Bulk>10.20</Bulk>
 					<WorkToMake>39000</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>7</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.13</recoilAmount>
+					<recoilAmount>1.44</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_58x42mmDBP10_FMJ</defaultProjectile>
-					<warmupTime>1.2</warmupTime>
-					<range>44.9</range>
+					<warmupTime>1.55</warmupTime>
+					<range>75</range>
 					<soundCast>RNShot_GenericDMR_II</soundCast>
 					<soundCastTail>GunTail_Heavy</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -39,8 +39,8 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>30</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<magazineSize>10</magazineSize>
+					<reloadTime>4.50</reloadTime>
 					<ammoSet>AmmoSet_58x42mmDBP10</ammoSet>
 				</AmmoUser>
 				

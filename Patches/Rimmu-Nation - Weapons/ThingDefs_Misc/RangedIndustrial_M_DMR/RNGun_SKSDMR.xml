@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>3.85</Mass>
 					<RangedWeapon_Cooldown>0.57</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.25</SightsEfficiency>
-					<ShotSpread>0.066</ShotSpread>
-					<SwayFactor>1.25</SwayFactor>
-					<Bulk>11.07</Bulk>
+					<SightsEfficiency>2.24</SightsEfficiency>
+					<ShotSpread>0.06</ShotSpread>
+					<SwayFactor>1.01</SwayFactor>
+					<Bulk>10.18</Bulk>
 					<WorkToMake>29000</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,12 +26,12 @@
 					<ComponentIndustrial>4</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.19</recoilAmount>
+					<recoilAmount>1.72</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_762x39mmSoviet_FMJ</defaultProjectile>
-					<warmupTime>1.2</warmupTime>
-					<range>44.9</range>
+					<warmupTime>1.3</warmupTime>
+					<range>48</range>
 					<soundCast>RNShotSKS</soundCast>
 					<soundCastTail>GunTail_Medium</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -40,7 +40,7 @@
 				
 				<AmmoUser>
 					<magazineSize>10</magazineSize>
-					<reloadTime>2.40</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_762x39mmSoviet</ammoSet>
 				</AmmoUser>
 				
