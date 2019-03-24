@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>1.30</Mass>
 					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.05</SightsEfficiency>
-					<ShotSpread>0.065</ShotSpread>
-					<SwayFactor>1.2</SwayFactor>
-					<Bulk>8.07</Bulk>
+					<SightsEfficiency>1.00</SightsEfficiency>
+					<ShotSpread>0.17</ShotSpread>
+					<SwayFactor>0.65</SwayFactor>
+					<Bulk>2.70</Bulk>
 					<WorkToMake>27500</WorkToMake>
 				</statBases>
 				<costList>
@@ -25,14 +25,14 @@
 					<ComponentIndustrial>5</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.05</recoilAmount>
+					<recoilAmount>1.57</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_32ACP_FMJ</defaultProjectile>
-					<warmupTime>0.5</warmupTime>
-					<range>19.9</range>
-					<burstShotCount>3</burstShotCount>
-					<ticksBetweenBurstShots>6</ticksBetweenBurstShots>
+					<warmupTime>0.6</warmupTime>
+					<range>25</range>
+					<burstShotCount>6</burstShotCount>
+					<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
 					<soundCast>RNShotSkorpionVZ</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -40,14 +40,14 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>30</magazineSize>
-					<reloadTime>1.90</reloadTime>
+					<magazineSize>20</magazineSize>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_32ACP</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
+					<aiAimMode>Snapshot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				

@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>2.10</Mass>
 					<RangedWeapon_Cooldown>0.36</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.05</SightsEfficiency>
-					<ShotSpread>0.065</ShotSpread>
-					<SwayFactor>1.2</SwayFactor>
-					<Bulk>8.07</Bulk>
+					<SightsEfficiency>1.00</SightsEfficiency>
+					<ShotSpread>0.14</ShotSpread>
+					<SwayFactor>0.87</SwayFactor>
+					<Bulk>4.25</Bulk>
 					<WorkToMake>28000</WorkToMake>
 				</statBases>
 				<costList>
@@ -25,13 +25,13 @@
 					<ComponentIndustrial>5</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.05</recoilAmount>
+					<recoilAmount>1.35</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_9x19mmPara_FMJ</defaultProjectile>
-					<warmupTime>0.5</warmupTime>
-					<range>21</range>
-					<burstShotCount>5</burstShotCount>
+					<warmupTime>0.6</warmupTime>
+					<range>20</range>
+					<burstShotCount>6</burstShotCount>
 					<ticksBetweenBurstShots>5</ticksBetweenBurstShots>
 					<soundCast>RNShotSMG_II</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
@@ -40,14 +40,14 @@
 				</Properties>
 				
 				<AmmoUser>
-					<magazineSize>30</magazineSize>
-					<reloadTime>1.90</reloadTime>
+					<magazineSize>64</magazineSize>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_9x19mmPara</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
+					<aiAimMode>Snapshot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				

@@ -14,10 +14,10 @@
 				<statBases>
 					<Mass>1.40</Mass>
 					<RangedWeapon_Cooldown>0.37</RangedWeapon_Cooldown>
-					<SightsEfficiency>1.05</SightsEfficiency>
-					<ShotSpread>0.065</ShotSpread>
-					<SwayFactor>1.2</SwayFactor>
-					<Bulk>8.07</Bulk>
+					<SightsEfficiency>1.00</SightsEfficiency>
+					<ShotSpread>0.17</ShotSpread>
+					<SwayFactor>0.66</SwayFactor>
+					<Bulk>3.03</Bulk>
 					<WorkToMake>28500</WorkToMake>
 				</statBases>
 				<costList>
@@ -26,14 +26,14 @@
 					<ComponentIndustrial>5</ComponentIndustrial>
 				</costList>
 				<Properties>
-					<recoilAmount>1.05</recoilAmount>
+					<recoilAmount>2.14</recoilAmount>
 					<verbClass>CombatExtended.Verb_ShootCE</verbClass>
 					<hasStandardCommand>true</hasStandardCommand>
 					<defaultProjectile>Bullet_380ACP_FMJ</defaultProjectile>
-					<warmupTime>0.7</warmupTime>
-					<range>21.9</range>
-					<burstShotCount>5</burstShotCount>
-					<ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+					<warmupTime>0.6</warmupTime>
+					<range>20</range>
+					<burstShotCount>6</burstShotCount>
+					<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
 					<soundCast>RNMP9Shot</soundCast>
 					<soundCastTail>GunTail_Light</soundCastTail>
 					<muzzleFlashScale>9</muzzleFlashScale>
@@ -42,13 +42,13 @@
 				
 				<AmmoUser>
 					<magazineSize>30</magazineSize>
-					<reloadTime>1.90</reloadTime>
+					<reloadTime>4</reloadTime>
 					<ammoSet>AmmoSet_380ACP</ammoSet>
 				</AmmoUser>
 				
 				<FireModes>
 					<aiUseBurstMode>FALSE</aiUseBurstMode>
-					<aiAimMode>AimedShot</aiAimMode>
+					<aiAimMode>Snapshot</aiAimMode>
 					<aimedBurstShotCount>3</aimedBurstShotCount>
 				</FireModes>
 				
