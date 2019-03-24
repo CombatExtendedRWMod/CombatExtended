@@ -91,16 +91,6 @@
 					</tools>
 				</value>
 			</li>	
-			<li Class="PatchOperationAdd">
-			<xpath>Defs/ThingDef[defName="RNEx_RPG7RL"]/comps</xpath>
-				<value>
-						<li Class="WHands.WhandCompProps">
-							<MainHand>(-0.225,0.3,-0.08625)</MainHand>
-							<SecHand>(-0.25,0,-0.125)</SecHand>
-						</li>
-						<li Class="CompProperties_Forbiddable"></li>
-				</value>
-			</li>	
 		</operations>
 	</Operation>
 </Patch>

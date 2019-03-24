@@ -1,41 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>	
-<Operation Class="PatchOperationSequence">
-	<success>Always</success>
-	<operations>
-	
-		<li Class="CombatExtended.PatchOperationFindMod">
-			<modName>[CP] Rimmu-Nation - Weapons (1.0)</modName>
-		</li>
-		
-		<li lass="PatchOperationReplace">
-			<xpath>Defs/[defName="Bullet_AnestheticGun"]/ThingDef</xpath>
-			<value> 		
-			  <ThingDef Class="AnestheticGunMod.ThingDef_AnestheticBullet" ParentName="BaseBullet">
-					<defName>Bullet_AnestheticGun</defName>
-					<label>anesthetic gun bullet</label>
-					<projectile Class="CombatExtended.ProjectilePropertiesCE">
-						<damageDef>Bullet</damageDef>
-						<damageAmountBase>1</damageAmountBase>
-						<stoppingPower>1.5</stoppingPower>
-						<speed>70</speed>
-						<armorPenetrationBase>0.36</armorPenetrationBase>
-					</projectile>
-					<graphicData>
-					  <texPath>Things/Projectile/Bullet_big</texPath>
-					  <graphicClass>Graphic_Single</graphicClass>
-					</graphicData>
-				<!-- configuration for anesthetic gun bullet -->
-					<thingClass>AnestheticGunMod.Projectile_AnestheticBullet</thingClass>
-					<AnestheticBulletPower>21.0</AnestheticBulletPower>
-					<AnestheticBulletExcludedes>
-						<li><pawnKindDef>Mech_Scyther</pawnKindDef></li>
-						<li><pawnKindDef>Mech_Centipede</pawnKindDef></li>
-						<li><pawnKindDef>Mech_Lancer</pawnKindDef></li>
-					</AnestheticBulletExcludedes>
-			  </ThingDef>
-			</value>
-		</li>
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+
+			<li Class="CombatExtended.PatchOperationFindMod">
+				<modName>[RH] Faction: Militaires Sans Frontieres (1.0)</modName>
+			</li>
+
+			<li Class="PatchOperationAttributeAdd">
+				<xpath>/Defs/ThingDef[defName="Bullet_AnestheticGun"]/projectile</xpath>
+				<attribute>Class</attribute>
+				<value>CombatExtended.ProjectilePropertiesCE</value>
+			</li>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="Bullet_AnestheticGun"]/projectile</xpath>
+				<value>
+					<armorPenetrationBase>0.36</armorPenetrationBase>
+				</value>
+			</li>
+
 		</operations>
 	</Operation>
 </Patch>
