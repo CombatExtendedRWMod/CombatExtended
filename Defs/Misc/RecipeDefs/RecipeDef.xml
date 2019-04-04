@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs> 
+
+<RecipeDef Name="DistillingBase" Abstract="true">
+<workSpeedStat>SmithingSpeed</workSpeedStat>
+<effectWorking>Cook</effectWorking>
+<soundWorking>Recipe_Smelt</soundWorking>
+<workSkill>Crafting</workSkill>
+<unfinishedThingDef>UnfinishedComponent</unfinishedThingDef>
+</RecipeDef> 
+
+<RecipeDef ParentName="DistillingBase">
+	<defName>Distill_FSX</defName>
+	<label>Distill 5 FSX</label>
+	<description>Distill 5 FSX from Chemfuel.</description>
+	<jobString>Distilling FSX.</jobString>
+	<ingredients>
+		<li>
+		<filter>
+		<thingDefs>
+		<li>Chemfuel</li>
+		</thingDefs>
+		</filter>
+		<count>25</count>
+		</li>
+	</ingredients>
+	<fixedIngredientFilter>
+	<thingDefs>
+		<li>Chemfuel</li>
+	</thingDefs>
+	</fixedIngredientFilter>
+	<products>
+		<FSX>5</FSX>
+	</products>
+	<workAmount>20000</workAmount>
+	<recipeUsers>
+		<li>BiofuelRefinery</li>
+</recipeUsers>
+</RecipeDef>
+
+</Defs>
