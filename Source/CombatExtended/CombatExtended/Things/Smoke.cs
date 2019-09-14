@@ -28,7 +28,9 @@ namespace CombatExtended
 
             // Don't decay if there's lots of smoke around
             var region = Position.GetRegion(Map);
-            var smokeFillage = region.ListerThings.ThingsOfDef(CE_ThingDefOf.Gas_BlackSmoke).Count / region.CellCount;
+            var smokeFillage = region != null
+                ? region.ListerThings.ThingsOfDef(CE_ThingDefOf.Gas_BlackSmoke).Count / region.CellCount
+                : 0;
             if (Rand.Chance(smokeFillage * 2))
                 destroyTick++;
 
