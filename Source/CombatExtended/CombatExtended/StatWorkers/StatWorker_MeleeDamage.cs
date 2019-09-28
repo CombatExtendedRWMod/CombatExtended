@@ -14,7 +14,7 @@ namespace CombatExtended
 
         private const float damageVariationMin = 0.5f;
         private const float damageVariationMax = 1.5f;
-        private const float skillVariationPerLevel = 0.025f;
+        private const float damageVariationPerSkillLevel = 0.025f;
 
         #endregion
 
@@ -108,7 +108,7 @@ namespace CombatExtended
                 return damageVariationMin;
             }
             int meleeSkillLevel = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-            return damageVariationMin + (skillVariationPerLevel * meleeSkillLevel);
+            return damageVariationMin + (damageVariationPerSkillLevel * meleeSkillLevel);
         }
 
         public static float GetDamageVariationMax(Pawn pawn)
@@ -118,7 +118,7 @@ namespace CombatExtended
                 return damageVariationMax;
             }
             int meleeSkillLevel = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-            return damageVariationMax - (skillVariationPerLevel * (20 - meleeSkillLevel));
+            return damageVariationMax - (damageVariationPerSkillLevel * (20 - meleeSkillLevel));
         }
 
         #endregion

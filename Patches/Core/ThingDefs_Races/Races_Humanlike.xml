@@ -28,31 +28,31 @@
 					<capacities>
 						<li>Blunt</li>
 					</capacities>
-					<power>7</power>
-					<cooldownTime>1.65</cooldownTime>
+					<power>3</power>
+					<cooldownTime>1.66</cooldownTime>
 					<linkedBodyPartsGroup>LeftHand</linkedBodyPartsGroup>
-					<armorPenetration>0.095</armorPenetration>
+					<armorPenetrationKPA>750</armorPenetrationKPA>
 				</li>
 				<li Class="CombatExtended.ToolCE">
 					<label>right fist</label>
 					<capacities>
 						<li>Blunt</li>
 					</capacities>
-					<power>7</power>
-					<cooldownTime>1.65</cooldownTime>
+					<power>3</power>
+					<cooldownTime>1.66</cooldownTime>
 					<linkedBodyPartsGroup>RightHand</linkedBodyPartsGroup>
-					<armorPenetration>0.095</armorPenetration>
+					<armorPenetrationKPA>750</armorPenetrationKPA>
 				</li>
 				<li Class="CombatExtended.ToolCE">
 					<label>head</label>
 					<capacities>
 						<li>Blunt</li>
 					</capacities>
-					<power>5</power>
-					<cooldownTime>1.85</cooldownTime>
+					<power>2</power>
+					<cooldownTime>4.49</cooldownTime>
 					<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
 					<chanceFactor>0.2</chanceFactor>
-					<armorPenetration>0.079</armorPenetration>
+					<armorPenetrationKPA>625</armorPenetrationKPA>
 				</li>
 			</tools>
 		</value>
