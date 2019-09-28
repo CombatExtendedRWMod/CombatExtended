@@ -217,11 +217,10 @@ namespace CombatExtended
             BodyPartGroupDef bodyPartGroupDef = null;
             HediffDef hediffDef = null;
 
-            var damFactor = EquipmentSource == null
+            var damVariation = EquipmentSource == null
                 ? CasterPawn.GetStatValue(CE_StatDefOf.UnarmedDamageFactor)
                 : Rand.Range(StatWorker_MeleeDamage.GetDamageVariationMin(CasterPawn), StatWorker_MeleeDamage.GetDamageVariationMax(CasterPawn));
-            damAmount *= damFactor;
-            armorPenetration *= damFactor;
+            damAmount *= damVariation;
 
             if (base.CasterIsPawn)
             {

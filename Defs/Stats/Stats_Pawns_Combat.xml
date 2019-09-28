@@ -272,7 +272,7 @@
     <description>Damage modifier in unarmed combat.</description>
     <category>PawnCombat</category>
     <displayPriorityInCategory>99</displayPriorityInCategory>
-    <defaultBaseValue>1.00</defaultBaseValue>
+    <defaultBaseValue>1</defaultBaseValue>
     <showOnPawns>true</showOnPawns>
     <minValue>0.0</minValue>
     <maxValue>2.0</maxValue>
