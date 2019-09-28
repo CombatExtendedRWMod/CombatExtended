@@ -167,22 +167,33 @@
 					<capacities>
 						<li>Slash</li>
 					</capacities>
-					<power>449</power>
-					<cooldownTime>1.89</cooldownTime>
+					<power>48</power>
+					<cooldownTime>2.48</cooldownTime>
 					<linkedBodyPartsGroup>HeadClaw</linkedBodyPartsGroup>
-					<armorPenetrationRHA>11</armorPenetrationRHA>
-					<armorPenetrationKPA>80000</armorPenetrationKPA>
+					<armorPenetrationRHA>0.5</armorPenetrationRHA>
+					<armorPenetrationKPA>3750</armorPenetrationKPA>
+				</li>
+				<li Class="CombatExtended.ToolCE">
+					<capacities>
+						<li>Stab</li>
+					</capacities>
+					<power>29</power>
+					<cooldownTime>1.24</cooldownTime>
+					<linkedBodyPartsGroup>HeadClaw</linkedBodyPartsGroup>
+					<armorPenetrationRHA>30</armorPenetrationRHA>
+					<armorPenetrationKPA>15000</armorPenetrationKPA>
 				</li>
 				<li Class="CombatExtended.ToolCE">
 					<label>head</label>
 					<capacities>
 						<li>Blunt</li>
 					</capacities>
-					<power>4</power>
-					<cooldownTime>1.65</cooldownTime>
+					<power>10</power>
+					<cooldownTime>2.48</cooldownTime>
 					<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
 					<chanceFactor>0.01</chanceFactor>
-					<armorPenetration>0.071</armorPenetration>
+					<armorPenetrationRHA>0.0</armorPenetrationRHA>
+					<armorPenetrationKPA>3750</armorPenetrationKPA>
 				</li>
 			</tools>
 		</value>

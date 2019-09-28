@@ -146,10 +146,11 @@
 					<capacities>
 						<li>Cut</li>
 					</capacities>
-					<power>24</power>
-					<cooldownTime>1.65</cooldownTime>
+					<power>43</power>
+					<cooldownTime>2.07</cooldownTime>
 					<linkedBodyPartsGroup>LeftBlade</linkedBodyPartsGroup>
-					<armorPenetration>0.207</armorPenetration>
+					<armorPenetrationRHA>2.16</armorPenetrationRHA>
+					<armorPenetrationKPA>5400</armorPenetrationKPA>
 					<alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
 				</li>
 				<li Class="CombatExtended.ToolCE">
@@ -158,9 +159,10 @@
 						<li>Stab</li>
 					</capacities>
 					<power>24</power>
-					<cooldownTime>1.65</cooldownTime>
+					<cooldownTime>1.24</cooldownTime>
 					<linkedBodyPartsGroup>LeftBlade</linkedBodyPartsGroup>
-					<armorPenetration>0.388</armorPenetration>
+					<armorPenetrationRHA>30</armorPenetrationRHA>
+					<armorPenetrationKPA>15000</armorPenetrationKPA>
 					<alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
 				</li>
 				<li Class="CombatExtended.ToolCE">
@@ -168,10 +170,11 @@
 					<capacities>
 						<li>Cut</li>
 					</capacities>
-					<power>24</power>
-					<cooldownTime>1.65</cooldownTime>
+					<power>43</power>
+					<cooldownTime>2.07</cooldownTime>
 					<linkedBodyPartsGroup>RightBlade</linkedBodyPartsGroup>
-					<armorPenetration>0.207</armorPenetration>
+					<armorPenetrationRHA>2.16</armorPenetrationRHA>
+					<armorPenetrationKPA>5400</armorPenetrationKPA>
 					<alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
 				</li>
 				<li Class="CombatExtended.ToolCE">
@@ -180,9 +183,10 @@
 						<li>Stab</li>
 					</capacities>
 					<power>24</power>
-					<cooldownTime>1.65</cooldownTime>
+					<cooldownTime>1.24</cooldownTime>
 					<linkedBodyPartsGroup>RightBlade</linkedBodyPartsGroup>
-					<armorPenetration>0.388</armorPenetration>
+					<armorPenetrationRHA>30</armorPenetrationRHA>
+					<armorPenetrationKPA>15000</armorPenetrationKPA>
 					<alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
 				</li>
 				<li Class="CombatExtended.ToolCE">
@@ -190,11 +194,12 @@
 					<capacities>
 						<li>Blunt</li>
 					</capacities>
-					<power>7</power>
-					<cooldownTime>1.65</cooldownTime>
+					<power>6</power>
+					<cooldownTime>5.9</cooldownTime>
 					<linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
 					<chanceFactor>0.2</chanceFactor>
-					<armorPenetration>0.095</armorPenetration>
+					<armorPenetrationRHA>0</armorPenetrationRHA>
+					<armorPenetrationKPA>1875</armorPenetrationKPA>
 				</li>
 			</tools>
 		</value>

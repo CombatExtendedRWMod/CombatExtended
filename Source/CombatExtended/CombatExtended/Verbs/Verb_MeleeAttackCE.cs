@@ -219,7 +219,7 @@ namespace CombatExtended
 
             var damFactor = EquipmentSource == null
                 ? CasterPawn.GetStatValue(CE_StatDefOf.UnarmedDamageFactor)
-                : Rand.Range(damAmount * StatWorker_MeleeDamage.GetDamageVariationMin(CasterPawn), damAmount * StatWorker_MeleeDamage.GetDamageVariationMax(CasterPawn));
+                : Rand.Range(StatWorker_MeleeDamage.GetDamageVariationMin(CasterPawn), StatWorker_MeleeDamage.GetDamageVariationMax(CasterPawn));
             damAmount *= damFactor;
             armorPenetration *= damFactor;
 
