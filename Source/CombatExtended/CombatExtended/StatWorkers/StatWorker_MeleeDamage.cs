@@ -103,22 +103,20 @@ namespace CombatExtended
 
         public static float GetDamageVariationMin(Pawn pawn)
         {
-            if (pawn == null)
+            if (pawn == null || (pawn?.skills?.GetSkill(SkillDefOf.Melee) ?? null) == null)
             {
                 return damageVariationMin;
             }
-            int meleeSkillLevel = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-            return damageVariationMin + (damageVariationPerSkillLevel * meleeSkillLevel);
+            return damageVariationMin + (damageVariationPerSkillLevel * pawn.skills.GetSkill(SkillDefOf.Melee).Level);
         }
 
         public static float GetDamageVariationMax(Pawn pawn)
         {
-            if (pawn == null)
+            if (pawn == null || (pawn?.skills?.GetSkill(SkillDefOf.Melee) ?? null) == null)
             {
                 return damageVariationMax;
             }
-            int meleeSkillLevel = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-            return damageVariationMax - (damageVariationPerSkillLevel * (20 - meleeSkillLevel));
+            return damageVariationMax - (damageVariationPerSkillLevel * (20 - pawn.skills.GetSkill(SkillDefOf.Melee).Level));
         }
 
         #endregion
