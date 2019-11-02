@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Arachne CE Patch</name>
+	<author>MagicHp</author>
+	<supportedVersions>
+		<li>1.0</li>
+	</supportedVersions>
+	<description>A compatibility patch for Arachne race and Combat Extended 1.6.
+	
+	The Arachne Bullets have been removed because having special ammo for a single gun didn't make much sense.
+	The fact that I didn't manage to successfully patch in custom ammo yet is clearly unrelated........
+	The Arachne P90 now uses the same caliber as in the real world.
+	
+	
+	</description>
+</ModMetaData>

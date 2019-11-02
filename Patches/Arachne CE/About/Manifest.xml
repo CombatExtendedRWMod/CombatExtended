@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Manifest>
+  <identifier>Arachne Race CE 1.6 Patch</identifier>
+  <version>1.0</version>
+  <dependencies />
+  <incompatibleWith />
+  <loadBefore>
+  </loadBefore>
+  <loadAfter>
+  </loadAfter>
+  <manifestUri></manifestUri>
+  <downloadUri></downloadUri>
+</Manifest>
