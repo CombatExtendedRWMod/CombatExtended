@@ -83,7 +83,7 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>7</damageAmountBase>
 			<armorPenetrationBase>0.189</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
 			<armorPenetrationBlunt>4.06</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>

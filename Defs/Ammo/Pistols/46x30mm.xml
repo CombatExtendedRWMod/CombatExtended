@@ -99,8 +99,8 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>8</damageAmountBase>
 			<armorPenetrationBase>0.295</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
+			<armorPenetrationBlunt>9.72</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -108,10 +108,10 @@
 		<defName>Bullet_46x30mm_AP</defName>
 		<label>4.6x30mm bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>6</damageAmountBase>
+			<damageAmountBase>5</damageAmountBase>
 			<armorPenetrationBase>0.445</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>8</armorPenetrationSharp>
+			<armorPenetrationBlunt>9.72</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -119,10 +119,10 @@
 		<defName>Bullet_46x30mm_HP</defName>
 		<label>4.6x30mm bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>10</damageAmountBase>
+			<damageAmountBase>11</damageAmountBase>
 			<armorPenetrationBase>0.145</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>9.72</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

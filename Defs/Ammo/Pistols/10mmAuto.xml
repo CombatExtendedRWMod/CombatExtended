@@ -99,7 +99,7 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>12</damageAmountBase>
 			<armorPenetrationBase>0.402</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
 			<armorPenetrationBlunt>11.260</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
@@ -108,8 +108,10 @@
 		<defName>Bullet_10mmAuto_AP</defName>
 		<label>10mm Auto bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>10</damageAmountBase>
+			<damageAmountBase>7</damageAmountBase>
 			<armorPenetrationBase>0.552</armorPenetrationBase>
+			<armorPenetrationSharp>8</armorPenetrationSharp>
+			<armorPenetrationBlunt>11.260</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -117,8 +119,10 @@
 		<defName>Bullet_10mmAuto_HP</defName>
 		<label>10mm Auto bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>24</damageAmountBase>
+			<damageAmountBase>15</damageAmountBase>
 			<armorPenetrationBase>0.252</armorPenetrationBase>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>11.260</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

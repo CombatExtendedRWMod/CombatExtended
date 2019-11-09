@@ -97,10 +97,10 @@
 		<defName>Bullet_9x21mmGyurza_FMJ</defName>
 		<label>9mm Gyurza bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>9</damageAmountBase>
+			<damageAmountBase>11</damageAmountBase>
 			<armorPenetrationBase>0.324</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
+			<armorPenetrationBlunt>11.26</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -110,6 +110,8 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>7</damageAmountBase>
 			<armorPenetrationBase>0.474</armorPenetrationBase>
+			<armorPenetrationSharp>8</armorPenetrationSharp>
+			<armorPenetrationBlunt>11.26</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -117,8 +119,10 @@
 		<defName>Bullet_9x21mmGyurza_HP</defName>
 		<label>9mm Gyurza bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>15</damageAmountBase>
+			<damageAmountBase>14</damageAmountBase>
 			<armorPenetrationBase>0.174</armorPenetrationBase>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>11.26</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

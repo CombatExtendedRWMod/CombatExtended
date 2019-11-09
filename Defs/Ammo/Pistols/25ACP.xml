@@ -67,10 +67,10 @@
 		<defName>Bullet_25ACP_FMJ</defName>
 		<label>.25 ACP bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>11</damageAmountBase>
+			<damageAmountBase>5</damageAmountBase>
 			<armorPenetrationBase>0.116</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>1.58</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

@@ -67,10 +67,10 @@
 		<defName>Bullet_8x22mmNambu_FMJ</defName>
 		<label>8mm Nambu bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>7</damageAmountBase>
+			<damageAmountBase>9</damageAmountBase>
 			<armorPenetrationBase>0.224</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>3</armorPenetrationSharp>
+			<armorPenetrationBlunt>5.88</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

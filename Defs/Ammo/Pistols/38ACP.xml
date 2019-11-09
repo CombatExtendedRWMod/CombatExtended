@@ -83,8 +83,8 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>10</damageAmountBase>
 			<armorPenetrationBase>0.286</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
+			<armorPenetrationBlunt>8.58</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -92,10 +92,10 @@
 		<defName>Bullet_38ACP_HP</defName>
 		<label>.38 ACP bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>14</damageAmountBase>
+			<damageAmountBase>13</damageAmountBase>
 			<armorPenetrationBase>0.136</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>8.58</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

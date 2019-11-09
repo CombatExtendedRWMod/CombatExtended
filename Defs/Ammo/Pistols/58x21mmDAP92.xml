@@ -97,10 +97,10 @@
 		<defName>Bullet_58x21mmDAP92_FMJ</defName>
 		<label>5.8mm DAP92 bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>6</damageAmountBase>
+			<damageAmountBase>8</damageAmountBase>
 			<armorPenetrationBase>0.276</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
+			<armorPenetrationBlunt>6.92</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -108,10 +108,10 @@
 		<defName>Bullet_58x21mmDAP92_AP</defName>
 		<label>5.8mm DAP92 bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>4</damageAmountBase>
+			<damageAmountBase>5</damageAmountBase>
 			<armorPenetrationBase>0.426</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>7</armorPenetrationSharp>
+			<armorPenetrationBlunt>6.92</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -119,10 +119,10 @@
 		<defName>Bullet_58x21mmDAP92_HP</defName>
 		<label>5.8mm DAP92 bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>8</damageAmountBase>
+			<damageAmountBase>10</damageAmountBase>
 			<armorPenetrationBase>0.126</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>6.92</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

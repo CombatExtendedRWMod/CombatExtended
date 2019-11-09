@@ -99,8 +99,8 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>12</damageAmountBase>
 			<armorPenetrationBase>0.372</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>5</armorPenetrationSharp>
+			<armorPenetrationBlunt>13.62</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -108,10 +108,10 @@
 		<defName>Bullet_357SIG_AP</defName>
 		<label>.357 SIG bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>10</damageAmountBase>
+			<damageAmountBase>7</damageAmountBase>
 			<armorPenetrationBase>0.529</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>10</armorPenetrationSharp>
+			<armorPenetrationBlunt>13.62</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -119,10 +119,10 @@
 		<defName>Bullet_357SIG_HP</defName>
 		<label>.357 SIG bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>14</damageAmountBase>
+			<damageAmountBase>15</damageAmountBase>
 			<armorPenetrationBase>0.229</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>13.62</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

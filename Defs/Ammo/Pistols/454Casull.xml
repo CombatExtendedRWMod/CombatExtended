@@ -101,10 +101,10 @@
 		<defName>Bullet_454Casull_FMJ</defName>
 		<label>.454 Casull bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>25</damageAmountBase>
+			<damageAmountBase>21</damageAmountBase>
 			<armorPenetrationBase>0.548</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>5</armorPenetrationSharp>
+			<armorPenetrationBlunt>53.82</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -112,10 +112,10 @@
 		<defName>Bullet_454Casull_AP</defName>
 		<label>.454 Casull bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>15</damageAmountBase>
+			<damageAmountBase>13</damageAmountBase>
 			<armorPenetrationBase>0.698</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>10</armorPenetrationSharp>
+			<armorPenetrationBlunt>53.82</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -123,10 +123,10 @@
 		<defName>Bullet_454Casull_HP</defName>
 		<label>.454 Casull bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>35</damageAmountBase>
+			<damageAmountBase>26</damageAmountBase>
 			<armorPenetrationBase>0.398</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>3</armorPenetrationSharp>
+			<armorPenetrationBlunt>53.82</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

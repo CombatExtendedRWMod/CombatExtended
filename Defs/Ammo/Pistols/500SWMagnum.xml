@@ -82,9 +82,9 @@
 		<defName>Bullet_500SWMagnum_FMJ</defName>
 		<label>.500 Smith Wessen Magnum bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>21</damageAmountBase>
+			<damageAmountBase>24</damageAmountBase>
 			<armorPenetrationBase>0.563</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
+			<armorPenetrationSharp>7</armorPenetrationSharp>
 			<armorPenetrationBlunt>53.820</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
@@ -93,9 +93,9 @@
 		<defName>Bullet_500SWMagnum_HP</defName>
 		<label>.500 Smith Wessen Magnum bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>27</damageAmountBase>
+			<damageAmountBase>31</damageAmountBase>
 			<armorPenetrationBase>0.413</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
 			<armorPenetrationBlunt>53.820</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>

@@ -97,10 +97,10 @@
 		<defName>Bullet_380ACP_FMJ</defName>
 		<label>.380 ACP bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>10</damageAmountBase>
+			<damageAmountBase>9</damageAmountBase>
 			<armorPenetrationBase>0.279</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>4</armorPenetrationSharp>
+			<armorPenetrationBlunt>5.4</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -108,10 +108,10 @@
 		<defName>Bullet_380ACP_AP</defName>
 		<label>.380 ACP bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>6</damageAmountBase>
+			<damageAmountBase>5</damageAmountBase>
 			<armorPenetrationBase>0.429</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>7</armorPenetrationSharp>
+			<armorPenetrationBlunt>5.4</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -119,10 +119,10 @@
 		<defName>Bullet_380ACP_HP</defName>
 		<label>.380 ACP bullet (HP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>14</damageAmountBase>
+			<damageAmountBase>11</damageAmountBase>
 			<armorPenetrationBase>0.129</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
-			<armorPenetrationBlunt>0</armorPenetrationBlunt>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>5.4</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 

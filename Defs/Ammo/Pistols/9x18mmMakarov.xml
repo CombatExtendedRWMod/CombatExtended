@@ -97,8 +97,10 @@
 		<defName>Bullet_9x18mmMakarov_FMJ</defName>
 		<label>9mm Makarov bullet (FMJ)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>8</damageAmountBase>
+			<damageAmountBase>9</damageAmountBase>
 			<armorPenetrationBase>0.235</armorPenetrationBase>
+			<armorPenetrationSharp>3</armorPenetrationSharp>
+			<armorPenetrationBlunt>6.1</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -106,8 +108,10 @@
 		<defName>Bullet_9x18mmMakarov_AP</defName>
 		<label>9mm Makarov bullet (AP)</label>
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
-			<damageAmountBase>5</damageAmountBase>
+			<damageAmountBase>6</damageAmountBase>
 			<armorPenetrationBase>0.385</armorPenetrationBase>
+			<armorPenetrationSharp>6</armorPenetrationSharp>
+			<armorPenetrationBlunt>6.1</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
 
@@ -117,6 +121,8 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>11</damageAmountBase>
 			<armorPenetrationBase>0.085</armorPenetrationBase>
+			<armorPenetrationSharp>2</armorPenetrationSharp>
+			<armorPenetrationBlunt>6.1</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
   

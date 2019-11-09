@@ -99,8 +99,8 @@
     <projectile Class="CombatExtended.ProjectilePropertiesCE">
       <damageAmountBase>9</damageAmountBase>
       <armorPenetrationBase>0.257</armorPenetrationBase>
-      <armorPenetrationSharp>0</armorPenetrationSharp>
-      <armorPenetrationBlunt>0</armorPenetrationBlunt>
+      <armorPenetrationSharp>3</armorPenetrationSharp>
+      <armorPenetrationBlunt>6.94</armorPenetrationBlunt>
     </projectile>
   </ThingDef>
 
@@ -108,10 +108,10 @@
     <defName>Bullet_38Special_AP</defName>
     <label>.38 Special bullet (AP)</label>
     <projectile Class="CombatExtended.ProjectilePropertiesCE">
-      <damageAmountBase>5</damageAmountBase>
+      <damageAmountBase>6</damageAmountBase>
       <armorPenetrationBase>0.407</armorPenetrationBase>
-      <armorPenetrationSharp>0</armorPenetrationSharp>
-      <armorPenetrationBlunt>0</armorPenetrationBlunt>
+      <armorPenetrationSharp>7</armorPenetrationSharp>
+      <armorPenetrationBlunt>6.94</armorPenetrationBlunt>
     </projectile>
   </ThingDef>
 
@@ -119,10 +119,10 @@
     <defName>Bullet_38Special_HP</defName>
     <label>.38 Special bullet (HP)</label>
     <projectile Class="CombatExtended.ProjectilePropertiesCE">
-      <damageAmountBase>13</damageAmountBase>
+      <damageAmountBase>12</damageAmountBase>
       <armorPenetrationBase>0.107</armorPenetrationBase>
-      <armorPenetrationSharp>0</armorPenetrationSharp>
-      <armorPenetrationBlunt>0</armorPenetrationBlunt>
+      <armorPenetrationSharp>2</armorPenetrationSharp>
+      <armorPenetrationBlunt>6.94</armorPenetrationBlunt>
     </projectile>
   </ThingDef>
 
