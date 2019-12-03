@@ -68,7 +68,7 @@
 		<projectile Class="CombatExtended.ProjectilePropertiesCE">
 			<damageAmountBase>4</damageAmountBase>
 			<armorPenetrationBase>0.121</armorPenetrationBase>
-			<armorPenetrationSharp>0</armorPenetrationSharp>
+			<armorPenetrationSharp>1</armorPenetrationSharp>
 			<armorPenetrationBlunt>1.180</armorPenetrationBlunt>
 		</projectile>
 	</ThingDef>
@@ -98,7 +98,7 @@
 		<products>
 			<Ammo_22Short>500</Ammo_22Short>
 		</products>
-		<workAmount>1000</workAmount>
+		<workAmount>400</workAmount>
 	</RecipeDef>
 
 </Defs>
