@@ -103,7 +103,7 @@
   <RecipeDef ParentName="AmmoRecipeBase">
     <defName>MakeAmmo_470NitroExpress_FMJ</defName>
     <label>make .470 Nitro Express (FMJ) cartridge x350</label>
-    <description>Craft 350 .470 Nitro Express (FMJ) cartridges.</description>
+    <description>Craft 500 .470 Nitro Express (FMJ) cartridges.</description>
     <jobString>Making .470 Nitro Express (FMJ) cartridges.</jobString>
     <ingredients>
       <li>
@@ -129,7 +129,7 @@
   <RecipeDef ParentName="AmmoRecipeBase">
     <defName>MakeAmmo_470NitroExpress_HP</defName>
     <label>make .470 Nitro Express (HP) cartridge x350</label>
-    <description>Craft 350 .470 Nitro Express (HP) cartridges.</description>
+    <description>Craft 500 .470 Nitro Express (HP) cartridges.</description>
     <jobString>Making .470 Nitro Express (HP) cartridges.</jobString>
     <ingredients>
       <li>
