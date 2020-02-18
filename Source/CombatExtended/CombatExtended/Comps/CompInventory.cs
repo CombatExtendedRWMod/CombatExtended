@@ -281,13 +281,15 @@ namespace CombatExtended
                  weight = eq.GetStatValue(StatDefOf.Mass);
             //old     weight = eq.GetStatValue(CE_StatDefOf.Weight);
                  bulk = eq.GetStatValue(CE_StatDefOf.Bulk);
+
+            /*  This code is now collapsed into StatParts/StatPart_LoadedAmmo, which is as it should be following vanilla conventions
             CompAmmoUser comp = eq.TryGetComp<CompAmmoUser>();
             if (comp != null && comp.CurrentAmmo != null)
             {
                 weight += comp.CurrentAmmo.GetStatValueAbstract(StatDefOf.Mass) * comp.CurMagCount;
                 //old     weight += comp.currentAmmo.GetStatValueAbstract(CE_StatDefOf.Weight) * comp.curMagCount;
                 bulk += comp.CurrentAmmo.GetStatValueAbstract(CE_StatDefOf.Bulk) * comp.CurMagCount;
-            }
+            }*/
         }
 
         /// <summary>
