@@ -29,6 +29,9 @@ namespace CombatExtended
                 if (ammoUser != null && ammoUser.CurrentAmmo != null)
                 {
                     num = ammoUser.CurrentAmmo.GetStatValueAbstract(parentStat) * ammoUser.CurMagCount;
+
+                    if (parentStat == CE_StatDefOf.Bulk)
+                        num *= ammoUser.Props.loadedAmmoBulkFactor;
                 }
             }
             return num != 0f;
