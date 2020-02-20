@@ -63,11 +63,11 @@
   <CE_AmmoCrafting.label>CE: 制造弹药</CE_AmmoCrafting.label>
   <CE_AmmoCrafting.helpText>确保你的殖民者获得足够的弹药对于在Rimworld生存至关重要。简单的石箭可以从手工加工点中获得，但是在对付有高级盔甲和衣服的对手时表现很差。\n\n铁箭和玻璃钢箭有更好的穿透力，需要在研究锻造后在锻造台上制造。\n\n研究机械加工以解锁弹药加工台，在那里你可以为大多数火器制造弹药。炮弹和手榴弹是在加工台上制造的。\n\n虽然大多数常规弹药都可以用简单的原材料制造，但比较高级弹药需要更多的材料如零部件、FSX或Prometheum之类的。</CE_AmmoCrafting.helpText>
 
-  <CE_ObtainingFSX.label>CE: 获取FSX</CE_ObtainingFSX.label>
-  <CE_ObtainingFSX.helpText>FSX是炸药的主要成分，如碎片手榴弹和迫击炮弹。你可以通过商人或者驯服爆炸鼠和爆炸羊，然后采集它们产生的挥发性化学物质。\n\n驯服后，它们会产生稳定的FSX流，殖民者对FSX的自动采集类会似于其他动物资源（如羊毛和牛奶）。\n\n通过选择并检查左下角的读数，您可以看到动物当前的生产进度。</CE_ObtainingFSX.helpText>
+  <CE_ObtainingFSX.label>CE: 获取含胺乳化炸药</CE_ObtainingFSX.label>
+  <CE_ObtainingFSX.helpText>含胺乳化炸药是炸药的主要成分，如碎片手榴弹和迫击炮弹。你可以通过商人或者驯服爆炸鼠和爆炸羊，然后采集它们产生的挥发性化学物质。\n\n驯服后，它们会稳定的生产含胺乳化炸药，殖民者对含胺乳化炸药的自动采集类会似于其他动物资源（如羊毛和牛奶）。\n\n通过选择并检查左下角的读数，您可以看到动物当前的生产进度。</CE_ObtainingFSX.helpText>
 
-  <CE_ObtainingPrometheum.label>CE: 获取Prometheum</CE_ObtainingPrometheum.label>
-  <CE_ObtainingPrometheum.helpText>Prometheum被大量用于数燃烧武器，如迫击炮燃烧弹、AP-I弹和燃烧弹。这是一种高度易燃的液体，可以从一种叫火焰球根的植物中提取。\n\n要种植火焰球根，只需选择一个种植区域，并将其设置为植物火焰球根即可。\n\n警告：火焰球根高度敏感，如果周围温度超过28°C/82F，有可能点燃火焰球根。当火焰球根受到损坏时，它们还会泄漏一些Prometheum与空气接触，从而点燃火球。\n\n请确保您的种植园有良好的气候控制和防火性能，否则它很可能变成烈火熊熊的地狱！</CE_ObtainingPrometheum.helpText>
+  <CE_ObtainingPrometheum.label>CE: 获取苯基液体燃料</CE_ObtainingPrometheum.label>
+  <CE_ObtainingPrometheum.helpText>苯基液体燃料被大量用于数燃烧武器，如迫击炮燃烧弹、AP-I弹和燃烧弹。这是一种高度易燃的液体，可以从一种叫焰球罂粟的植物中提取。\n\n要种植焰球罂粟，只需选择一个种植区域，并将植物设置为焰球罂粟即可。\n\n警告：焰球罂粟高度敏感，如果周围温度超过28°C/82F，有可能点燃焰球罂粟。焰球罂粟根受到损坏时，它们还会泄漏一些苯基液体燃料与空气接触，从而点燃火球。\n\n请确保您的种植园有良好的气候控制和防火性能，否则它很可能变成烈火熊熊的地狱！</CE_ObtainingPrometheum.helpText>
 
   <CE_CentipedeArmor.label>CE: 对抗机械体</CE_CentipedeArmor.label>
   <CE_CentipedeArmor.helpText>警告：机械体注意到你并开始攻击只是时间问题。较大的型号有机械蜈蚣，不会受小型武器射击的影响。\n\n要对付它们，需要重型机枪或炸药等强力武器。如果你希望长期生存，你应该保证这些武器的储备。 </CE_CentipedeArmor.helpText>
