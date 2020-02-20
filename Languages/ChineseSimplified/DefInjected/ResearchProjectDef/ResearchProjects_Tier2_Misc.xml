@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
 
-	<LargeRockets.label>[CR]大型火箭</LargeRockets.label>
+  <CE_Launchers.label>简易发射器</CE_Launchers.label>
+  <CE_Launchers.description>允许生产基本的手榴弹和火箭发射器。</CE_Launchers.description>
 
-	<LargeRockets.description>允许制作末日火箭发射器和三重火箭发射器，巨大冲击力的一次性武器。</LargeRockets.description>
-
-	<CE_TurretAI.label>[CR]组装炮塔</CE_TurretAI.label>
-
-	<CE_TurretAI.description>学习如何构建和编程自动炮塔。</CE_TurretAI.description>
+  <CE_AdvancedLaunchers.label>高级发射器</CE_AdvancedLaunchers.label>
+  <CE_AdvancedLaunchers.description>允许生产更先进的发射器，如燃烧弹发射器，三重火箭发射器和末日火箭发射器。</CE_AdvancedLaunchers.description>
 
 </LanguageData>
