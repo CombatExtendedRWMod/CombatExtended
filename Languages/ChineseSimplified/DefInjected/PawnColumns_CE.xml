@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <CombatFrenzy.label>战斗狂热</CombatFrenzy.label>
+  <CombatFrenzy.beginLetter>{0}因为长时期被压制而疯了!</CombatFrenzy.beginLetter>
+  <CombatFrenzy.beginLetterLabel>战斗狂热</CombatFrenzy.beginLetterLabel>
+  <CombatFrenzy.recoveryMessage>{0}的战斗狂热结束了。</CombatFrenzy.recoveryMessage>
+  <CombatFrenzy.baseInspectLine>精神状态：战斗狂热</CombatFrenzy.baseInspectLine>
+
+  <ShellShock.label>弹震症</ShellShock.label>
+  <ShellShock.beginLetter>{0}因为长时期作战而产生了精神恐慌!</ShellShock.beginLetter>
+  <ShellShock.beginLetterLabel>弹震症</ShellShock.beginLetterLabel>
+  <ShellShock.recoveryMessage>{0}的弹震症结束了。</ShellShock.recoveryMessage>
+  <ShellShock.baseInspectLine>精神状态：弹震症</ShellShock.baseInspectLine>
+
+
+</LanguageData>
