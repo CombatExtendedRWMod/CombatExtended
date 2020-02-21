@@ -26,6 +26,7 @@
     <label>beanbag</label>
     <labelShort>bean</labelShort>
     <description>Non-lethal rubber round originally designed for riot control. Accurate over short ranges only. Designed to temporarily incapacitate a target, it does not cause bleeding or damage to internal organs.</description>
+	<color>(0.10, 0.50, 0.55)</color>
   </CombatExtended.AmmoCategoryDef>
 
    <CombatExtended.AmmoCategoryDef>
@@ -33,6 +34,7 @@
     <label>EMP</label>
     <description>Designed to combat mechanoids, the projectile is accurate over short range only and delivers an electro-magnetic pulse on impact, temporarily disabling electronics.</description>
 	<advanced>true</advanced>
+	<color>(0.05, 0.70, 0.85)</color>
   </CombatExtended.AmmoCategoryDef>
   
 </Defs>

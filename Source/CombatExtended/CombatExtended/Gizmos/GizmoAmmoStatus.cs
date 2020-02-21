@@ -11,23 +11,22 @@ namespace CombatExtended
     [StaticConstructorOnStartup]
     public class GizmoAmmoStatus : Command
     {
+        const float dividerBorderRatio = 0.5f;
+        const float borderBarRatio = 0.1f;
         const float minHeight = 10f;    //Minimum height of an ammo bar
         const float idealRatio = 3.3f;    //Preferred width-to-height ratio of ammo status bars
-        const float magSplit = 0.3f;    //Split between current and stored magazine bar sizes
+        const float magSplit = 0.5f;    //Split between current and stored magazine bar sizes
         const float defaultWidth = 120f;
         const float margin = 6f;
-
-        private static bool initialized;
+        const float magAlpha = 0.9f;
+        const bool borderBetween = false;
+        
         //Link
         List<CompAmmoUser> compAmmos;
         public CompAmmoUser compAmmo;
 
-        private static Texture2D FullTex;
-        private static Texture2D EmptyTex;
-        private static new Texture2D BGTex;
-
-        private static int cachedAmount;
-        private static float oWidth, oHeight, oRows, oCols;
+        private static int cachedAmount, oRows, oCols;
+        private static float oWidth, oHeight;
 
         public override bool GroupsWith(Gizmo other)
         {
@@ -58,8 +57,8 @@ namespace CombatExtended
 
             float bWidth = 0f;
             float bHeight = 0f;
-            float bRows = 0f;
-            float bCols = 0f;
+            int bRows = 0;
+            int bCols = 0;
 
             for (int col = 1; col <= amount; col++)
             {
@@ -86,8 +85,8 @@ namespace CombatExtended
                 {
                     bWidth = width;
                     bHeight = height;
-                    bRows = (float)row;
-                    bCols = (float)col;
+                    bRows = row;
+                    bCols = col;
                 }
             }
 
@@ -108,7 +107,7 @@ namespace CombatExtended
             int magsLeft = 0;
 
             if (inventory != null)
-                magsLeft = Mathf.CeilToInt((float)inventory.AmmoCountOfDef(user.CurrentAmmo) / user.Props.magazineSize);
+                magsLeft = Mathf.CeilToInt((float)inventory.AmmoCountOfDef(user.SelectedAmmo) / (user.HasMagazine ? user.Props.magazineSize : 1f));
             
             var barsRect = boxRect;
 
@@ -125,27 +124,38 @@ namespace CombatExtended
                     barsRect.y = boxRect.center.y - barsRect.height / 2f;
                 }
             }
-            
+
+            if (!user.HasMagazine && inventory == null)
+                return;
+
+            Widgets.DrawBoxSolid(barsRect, Color.black);
+
+            var borderThickness = Mathf.Max(1f, borderBarRatio * barsRect.height);
+
             // Top bar
             if (user.HasMagazine)
             {
-                Rect barRect = (inventory != null && magsLeft > 0)
+                Rect barRect = ((inventory != null && magsLeft > 0)
                     ? barsRect.TopPart(magSplit)
-                    : barsRect;
+                    : barsRect);
+                
+                var innerRect = barRect.ContractedBy(borderThickness);
+                innerRect.width *= (float)user.CurMagCount / user.Props.magazineSize;
+                
+                if (inventory != null && magsLeft > 0)
+                {
+                    innerRect.height += (borderBetween ? 0.5f : 1f) * borderThickness;
+                }
 
                 //Add colour of ammo type
-                Widgets.DrawBoxSolid(barRect, Color.black);
+                Widgets.DrawBoxSolid(innerRect, user.CurrentAmmo.ammoClass.color);
 
-                var innerRect = barRect.ContractedBy(2f);
-                innerRect.width *= (float)user.CurMagCount / user.Props.magazineSize;
-
-                Widgets.DrawBoxSolid(innerRect, Color.cyan);
-
-                if (innerRect.height > 11f)
+                if (innerRect.height > 9f)
                 {
-                    Text.Font = innerRect.height > 15f ? GameFont.Small : GameFont.Tiny;
+                    Text.Font = innerRect.height > 11f ? GameFont.Small : GameFont.Tiny;
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    Widgets.Label(barRect, user.CurMagCount + " / " + user.Props.magazineSize);
+                    var text = user.CurMagCount + (oCols > 1 ? "/" : " / ") + user.Props.magazineSize;
+                    Widgets.Label(innerRect.ExpandedBy(borderThickness), text);
                 }
             }
 
@@ -158,29 +168,57 @@ namespace CombatExtended
 
                 if (magsLeft > 0)
                 {
-                    float magWidth = barsRect.width / magsLeft;
+                    var innerRect = barRect.ContractedBy(borderThickness);
 
-                    //Create magsLeft rectangles of appropriate width
-                    for (int i = 0; i < magsLeft; i++)
+                    if (user.HasMagazine)
                     {
-                        var rect = new Rect(barRect.x + i * magWidth, barRect.y, magWidth, barRect.height);
-                        Widgets.DrawBoxSolid(rect, Color.black);
-
-                        var innerRect = rect.ContractedBy(2f);
-
-                        if (i > 0)
-                            innerRect.x -= 1f;
-
-                        if (i < magsLeft - 1)
-                            innerRect.xMax += 1f;
-
-                        Widgets.DrawBoxSolid(innerRect, Color.cyan);
+                        innerRect.y -= (borderBetween ? 0.5f : 1f) * borderThickness;
+                        innerRect.height += (borderBetween ? 0.5f : 1f) * borderThickness;
                     }
-                    if (barRect.height > 15f && !user.HasMagazine)
+
+                    var color = user.SelectedAmmo.ammoClass.color;
+                    color.a = magAlpha;
+
+                    if (magsLeft > 1)
                     {
-                        Text.Font = barRect.height > 19f ? GameFont.Small : GameFont.Tiny;
+                        var magWidth = innerRect.width / (float)magsLeft;
+                        var halfDividerThickness = 0.5f * Mathf.Max(1f, dividerBorderRatio * borderThickness);
+
+                        innerRect.width = magWidth;
+
+                        //Create magsLeft rectangles of appropriate width
+                        for (int i = 0; i < magsLeft; i++)
+                        {
+                            // For first iteration, if has neighbour, reduce width for divider
+                            if (i == 0)
+                                innerRect.width -= halfDividerThickness;
+                            else
+                                innerRect.x += magWidth;
+
+                            // For last iteration, increase width (no divider at end)
+                            if (i == magsLeft - 1)
+                                innerRect.width += halfDividerThickness;
+
+                            Widgets.DrawBoxSolid(innerRect, color);
+
+                            // After first iteration, increase x-offset for divider, further reduce width to account for this
+                            if (i == 0)
+                            {
+                                innerRect.x += halfDividerThickness;
+                                innerRect.width -= halfDividerThickness;
+                            }
+                        }
+                    }
+                    else
+                        Widgets.DrawBoxSolid(innerRect, color);
+
+                    if (innerRect.height > 9f && !user.HasMagazine)
+                    {
+                        Text.Font = innerRect.height > 11f ? GameFont.Small : GameFont.Tiny;
                         Text.Anchor = TextAnchor.MiddleCenter;
-                        Widgets.Label(barRect, magsLeft.ToString());
+
+                        Widgets.Label(new Rect(barRect.x, innerRect.y, barRect.width, innerRect.height).ExpandedBy(borderThickness),
+                            magsLeft.ToString());
                     }
                 }
             }
@@ -188,28 +226,55 @@ namespace CombatExtended
 
         public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth)
         {
-            if (!initialized)
-                InitializeTextures();
-
             Rect overRect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), Height);
+
+            var gizmoState = GizmoState.Clear;
+
+            var guiCache = GUI.color;
+            if (Mouse.IsOver(overRect))
+            {
+                gizmoState = GizmoState.Mouseover;
+                GUI.color = GenUI.MouseoverColor;
+            }
+
+            if (Event.current.type != EventType.Repaint)
+            {
+                GUI.color = guiCache;
+                return new GizmoResult(gizmoState);
+            }
+
             Widgets.DrawBox(overRect);
-            GUI.DrawTexture(overRect, BGTex);
+            GUI.DrawTexture(overRect, Command.BGTex);
             
             Rect inRect = overRect.ContractedBy(margin);
 
-            if (compAmmos == null || !compAmmos.Except(compAmmo).Any())
+                if (compAmmos == null || !compAmmos.Except(compAmmo).Any())
             {
-                // Ammo type
+                // ThingCategory icon
+                // Widgets.DrawTextureFitted(inRect.TopHalf(), compAmmo.CurrentAmmo.thingCategories.First().icon, 1f);
+
+                // Ammo type label
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.UpperCenter;
                 Widgets.Label(inRect.TopHalf(), compAmmo.CurrentAmmo == null ? compAmmo.parent.def.LabelCap : compAmmo.CurrentAmmo.ammoClass.LabelCap);
                 
                 DrawEntry(inRect.BottomHalf(), compAmmo);
 
-                return new GizmoResult(GizmoState.Clear);
+                GUI.color = guiCache;
+                return new GizmoResult(gizmoState);
             }
-            
-            OptimizeGizmo(compAmmos.Count);
+
+            var count = compAmmos.Count;
+            OptimizeGizmo(count);
+
+            if (count != cachedAmount)
+            {
+                compAmmos.Sort((x, y) =>
+                {
+                    return x.CurrentAmmo.ammoClass.defName
+                        .CompareTo(y.CurrentAmmo.ammoClass.defName);
+                });
+            }
 
             //Too large, need to cull oCols
             while (maxWidth - 2f * margin < oCols * minHeight * idealRatio)
@@ -224,14 +289,32 @@ namespace CombatExtended
                 }
             }
 
-            var boxHeight = inRect.height / oRows;
-            var boxWidth = inRect.width / oCols;
+            var boxHeight = inRect.height / (float)oRows;
+            var boxWidth = inRect.width / (float)oCols;
             
             int col = 0;
             int row = 0;
+            int colorIndex = 0;
+            int j = 0;
             
-            foreach (var user in compAmmos)
+            for (int i = 0; i < count; i++)
             {
+                colorIndex = Mathf.FloorToInt(j / oCols) + (j % oCols) * oRows;
+
+                while (colorIndex > count - 1)
+                {
+                    j++;
+                    colorIndex = Mathf.FloorToInt(j / oCols) + (j % oCols) * oRows;
+                }
+
+                var user = compAmmos[colorIndex];
+
+                j++;
+
+                colorIndex += oRows;
+                if (colorIndex > count)
+                    colorIndex = 1 + colorIndex % oRows;
+
                 DrawEntry(
                     new Rect(
                         inRect.x + (float)col * boxWidth,
@@ -248,18 +331,13 @@ namespace CombatExtended
             }
             
             Text.Anchor = TextAnchor.UpperLeft;
-            return new GizmoResult(GizmoState.Clear);
+            GUI.color = guiCache;
+            return new GizmoResult(gizmoState);
         }
 
-        private void InitializeTextures()
+        public override void ProcessInput(Event ev)
         {
-            if (FullTex == null)
-                FullTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.2f, 0.2f, 0.24f));
-            if (EmptyTex == null)
-                EmptyTex = SolidColorMaterials.NewSolidColorTexture(Color.clear);
-            if (BGTex == null)
-                BGTex = ContentFinder<Texture2D>.Get("UI/Widgets/DesButBG", true);
-            initialized = true;
+            base.ProcessInput(ev);
         }
     }
 }

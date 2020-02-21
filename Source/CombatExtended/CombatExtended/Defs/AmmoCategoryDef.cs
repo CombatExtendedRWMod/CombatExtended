@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Verse;
+using UnityEngine;
 
 namespace CombatExtended
 {
@@ -12,5 +13,7 @@ namespace CombatExtended
         public string labelShort;
 
         public string LabelCapShort => labelShort.CapitalizeFirst();
+
+        public Color color = new Color(0.2f, 0.8f, 0.85f);
     }
 }

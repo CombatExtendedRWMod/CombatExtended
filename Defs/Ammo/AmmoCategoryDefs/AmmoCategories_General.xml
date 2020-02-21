@@ -6,6 +6,7 @@
     <label>full metal jacket</label>
     <labelShort>FMJ</labelShort>
     <description>The soft lead core is encased in a harder metal coating, combining a medium amount of stopping power and armor penetration.</description>
+	<color>(0.85, 0.70, 0.20)</color>	<!-- 45 deg -->
   </CombatExtended.AmmoCategoryDef>
 
   <CombatExtended.AmmoCategoryDef>
@@ -13,6 +14,7 @@
     <label>armor-piercing</label>
     <labelShort>AP</labelShort>
     <description>Features a hardened steel penetrator core for increased armor penetration.</description>
+	<color>(0.85, 0.45, 0.20)</color>	<!-- 21 deg	-->
   </CombatExtended.AmmoCategoryDef>
 
   <CombatExtended.AmmoCategoryDef>
@@ -20,6 +22,7 @@
     <label>hollow point</label>
     <labelShort>HP</labelShort>
     <description>A hollowed out tip causes the bullet to expand on impact, increasing tissue damage at the cost of armor penetration.</description>
+	<color>(0.80, 0.85, 0.20)</color>	<!-- 66 deg -->
   </CombatExtended.AmmoCategoryDef>
 
   <CombatExtended.AmmoCategoryDef>

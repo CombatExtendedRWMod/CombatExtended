@@ -17,6 +17,7 @@
 		<label>stone arrow</label>
     <labelShort>stone</labelShort>
 		<description>A sharpened stone is attached as an arrow head. Cuts exposed tissue fairly well but is ineffective against any kind of armor.</description>
+		<color>(0.70, 0.70, 0.55)</color>
 	</CombatExtended.AmmoCategoryDef>
 
 	<CombatExtended.AmmoCategoryDef>
@@ -25,6 +26,7 @@
     <labelShort>steel</labelShort>
 		<description>The arrow head is made from steel to enhance armor penetration.</description>
 		<advanced>true</advanced>
+		<color>(0.75, 0.15, 0.00)</color>
 	</CombatExtended.AmmoCategoryDef>
 
 	<CombatExtended.AmmoCategoryDef>
@@ -33,6 +35,7 @@
     <labelShort>plasteel</labelShort>
 		<description>Fitted with a plasteel head to maximize armor penetration.</description>
 		<advanced>true</advanced>
+		<color>(0.55, 0.70, 0.70)</color>
 	</CombatExtended.AmmoCategoryDef>
 
   <!-- ========== For Vanilla-Friendly Weapons Expansion ========== -->
@@ -91,6 +94,7 @@
     <labelShort>venom</labelShort>
 		<description>The arrow head is made from steel and coated in toxin.</description>
 		<advanced>true</advanced>
+		<color>(0.35, 0.55, 0.20)</color>
 	</CombatExtended.AmmoCategoryDef>
 
 	<CombatExtended.AmmoCategoryDef>
@@ -99,6 +103,7 @@
     <labelShort>flame</labelShort>
 		<description>Steel open cage arrowhead containing incendiary components for setting targets alight.</description>
 		<advanced>true</advanced>
+		<color>(0.75, 0.45, 0.00)</color>
 	</CombatExtended.AmmoCategoryDef>
 
 </Defs>
