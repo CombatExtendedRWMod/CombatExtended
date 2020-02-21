@@ -14,7 +14,7 @@
   <SmokeInhalation.stages.4.label>严重</SmokeInhalation.stages.4.label>
   <SmokeInhalation.stages.5.label>极重</SmokeInhalation.stages.5.label>
 
-  <VenomBuildup.label>中毒（毒液）</VenomBuildup.label>
+  <VenomBuildup.label>中毒(毒液)</VenomBuildup.label>
   <VenomBuildup.stages.0.label>较轻</VenomBuildup.stages.0.label>
   <VenomBuildup.stages.1.label>较轻</VenomBuildup.stages.1.label>
   <VenomBuildup.stages.2.label>中等</VenomBuildup.stages.2.label>
