@@ -1076,6 +1076,21 @@
 
   <Ammo_FN57x28mm_HP.label>FN 5.7x28mm手枪弹 (空尖弹)</Ammo_FN57x28mm_HP.label>
   <Ammo_FN57x28mm_HP.description>这种高速手枪子弹是专门为军事人员设计的，可以击穿防弹衣。</Ammo_FN57x28mm_HP.description>
+  
+  <Ammo_Arrow_Stone.label>箭 (石)</Ammo_Arrow_Stone.label>
+  <Ammo_Arrow_Stone.description>简单的箭矢，把磨尖的箭头装在木杆上制成。</Ammo_Arrow_Stone.description>
+
+  <Ammo_Arrow_Steel.label>箭 (钢铁)</Ammo_Arrow_Steel.label>
+  <Ammo_Arrow_Steel.description>简单的箭矢，把磨尖的箭头装在木杆上制成。</Ammo_Arrow_Steel.description>
+
+  <Ammo_Arrow_Plasteel.label>箭 (玻璃钢)</Ammo_Arrow_Plasteel.label>
+  <Ammo_Arrow_Plasteel.description>简单的箭矢，把磨尖的箭头装在木杆上制成。</Ammo_Arrow_Plasteel.description>
+
+  <Ammo_Arrow_Venom.label>箭 (毒液)</Ammo_Arrow_Venom.label>
+  <Ammo_Arrow_Venom.description>简单的箭矢，把磨尖的箭头装在木杆上制成。</Ammo_Arrow_Venom.description>
+
+  <Ammo_Arrow_Flame.label>箭 (火箭)</Ammo_Arrow_Flame.label>
+  <Ammo_Arrow_Flame.description>简单的箭矢，把磨尖的箭头装在木杆上制成。</Ammo_Arrow_Flame.description>
 
   <Ammo_GreatArrow_Stone.label>重箭 (石)</Ammo_GreatArrow_Stone.label>
   <Ammo_GreatArrow_Stone.description>用长弓发射的重箭。</Ammo_GreatArrow_Stone.description>
@@ -1513,6 +1528,16 @@
   <Bullet_FN57x28mm_FMJ.label>FN 5.7x28mm手枪弹 (全金属被甲弹)</Bullet_FN57x28mm_FMJ.label>
   <Bullet_FN57x28mm_AP.label>FN 5.7x28mm手枪弹 (穿甲弹)</Bullet_FN57x28mm_AP.label>
   <Bullet_FN57x28mm_HP.label>FN 5.7x28mm手枪弹 (空尖弹)</Bullet_FN57x28mm_HP.label>
+  <Projectile_Arrow_Stone.label>箭 (石)</Projectile_Arrow_Stone.label>
+  <Projectile_Arrow_Steel.label>箭 (钢铁)</Projectile_Arrow_Steel.label>
+  <Projectile_Arrow_Plasteel.label>箭 (玻璃钢)</Projectile_Arrow_Plasteel.label>
+  <Projectile_Arrow_Venom.label>箭 (毒液)</Projectile_Arrow_Venom.label>
+  <Projectile_Arrow_Flame.label>箭 (火箭)</Projectile_Arrow_Flame.label>
+  <Projectile_StreamlinedArrow_Stone.label>箭 (石)</Projectile_StreamlinedArrow_Stone.label>
+  <Projectile_StreamlinedArrow_Steel.label>箭 (钢铁)</Projectile_StreamlinedArrow_Steel.label>
+  <Projectile_StreamlinedArrow_Plasteel.label>箭 (玻璃钢)</Projectile_StreamlinedArrow_Plasteel.label>
+  <Projectile_StreamlinedArrow_Venom.label>箭 (毒液)</Projectile_StreamlinedArrow_Venom.label>
+  <Projectile_StreamlinedArrow_Flame.label>箭 (火箭)</Projectile_StreamlinedArrow_Flame.label>
   <Projectile_GreatArrow_Stone.label>重箭 (石)</Projectile_GreatArrow_Stone.label>
   <Projectile_GreatArrow_Steel.label>重箭 (钢铁)</Projectile_GreatArrow_Steel.label>
   <Projectile_GreatArrow_Plasteel.label>重箭 (玻璃钢)</Projectile_GreatArrow_Plasteel.label>
