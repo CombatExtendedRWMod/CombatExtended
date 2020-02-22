@@ -14,6 +14,7 @@ namespace CombatExtended
     {
         #region Fields
 
+        private int lastLoadedMagCountInt = 0;
         private int curMagCountInt = 0;
         private AmmoDef currentAmmoInt = null;
         private AmmoDef selectedAmmo;
@@ -35,6 +36,11 @@ namespace CombatExtended
             }
         }
 
+        bool ejectsCasings = false;
+        //Used by StatPart_LoadedAmmo to calculate remaining weight of e.g casings or spent batteries
+        public int SpentRounds => (ejectsCasings && ((CurAmmoProjectile.projectile as ProjectilePropertiesCE)?.dropsCasings ?? false))
+                    ? 0 : lastLoadedMagCountInt - curMagCountInt;
+
         public int CurMagCount
         {
             get
@@ -46,6 +52,8 @@ namespace CombatExtended
                 if (curMagCountInt != value && value >= 0)
                 {
                     curMagCountInt = value;
+                    lastLoadedMagCountInt = Mathf.Max(lastLoadedMagCountInt, value);
+
                     if (CompInventory != null) CompInventory.UpdateInventory();     //Must be positioned after curMagCountInt is updated, because it relies on that value
                 }
             }
@@ -118,7 +126,11 @@ namespace CombatExtended
                 return UseAmmo ? currentAmmoInt : null;
             }
         }
-        public ThingDef CurAmmoProjectile => Props.ammoSet?.ammoTypes?.FirstOrDefault(x => x.ammo == CurrentAmmo)?.projectile ?? parent.def.Verbs.FirstOrDefault().defaultProjectile;
+        public AmmoLink CurrentLink => Props.ammoSet?.ammoTypes?
+                    .Where(x => x.ammo == CurrentAmmo && x.amount <= CurMagCount)
+                    .MaxByWithFallback(x => x.amount);
+        public ThingDef CurAmmoProjectile => CurrentLink?.projectile
+                ?? parent.def.Verbs.FirstOrDefault().defaultProjectile;
         public CompInventory CompInventory
         {
             get
@@ -172,6 +184,7 @@ namespace CombatExtended
             base.Initialize(vprops);
 
             //curMagCountInt = Props.spawnUnloaded && UseAmmo ? 0 : Props.magazineSize;
+            ejectsCasings = parent.def.Verbs.Select(x => x as VerbPropertiesCE).First()?.ejectsCasings ?? true;
 
             // Initialize ammo with default if none is set
             if (UseAmmo)
@@ -196,6 +209,12 @@ namespace CombatExtended
             Scribe_Values.Look(ref curMagCountInt, "count", 0);
             Scribe_Defs.Look(ref currentAmmoInt, "currentAmmo");
             Scribe_Defs.Look(ref selectedAmmo, "selectedAmmo");
+
+            var val = SpentRounds;
+            Scribe_Values.Look(ref val, "conservedRounds", 0);
+            lastLoadedMagCountInt = curMagCountInt + val;
+
+            ejectsCasings = parent.def.Verbs.Select(x => x as VerbPropertiesCE).First()?.ejectsCasings ?? true;
         }
 
         private void AssignJobToWielder(Job job)
@@ -236,12 +255,11 @@ namespace CombatExtended
         }
 
         /// <summary>
-        /// <para>Reduces ammo count and updates inventory if necessary, call this whenever ammo is consumed by the gun (e.g. firing a shot, clearing a jam). </para>
-        /// <para>Has an optional argument for the amount of ammo to consume per shot, which defaults to 1; this caters for special cases such as different sci-fi weapons using up different amounts of the same energy cell ammo type per shot, or a double-barrelled shotgun that fires both cartridges at the same time (projectile treated as a single, more powerful bullet)</para>
+        /// Reduces ammo count and updates inventory if necessary, call this whenever ammo is consumed by the gun (e.g. firing a shot, clearing a jam).
         /// </summary>
-        public bool TryReduceAmmoCount(int ammoConsumedPerShot = 1)
+        public bool TryReduceAmmoCount()
         {
-            ammoConsumedPerShot = (ammoConsumedPerShot > 0) ? ammoConsumedPerShot : 1;
+            var ammoConsumedPerShot = (CurrentLink?.amount ?? 1);
 
             if (Wielder == null && turret == null)
             {
@@ -262,8 +280,12 @@ namespace CombatExtended
                         currentAmmoInt = ammoToBeDeleted.def as AmmoDef;
                     }
 
-                    if (ammoToBeDeleted.stackCount > 1)
-                        ammoToBeDeleted = ammoToBeDeleted.SplitOff(1);
+                    //Set CurMagCount since it changes CurrentLink return value
+                    CurMagCount = ammoToBeDeleted.stackCount;
+                    ammoConsumedPerShot = (CurrentLink?.amount ?? 1);
+
+                    if (ammoToBeDeleted.stackCount > ammoConsumedPerShot)
+                        ammoToBeDeleted = ammoToBeDeleted.SplitOff(ammoConsumedPerShot);
                 }
                 return true;
             }
@@ -271,22 +293,11 @@ namespace CombatExtended
             if (curMagCountInt <= 0)
             {
                 CurMagCount = 0;
+                lastLoadedMagCountInt = 0;
                 return false;
             }
             // Reduce ammo count and update inventory
-            CurMagCount = (curMagCountInt - ammoConsumedPerShot < 0) ? 0 : curMagCountInt - ammoConsumedPerShot;
-
-
-            /*if (curMagCountInt - ammoConsumedPerShot < 0)
-            {
-                curMagCountInt = 0;
-            } else
-            {
-                curMagCountInt = curMagCountInt - ammoConsumedPerShot;
-            }*/
-
-
-            // Original: curMagCountInt--;
+            CurMagCount -= ammoConsumedPerShot;
             
             if (curMagCountInt < 0) TryStartReload();
             return true;
@@ -403,6 +414,7 @@ namespace CombatExtended
 
             // don't forget to set the clip to empty...
             CurMagCount = 0;
+            lastLoadedMagCountInt = 0;
 
             return true;
         }

@@ -39,5 +39,6 @@
 	<CE_DropExcess>Drop excess</CE_DropExcess>
 	<CE_PickupMissingAndDropExcess>Pickup missing and drop excess</CE_PickupMissingAndDropExcess>
 	<CE_StatsReport_LoadedAmmo>Loaded ammunition</CE_StatsReport_LoadedAmmo>
+	<CE_StatsReport_SpentAmmo>Spent cartridges</CE_StatsReport_SpentAmmo>
 
 </LanguageData>

@@ -14,6 +14,7 @@ namespace CombatExtended
         public int defaultAmmoCount = 1;
         public float cookOffSpeed = 1f;
         public float cookOffFlashScale = 1;
+        public float conservedMassFactorWhenFired = 0.1f;
         public ThingDef cookOffProjectile = null;
         public SoundDef cookOffSound = null;
         public SoundDef cookOffTailSound = null;

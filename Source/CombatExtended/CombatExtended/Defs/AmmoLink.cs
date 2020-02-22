@@ -13,6 +13,7 @@ namespace CombatExtended
     {
         public AmmoDef ammo;
         public ThingDef projectile;
+        public int amount = 1;
 
         public AmmoLink() { }
 
@@ -31,16 +32,21 @@ namespace CombatExtended
             }
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "ammo", xmlRoot.Name);
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "projectile", (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
+            if (xmlRoot.Attributes["Amount"] != null)
+                amount = (int)ParseHelper.FromString(xmlRoot.Attributes["Amount"].Value, typeof(int));
         }
 
         public override string ToString()
         {
-            return string.Concat("(", ammo == null ? "null" : ammo.defName, " -> ", projectile == null ? "null" : projectile.defName, ")");
+            return "("
+                + (ammo == null ? "null" : ammo.defName)
+                + (amount > 1 ? "x" + amount + " -> " : " -> ")
+                + (projectile == null ? "null" : projectile.defName + ")");
         }
 
         public override int GetHashCode()
         {
-            return ammo.shortHash + projectile.shortHash << 16;
+            return ammo.shortHash + projectile.shortHash + amount << 16;
         }
     }
 }

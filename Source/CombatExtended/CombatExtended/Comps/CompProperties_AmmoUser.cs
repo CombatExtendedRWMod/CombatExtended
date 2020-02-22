@@ -11,6 +11,7 @@ namespace CombatExtended
     public class CompProperties_AmmoUser : CompProperties
     {
         public int magazineSize = 0;
+        public float magazineBulk = 0f;
         public float reloadTime = 1;
         public bool reloadOneAtATime = false;
         public bool throwMote = true;

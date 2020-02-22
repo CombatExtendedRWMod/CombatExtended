@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Verse;
+using System.Text;
 using RimWorld;
+using Verse;
+using UnityEngine;
 
 namespace CombatExtended
 {
     public class StatPart_LoadedAmmo : StatPart
     {
+        float cartridges = 0f;
+        float spentCartridges = 0f;
+        float magazine = 0f;
+
         public override void TransformValue(StatRequest req, ref float val)
         {
             if (TryGetValue(req, out float num))
@@ -15,25 +21,52 @@ namespace CombatExtended
 
         public override string ExplanationPart(StatRequest req)
         {
-            return TryGetValue(req, out float num)
-                ? "CE_StatsReport_LoadedAmmo".Translate() + ": " + parentStat.ValueToString(num)
-                : null;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (TryGetValue(req, out float _))
+            {
+                if (cartridges != 0f)
+                    stringBuilder.AppendLine("CE_StatsReport_LoadedAmmo".Translate() + ": " + parentStat.ValueToString(cartridges));
+
+                if (spentCartridges != 0f)
+                    stringBuilder.AppendLine("CE_StatsReport_SpentAmmo".Translate() + ": " + parentStat.ValueToString(spentCartridges));
+
+                if (magazine != 0f)
+                    stringBuilder.AppendLine("CE_MagazineBulk".Translate() + ": " + parentStat.ValueToString(magazine));
+
+                return stringBuilder.ToString().TrimEndNewlines();
+            }
+
+            return null;
         }
 
         public bool TryGetValue(StatRequest req, out float num)
         {
-            num = 0f;
+            cartridges = 0f;
+            spentCartridges = 0f;
+            magazine = 0f;
+            
             if (req.HasThing)
             {
                 var ammoUser = req.Thing.TryGetComp<CompAmmoUser>();
                 if (ammoUser != null && ammoUser.CurrentAmmo != null)
                 {
-                    num = ammoUser.CurrentAmmo.GetStatValueAbstract(parentStat) * ammoUser.CurMagCount;
+                    var numSingle = ammoUser.CurrentAmmo.GetStatValueAbstract(parentStat);
 
-                    if (parentStat == CE_StatDefOf.Bulk)
-                        num *= ammoUser.Props.loadedAmmoBulkFactor;
+                    cartridges = numSingle * ammoUser.CurMagCount;
+
+                    if (Controller.settings.EnableAmmoSystem && parentStat == StatDefOf.Mass)
+                        spentCartridges = ammoUser.SpentRounds * numSingle * ammoUser.CurrentAmmo.conservedMassFactorWhenFired;
+                    else if (parentStat == CE_StatDefOf.Bulk)
+                    {
+                        cartridges *= ammoUser.Props.loadedAmmoBulkFactor;
+
+                        if (ammoUser.HasMagazine && ammoUser.CurMagCount > 0)
+                            magazine = ammoUser.Props.magazineBulk;
+                    }
                 }
             }
+            num = cartridges + spentCartridges + magazine;
             return num != 0f;
         }
     }

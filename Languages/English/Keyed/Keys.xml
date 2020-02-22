@@ -74,6 +74,7 @@
 
   <!-- Info Box -->
   <CE_MagazineSize>Magazine size</CE_MagazineSize>
+  <CE_MagazineBulk>Magazine bulk</CE_MagazineBulk>
   <CE_ReloadTime>Reload time</CE_ReloadTime>
   <CE_AmmoSet>Caliber</CE_AmmoSet>
   <CE_FireModes>Fire modes</CE_FireModes>

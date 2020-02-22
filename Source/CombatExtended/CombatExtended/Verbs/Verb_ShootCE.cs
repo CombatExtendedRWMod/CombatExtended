@@ -179,7 +179,7 @@ namespace CombatExtended
             //Reduce ammunition
             if (CompAmmo != null)
             {
-                if (!CompAmmo.TryReduceAmmoCount(VerbPropsCE.ammoConsumedPerShotCount))
+                if (!CompAmmo.TryReduceAmmoCount())
                 {
                     return false;
                 }
@@ -192,7 +192,8 @@ namespace CombatExtended
                     ShooterPawn.records.Increment(RecordDefOf.ShotsFired);
                 }
                 //Drop casings
-                if (VerbPropsCE.ejectsCasings && projectilePropsCE.dropsCasings)
+                if (VerbPropsCE.ejectsCasings && projectilePropsCE.dropsCasings
+                    && (CompAmmo?.CurrentAmmo?.conservedMassFactorWhenFired > 0f))
                 {
                     CE_Utility.ThrowEmptyCasing(caster.DrawPos, caster.Map, ThingDef.Named(projectilePropsCE.casingMoteDefname));
                 }

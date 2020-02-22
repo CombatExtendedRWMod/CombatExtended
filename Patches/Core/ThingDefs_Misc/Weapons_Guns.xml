@@ -115,6 +115,7 @@
       <soundCast>Shot_Revolver</soundCast>
       <soundCastTail>GunTail_Light</soundCastTail>
       <muzzleFlashScale>9</muzzleFlashScale>
+	  <ejectsCasings>FALSE</ejectsCasings>
     </Properties>
     <AmmoUser>
       <magazineSize>6</magazineSize>
