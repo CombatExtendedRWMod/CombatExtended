@@ -1107,6 +1107,15 @@
   <Ammo_GreatArrow_Flame.label>重箭 (火箭)</Ammo_GreatArrow_Flame.label>
   <Ammo_GreatArrow_Flame.description>用长弓发射的重箭。</Ammo_GreatArrow_Flame.description>
 
+  <Ammo_CrossbowBolt_Stone.label>弩箭</Ammo_CrossbowBolt_Stone.label>
+  <Ammo_CrossbowBolt_Stone.description>弩箭。</Ammo_CrossbowBolt_Stone.description>
+
+  <Ammo_CrossbowBolt_Steel.label>弩箭 (钢铁)</Ammo_CrossbowBolt_Steel.label>
+  <Ammo_CrossbowBolt_Steel.description>弩箭。</Ammo_CrossbowBolt_Steel.description>
+
+  <Ammo_CrossbowBolt_Plasteel.label>弩箭 (玻璃钢)</Ammo_CrossbowBolt_Plasteel.label>
+  <Ammo_CrossbowBolt_Plasteel.description>弩箭。</Ammo_CrossbowBolt_Plasteel.description>
+
   <Ammo_M6_HEAT.label>M6火箭弹 (破甲弹)</Ammo_M6_HEAT.label>
   <Ammo_M6_HEAT.description>古老的M1火箭筒使用的60毫米火箭弹。</Ammo_M6_HEAT.description>
 
@@ -1543,6 +1552,9 @@
   <Projectile_GreatArrow_Plasteel.label>重箭 (玻璃钢)</Projectile_GreatArrow_Plasteel.label>
   <Projectile_GreatArrow_Venom.label>重箭 (毒液)</Projectile_GreatArrow_Venom.label>
   <Projectile_GreatArrow_Flame.label>重箭 (火箭)</Projectile_GreatArrow_Flame.label>
+  <Projectile_CrossbowBolt_Stone.label>弩箭 (石)</Projectile_CrossbowBolt_Stone.label>
+  <Projectile_CrossbowBolt_Steel.label>弩箭 (钢铁)</Projectile_CrossbowBolt_Steel.label>
+  <Projectile_CrossbowBolt_Plasteel.label>弩箭 (玻璃钢)</Projectile_CrossbowBolt_Plasteel.label>
   <Pilum_Fired.label>标枪</Pilum_Fired.label>
   <Bullet_M6_HEAT.label>M6火箭弹 (破甲弹)</Bullet_M6_HEAT.label>
   <Bullet_M6A1_HEAT.label>M6A1火箭弹 (破甲弹)</Bullet_M6A1_HEAT.label>
