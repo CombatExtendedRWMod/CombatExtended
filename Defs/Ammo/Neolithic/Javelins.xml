@@ -16,6 +16,7 @@
 	<!-- ================== Projectiles ================== -->
 
 	<ThingDef Class="CombatExtended.AmmoDef" ParentName="BaseProjectileNeolithic" Name="BasePilumProjectile" Abstract="true">
+		<thingClass>CombatExtended.BulletCE</thingClass>
 		<graphicData>
 			<texPath>Things/Projectile/Pilum</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
