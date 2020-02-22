@@ -97,7 +97,7 @@
   <AmmoSet_762x38mmR.label>7.62x38mmR子弹</AmmoSet_762x38mmR.label>
   <AmmoSet_762x39mmSoviet.label>7.62x39苏维埃子弹</AmmoSet_762x39mmSoviet.label>
   <AmmoSet_762x51mmNATO.label>7.62x51mm北约标准弹</AmmoSet_762x51mmNATO.label>
-  <AmmoSet_762x54mmR.label>7.62x54mmR子弹</AmmoSet_762x54mmR.label>
+  <AmmoSet_762x54mmR.label>7.62x54mmR步枪子弹</AmmoSet_762x54mmR.label>
   <AmmoSet_763x25mmMauser.label>7.63x25mm毛瑟手枪弹</AmmoSet_763x25mmMauser.label>
   <AmmoSet_792x33mmKurz.label>7.92x33mm步枪弹</AmmoSet_792x33mmKurz.label>
   <AmmoSet_950JDJ.label>.950 JDJ步枪弹</AmmoSet_950JDJ.label>
@@ -115,8 +115,8 @@
   <AmmoSet_RPG7Grenade.label>RPG-7火箭弹</AmmoSet_RPG7Grenade.label>
   <AmmoSet_RPG32Rocket.label>RPG-32火箭弹</AmmoSet_RPG32Rocket.label>
   <AmmoSet_SlingBullet.label>弹弓子弹</AmmoSet_SlingBullet.label>
-  <AmmoSet_SPG9Grenade.label>SPG-9榴弹</AmmoSet_SPG9Grenade.label>
-  <AmmoSet_XennFuel.label>氙气</AmmoSet_XennFuel.label>
+  <AmmoSet_SPG9Grenade.label>SPG-9炮弹</AmmoSet_SPG9Grenade.label>
+  <AmmoSet_XennFuel.label>Xenn燃料</AmmoSet_XennFuel.label>
 
 
 </LanguageData>
