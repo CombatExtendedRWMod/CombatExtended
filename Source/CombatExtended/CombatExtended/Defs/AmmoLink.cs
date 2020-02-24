@@ -141,15 +141,13 @@ namespace CombatExtended
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            if (xmlRoot.ChildNodes.Count != 1)
+            if (xmlRoot.ChildNodes.Count == 1)
             {
-                Log.Error("Misconfigured AmmoLink: " + xmlRoot.OuterXml);
-                return;
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "ammo", xmlRoot.Name);
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "projectile", (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
+                if (xmlRoot.Attributes["Amount"] != null)
+                    amount = (int)ParseHelper.FromString(xmlRoot.Attributes["Amount"].Value, typeof(int));
             }
-            DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "ammo", xmlRoot.Name);
-            DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "projectile", (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
-            if (xmlRoot.Attributes["Amount"] != null)
-                amount = (int)ParseHelper.FromString(xmlRoot.Attributes["Amount"].Value, typeof(int));
         }
         #endregion
 
