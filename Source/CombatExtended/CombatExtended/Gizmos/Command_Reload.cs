@@ -53,7 +53,7 @@ namespace CombatExtended
                     Find.WindowStack.Add(MakeAmmoMenu());
                 }
             }
-            else if (compAmmo.SelectedAmmo != compAmmo.CurrentAmmo || compAmmo.CurMagCount < compAmmo.Props.magazineSize)
+            else if (compAmmo.SelectedLink != compAmmo.CurrentLink || compAmmo.CurMagCount < compAmmo.Props.magazineSize)
             {
                 base.ProcessInput(ev);
             }
@@ -113,12 +113,11 @@ namespace CombatExtended
 
                     foreach (AmmoLink link in user.Props.ammoSet.ammoTypes)
                     {
-                        var ammoDef = link.ammo;
-                        var ammoClass = ammoDef.ammoClass;
+                        var ammoClass = link.ammoClass;
 
                         // If we have no inventory available (e.g. manned turret), add all possible ammo types to the selection
                         // Otherwise, iterate through all suitable ammo types and check if they're in our inventory
-                        if (user.CompInventory?.ammoList?.Any(x => x.def == ammoDef) ?? true)
+                        if (user.HasAmmo)
                         {
                             if (!ammoClassAmounts.ContainsKey(ammoClass))
                                 ammoClassAmounts.Add(ammoClass, new int[2]);
@@ -128,17 +127,17 @@ namespace CombatExtended
                             Action del = null;
 
                             //Increase amount of current ammo of this type by 1
-                            if (user.CurrentAmmo == ammoDef)
+                            if (user.CurrentLink == link)
                                 ammoClassAmounts[ammoClass][1]++;
 
-                            if (user.SelectedAmmo == ammoDef)
+                            if (user.SelectedLink == link)
                             {
                                 if (Controller.settings.AutoReloadOnChangeAmmo && user.turret?.MannableComp == null && user.CurMagCount < user.Props.magazineSize)
                                     del += other.action;
                             }
                             else
                             {
-                                del += delegate { user.SelectedAmmo = ammoDef; };
+                                del += delegate { user.SelectedLink = link; };
 
                                 if (Controller.settings.AutoReloadOnChangeAmmo && user.turret?.MannableComp == null)
                                     del += other.action;

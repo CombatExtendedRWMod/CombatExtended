@@ -14,11 +14,10 @@ namespace CombatExtended.Harmony
         {
             var ammoUser = (__instance as ThingWithComps)?.TryGetComp<CompAmmoUser>();
 
-            if (ammoUser != null && (ammoUser.HasMagazine && ammoUser.CurMagCount > 0 && ammoUser.CurrentAmmo != null))
+            if (ammoUser != null && (ammoUser.HasMagazine && ammoUser.CurMagCount > 0 && ammoUser.CurrentLink != null))
             {
-                var ammoThing = ThingMaker.MakeThing(ammoUser.CurrentAmmo, null);
-                ammoThing.stackCount = ammoUser.CurMagCount;
-                __result = __result.Add(ammoThing);
+                if (ammoUser.TryUnload(out var list, true, true))
+                    __result = __result.Concat(list);
             }
         }
     }

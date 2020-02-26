@@ -514,9 +514,9 @@ namespace CombatExtended
 
                         foreach (AmmoLink link in ((ammoSet == null) ? null : ammoSet.ammoTypes))
                         {
-                            options.Add(new FloatMenuOption(link.ammo.LabelCap, delegate
+                            options.Add(new FloatMenuOption(link.labelCap, delegate
                             {
-		                        CurrentLoadout.AddSlot(new LoadoutSlot(link.ammo, (magazineSize <= 1 ? link.ammo.defaultAmmoCount : magazineSize)));
+		                        CurrentLoadout.AddSlot(new LoadoutSlot(link.iconAdder, (magazineSize <= 1 ? ((link.iconAdder as AmmoDef)?.defaultAmmoCount ?? 1) : magazineSize)));
                             }));
                         }
                         // Add in the generic for this gun.

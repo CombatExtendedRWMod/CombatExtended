@@ -39,7 +39,7 @@ namespace CombatExtended
             Rect textRect = inRect;
             textRect.height = overRect.height / 2;
             Text.Font = GameFont.Tiny;
-            Widgets.Label(textRect, compAmmo.CurrentAmmo == null ? compAmmo.parent.def.LabelCap : compAmmo.CurrentAmmo.ammoClass.LabelCap);
+            Widgets.Label(textRect, compAmmo.CurrentLink == null ? compAmmo.parent.def.LabelCap : compAmmo.CurrentLink.labelCap);
 
             // Bar
             if (compAmmo.HasMagazine)

@@ -123,9 +123,9 @@ namespace CombatExtended
         {
             get
             {
-                if (CompAmmo != null && CompAmmo.CurrentAmmo != null)
+                if (CompAmmo != null && CompAmmo.CurrentLink != null)
                 {
-                	return CompAmmo.CurAmmoProjectile;
+                	return CompAmmo.CurrentUser.projectiles.First().thingDef;
                 }
                 if (CompChangeable != null && CompChangeable.Loaded)
                 {
@@ -134,7 +134,6 @@ namespace CombatExtended
                 return this.GunCompEq.PrimaryVerb.verbProps.defaultProjectile;
             }
         }
-        
         
         public CompChangeableProjectile CompChangeable
         {
@@ -167,7 +166,7 @@ namespace CombatExtended
                 return (mannableComp == null || !mannableComp.MannedNow)
                     && CompAmmo != null
                     && CompAmmo.HasMagazine
-                    && (CompAmmo.CurMagCount < CompAmmo.Props.magazineSize || CompAmmo.SelectedAmmo != CompAmmo.CurrentAmmo);
+                    && (CompAmmo.CurMagCount < CompAmmo.Props.magazineSize || CompAmmo.SelectedLink != CompAmmo.CurrentLink);
             }
         }
         public bool AllowAutomaticReload
@@ -573,29 +572,24 @@ namespace CombatExtended
             }
             */
 
-            if ((!mannableComp?.MannedNow ?? true) || (CompAmmo.CurrentAmmo == CompAmmo.SelectedAmmo && CompAmmo.CurMagCount == CompAmmo.Props.magazineSize)) return;
+            if ((!mannableComp?.MannedNow ?? true) || (CompAmmo.CurrentLink == CompAmmo.SelectedLink && CompAmmo.CurMagCount == CompAmmo.Props.magazineSize)) return;
             Job reloadJob = null;
             if (CompAmmo.UseAmmo)
             {
                 CompInventory inventory = mannableComp.ManningPawn.TryGetComp<CompInventory>();
                 if (inventory != null)
                 {
-                    Thing ammo = inventory.container.FirstOrDefault(x => x.def == CompAmmo.SelectedAmmo);
-
-                    // NPC's switch ammo types
-                    if (ammo == null)
+                    if (CompAmmo.TryFindAmmoInInventory(inventory, out var ammo, true, true))
                     {
-                        ammo = inventory.container.FirstOrDefault(x => CompAmmo.Props.ammoSet.ammoTypes.Any(a => a.ammo == x.def));
-                    }
-                    if (ammo != null)
-                    {
-                        if (ammo.def != CompAmmo.SelectedAmmo)
-                        {
-                            CompAmmo.SelectedAmmo = ammo.def as AmmoDef;
-                        }
                         Thing droppedAmmo;
-                        int amount = CompAmmo.Props.magazineSize;
-                        if (CompAmmo.CurrentAmmo == CompAmmo.SelectedAmmo) amount -= CompAmmo.CurMagCount;
+                        int chargeAmt = CompAmmo.Props.magazineSize;
+                        if (CompAmmo.CurrentLink == CompAmmo.SelectedLink) chargeAmt -= CompAmmo.CurMagCount;
+
+                        if (!CompAmmo.SelectedLink.CanAdd(ammo.def, out var cpu))
+                            Log.Error("TryFindAmmoInInventory returned ammo which is unusable within Building_TurretGunCE.TryOrderReload based on SelectedLink.CanAdd(ThingDef, out int)");
+
+                        var amount = Mathf.CeilToInt((float)chargeAmt / (float)cpu);
+
                         if (inventory.container.TryDrop(ammo, this.Position, this.Map, ThingPlaceMode.Direct, Mathf.Min(ammo.stackCount, amount), out droppedAmmo))
                         {
                             reloadJob = new Job(CE_JobDefOf.ReloadTurret, this, droppedAmmo) { count = droppedAmmo.stackCount };

@@ -132,7 +132,7 @@ namespace CombatExtended
             // choose ammo to be loaded and set failstate for no ammo in inventory
             if (compReloader.UseAmmo)
             {
-                this.FailOn(() => !compReloader.TryFindAmmoInInventory(out initAmmo));
+                this.FailOn(() => !compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo));
             }
 
             // setup fail states, if something goes wrong with the pawn performing the reload, the weapon, or something else that we want to fail on.
@@ -163,7 +163,7 @@ namespace CombatExtended
             System.Func<bool> jumpCondition =
                 () => compReloader.Props.reloadOneAtATime &&
                       compReloader.CurMagCount < compReloader.Props.magazineSize &&
-                      (!compReloader.UseAmmo || compReloader.TryFindAmmoInInventory(out initAmmo));
+                      (!compReloader.UseAmmo || compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo));
             Toil jumpToil = Toils_Jump.JumpIf(waitToil, jumpCondition);
             yield return jumpToil;
 

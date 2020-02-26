@@ -12,7 +12,6 @@ namespace CombatExtended
     public class ChargeAdder
     {
         public ThingDefCountClass ammo;
-        public bool isFallback = false;
 
         //Normally:
         //<Ammo>chargesAdded</Ammo>
@@ -98,22 +97,37 @@ namespace CombatExtended
 
         #region Fields
         //Index of lists is the amount of charges added or used?
-        public List<ChargeAdder> adders;
+        public List<ThingDefCountClass> adders;
         public List<ChargeUser> users;
 
         public bool allowMagsizeChange = true;
         public bool autogenerateFallbackUser = true;
+        /// <summary>Whether there is a adder.ammo.count / CurMagCount chance (0f to 1f) chance to recover the smallest available adder on backlog</summary>
         public bool chanceToRecoverBacklog = true;
+        /// <summary>Whether a many-charge ammo thingDef can be unloaded in-full, displaying an underflow of charge in the weapon</summary>
+        public bool allowUnderflow = false;
+        /// <summary>Whether a many-charge ammo thingDef can be loaded in-full, displaying an overflow of charge in the weapon</summary>
+        public bool allowOverflow = false;
+        /// <summary>Whether the index of the charge adder and that of the charge user it creates are the same - useful for e.g catapults</summary>
+        public bool directAdderUserLinkage = false;
 
-        public ThingDef spentThingDef;
-        public ThingDef fallbackThingDef;
+        /// <summary>ThingDef spawned for every SpentRounds charge</summary>
+        public ThingDefCountClass spentThingDef;
+        /// <summary>ThingDef spawned for charges not otherwise unloadable</summary>
+        public ThingDefCountClass fallbackThingDef;
+        
+        public ThingDef iconAdder;
+        public ThingDef physicsProjectile;
 
-        public string label;
+        public AmmoCategoryDef ammoClass;
+        public int defaultAmmoCount = -1;
+        public string labelCap;
+        public string labelCapShort;
         #endregion
 
-        public AmmoDef ammo;
-        public ThingDef projectile;
-
+      //AmmoDef _ammo;
+      //ThingDef _projectile;
+      
         #region Methods
         public bool SuggestMagSize(int currentMagSize, out int newMagSize)
         {
@@ -131,22 +145,217 @@ namespace CombatExtended
             return true;
         }
 
+        /*
         public AmmoLink() { }
 
         public AmmoLink(AmmoDef ammo, ThingDef projectile)
         {
             this.ammo = ammo;
             this.projectile = projectile;
+        }*/
+
+        public virtual bool CanAdd(ThingDef def)
+        {
+            return adders.Any(x => x.thingDef == def);
+        }
+
+        /// <summary>Returns </summary>
+        /// <param name="def"></param>
+        /// <param name="adder">ThingDef and amount of charges added by that def</param>
+        /// <returns></returns>
+        public virtual bool CanAdd(ThingDef def, out int chargesPerUnit)
+        {
+            chargesPerUnit = adders.First(x => x.thingDef == def)?.count ?? -1;
+            return chargesPerUnit != -1;
+        }
+
+        public virtual bool CanAdd(Thing thing, CompAmmoUser user, out ThingDefCount defCount)
+        {
+            if (CanAdd(thing.def, out var count)
+                && (allowOverflow || user.CurMagCount + count <= user.Props.magazineSize))
+            {
+                defCount = new ThingDefCount(thing.def, count);
+                return true;
+            }
+            defCount = null;
+            return false;
+        }
+        
+        /*
+        public virtual IEnumerable<Thing> BestFullMagazine(List<Thing> things, CompAmmoUser user)
+        {
+            foreach (var adder in things
+                .Select(x => { CanAdd(x, user, out var adder); return adder; })
+                .OrderByDescending(y => y.ammo.count))
+            {
+
+            }
+        }*/
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="things">A collection of Things, e.g from the inventory</param>
+        /// <param name="user"></param>
+        /// <param name="defCount">The amount of charges associated with the returned Thing</param>
+        /// <returns></returns>
+        public Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false)
+        {
+            if (user.CurMagCount < user.Props.magazineSize)
+            {
+                // From the largest to the smallest possible adder ..
+                foreach (var dc in allowOverflow
+                    ? adders.OrderByDescending(x => x.count)
+                    : adders.Where(x => user.CurMagCount + x.count <= user.Props.magazineSize).OrderByDescending(x => x.count))
+                {
+                    // .. test if it's in things and take the smallest (or largest with maxStackSize = true) stack of it
+                    var test = things.Where(x => x.def == dc.thingDef).MaxByWithFallback(x => (maxStackSize ? 1 : -1) * x.stackCount);
+                    if (test != null)
+                    {
+                        chargeCount = dc.count;
+                        return test;
+                    }
+                }
+            }
+            else
+                Log.Error("AmmoLink.ReloadNext called with CurMagCount == Props.magazineSize");
+
+            chargeCount = 0;
+            return null;
+        }
+        
+        public ChargeUser BestUser(CompAmmoUser user)
+        {
+            if (user.CurMagCount > 0)
+            {
+                //1. Fire a shot as long as there's at least one charge remaining
+                var availableUsers = users.Where(x => x.chargesUsed <= user.CurMagCount);
+
+                if (availableUsers != null)
+                {
+                    return availableUsers.MaxByWithFallback(y => y.chargesUsed);
+                }
+
+                //4. Allow for an underflow of rounds, which has to be replenished with newly loaded ammo
+                if (allowUnderflow)
+                {
+                    return users.Where(x => x.chargesUsed > user.CurMagCount)?.MinBy(y => y.chargesUsed) ?? null;
+                }
+
+                //3. Somehow linearly decreasing projectile stats with lower ammo amounts, e.g cutting pelletCount or damage or AP, or speed.
+                //2. Having an option with the current X and different Y which does have X / Y integer as fallback, handling a tiered decrease in projectile properties.
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Reload the gun once - e.g, load with as many, as large as possible pieces of ammo
+        /// </summary>
+        /// <param name="defCount">Amount of thingDef used during reload</param>
+        /// <returns>Charges loaded with this reload</returns>
+        public int ReloadNext(List<Thing> things, CompAmmoUser user, out ThingDefCount defCount, bool maxStackSize = false)
+        {
+            if (user.CurMagCount < user.Props.magazineSize)
+            {
+                var thing = BestAdder(things, user, out var chargePerThing, maxStackSize);
+
+                //3. Allow an overflow
+                var amountUsed = user.Props.reloadOneAtATime ? 1
+                    : Math.Min(thing.stackCount, allowOverflow
+                        ? Mathf.CeilToInt((float)(user.Props.magazineSize - user.CurMagCount) / (float)chargePerThing)
+                        : Mathf.FloorToInt((float)(user.Props.magazineSize - user.CurMagCount) / (float)chargePerThing));
+
+                defCount = new ThingDefCount(thing.def, amountUsed);
+                return amountUsed * chargePerThing;
+            }
+            else
+                Log.Error("AmmoLink.ReloadNext called with CurMagCount >= Props.magazineSize");
+
+            defCount = null;
+            return 0;
+        }
+
+        public int UnloadNext(CompAmmoUser user, out ThingDefCount defCount)
+        {
+            //Start off unloading spent rounds
+            if (user.SpentRounds > 1)
+            {
+                defCount = spentThingDef != null
+                    ? new ThingDefCount(spentThingDef.thingDef, Mathf.FloorToInt((float)user.SpentRounds / (float)spentThingDef.count))
+                    : null;
+
+                user.SpentRounds = 0;
+                return 0;
+            }
+
+            if (user.CurMagCount > 0)
+            {
+                var availableAdders = adders.Where(x => x.count <= user.CurMagCount);
+
+                //4. Create a fallback ThingDef for X = 1 or appropriate value, which backlog charges are converted to
+                if (availableAdders != null)
+                {
+                    var most = availableAdders.MaxBy(x => x.count);
+                    var addersRemoved = (allowUnderflow && most.count == adders.MinBy(x => x.count).count)
+                        ? Mathf.CeilToInt((float)user.CurMagCount / (float)most.count)
+                        : Mathf.FloorToInt((float)user.CurMagCount / (float)most.count);
+
+                    defCount = new ThingDefCount(most.thingDef, addersRemoved);
+                    return addersRemoved * most.count;
+                }
+
+                //---- ----  ----   ----    ----
+                // UNSOLVED UNLOADING BACKLOG - All adders have charge counts larger than currently stored charge count
+                //---- ----  ----   ----    ----
+
+                //3. Give a chance to recover a full X cartridge depending on the discrepancy between X and charge
+                //5. If underflow is allowed, use that
+                if (allowUnderflow || chanceToRecoverBacklog)
+                {
+                    //There is no adder with count == 1
+                    //CurMagCount is smaller than the smallest count
+
+                    //Find smallest count thingDef
+                    var least = adders.MinBy(x => x.count);
+
+                    //Create smallest count thingDef with count 1 with a (count / CurMagCount) chance
+                    if (allowUnderflow || Rand.Value < (float)least.count / (float)user.CurMagCount)
+                    {
+                        //Remove the smallest count (return). Underflow is handled by AmmoUser
+                        defCount = new ThingDefCount(least.thingDef, 1);
+                        return allowUnderflow ? least.count : user.CurMagCount;
+                    }
+                }
+
+                //2. Convert non-X charge count to fallback ThingDefs (set by a new XML tag) - no partially spent rounds allowed
+                if (fallbackThingDef != null)
+                {
+                    defCount = new ThingDefCount(fallbackThingDef.thingDef, 1);
+                    return allowUnderflow ? fallbackThingDef.count : user.CurMagCount;
+                }
+
+            }
+            else
+                Log.Error("AmmoLink.UnloadNext called with CurMagCount == 0");
+
+            //1. Unload charge counts below X by destroying them
+            defCount = null;
+            return user.CurMagCount;
         }
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             if (xmlRoot.ChildNodes.Count == 1)
             {
-                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "ammo", xmlRoot.Name);
-                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "projectile", (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
-                if (xmlRoot.Attributes["Amount"] != null)
-                    amount = (int)ParseHelper.FromString(xmlRoot.Attributes["Amount"].Value, typeof(int));
+              //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "_ammo", xmlRoot.Name);
+              //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "_projectile", (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
+
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("adders"), xmlRoot.Name);
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("users"), (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
+                
+              //if (xmlRoot.Attributes["Amount"] != null)
+              //    amount = (int)ParseHelper.FromString(xmlRoot.Attributes["Amount"].Value, typeof(int));
             }
         }
         #endregion
@@ -180,17 +389,18 @@ namespace CombatExtended
         </ammoTypes>
         */
 
+        /*
         public override string ToString()
         {
             return "("
                 + (ammo == null ? "null" : ammo.defName)
-                + (amount > 1 ? "x" + amount + " -> " : " -> ")
+              //+ (amount > 1 ? "x" + amount + " -> " : " -> ")
                 + (projectile == null ? "null" : projectile.defName + ")");
         }
 
         public override int GetHashCode()
         {
             return ammo.shortHash + projectile.shortHash + amount << 16;
-        }
+        }*/
     }
 }

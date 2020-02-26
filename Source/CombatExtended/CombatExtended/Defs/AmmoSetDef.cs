@@ -12,20 +12,37 @@ namespace CombatExtended
     {
         public List<AmmoLink> ammoTypes;
 
-        public override IEnumerable<string> ConfigErrors()
-        {
-            foreach (string str in base.ConfigErrors())
-            {
-                yield return str;
-            }
-            
-            var multiplesWithoutSingles = 
-                        ammoTypes.Where(x => x.amount > 1).Select(x => x.ammo)
-                .Except(ammoTypes.Where(x => x.amount == 1).Select(x => x.ammo));
+        public Dictionary<ThingDef, int> maxChargeAdded = new Dictionary<ThingDef, int>();
 
-            if (multiplesWithoutSingles.Any())
-                yield return "has multiple ammoDefs with Amount > 1, without a fallback of Amount = 1; namely "
-                    + String.Join(",", multiplesWithoutSingles.Select(x => x.defName).ToArray());
+        public int MaxCharge(ThingDef def)
+        {
+            if (!maxChargeAdded.ContainsKey(def))
+            {
+                var ammo = ammoTypes.SelectMany(x => x.adders).Where(x => x.thingDef == def);
+                maxChargeAdded.Add(def, ammo?.MaxBy(x => x.count).count ?? -1);
+            }
+
+            return maxChargeAdded[def];
+        }
+
+        public AmmoLink Containing(ThingDef def)
+        {
+            return ammoTypes.Where(x => x.adders.Any(y => y.thingDef == def)).FirstOrDefault();
+        }
+
+        public override void ResolveReferences()
+        {
+            ammoTypes.ForEach(x => {
+                if (x.iconAdder == null)        x.iconAdder = x.adders.MaxBy(y => y.count).thingDef;
+                if (x.defaultAmmoCount == -1)   x.defaultAmmoCount = ((x.iconAdder as AmmoDef)?.defaultAmmoCount ?? 1);
+                if (x.ammoClass == null)        x.ammoClass = (x.iconAdder as AmmoDef).ammoClass;
+                if (x.labelCap.NullOrEmpty() && x.labelCapShort.NullOrEmpty())
+                {
+                    x.labelCap = x.ammoClass.LabelCap;
+                    x.labelCapShort = x.ammoClass.LabelCapShort;
+                }
+
+            });
         }
     }
 }

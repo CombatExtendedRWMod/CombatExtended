@@ -31,7 +31,7 @@ namespace CombatExtended
                         CompProperties_AmmoUser props = def.GetCompProperties<CompProperties_AmmoUser>();
                         if(props?.ammoSet?.ammoTypes != null)
                         {
-                            return props.ammoSet.ammoTypes.Any(x => x.ammo == this);
+                            return props.ammoSet.ammoTypes.Any(x => x.CanAdd(this));
                         }
                         return false;
                     });
@@ -51,7 +51,19 @@ namespace CombatExtended
                 return ammoSetDefs;
             }
         }
-        
+
+        private List<AmmoLink> ammoLinks;
+        public List<AmmoLink> AmmoLinks
+        {
+            get
+            {
+                if (ammoLinks == null)
+                    ammoLinks = AmmoSetDefs.SelectMany(x => x.ammoTypes).Where(x => x.CanAdd(this)).ToList();
+
+                return ammoLinks;
+            }
+        }
+
         private string oldDescription;
         public void AddDescriptionParts()
         {

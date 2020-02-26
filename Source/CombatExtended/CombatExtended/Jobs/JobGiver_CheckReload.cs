@@ -34,9 +34,7 @@ namespace CombatExtended
 			
 			// would be nice to communicate with JobGiver_UpdateLoadout but it will suffice to set our priority below theirs.
 			
-			ThingWithComps ignore1;
-			AmmoDef ignore2;
-			if (!pawn.Drafted && DoReloadCheck(pawn, out ignore1, out ignore2))
+			if (!pawn.Drafted && DoReloadCheck(pawn, out var _, out var __))
 				return reloadPriority;
             
 			return 0.0f;
@@ -49,22 +47,18 @@ namespace CombatExtended
 		/// <returns>Job that the pawn is to be working on.</returns>
 		protected override Job TryGiveJob(Pawn pawn)
 		{
-			ThingWithComps gun;
-			AmmoDef ammo;
 			Job reloadJob = null;
 			
-			if (DoReloadCheck(pawn, out gun, out ammo))
+			if (DoReloadCheck(pawn, out var gun, out var link))
 			{
 				CompAmmoUser comp = gun.TryGetComp<CompAmmoUser>();
-				CompInventory compInventory = pawn.TryGetComp<CompInventory>();
 				// we relied on DoReloadCheck() to do error checking of many variables.
 				
 				if (!comp.TryUnload()) return null; // unload the weapon or stop trying if there was a problem.
 				
-				// change ammo type if necessary.
-				if (comp.UseAmmo && comp.CurrentAmmo != ammo)
-					comp.SelectedAmmo = ammo;
-				
+                if (comp.UseAmmo && comp.CurrentLink != link)
+                    comp.SelectedLink = link;
+                
 	            // Get the reload job from the comp.
 	            reloadJob = comp.TryMakeReloadJob();
 			}
@@ -91,10 +85,10 @@ namespace CombatExtended
 		/// <param name="reloadWeapon">Thing weapon which needs to be reloaded.</param>
 		/// <param name="reloadAmmo">AmmoDef ammo to reload the gun with.</param>
 		/// <returns>Bool value indicating if the job needs to be done.</returns>
-		private bool DoReloadCheck(Pawn pawn, out ThingWithComps reloadWeapon, out AmmoDef reloadAmmo)
+		private bool DoReloadCheck(Pawn pawn, out ThingWithComps reloadWeapon, out AmmoLink reloadLink)
 		{
 			reloadWeapon = null;
-			reloadAmmo = null;
+			reloadLink = null;
 			
 			// First need to create the collections that will be searched.
 			List<ThingWithComps> guns = new List<ThingWithComps>();
@@ -103,6 +97,7 @@ namespace CombatExtended
             Loadout loadout = pawn.GetLoadout();
             bool pawnHasLoadout = loadout != null && !loadout.Slots.NullOrEmpty();
 
+            #region Checks
             if (inventory == null)
 				return false; // There isn't any work to do since the pawn doesn't have a CE Inventory.
 			
@@ -114,32 +109,39 @@ namespace CombatExtended
 			
 			if (guns.NullOrEmpty())
 				return false; // There isn't any work to do since the pawn doesn't have any ammo using guns.
-			
-			// look at each gun...
-			foreach (ThingWithComps gun in guns)
+            #endregion
+
+            // look at each gun...
+            foreach (ThingWithComps gun in guns)
 			{
 				// Get key stats of the weapon.
 				tmpComp = gun.TryGetComp<CompAmmoUser>();
-				AmmoDef ammoType = tmpComp.CurrentAmmo;
-				int ammoAmount = tmpComp.CurMagCount;
+
+			  //AmmoDef ammoType = tmpComp.CurrentAmmo;
+                AmmoLink ammoLink = tmpComp.CurrentLink;
+                
 				int magazineSize = tmpComp.Props.magazineSize;
 
                 // Is the gun loaded with ammo not in a Loadout/HoldTracker?
                 if (tmpComp.UseAmmo && pawnHasLoadout && !TrackingSatisfied(pawn, ammoType, magazineSize))
 				{
-					// Do we have ammo in the inventory that the gun uses which satisfies requirements? (expensive)
-					AmmoDef matchAmmo = tmpComp.Props.ammoSet.ammoTypes
-						.Where(al => al.ammo != ammoType)
-						.Select(al => al.ammo)
-						.FirstOrDefault(ad => TrackingSatisfied(pawn, ad, magazineSize) 
-						                && inventory.AmmoCountOfDef(ad) >= magazineSize);
-					
-					if (matchAmmo != null)
-					{
-						reloadWeapon = gun;
-						reloadAmmo = matchAmmo;
-						return true;
-					}
+                    foreach (var thing in inventory.ammoList)
+                    {
+                        var maxCharge = tmpComp.Props.ammoSet.MaxCharge(thing.def);
+
+                        if (maxCharge == -1)
+                            continue;
+
+                        var toFill = (float)magazineSize / (float)maxCharge;
+
+                        if (toFill > 0 && (TrackingSatisfied(pawn, thing.def, Mathf.CeilToInt(toFill)) || TrackingSatisfied(pawn, thing.def, Mathf.FloorToInt(toFill)))
+                            && toFill < thing.stackCount || toFill < inventory.AmmoCountOfDef(thing.def as AmmoDef))
+                        {
+                            reloadWeapon = gun;
+                            reloadLink = tmpComp.Props.ammoSet.ammoTypes.First(x => x.adders.Contains(new ThingDefCountClass(thing.def, maxCharge)));
+                            return true;
+                        }
+                    }
 				}
 				
 				// Is the gun low on ammo?
@@ -156,7 +158,7 @@ namespace CombatExtended
 						// We could do a more strict check to see if the pawn's loadout is satisfied to pick up ammo and if not swap to another ammo...?
 					}
 				}
-				
+			
 			}
 			
 			return false;

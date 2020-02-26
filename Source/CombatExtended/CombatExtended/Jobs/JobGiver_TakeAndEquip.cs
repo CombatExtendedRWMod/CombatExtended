@@ -96,11 +96,16 @@ namespace CombatExtended
                 // Number of things in inventory that could be put in the weapon
                 int viableAmmoCarried = 0;
                 float viableAmmoBulk = 0;
-                foreach (AmmoLink link in primaryAmmoUser.Props.ammoSet.ammoTypes)
+
+                foreach (var ammoThing in compInventory.ammoList)
                 {
-                    var count = compInventory.AmmoCountOfDef(link.ammo);
-                    viableAmmoCarried += count;
-                    viableAmmoBulk += count * link.ammo.GetStatValueAbstract(CE_StatDefOf.Bulk);
+                    var charges = primaryAmmoUser.Props.ammoSet.MaxCharge(ammoThing.def);
+
+                    if (charges == -1)
+                        continue;
+
+                    viableAmmoCarried += charges * ammoThing.stackCount;
+                    viableAmmoBulk += ammoThing.stackCount * ammoThing.def.GetStatValueAbstract(CE_StatDefOf.Bulk);
                 }
 
                 // ~2/3rds of the inventory bulk minus non-usable and non-ammo bulk could be filled with ammo
@@ -238,26 +243,13 @@ namespace CombatExtended
                 if (!pawn.Faction.IsPlayer && primaryAmmoUser != null && priority == WorkPriority.Unloading && inventory.rangedWeaponList.Count >= 1)
                 {
                     Thing ListGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
-                    if (ListGun != null)
+                    if (ListGun != null && !ListGun.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine)
                     {
-                        Thing ammoListGun = null;
-                        if (!ListGun.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine)
-                            foreach (AmmoLink link in ListGun.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
-                            {
-                                if (inventory.ammoList.Find(thing => thing.def == link.ammo) == null)
-                                {
-                                    ammoListGun = ListGun;
-                                    break;
-                                }
-                            }
-                        if (ammoListGun != null)
+                        Thing droppedWeapon;
+                        if (inventory.container.TryDrop(ListGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, ListGun.stackCount, out droppedWeapon))
                         {
-                            Thing droppedWeapon;
-                            if (inventory.container.TryDrop(ListGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, ListGun.stackCount, out droppedWeapon))
-                            {
-                                pawn.jobs.EndCurrentJob(JobCondition.None, true);
-                                pawn.jobs.TryTakeOrderedJob(new Job(JobDefOf.DropEquipment, droppedWeapon, 30, true));
-                            }
+                            pawn.jobs.EndCurrentJob(JobCondition.None, true);
+                            pawn.jobs.TryTakeOrderedJob(new Job(JobDefOf.DropEquipment, droppedWeapon, 30, true));
                         }
                     }
                 }
@@ -267,7 +259,7 @@ namespace CombatExtended
                 {
                     Thing WrongammoThing = null;
                     WrongammoThing = primaryAmmoUser != null
-                        ? inventory.ammoList.Find(thing => !primaryAmmoUser.Props.ammoSet.ammoTypes.Any(a => a.ammo == thing.def))
+                        ? inventory.ammoList.Find(thing => primaryAmmoUser.Props.ammoSet.MaxCharge(thing.def) == -1)
                         : inventory.ammoList.RandomElement<Thing>();
 
                     if (WrongammoThing != null)
@@ -275,13 +267,7 @@ namespace CombatExtended
                         Thing InvListGun = inventory.rangedWeaponList.Find(thing => hasPrimary && thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
                         if (InvListGun != null)
                         {
-                            Thing ammoInvListGun = null;
-                            foreach (AmmoLink link in InvListGun.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
-                            {
-                                ammoInvListGun = inventory.ammoList.Find(thing => thing.def == link.ammo);
-                                break;
-                            }
-                            if (ammoInvListGun != null && ammoInvListGun != WrongammoThing)
+                            if (InvListGun.TryGetComp<CompAmmoUser>().TryFindAmmoInInventory(inventory, out var ammoInvListGun, false, false) && ammoInvListGun != WrongammoThing)
                             {
                                 Thing droppedThingAmmo;
                                 if (inventory.container.TryDrop(ammoInvListGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, ammoInvListGun.stackCount, out droppedThingAmmo))
@@ -313,12 +299,7 @@ namespace CombatExtended
                     if (InvListGun2 != null)
                     {
                         Thing ammoInvListGun2 = null;
-                        foreach (AmmoLink link in InvListGun2.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes)
-                        {
-                            ammoInvListGun2 = inventory.ammoList.Find(thing => thing.def == link.ammo);
-                            break;
-                        }
-                        if (ammoInvListGun2 != null)
+                        if (InvListGun2?.TryGetComp<CompAmmoUser>().TryFindAmmoInInventory(inventory, out ammoInvListGun2) ?? false)
                         {
                             inventory.TrySwitchToWeapon(InvListGun2);
                         }
@@ -348,7 +329,8 @@ namespace CombatExtended
                         {
                             foreach (Thing thing in rangedWeapons)
                             {
-                                if (thing.TryGetComp<CompAmmoUser>() == null)
+                                var user = thing.TryGetComp<CompAmmoUser>();
+                                if (user == null)
                                 {
                                     // pickup a non-CE ranged weapon...
                                     int numToThing = 0;
@@ -360,8 +342,6 @@ namespace CombatExtended
                                 else
                                 {
                                     // pickup a CE ranged weapon...
-                                    List<ThingDef> thingDefAmmoList = thing.TryGetComp<CompAmmoUser>().Props.ammoSet.ammoTypes.Select(g => g.ammo as ThingDef).ToList();
-
                                     Predicate<Thing> validatorA = (Thing t) => t.def.category == ThingCategory.Item
                                         && t is AmmoThing && pawn.CanReserve(t, 1)
                                         && pawn.Position.InHorDistOf(t.Position, 25f)
@@ -374,11 +354,10 @@ namespace CombatExtended
                                         select t
                                         ).ToList();
 
-                                    if (thingAmmoList.Count > 0 && thingDefAmmoList.Count > 0)
+                                    if (thingAmmoList.Any() && user.Props.ammoSet.ammoTypes.Any(x => x.adders.Any()))
                                     {
-                                        int desiredStackSize = thing.TryGetComp<CompAmmoUser>().Props.magazineSize * 2;
-                                        Thing th = thingAmmoList.FirstOrDefault(x => thingDefAmmoList.Contains(x.def) && x.stackCount > desiredStackSize);
-                                        if (th != null)
+                                        int desiredStackSize = user.Props.magazineSize * 2;
+                                        if (thingAmmoList.Any(x => user.Props.ammoSet.MaxCharge(x.def) != -1 && x.stackCount > desiredStackSize))
                                         {
                                             int numToThing = 0;
                                             if (inventory.CanFitInInventory(thing, out numToThing))

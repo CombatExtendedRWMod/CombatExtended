@@ -193,7 +193,7 @@ namespace CombatExtended
                 }
                 //Drop casings
                 if (VerbPropsCE.ejectsCasings && projectilePropsCE.dropsCasings
-                    && (CompAmmo?.CurrentAmmo?.conservedMassFactorWhenFired > 0f))
+                    && ((CompAmmo?.CurrentLink?.iconAdder as AmmoDef)?.conservedMassFactorWhenFired > 0f))
                 {
                     CE_Utility.ThrowEmptyCasing(caster.DrawPos, caster.Map, ThingDef.Named(projectilePropsCE.casingMoteDefname));
                 }

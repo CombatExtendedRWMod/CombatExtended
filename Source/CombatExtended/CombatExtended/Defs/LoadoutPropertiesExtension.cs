@@ -158,7 +158,11 @@ namespace CombatExtended
                 return;
             }
             // Determine ammo
-            IEnumerable<AmmoDef> availableAmmo = compAmmo.Props.ammoSet.ammoTypes.Where(a => a.ammo.alwaysHaulable && a.ammo.generateAllowChance > 0f).Select(a => a.ammo); //Running out of options. alwaysHaulable does exist in xml.
+            //Running out of options. alwaysHaulable does exist in xml.
+            IEnumerable<AmmoDef> availableAmmo = compAmmo.Props.ammoSet.ammoTypes
+                .SelectMany(x => x.adders.Select(y => y.thingDef as AmmoDef))
+                .Where(y => y.alwaysHaulable && y.generateAllowChance > 0f);
+            
             AmmoDef ammoToLoad = availableAmmo.RandomElementByWeight(a => a.generateAllowChance);
             compAmmo.ResetAmmoCount(ammoToLoad);
         }
@@ -183,7 +187,7 @@ namespace CombatExtended
             else
             {
                 // Generate currently loaded ammo
-                thingToAdd = compAmmo.CurrentAmmo;
+                thingToAdd = compAmmo.CurrentLink.iconAdder;
                 unitCount = Mathf.Max(1, compAmmo.Props.magazineSize);  // Guns use full magazines as units
             }
             var ammoThing = thingToAdd.MadeFromStuff ? ThingMaker.MakeThing(thingToAdd, gun.Stuff) : ThingMaker.MakeThing(thingToAdd);

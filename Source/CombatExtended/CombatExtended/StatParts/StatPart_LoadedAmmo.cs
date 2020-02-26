@@ -51,12 +51,14 @@ namespace CombatExtended
                 var ammoUser = req.Thing.TryGetComp<CompAmmoUser>();
                 if (ammoUser != null && ammoUser.CurrentAmmo != null)
                 {
-                    var numSingle = ammoUser.CurrentAmmo.GetStatValueAbstract(parentStat);
+                    var numSingle = ammoUser.CurrentLink.spentThingDef.thingDef.GetStatValueAbstract(parentStat);
 
-                    cartridges = numSingle * ammoUser.CurMagCount;
+                    //TODO: Consider the full contents of the AmmoUser - store contents and iterate here
+
+                    cartridges = numSingle * //ammoUser.CurMagCount;
 
                     if (Controller.settings.EnableAmmoSystem && parentStat == StatDefOf.Mass)
-                        spentCartridges = ammoUser.SpentRounds * numSingle * ammoUser.CurrentAmmo.conservedMassFactorWhenFired;
+                        spentCartridges = ammoUser.SpentRounds * numSingle;
                     else if (parentStat == CE_StatDefOf.Bulk)
                     {
                         cartridges *= ammoUser.Props.loadedAmmoBulkFactor;

@@ -80,7 +80,7 @@ namespace CombatExtended
         public static bool IsShell(ThingDef def)
         {
             var ammo = ThingDefOf.Turret_Mortar.building.turretGunDef.GetCompProperties<CompProperties_AmmoUser>();
-            return ammo?.ammoSet.ammoTypes.Any(l => l.ammo == def) ?? false;
+            return ammo?.ammoSet.ammoTypes.Any(l => l.adders.Any(x => x.thingDef == def)) ?? false;
         }
     }
 }

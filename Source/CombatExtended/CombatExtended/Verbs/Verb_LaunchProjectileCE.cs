@@ -117,9 +117,9 @@ namespace CombatExtended
         {
             get
             {
-                if (CompAmmo != null && CompAmmo.CurrentAmmo != null)
+                if (CompAmmo != null && CompAmmo.CurrentLink != null)
                 {
-                    return CompAmmo.CurAmmoProjectile;
+                    return CompAmmo.CurrentUser.projectiles.First().thingDef;
                 }
                 if (CompChangeable != null && CompChangeable.Loaded)
                 {
@@ -535,32 +535,35 @@ namespace CombatExtended
             }
             ShiftVecReport report = ShiftVecReportFor(currentTarget);
             bool pelletMechanicsOnly = false;
-            for (int i = 0; i < projectilePropsCE.pelletCount; i++)
+            foreach (var proj in CompAmmo.CurrentUser.projectiles)
             {
-                ProjectileCE projectile = (ProjectileCE)ThingMaker.MakeThing(Projectile, null);
-                GenSpawn.Spawn(projectile, shootLine.Source, caster.Map);
-                ShiftTarget(report, pelletMechanicsOnly);
+                for (int i = 0; i < ((proj.thingDef.projectile as ProjectilePropertiesCE)?.pelletCount ?? 1) * proj.count; i++)
+                {
+                    ProjectileCE projectile = (ProjectileCE)ThingMaker.MakeThing(proj.thingDef, null);
+                    GenSpawn.Spawn(projectile, shootLine.Source, caster.Map);
+                    ShiftTarget(report, pelletMechanicsOnly);
 
-                //New aiming algorithm
-                projectile.canTargetSelf = false;
+                    //New aiming algorithm
+                    projectile.canTargetSelf = false;
 
-                var targDist = (sourceLoc - currentTarget.Cell.ToIntVec2.ToVector2Shifted()).magnitude;
-                if (targDist <= 2)
-                    targDist *= 2;  // Double to account for divide by 4 in ProjectileCE minimum collision distance calculations
-                projectile.minCollisionSqr = Mathf.Pow(targDist, 2);
-                projectile.intendedTarget = currentTarget.Thing;
-                projectile.mount = caster.Position.GetThingList(caster.Map).FirstOrDefault(t => t is Pawn && t != caster);
-                projectile.AccuracyFactor = report.accuracyFactor * report.swayDegrees * ((numShotsFired + 1) * 0.75f);
-                projectile.Launch(
-                    Shooter,    //Shooter instead of caster to give turret operators' records the damage/kills obtained
-                    sourceLoc,
-                    shotAngle,
-                    shotRotation,
-                    ShotHeight,
-                    ShotSpeed,
-                    EquipmentSource
-                );
-                pelletMechanicsOnly = true;
+                    var targDist = (sourceLoc - currentTarget.Cell.ToIntVec2.ToVector2Shifted()).magnitude;
+                    if (targDist <= 2)
+                        targDist *= 2;  // Double to account for divide by 4 in ProjectileCE minimum collision distance calculations
+                    projectile.minCollisionSqr = Mathf.Pow(targDist, 2);
+                    projectile.intendedTarget = currentTarget.Thing;
+                    projectile.mount = caster.Position.GetThingList(caster.Map).FirstOrDefault(t => t is Pawn && t != caster);
+                    projectile.AccuracyFactor = report.accuracyFactor * report.swayDegrees * ((numShotsFired + 1) * 0.75f);
+                    projectile.Launch(
+                        Shooter,    //Shooter instead of caster to give turret operators' records the damage/kills obtained
+                        sourceLoc,
+                        shotAngle,
+                        shotRotation,
+                        ShotHeight,
+                        ShotSpeed,
+                        EquipmentSource
+                    );
+                    pelletMechanicsOnly = true;
+                }
             }
             pelletMechanicsOnly = false;
             numShotsFired++;

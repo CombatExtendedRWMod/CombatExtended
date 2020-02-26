@@ -52,13 +52,13 @@ namespace CombatExtended
 
             // Iterate through all possible ammo types for NPC's to find whichever is available, starting with currently selected
             Thing ammo = null;
-            var ammoTypes = turret.CompAmmo.Props.ammoSet.ammoTypes.Select(l => l.ammo).ToList();
-            var index = ammoTypes.IndexOf(turret.CompAmmo.SelectedAmmo);
+            var ammoTypes = turret.CompAmmo.SelectedLink.adders.Select(x => x.thingDef)
+                .Concat(turret.CompAmmo.Props.ammoSet.ammoTypes.Except(turret.CompAmmo.SelectedLink).SelectMany(l => l.adders.Select(x => x.thingDef)))
+                .ToList();
             for (int i = 0; i < ammoTypes.Count; i++)
             {
-                index = (index + i) % ammoTypes.Count;
                 ammo = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
-                                ThingRequest.ForDef(ammoTypes[index]),
+                                ThingRequest.ForDef(ammoTypes[i]),
                                 PathEndMode.ClosestTouch,
                                 TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn),
                                 80,
@@ -70,15 +70,14 @@ namespace CombatExtended
                 return null;
 
             // Update selected ammo if necessary
-            if (ammo.def != turret.CompAmmo.SelectedAmmo)
-                turret.CompAmmo.SelectedAmmo = ammo.def as AmmoDef;
+            var newLink = turret.CompAmmo.Props.ammoSet.Containing(ammo.def);
+            if (newLink != turret.CompAmmo.SelectedLink)
+                turret.CompAmmo.SelectedLink = newLink;
 
             // Create the actual job
             int amountNeeded = turret.CompAmmo.Props.magazineSize;
-            if (turret.CompAmmo.CurrentAmmo == turret.CompAmmo.SelectedAmmo) amountNeeded -= turret.CompAmmo.CurMagCount;
+            if (turret.CompAmmo.CurrentLink == turret.CompAmmo.SelectedLink) amountNeeded -= turret.CompAmmo.CurMagCount;
             return new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), t, ammo) { count = Mathf.Min(amountNeeded, ammo.stackCount) };
         }
-
-
     }
 }

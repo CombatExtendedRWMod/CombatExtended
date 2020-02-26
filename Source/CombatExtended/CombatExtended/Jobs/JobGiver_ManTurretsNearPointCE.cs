@@ -53,7 +53,7 @@ namespace CombatExtended
                 40f,
                 t => !t.IsForbidden(pawn) &&
                      pawn.CanReserve(t, 10, 1) &&
-                     compAmmo.Props.ammoSet.ammoTypes.Any(l => l.ammo == t.def));
+                     compAmmo.Props.ammoSet.MaxCharge(t.def) > 0);
         }
     }
 }

@@ -108,10 +108,15 @@ namespace CombatExtended
                 waitToil.actor.pather.StopDead();
                 if (compReloader.ShouldThrowMote)
                     MoteMaker.ThrowText(turret.Position.ToVector3Shifted(), turret.Map, string.Format("CE_ReloadingTurretMote".Translate(), TargetThingA.LabelCapNoCount));
-                Thing newAmmo;
-                compReloader.TryUnload(out newAmmo);
-                if (newAmmo?.CanStackWith(ammo) ?? false)
-                    pawn.carryTracker.TryStartCarry(newAmmo, Mathf.Min(newAmmo.stackCount, compReloader.Props.magazineSize - ammo.stackCount));
+                compReloader.TryUnload(out var newAmmo);
+                for (int i = 0; i < newAmmo.Count; i++)
+                {
+                    if (newAmmo[i]?.CanStackWith(ammo) ?? false)
+                    {
+                        pawn.carryTracker.TryStartCarry(newAmmo[i], Mathf.Min(newAmmo[i].stackCount, compReloader.Props.magazineSize - ammo.stackCount));
+                        break;
+                    }
+                }
             };
             waitToil.defaultCompleteMode = ToilCompleteMode.Delay;
             waitToil.defaultDuration = Mathf.CeilToInt(compReloader.Props.reloadTime.SecondsToTicks() / pawn.GetStatValue(CE_StatDefOf.ReloadSpeed));
