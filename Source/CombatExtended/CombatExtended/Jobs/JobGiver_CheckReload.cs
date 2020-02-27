@@ -118,12 +118,13 @@ namespace CombatExtended
 				tmpComp = gun.TryGetComp<CompAmmoUser>();
 
 			  //AmmoDef ammoType = tmpComp.CurrentAmmo;
-                AmmoLink ammoLink = tmpComp.CurrentLink;
                 
-				int magazineSize = tmpComp.Props.magazineSize;
+				int deficitSize = Math.Max(tmpComp.Props.magazineSize, tmpComp.Props.magazineSize - tmpComp.CurMagCount);
 
-                // Is the gun loaded with ammo not in a Loadout/HoldTracker?
-                if (tmpComp.UseAmmo && pawnHasLoadout && !TrackingSatisfied(pawn, ammoType, magazineSize))
+                // Is the gun NOT loaded with ammo in a Loadout/HoldTracker?
+                // If the gun's full mag doesn't take enough desired 
+                if (tmpComp.UseAmmo && pawnHasLoadout
+                    && tmpComp.adders.All(x => !TrackingSatisfied(pawn, x.def, tmpComp.CurrentLink.AmountToConsume(x, tmpComp, true))))
 				{
                     foreach (var thing in inventory.ammoList)
                     {
@@ -132,35 +133,49 @@ namespace CombatExtended
                         if (maxCharge == -1)
                             continue;
 
-                        var toFill = (float)magazineSize / (float)maxCharge;
+                        //var toFill = tmpComp.CurrentLink.AmountToConsume(thing, tmpComp, true);
 
-                        if (toFill > 0 && (TrackingSatisfied(pawn, thing.def, Mathf.CeilToInt(toFill)) || TrackingSatisfied(pawn, thing.def, Mathf.FloorToInt(toFill)))
+                        var toFill = (float)deficitSize / (float)maxCharge;
+
+                        if (toFill > 0 && TrackingSatisfied(pawn, thing.def, Mathf.CeilToInt(toFill))
                             && toFill < thing.stackCount || toFill < inventory.AmmoCountOfDef(thing.def as AmmoDef))
                         {
                             reloadWeapon = gun;
-                            reloadLink = tmpComp.Props.ammoSet.ammoTypes.First(x => x.adders.Contains(new ThingDefCountClass(thing.def, maxCharge)));
+                            reloadLink = tmpComp.Props.ammoSet.Containing(new ThingDefCountClass(thing.def, maxCharge));
                             return true;
                         }
                     }
 				}
 				
 				// Is the gun low on ammo?
-				if (tmpComp.CurMagCount < magazineSize)
+				if (tmpComp.CurMagCount < tmpComp.Props.magazineSize && tmpComp.CurrentLink == tmpComp.SelectedLink)
 				{
-					// Do we have enough ammo in the inventory to top it off?
-					if (!tmpComp.UseAmmo || inventory.AmmoCountOfDef(ammoType) >= (magazineSize - tmpComp.CurMagCount))
-					{
-						reloadWeapon = gun;
-						reloadAmmo = ammoType;
-						return true;
+                    if (!tmpComp.UseAmmo)
+                    {
+                        reloadWeapon = gun;
+                        reloadLink = tmpComp.CurrentLink;
+                        return true;
+                    }
+
+                    // Do we have enough ammo in the inventory to top it off?
+                    var countCharges = 0;
+                    foreach (var defCount in tmpComp.CurrentLink.adders)
+                    {
+                        countCharges += defCount.count * inventory.AmmoCountOfDef(defCount.thingDef as AmmoDef);
+
+                        if (countCharges >= deficitSize)
+                        {
+                            reloadWeapon = gun;
+                            reloadLink = tmpComp.CurrentLink;
+                            return true;
+                        }
+                    }
+                    
 					//} else {  // (ProfoundDarkness) I think the idea of this branch was that the JobGiver might initiate fetching ammo but it actually runs AFTER the one that fetches ammo for loadout.
 						// There wasn't enough in the inventory to top it off.  At this point we know the loadout is satisfied for this ammo...
 						// We could do a more strict check to see if the pawn's loadout is satisfied to pick up ammo and if not swap to another ammo...?
-					}
 				}
-			
 			}
-			
 			return false;
 		}
 		

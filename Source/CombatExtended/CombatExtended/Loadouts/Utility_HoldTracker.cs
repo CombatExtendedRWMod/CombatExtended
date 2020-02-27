@@ -291,7 +291,21 @@ namespace CombatExtended
 				storage.Add(pawn.equipment.Primary.def, new Integer(1));
 				gun = pawn.equipment.Primary.TryGetComp<CompAmmoUser>();
 				if (gun != null && gun.UseAmmo)
-					storage.Add(gun.CurrentAmmo, new Integer(gun.CurMagCount));
+                {
+                    for (int i = 0; i < gun.adders.Count; i++)
+                    {
+                        var count = gun.adders[i].stackCount - (i == 1 && gun.CurrentLink.CountFirstAdder(gun) ? 1 : 0);
+                        storage.Add(gun.adders[i].def, new Integer(count));
+                    }
+                    
+                    foreach (var spentAmmo in gun.spentAdders.Where(x => !gun.CurrentLink.IsSpentAdder(x.def)))
+                    {
+                        if (storage.ContainsKey(spentAmmo.def))
+                            storage[spentAmmo.def].value += spentAmmo.stackCount;
+                        else
+                            storage.Add(spentAmmo.def, new Integer(spentAmmo.stackCount));
+                    }
+                }
         	}
 			// get the pawn's inventory
         	foreach (Thing thing in pawn.inventory.innerContainer)
@@ -302,12 +316,24 @@ namespace CombatExtended
 				storage[thing2.def].value += thing2.stackCount;
 				gun = thing2.TryGetComp<CompAmmoUser>();
 				if (gun != null && gun.UseAmmo)
-				{
-					if (storage.ContainsKey(gun.CurrentAmmo))
-						storage[gun.CurrentAmmo].value += gun.CurMagCount;
-					else
-						storage.Add(gun.CurrentAmmo, new Integer(gun.CurMagCount));
-				}
+                {
+                    for (int i = 0; i < gun.adders.Count; i++)
+                    {
+                        var count = gun.adders[i].stackCount - (i == 1 && gun.CurrentLink.CountFirstAdder(gun) ? 1 : 0);
+                        if (storage.ContainsKey(gun.adders[i].def))
+                            storage[gun.adders[i].def].value += count;
+                        else
+                            storage.Add(gun.adders[i].def, new Integer(count));
+                    }
+                    
+                    foreach (var spentAmmo in gun.spentAdders.Where(x => !gun.CurrentLink.IsSpentAdder(x.def)))
+                    {
+                        if (storage.ContainsKey(spentAmmo.def))
+                            storage[spentAmmo.def].value += spentAmmo.stackCount;
+                        else
+                            storage.Add(spentAmmo.def, new Integer(spentAmmo.stackCount));
+                    }
+                }
 			}
         	
 			return storage;

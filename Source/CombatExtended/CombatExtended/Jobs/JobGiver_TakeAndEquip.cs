@@ -388,8 +388,7 @@ namespace CombatExtended
                 if ((priority == WorkPriority.Ammo || priority == WorkPriority.LowAmmo)
                     && primaryAmmoUserWithInventoryCheck != null)
                 {
-                    List<ThingDef> curAmmoList = (from AmmoLink g in primaryAmmoUserWithInventoryCheck.Props.ammoSet.ammoTypes
-                                                  select g.ammo as ThingDef).ToList();
+                    List<ThingDef> curAmmoList = primaryAmmoUserWithInventoryCheck.Props.ammoSet.ammoTypes.SelectMany(x => x.adders.Select(y => y.thingDef)).ToList();
 
                     if (curAmmoList.Count > 0)
                     {

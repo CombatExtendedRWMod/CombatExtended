@@ -27,12 +27,21 @@ namespace CombatExtended
 
         public AmmoLink Containing(ThingDef def)
         {
-            return ammoTypes.Where(x => x.adders.Any(y => y.thingDef == def)).FirstOrDefault();
+            return ammoTypes.Where(x => x.CanAdd(def)).FirstOrDefault();
+        }
+
+        public AmmoLink Containing(ThingDefCount defCount)
+        {
+            return ammoTypes.Where(x => x.adders.Contains(defCount)).FirstOrDefault();
         }
 
         public override void ResolveReferences()
         {
             ammoTypes.ForEach(x => {
+
+                //Assign short-hand XML constructs appropriately before checking adders etc.
+                x.ResolveReferences();
+
                 if (x.iconAdder == null)        x.iconAdder = x.adders.MaxBy(y => y.count).thingDef;
                 if (x.defaultAmmoCount == -1)   x.defaultAmmoCount = ((x.iconAdder as AmmoDef)?.defaultAmmoCount ?? 1);
                 if (x.ammoClass == null)        x.ammoClass = (x.iconAdder as AmmoDef).ammoClass;

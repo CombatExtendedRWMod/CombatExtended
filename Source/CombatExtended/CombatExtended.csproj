@@ -128,6 +128,7 @@
     <Compile Include="CombatExtended\DefOfs\CE_MentalStateDefOf.cs" />
     <Compile Include="CombatExtended\DefOfs\CE_RulePackDefOf.cs" />
     <Compile Include="CombatExtended\DefOfs\CE_TraitDefOf.cs" />
+    <Compile Include="CombatExtended\Defs\AmmoLink_MultiAmmo.cs" />
     <Compile Include="CombatExtended\Defs\AmmoLink.cs" />
     <Compile Include="CombatExtended\ArmorUtilityCE.cs" />
     <Compile Include="CombatExtended\Comps\HediffCompProperties_InfecterCE.cs" />

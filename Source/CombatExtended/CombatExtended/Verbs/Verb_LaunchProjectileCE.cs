@@ -117,9 +117,9 @@ namespace CombatExtended
         {
             get
             {
-                if (CompAmmo != null && CompAmmo.CurrentLink != null)
+                if (CompAmmo != null && CompAmmo.CurrentUser != null)
                 {
-                    return CompAmmo.CurrentUser.projectiles.First().thingDef;
+                    return CompAmmo.MainProjectile;
                 }
                 if (CompChangeable != null && CompChangeable.Loaded)
                 {

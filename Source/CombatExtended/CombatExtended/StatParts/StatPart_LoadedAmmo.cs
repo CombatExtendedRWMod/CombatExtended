@@ -46,25 +46,38 @@ namespace CombatExtended
             spentCartridges = 0f;
             magazine = 0f;
             
-            if (req.HasThing)
+            if (Controller.settings.EnableAmmoSystem && req.HasThing)
             {
+                // Consider the full contents of the AmmoUser
                 var ammoUser = req.Thing.TryGetComp<CompAmmoUser>();
-                if (ammoUser != null && ammoUser.CurrentAmmo != null)
+                if (ammoUser != null && ammoUser.CurrentLink != null && ammoUser.CurrentAdder != null)
                 {
-                    var numSingle = ammoUser.CurrentLink.spentThingDef.thingDef.GetStatValueAbstract(parentStat);
+                    //Add currently loaded cartridge (more complex)
+                  //var isSpentAdder = ammoUser.CurrentLink.IsSpentAdder(ammoUser.CurrentAdder.def);
 
-                    //TODO: Consider the full contents of the AmmoUser - store contents and iterate here
-
-                    cartridges = numSingle * //ammoUser.CurMagCount;
-
-                    if (Controller.settings.EnableAmmoSystem && parentStat == StatDefOf.Mass)
-                        spentCartridges = ammoUser.SpentRounds * numSingle;
-                    else if (parentStat == CE_StatDefOf.Bulk)
+                    for (int i = 0; i < ammoUser.adders.Count; i++)
+                    {
+                        cartridges += ammoUser.adders[i].GetStatValue(parentStat) *
+                            (float)(ammoUser.adders[i].stackCount);
+                    }
+                    
+                    //Magazine bulk and/or bulkFactor on the gun
+                    if (parentStat == CE_StatDefOf.Bulk)
                     {
                         cartridges *= ammoUser.Props.loadedAmmoBulkFactor;
 
                         if (ammoUser.HasMagazine && ammoUser.CurMagCount > 0)
                             magazine = ammoUser.Props.magazineBulk;
+                    }
+
+                    //Add all spent cartridges
+                    for (int i = 0; i < ammoUser.spentAdders.Count; i++)
+                    {
+                        cartridges += ammoUser.spentAdders[i].GetStatValue(parentStat) *
+                            (float)(ammoUser.spentAdders[i].stackCount)
+                            * ((parentStat == StatDefOf.Mass && ammoUser.CurrentLink.IsSpentAdder(ammoUser.spentAdders[i].def))
+                                ? (ammoUser.spentAdders[i].def as AmmoDef)?.conservedMassFactorWhenFired ?? 1f
+                                : 1f);
                     }
                 }
             }

@@ -3,21 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Reflection;
 using RimWorld;
 using Verse;
 using UnityEngine;
 
 namespace CombatExtended
 {
-    public class ChargeAdder
-    {
-        public ThingDefCountClass ammo;
-
-        //Normally:
-        //<Ammo>chargesAdded</Ammo>
-        //Add fallback for <Ammo Added="chargesAdded"/>
-    }
-
     public class ChargeUser
     {
         //Same format as explosive comp fragments -- ALTHOUGH THINGDEFCOUNT IS ENOUGH?
@@ -100,25 +92,18 @@ namespace CombatExtended
         public List<ThingDefCountClass> adders;
         public List<ChargeUser> users;
 
-        public bool allowMagsizeChange = true;
-        public bool autogenerateFallbackUser = true;
         /// <summary>Whether there is a adder.ammo.count / CurMagCount chance (0f to 1f) chance to recover the smallest available adder on backlog</summary>
         public bool chanceToRecoverBacklog = true;
         /// <summary>Whether a many-charge ammo thingDef can be unloaded in-full, displaying an underflow of charge in the weapon</summary>
         public bool allowUnderflow = false;
         /// <summary>Whether a many-charge ammo thingDef can be loaded in-full, displaying an overflow of charge in the weapon</summary>
         public bool allowOverflow = false;
+        /// <summary>Whether overflow wastes charges</summary>
+        public bool wastefulOverflow = false;
         /// <summary>Whether the index of the charge adder and that of the charge user it creates are the same - useful for e.g catapults</summary>
         public bool directAdderUserLinkage = false;
-
-        /// <summary>ThingDef spawned for every SpentRounds charge</summary>
-        public ThingDefCountClass spentThingDef;
-        /// <summary>ThingDef spawned for charges not otherwise unloadable</summary>
-        public ThingDefCountClass fallbackThingDef;
         
         public ThingDef iconAdder;
-        public ThingDef physicsProjectile;
-
         public AmmoCategoryDef ammoClass;
         public int defaultAmmoCount = -1;
         public string labelCap;
@@ -129,22 +114,6 @@ namespace CombatExtended
       //ThingDef _projectile;
       
         #region Methods
-        public bool SuggestMagSize(int currentMagSize, out int newMagSize)
-        {
-            if (!allowMagsizeChange)
-            {
-                newMagSize = currentMagSize;
-                return false;
-            }
-
-            //Find all X, Y
-
-            //TODO: Calculate new size based on X, Y
-
-            newMagSize = currentMagSize;
-            return true;
-        }
-
         /*
         public AmmoLink() { }
 
@@ -156,16 +125,16 @@ namespace CombatExtended
 
         public virtual bool CanAdd(ThingDef def)
         {
-            return adders.Any(x => x.thingDef == def);
+            return def == adders.First().thingDef;
         }
 
-        /// <summary>Returns </summary>
+        /// <summary>Can the item be added to this ammoLink, and how many charges does it add</summary>
         /// <param name="def"></param>
         /// <param name="adder">ThingDef and amount of charges added by that def</param>
         /// <returns></returns>
         public virtual bool CanAdd(ThingDef def, out int chargesPerUnit)
         {
-            chargesPerUnit = adders.First(x => x.thingDef == def)?.count ?? -1;
+            chargesPerUnit = CanAdd(def) ? adders.First().count : -1;
             return chargesPerUnit != -1;
         }
 
@@ -180,7 +149,34 @@ namespace CombatExtended
             defCount = null;
             return false;
         }
-        
+
+        public virtual int AmountForDeficit(Thing thing, int chargeDeficit, bool forLoading = false)
+        {
+            if (CanAdd(thing.def, out int chargesPerUnit))
+            {
+                //Consider maximum loaded and maximum provided
+                //3. Allow an overflow
+                return Math.Min(thing.stackCount, (forLoading || allowOverflow || wastefulOverflow)
+                    ? Mathf.CeilToInt(chargeDeficit / (float)chargesPerUnit)
+                    : Mathf.FloorToInt(chargeDeficit / (float)chargesPerUnit));
+            }
+
+            return 0;
+        }
+
+        public virtual int AmountToConsume(Thing thing, CompAmmoUser user, bool ignoreLoadedCharge = false)
+        {
+            var magSize = Math.Max(1, user.Props.magazineSize);
+            if (thing != null && user.CurMagCount < magSize)
+            {
+                return AmountForDeficit(thing, (!ignoreLoadedCharge || user.CurMagCount < 0)
+                    ? magSize - user.CurMagCount
+                    : magSize);
+            }
+
+            return 0;
+        }
+
         /*
         public virtual IEnumerable<Thing> BestFullMagazine(List<Thing> things, CompAmmoUser user)
         {
@@ -197,56 +193,31 @@ namespace CombatExtended
         /// </summary>
         /// <param name="things">A collection of Things, e.g from the inventory</param>
         /// <param name="user"></param>
+        /// <param name="chargeCount">The amount of charges added per instance of adder consumed</param>
         /// <param name="defCount">The amount of charges associated with the returned Thing</param>
         /// <returns></returns>
-        public Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false)
+        public virtual Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false)
         {
-            if (user.CurMagCount < user.Props.magazineSize)
+            var adder = adders.FirstOrDefault();
+            if (adder != null)
             {
-                // From the largest to the smallest possible adder ..
-                foreach (var dc in allowOverflow
-                    ? adders.OrderByDescending(x => x.count)
-                    : adders.Where(x => user.CurMagCount + x.count <= user.Props.magazineSize).OrderByDescending(x => x.count))
+                var thing = things.FirstOrDefault(x => x.def == adder.thingDef);
+
+                if (thing != null)
                 {
-                    // .. test if it's in things and take the smallest (or largest with maxStackSize = true) stack of it
-                    var test = things.Where(x => x.def == dc.thingDef).MaxByWithFallback(x => (maxStackSize ? 1 : -1) * x.stackCount);
-                    if (test != null)
-                    {
-                        chargeCount = dc.count;
-                        return test;
-                    }
+                    chargeCount = adder.count;
+                    return thing;
                 }
             }
-            else
-                Log.Error("AmmoLink.ReloadNext called with CurMagCount == Props.magazineSize");
-
             chargeCount = 0;
             return null;
         }
         
-        public ChargeUser BestUser(CompAmmoUser user)
+        public virtual ChargeUser BestUser(CompAmmoUser user)
         {
-            if (user.CurMagCount > 0)
-            {
-                //1. Fire a shot as long as there's at least one charge remaining
-                var availableUsers = users.Where(x => x.chargesUsed <= user.CurMagCount);
-
-                if (availableUsers != null)
-                {
-                    return availableUsers.MaxByWithFallback(y => y.chargesUsed);
-                }
-
-                //4. Allow for an underflow of rounds, which has to be replenished with newly loaded ammo
-                if (allowUnderflow)
-                {
-                    return users.Where(x => x.chargesUsed > user.CurMagCount)?.MinBy(y => y.chargesUsed) ?? null;
-                }
-
-                //3. Somehow linearly decreasing projectile stats with lower ammo amounts, e.g cutting pelletCount or damage or AP, or speed.
-                //2. Having an option with the current X and different Y which does have X / Y integer as fallback, handling a tiered decrease in projectile properties.
-            }
-
-            return null;
+            return (!user.HasMagazine || user.CurMagCount > 0)
+                ? users.First()
+                : null;
         }
 
         /// <summary>
@@ -254,46 +225,103 @@ namespace CombatExtended
         /// </summary>
         /// <param name="defCount">Amount of thingDef used during reload</param>
         /// <returns>Charges loaded with this reload</returns>
-        public int ReloadNext(List<Thing> things, CompAmmoUser user, out ThingDefCount defCount, bool maxStackSize = false)
+        public virtual int ReloadNext(List<Thing> things, CompAmmoUser user, out ThingDefCount defCount, bool maxStackSize = false)
         {
-            if (user.CurMagCount < user.Props.magazineSize)
-            {
-                var thing = BestAdder(things, user, out var chargePerThing, maxStackSize);
-
-                //3. Allow an overflow
-                var amountUsed = user.Props.reloadOneAtATime ? 1
-                    : Math.Min(thing.stackCount, allowOverflow
-                        ? Mathf.CeilToInt((float)(user.Props.magazineSize - user.CurMagCount) / (float)chargePerThing)
-                        : Mathf.FloorToInt((float)(user.Props.magazineSize - user.CurMagCount) / (float)chargePerThing));
-
-                defCount = new ThingDefCount(thing.def, amountUsed);
-                return amountUsed * chargePerThing;
-            }
-            else
-                Log.Error("AmmoLink.ReloadNext called with CurMagCount >= Props.magazineSize");
-
-            defCount = null;
-            return 0;
+            var thing = BestAdder(things, user, out var chargePerThing, maxStackSize);
+            var chargesAdded = LoadThing(thing, user, out int amountUsed);
+            defCount = new ThingDefCount(thing.def, amountUsed);
+            return chargesAdded;
         }
 
-        public int UnloadNext(CompAmmoUser user, out ThingDefCount defCount)
+        public virtual int LoadThing(Thing thing, CompAmmoUser user, out int amountUsed)
         {
-            //Start off unloading spent rounds
-            if (user.SpentRounds > 1)
-            {
-                defCount = spentThingDef != null
-                    ? new ThingDefCount(spentThingDef.thingDef, Mathf.FloorToInt((float)user.SpentRounds / (float)spentThingDef.count))
-                    : null;
+            amountUsed = AmountToConsume(thing, user);
 
-                user.SpentRounds = 0;
-                return 0;
+            if (amountUsed > 0)
+            {
+                if (user.Props.reloadOneAtATime || !user.HasMagazine)
+                    amountUsed = 1;
+
+                var chargesAdded = amountUsed * adders.Find(x => x.thingDef == thing.def).count;
+                var magSize = Math.Max(1, user.Props.magazineSize);
+
+                //1. Allow a wasteful overflow
+                if (wastefulOverflow && chargesAdded + user.CurMagCount > magSize)
+                    chargesAdded = magSize;
+
+                return chargesAdded;
             }
 
+            amountUsed = 0;
+            return 0;
+        }
+        
+        public virtual Thing UnloadAdder(Thing thing, CompAmmoUser user, out int deficit, ref bool isSpent)
+        {
+            deficit = user.currentAdderCharge;
+
+            if (thing.stackCount <= 0 || user.DiscardRounds)
+                return null;
+
+            if (!isSpent)
+            {
+                //For some reason isn't loadable.. just used to get charges per unit (cpu)
+                if (!CanAdd(thing.def, out int cpu))
+                    return null;
+
+                //4. Create a fallback ThingDef for X = 1 or appropriate value, which backlog charges are converted to
+                //TODO?
+
+                //3. Give a chance to recover a full X cartridge depending on the discrepancy between X and charge
+                //5. If underflow is allowed, use that
+                if (deficit == cpu || allowUnderflow || (chanceToRecoverBacklog && Rand.Value < deficit / cpu))
+                {
+                    if (allowUnderflow && user.CurMagCount - deficit == 0)
+                        deficit = cpu;
+
+                    return thing;
+                }
+            }
+
+            isSpent = true;
+
+            // [XX 2. XX] NOT USED Convert non-X charge count to fallback ThingDefs - no partially spent rounds allowed
+
+            if (IsSpentAdder(thing.def))
+                return thing;
+            else
+            {
+                var spentThing = ThingMaker.MakeThing((user.CurrentAdder.def as AmmoDef)?.spentThingDef) ?? null;
+                if (spentThing != null)
+                    spentThing.stackCount = thing.stackCount;
+                return spentThing;
+            }
+        }
+
+        public virtual bool CountFirstAdder(CompAmmoUser user)
+        {
+            return user.currentAdderCharge == adders.First(x => x.thingDef == user.CurrentAdder.def).count;
+        }
+
+        /// <summary>
+        /// Whether the current def can be ignored for thingdef spawning reasons
+        /// </summary>
+        /// <param name="def"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public virtual bool IsSpentAdder(ThingDef def)
+        {
+            return (CanAdd(def)
+                && (def as AmmoDef).spentThingDef == null
+                && (def as AmmoDef).conservedMassFactorWhenFired > 0f);
+        }
+
+        public virtual int UnloadNext(CompAmmoUser user, out ThingDefCount defCount)
+        {
             if (user.CurMagCount > 0)
             {
                 var availableAdders = adders.Where(x => x.count <= user.CurMagCount);
 
-                //4. Create a fallback ThingDef for X = 1 or appropriate value, which backlog charges are converted to
                 if (availableAdders != null)
                 {
                     var most = availableAdders.MaxBy(x => x.count);
@@ -304,37 +332,6 @@ namespace CombatExtended
                     defCount = new ThingDefCount(most.thingDef, addersRemoved);
                     return addersRemoved * most.count;
                 }
-
-                //---- ----  ----   ----    ----
-                // UNSOLVED UNLOADING BACKLOG - All adders have charge counts larger than currently stored charge count
-                //---- ----  ----   ----    ----
-
-                //3. Give a chance to recover a full X cartridge depending on the discrepancy between X and charge
-                //5. If underflow is allowed, use that
-                if (allowUnderflow || chanceToRecoverBacklog)
-                {
-                    //There is no adder with count == 1
-                    //CurMagCount is smaller than the smallest count
-
-                    //Find smallest count thingDef
-                    var least = adders.MinBy(x => x.count);
-
-                    //Create smallest count thingDef with count 1 with a (count / CurMagCount) chance
-                    if (allowUnderflow || Rand.Value < (float)least.count / (float)user.CurMagCount)
-                    {
-                        //Remove the smallest count (return). Underflow is handled by AmmoUser
-                        defCount = new ThingDefCount(least.thingDef, 1);
-                        return allowUnderflow ? least.count : user.CurMagCount;
-                    }
-                }
-
-                //2. Convert non-X charge count to fallback ThingDefs (set by a new XML tag) - no partially spent rounds allowed
-                if (fallbackThingDef != null)
-                {
-                    defCount = new ThingDefCount(fallbackThingDef.thingDef, 1);
-                    return allowUnderflow ? fallbackThingDef.count : user.CurMagCount;
-                }
-
             }
             else
                 Log.Error("AmmoLink.UnloadNext called with CurMagCount == 0");
@@ -343,19 +340,47 @@ namespace CombatExtended
             defCount = null;
             return user.CurMagCount;
         }
+        #endregion
+
+        #region XML-related
+        ThingDef _ammo;
+        ThingDef _projectile;
+        int _ammoCharge = 1;
+        int _projCharge = 1;
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             if (xmlRoot.ChildNodes.Count == 1)
             {
-              //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "_ammo", xmlRoot.Name);
-              //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "_projectile", (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("_ammo", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Name);
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("_projectile", BindingFlags.NonPublic | BindingFlags.Instance), (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
 
-                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("adders"), xmlRoot.Name);
-                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("users"), (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
-                
-              //if (xmlRoot.Attributes["Amount"] != null)
-              //    amount = (int)ParseHelper.FromString(xmlRoot.Attributes["Amount"].Value, typeof(int));
+                //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("adders"), xmlRoot.Name);
+                //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("users"), (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
+
+                if (xmlRoot.Attributes["AmmoCharge"] != null)
+                    _ammoCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["AmmoCharge"].Value, typeof(int));
+
+                if (xmlRoot.Attributes["ProjCharge"] != null)
+                    _projCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["ProjCharge"].Value, typeof(int));
+            }
+        }
+
+        public virtual void ResolveReferences()
+        {
+            if (_ammo != null && adders.NullOrEmpty())
+            {
+                adders = new List<ThingDefCountClass>();
+                adders.Add(new ThingDefCountClass(_ammo, _ammoCharge));
+            }
+
+            if (_projectile != null && users.NullOrEmpty())
+            {
+                var projList = new List<ThingDefCountClass>();
+                projList.Add(new ThingDefCount(_projectile, 1));
+
+                users = new List<ChargeUser>();
+                users.Add(new ChargeUser() { chargesUsed = _projCharge, projectiles = projList });
             }
         }
         #endregion
