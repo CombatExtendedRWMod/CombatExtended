@@ -52,9 +52,9 @@ namespace CombatExtended
 
             // Iterate through all possible ammo types for NPC's to find whichever is available, starting with currently selected
             Thing ammo = null;
-            var ammoTypes = turret.CompAmmo.SelectedLink.adders.Select(x => x.thingDef)
-                .Concat(turret.CompAmmo.Props.ammoSet.ammoTypes.Except(turret.CompAmmo.SelectedLink).SelectMany(l => l.adders.Select(x => x.thingDef)))
-                .ToList();
+            var ammoTypes = turret.CompAmmo.SelectedLink.AllAdders()
+                .Concat(turret.CompAmmo.Props.ammoSet.ammoTypes.Except(turret.CompAmmo.SelectedLink).SelectMany(l => l.AllAdders()))
+                .Distinct().ToList();
             for (int i = 0; i < ammoTypes.Count; i++)
             {
                 ammo = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
@@ -76,7 +76,7 @@ namespace CombatExtended
 
             // Create the actual job
             int amountNeeded = turret.CompAmmo.Props.magazineSize;
-            if (turret.CompAmmo.CurrentLink == turret.CompAmmo.SelectedLink) amountNeeded -= turret.CompAmmo.CurMagCount;
+            if (turret.CompAmmo.LinksMatch) amountNeeded -= turret.CompAmmo.CurMagCount;
             return new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), t, ammo) { count = Mathf.Min(amountNeeded, ammo.stackCount) };
         }
     }

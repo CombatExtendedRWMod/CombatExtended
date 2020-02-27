@@ -122,15 +122,15 @@ namespace CombatExtended
 				int deficitSize = Math.Max(tmpComp.Props.magazineSize, tmpComp.Props.magazineSize - tmpComp.CurMagCount);
 
                 // Is the gun NOT loaded with ammo in a Loadout/HoldTracker?
-                // If the gun's full mag doesn't take enough desired 
                 if (tmpComp.UseAmmo && pawnHasLoadout
                     && tmpComp.adders.All(x => !TrackingSatisfied(pawn, x.def, tmpComp.CurrentLink.AmountToConsume(x, tmpComp, true))))
 				{
                     foreach (var thing in inventory.ammoList)
                     {
+
                         var maxCharge = tmpComp.Props.ammoSet.MaxCharge(thing.def);
 
-                        if (maxCharge == -1)
+                        if (maxCharge <= 0)
                             continue;
 
                         //var toFill = tmpComp.CurrentLink.AmountToConsume(thing, tmpComp, true);
@@ -138,7 +138,7 @@ namespace CombatExtended
                         var toFill = (float)deficitSize / (float)maxCharge;
 
                         if (toFill > 0 && TrackingSatisfied(pawn, thing.def, Mathf.CeilToInt(toFill))
-                            && toFill < thing.stackCount || toFill < inventory.AmmoCountOfDef(thing.def as AmmoDef))
+                            && toFill < inventory.AmmoCountOfDef(thing.def as AmmoDef))
                         {
                             reloadWeapon = gun;
                             reloadLink = tmpComp.Props.ammoSet.Containing(new ThingDefCountClass(thing.def, maxCharge));
@@ -148,26 +148,28 @@ namespace CombatExtended
 				}
 				
 				// Is the gun low on ammo?
-				if (tmpComp.CurMagCount < tmpComp.Props.magazineSize && tmpComp.CurrentLink == tmpComp.SelectedLink)
+				if (tmpComp.CurMagCount < tmpComp.Props.magazineSize)
 				{
                     if (!tmpComp.UseAmmo)
                     {
                         reloadWeapon = gun;
-                        reloadLink = tmpComp.CurrentLink;
+                        reloadLink = tmpComp.SelectedLink;
                         return true;
                     }
-
-                    // Do we have enough ammo in the inventory to top it off?
-                    var countCharges = 0;
-                    foreach (var defCount in tmpComp.CurrentLink.adders)
+                    else if (tmpComp.LinksMatch)
                     {
-                        countCharges += defCount.count * inventory.AmmoCountOfDef(defCount.thingDef as AmmoDef);
-
-                        if (countCharges >= deficitSize)
+                        // Do we have enough ammo in the inventory to top it off?
+                        var countCharges = 0;
+                        foreach (var defCount in tmpComp.CurrentLink.adders)
                         {
-                            reloadWeapon = gun;
-                            reloadLink = tmpComp.CurrentLink;
-                            return true;
+                            countCharges += defCount.count * inventory.AmmoCountOfDef(defCount.thingDef as AmmoDef);
+
+                            if (countCharges >= deficitSize)
+                            {
+                                reloadWeapon = gun;
+                                reloadLink = tmpComp.CurrentLink;
+                                return true;
+                            }
                         }
                     }
                     

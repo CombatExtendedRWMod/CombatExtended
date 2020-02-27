@@ -166,7 +166,7 @@ namespace CombatExtended
                 return (mannableComp == null || !mannableComp.MannedNow)
                     && CompAmmo != null
                     && CompAmmo.HasMagazine
-                    && (CompAmmo.CurMagCount < CompAmmo.Props.magazineSize || CompAmmo.SelectedLink != CompAmmo.CurrentLink);
+                    && (CompAmmo.CurMagCount < CompAmmo.Props.magazineSize || !CompAmmo.LinksMatch);
             }
         }
         public bool AllowAutomaticReload
@@ -572,7 +572,7 @@ namespace CombatExtended
             }
             */
 
-            if ((!mannableComp?.MannedNow ?? true) || (CompAmmo.CurrentLink == CompAmmo.SelectedLink && CompAmmo.CurMagCount == CompAmmo.Props.magazineSize)) return;
+            if ((!mannableComp?.MannedNow ?? true) || (CompAmmo.LinksMatch && CompAmmo.CurMagCount >= CompAmmo.Props.magazineSize)) return;
             Job reloadJob = null;
             if (CompAmmo.UseAmmo)
             {
@@ -583,7 +583,7 @@ namespace CombatExtended
                     {
                         Thing droppedAmmo;
                         int chargeAmt = CompAmmo.Props.magazineSize;
-                        if (CompAmmo.CurrentLink == CompAmmo.SelectedLink) chargeAmt -= CompAmmo.CurMagCount;
+                        if (CompAmmo.LinksMatch) chargeAmt -= CompAmmo.CurMagCount;
 
                         if (!CompAmmo.SelectedLink.CanAdd(ammo.def, out var cpu))
                             Log.Error("TryFindAmmoInInventory returned ammo which is unusable within Building_TurretGunCE.TryOrderReload based on SelectedLink.CanAdd(ThingDef, out int)");

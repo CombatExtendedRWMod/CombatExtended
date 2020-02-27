@@ -12,13 +12,16 @@ namespace CombatExtended
     {
         public List<AmmoLink> ammoTypes;
 
-        public Dictionary<ThingDef, int> maxChargeAdded = new Dictionary<ThingDef, int>();
+        public Dictionary<ThingDef, int> maxChargeAdded;
 
         public int MaxCharge(ThingDef def)
         {
-            if (!maxChargeAdded.ContainsKey(def))
+            if (maxChargeAdded == null)
+                maxChargeAdded = new Dictionary<ThingDef, int>();
+
+            if (!maxChargeAdded.ContainsKey(def) || maxChargeAdded[def] == -2)
             {
-                var ammo = ammoTypes.SelectMany(x => x.adders).Where(x => x.thingDef == def);
+                var ammo = ammoTypes.SelectMany(x => x.adders)?.Where(x => x.thingDef == def) ?? null;
                 maxChargeAdded.Add(def, ammo?.MaxBy(x => x.count).count ?? -1);
             }
 
@@ -50,8 +53,20 @@ namespace CombatExtended
                     x.labelCap = x.ammoClass.LabelCap;
                     x.labelCapShort = x.ammoClass.LabelCapShort;
                 }
-
+                
             });
+        }
+
+        public override IEnumerable<string> ConfigErrors()
+        {
+            foreach (var err in base.ConfigErrors())
+                yield return err;
+
+            for (int i = 0; i < ammoTypes.Count; i++)
+            {
+                foreach (var err in ammoTypes[i].ConfigErrors())
+                    yield return "for type with index "+i+", " + err;
+            }
         }
     }
 }

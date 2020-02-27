@@ -53,7 +53,7 @@ namespace CombatExtended
                     Find.WindowStack.Add(MakeAmmoMenu());
                 }
             }
-            else if (compAmmo.SelectedLink != compAmmo.CurrentLink || compAmmo.CurMagCount < compAmmo.Props.magazineSize)
+            else if (!compAmmo.LinksMatch || compAmmo.CurMagCount < compAmmo.Props.magazineSize)
             {
                 base.ProcessInput(ev);
             }

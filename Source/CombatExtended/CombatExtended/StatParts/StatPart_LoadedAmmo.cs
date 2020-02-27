@@ -50,7 +50,7 @@ namespace CombatExtended
             {
                 // Consider the full contents of the AmmoUser
                 var ammoUser = req.Thing.TryGetComp<CompAmmoUser>();
-                if (ammoUser != null && ammoUser.CurrentLink != null && ammoUser.CurrentAdder != null)
+                if (ammoUser != null && ammoUser.CurrentAdder != null)
                 {
                     //Add currently loaded cartridge (more complex)
                   //var isSpentAdder = ammoUser.CurrentLink.IsSpentAdder(ammoUser.CurrentAdder.def);

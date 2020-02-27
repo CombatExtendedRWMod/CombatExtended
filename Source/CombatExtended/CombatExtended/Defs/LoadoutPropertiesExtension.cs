@@ -159,11 +159,15 @@ namespace CombatExtended
             }
             // Determine ammo
             //Running out of options. alwaysHaulable does exist in xml.
-            IEnumerable<AmmoDef> availableAmmo = compAmmo.Props.ammoSet.ammoTypes
-                .SelectMany(x => x.adders.Select(y => y.thingDef as AmmoDef))
+            IEnumerable<ThingDef> availableAmmo = compAmmo.Props.ammoSet.ammoTypes
+                .SelectMany(x => x.AllAdders())
                 .Where(y => y.alwaysHaulable && y.generateAllowChance > 0f);
             
-            AmmoDef ammoToLoad = availableAmmo.RandomElementByWeight(a => a.generateAllowChance);
+            var ammoToLoad = availableAmmo.RandomElementByWeight(a => a.generateAllowChance);
+
+            if (ammoToLoad == null)
+                Log.Error("Combat Extended :: LoadoutPropertiesExtension.LoadWeaponWithRandomAmmo failed to find ammo with generateAllowChance > 0 for "+gun.LabelCap+" (thingDef = "+gun.def.defName+", ammoSetDef = "+compAmmo.Props.ammoSet.defName+")");
+
             compAmmo.ResetAmmoCount(ammoToLoad);
         }
 
@@ -187,7 +191,7 @@ namespace CombatExtended
             else
             {
                 // Generate currently loaded ammo
-                thingToAdd = compAmmo.CurrentLink.iconAdder;
+                thingToAdd = compAmmo.CurrentAdder?.def ?? compAmmo.CurrentLink.iconAdder;
                 unitCount = Mathf.Max(1, compAmmo.Props.magazineSize);  // Guns use full magazines as units
             }
             var ammoThing = thingToAdd.MadeFromStuff ? ThingMaker.MakeThing(thingToAdd, gun.Stuff) : ThingMaker.MakeThing(thingToAdd);

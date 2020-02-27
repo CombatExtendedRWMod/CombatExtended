@@ -259,7 +259,7 @@ namespace CombatExtended
                 {
                     Thing WrongammoThing = null;
                     WrongammoThing = primaryAmmoUser != null
-                        ? inventory.ammoList.Find(thing => primaryAmmoUser.Props.ammoSet.MaxCharge(thing.def) == -1)
+                        ? inventory.ammoList.Find(thing => primaryAmmoUser.Props.ammoSet.MaxCharge(thing.def) < 1)
                         : inventory.ammoList.RandomElement<Thing>();
 
                     if (WrongammoThing != null)
@@ -357,7 +357,7 @@ namespace CombatExtended
                                     if (thingAmmoList.Any() && user.Props.ammoSet.ammoTypes.Any(x => x.adders.Any()))
                                     {
                                         int desiredStackSize = user.Props.magazineSize * 2;
-                                        if (thingAmmoList.Any(x => user.Props.ammoSet.MaxCharge(x.def) != -1 && x.stackCount > desiredStackSize))
+                                        if (thingAmmoList.Any(x => user.Props.ammoSet.MaxCharge(x.def) > 0 && user.Props.ammoSet.MaxCharge(x.def) * x.stackCount > desiredStackSize))
                                         {
                                             int numToThing = 0;
                                             if (inventory.CanFitInInventory(thing, out numToThing))
@@ -388,7 +388,7 @@ namespace CombatExtended
                 if ((priority == WorkPriority.Ammo || priority == WorkPriority.LowAmmo)
                     && primaryAmmoUserWithInventoryCheck != null)
                 {
-                    List<ThingDef> curAmmoList = primaryAmmoUserWithInventoryCheck.Props.ammoSet.ammoTypes.SelectMany(x => x.adders.Select(y => y.thingDef)).ToList();
+                    List<ThingDef> curAmmoList = primaryAmmoUserWithInventoryCheck.Props.ammoSet.ammoTypes.SelectMany(x => x.AllAdders()).ToList();
 
                     if (curAmmoList.Count > 0)
                     {

@@ -80,6 +80,7 @@ namespace CombatExtended
         public static bool IsShell(ThingDef def)
         {
             var ammo = ThingDefOf.Turret_Mortar.building.turretGunDef.GetCompProperties<CompProperties_AmmoUser>();
+            //return ammo?.ammoSet.MaxCharge(def) != -1;    CANNOT be used because MaxCharge is not always possible to be initiated on startup
             return ammo?.ammoSet.ammoTypes.Any(l => l.adders.Any(x => x.thingDef == def)) ?? false;
         }
     }

@@ -123,9 +123,14 @@ namespace CombatExtended
             this.projectile = projectile;
         }*/
 
+        public virtual IEnumerable<ThingDef> AllAdders()
+        {
+            yield return iconAdder;
+        }
+
         public virtual bool CanAdd(ThingDef def)
         {
-            return def == adders.First().thingDef;
+            return def == iconAdder;
         }
 
         /// <summary>Can the item be added to this ammoLink, and how many charges does it add</summary>
@@ -138,30 +143,27 @@ namespace CombatExtended
             return chargesPerUnit != -1;
         }
 
-        public virtual bool CanAdd(Thing thing, CompAmmoUser user, out ThingDefCount defCount)
+        public virtual int AmountForDeficit(ThingDef def, int chargeDeficit, bool forLoading = false)
         {
-            if (CanAdd(thing.def, out var count)
-                && (allowOverflow || user.CurMagCount + count <= user.Props.magazineSize))
+            if (CanAdd(def, out int chargesPerUnit))
             {
-                defCount = new ThingDefCount(thing.def, count);
-                return true;
+                //Consider maximum loaded and maximum provided
+                //3. Allow an overflow
+                return (forLoading || allowOverflow || wastefulOverflow)
+                    ? Mathf.CeilToInt(chargeDeficit / (float)chargesPerUnit)
+                    : Mathf.FloorToInt(chargeDeficit / (float)chargesPerUnit);
             }
-            defCount = null;
-            return false;
+
+            return 0;
         }
 
         public virtual int AmountForDeficit(Thing thing, int chargeDeficit, bool forLoading = false)
         {
-            if (CanAdd(thing.def, out int chargesPerUnit))
-            {
-                //Consider maximum loaded and maximum provided
-                //3. Allow an overflow
-                return Math.Min(thing.stackCount, (forLoading || allowOverflow || wastefulOverflow)
-                    ? Mathf.CeilToInt(chargeDeficit / (float)chargesPerUnit)
-                    : Mathf.FloorToInt(chargeDeficit / (float)chargesPerUnit));
-            }
+            var val = AmountForDeficit(thing.def, chargeDeficit, forLoading);
+            if (val > 0)
+                val = Math.Min(thing.stackCount, val);
 
-            return 0;
+            return val;
         }
 
         public virtual int AmountToConsume(Thing thing, CompAmmoUser user, bool ignoreLoadedCharge = false)
@@ -220,6 +222,7 @@ namespace CombatExtended
                 : null;
         }
 
+        /*
         /// <summary>
         /// Reload the gun once - e.g, load with as many, as large as possible pieces of ammo
         /// </summary>
@@ -231,7 +234,7 @@ namespace CombatExtended
             var chargesAdded = LoadThing(thing, user, out int amountUsed);
             defCount = new ThingDefCount(thing.def, amountUsed);
             return chargesAdded;
-        }
+        }*/
 
         public virtual int LoadThing(Thing thing, CompAmmoUser user, out int amountUsed)
         {
@@ -251,8 +254,7 @@ namespace CombatExtended
 
                 return chargesAdded;
             }
-
-            amountUsed = 0;
+            
             return 0;
         }
         
@@ -382,6 +384,12 @@ namespace CombatExtended
                 users = new List<ChargeUser>();
                 users.Add(new ChargeUser() { chargesUsed = _projCharge, projectiles = projList });
             }
+        }
+
+        public virtual IEnumerable<string> ConfigErrors()
+        {
+            if (adders.Count > 1 || users.Count > 1)
+                yield return "current AmmoLink class does not support multiple adders and/or users, please use AmmoLink_MultiAmmo";
         }
         #endregion
 
