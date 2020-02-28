@@ -179,8 +179,11 @@ namespace CombatExtended
             //Reduce ammunition
             if (CompAmmo != null)
             {
-                if (!CompAmmo.TryReduceAmmoCount())
+                latestProjectileFired = false;
+                CompAmmo.latestUser = CompAmmo.CurrentUser;
+                if (!CompAmmo.TryFire())
                 {
+                    latestProjectileFired = true;
                     return false;
                 }
             }
@@ -222,10 +225,13 @@ namespace CombatExtended
                             }
                         }
                     }
+                    latestProjectileFired = true;
                     return CompAmmo.Notify_PostShotFired();
                 }
+                latestProjectileFired = true;
                 return true;
             }
+            latestProjectileFired = true;
             return false;
         }
         #endregion

@@ -12,13 +12,10 @@ namespace CombatExtended
     {
         public List<AmmoLink> ammoTypes;
 
-        public Dictionary<ThingDef, int> maxChargeAdded;
+        Dictionary<ThingDef, int> maxChargeAdded = new Dictionary<ThingDef, int>();
 
         public int MaxCharge(ThingDef def)
         {
-            if (maxChargeAdded == null)
-                maxChargeAdded = new Dictionary<ThingDef, int>();
-
             if (!maxChargeAdded.ContainsKey(def) || maxChargeAdded[def] == -2)
             {
                 var ammo = ammoTypes.SelectMany(x => x.adders)?.Where(x => x.thingDef == def) ?? null;
@@ -40,6 +37,8 @@ namespace CombatExtended
 
         public override void ResolveReferences()
         {
+            bool couldBeMultiUser = true;
+
             ammoTypes.ForEach(x => {
 
                 //Assign short-hand XML constructs appropriately before checking adders etc.
@@ -54,6 +53,8 @@ namespace CombatExtended
                     x.labelCapShort = x.ammoClass.LabelCapShort;
                 }
                 
+                couldBeMultiUser = couldBeMultiUser
+                    && (x.adders.Count == 1 && x.users.Count == 1);
             });
         }
 

@@ -113,13 +113,19 @@ namespace CombatExtended
                 return compAmmo;
             }
         }
+        public bool latestProjectileFired = true;
         public ThingDef Projectile
         {
             get
             {
-                if (CompAmmo != null && CompAmmo.CurrentUser != null)
+                //latestProjectileFired check needed, because CurrentUser is sometimes incorrect after CurrentAdder is consumed
+                if (CompAmmo != null && (latestProjectileFired
+                    ? CompAmmo.CurrentUser != null
+                    : CompAmmo.latestUser != null))
                 {
-                    return CompAmmo.MainProjectile;
+                    return (latestProjectileFired
+                        ? CompAmmo.MainProjectile
+                        : CompAmmo.latestUser.projectiles.First().thingDef);
                 }
                 if (CompChangeable != null && CompChangeable.Loaded)
                 {
@@ -535,7 +541,13 @@ namespace CombatExtended
             }
             ShiftVecReport report = ShiftVecReportFor(currentTarget);
             bool pelletMechanicsOnly = false;
-            foreach (var proj in CompAmmo.CurrentUser.projectiles)
+
+            var iteratedList = CompAmmo?.latestUser?.projectiles;
+
+            if (iteratedList.NullOrEmpty())
+                iteratedList.Add(new ThingDefCount(Projectile, 1));
+
+            foreach (var proj in iteratedList)
             {
                 for (int i = 0; i < ((proj.thingDef.projectile as ProjectilePropertiesCE)?.pelletCount ?? 1) * proj.count; i++)
                 {

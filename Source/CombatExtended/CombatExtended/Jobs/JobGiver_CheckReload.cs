@@ -48,12 +48,10 @@ namespace CombatExtended
 		protected override Job TryGiveJob(Pawn pawn)
 		{
 			Job reloadJob = null;
-			
-			if (DoReloadCheck(pawn, out var gun, out var link))
+
+            // we relied on DoReloadCheck() to do error checking of many variables.
+            if (DoReloadCheck(pawn, out var comp, out var link))
 			{
-				CompAmmoUser comp = gun.TryGetComp<CompAmmoUser>();
-				// we relied on DoReloadCheck() to do error checking of many variables.
-				
 				if (!comp.TryUnload()) return null; // unload the weapon or stop trying if there was a problem.
 				
                 if (comp.UseAmmo && comp.CurrentLink != link)
@@ -85,9 +83,9 @@ namespace CombatExtended
 		/// <param name="reloadWeapon">Thing weapon which needs to be reloaded.</param>
 		/// <param name="reloadAmmo">AmmoDef ammo to reload the gun with.</param>
 		/// <returns>Bool value indicating if the job needs to be done.</returns>
-		private bool DoReloadCheck(Pawn pawn, out ThingWithComps reloadWeapon, out AmmoLink reloadLink)
+		private bool DoReloadCheck(Pawn pawn, out CompAmmoUser reloadUser, out AmmoLink reloadLink)
 		{
-			reloadWeapon = null;
+            reloadUser = null;
 			reloadLink = null;
 			
 			// First need to create the collections that will be searched.
@@ -101,21 +99,24 @@ namespace CombatExtended
             if (inventory == null)
 				return false; // There isn't any work to do since the pawn doesn't have a CE Inventory.
 			
-			if ((tmpComp = pawn.equipment?.Primary?.TryGetComp<CompAmmoUser>()) != null && tmpComp.HasMagazine)
-				guns.Add(pawn.equipment.Primary);
+			guns.Add(pawn.equipment.Primary);
 
             // CompInventory doesn't track equipment and it's desired to check the pawn's equipped weapon before inventory items so need to copy stuff from Inventory Cache.
-            guns.AddRange(inventory.rangedWeaponList.Where(t => t.TryGetComp<CompAmmoUser>() != null && t.GetComp<CompAmmoUser>().HasMagazine));
+            guns.AddRange(inventory.rangedWeaponList);
 			
 			if (guns.NullOrEmpty())
-				return false; // There isn't any work to do since the pawn doesn't have any ammo using guns.
+				return false; 
             #endregion
 
             // look at each gun...
             foreach (ThingWithComps gun in guns)
 			{
 				// Get key stats of the weapon.
-				tmpComp = gun.TryGetComp<CompAmmoUser>();
+				tmpComp = gun?.TryGetComp<CompAmmoUser>();
+
+                // Gun doesn't use ammo
+                if (tmpComp == null || !tmpComp.HasMagazine)
+                    continue;
 
 			  //AmmoDef ammoType = tmpComp.CurrentAmmo;
                 
@@ -127,7 +128,6 @@ namespace CombatExtended
 				{
                     foreach (var thing in inventory.ammoList)
                     {
-
                         var maxCharge = tmpComp.Props.ammoSet.MaxCharge(thing.def);
 
                         if (maxCharge <= 0)
@@ -140,7 +140,7 @@ namespace CombatExtended
                         if (toFill > 0 && TrackingSatisfied(pawn, thing.def, Mathf.CeilToInt(toFill))
                             && toFill < inventory.AmmoCountOfDef(thing.def as AmmoDef))
                         {
-                            reloadWeapon = gun;
+                            reloadUser = tmpComp;
                             reloadLink = tmpComp.Props.ammoSet.Containing(new ThingDefCountClass(thing.def, maxCharge));
                             return true;
                         }
@@ -152,7 +152,7 @@ namespace CombatExtended
 				{
                     if (!tmpComp.UseAmmo)
                     {
-                        reloadWeapon = gun;
+                        reloadUser = tmpComp;
                         reloadLink = tmpComp.SelectedLink;
                         return true;
                     }
@@ -166,7 +166,7 @@ namespace CombatExtended
 
                             if (countCharges >= deficitSize)
                             {
-                                reloadWeapon = gun;
+                                reloadUser = tmpComp;
                                 reloadLink = tmpComp.CurrentLink;
                                 return true;
                             }

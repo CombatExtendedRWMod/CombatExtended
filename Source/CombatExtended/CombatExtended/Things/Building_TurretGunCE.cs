@@ -118,7 +118,10 @@ namespace CombatExtended
             }
         }
 
-        // New properties
+        //New properties
+        /// <summary>
+        /// Since this property is never checked while a shot is being fired, it can use MainProjectile (rather than latestUser)
+        /// </summary>
         public ThingDef Projectile
         {
             get

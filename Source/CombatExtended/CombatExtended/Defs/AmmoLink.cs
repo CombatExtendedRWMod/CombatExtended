@@ -150,8 +150,8 @@ namespace CombatExtended
                 //Consider maximum loaded and maximum provided
                 //3. Allow an overflow
                 return (forLoading || allowOverflow || wastefulOverflow)
-                    ? Mathf.CeilToInt(chargeDeficit / (float)chargesPerUnit)
-                    : Mathf.FloorToInt(chargeDeficit / (float)chargesPerUnit);
+                    ? Mathf.CeilToInt((float)chargeDeficit / (float)chargesPerUnit)
+                    : Mathf.FloorToInt((float)chargeDeficit / (float)chargesPerUnit);
             }
 
             return 0;
@@ -200,16 +200,12 @@ namespace CombatExtended
         /// <returns></returns>
         public virtual Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false)
         {
-            var adder = adders.FirstOrDefault();
-            if (adder != null)
-            {
-                var thing = things.FirstOrDefault(x => x.def == adder.thingDef);
+            var thing = things.FirstOrDefault(x => x.def == iconAdder);
 
-                if (thing != null)
-                {
-                    chargeCount = adder.count;
-                    return thing;
-                }
+            if (thing != null)
+            {
+                chargeCount = adders.FirstOrDefault().count;
+                return thing;
             }
             chargeCount = 0;
             return null;
@@ -258,11 +254,9 @@ namespace CombatExtended
             return 0;
         }
         
-        public virtual Thing UnloadAdder(Thing thing, CompAmmoUser user, out int deficit, ref bool isSpent)
+        public virtual Thing UnloadAdder(Thing thing, CompAmmoUser user, ref bool isSpent)
         {
-            deficit = user.currentAdderCharge;
-
-            if (thing.stackCount <= 0 || user.DiscardRounds)
+            if (thing == null || thing.stackCount <= 0)
                 return null;
 
             if (!isSpent)
@@ -276,16 +270,18 @@ namespace CombatExtended
 
                 //3. Give a chance to recover a full X cartridge depending on the discrepancy between X and charge
                 //5. If underflow is allowed, use that
-                if (deficit == cpu || allowUnderflow || (chanceToRecoverBacklog && Rand.Value < deficit / cpu))
+                if (user.currentAdderCharge >= 0
+                    || allowUnderflow
+                    || (chanceToRecoverBacklog && Rand.Value < (float)(cpu + user.currentAdderCharge) / (float)cpu))
                 {
-                    if (allowUnderflow && user.CurMagCount - deficit == 0)
-                        deficit = cpu;
-
                     return thing;
                 }
             }
 
             isSpent = true;
+
+            if (user.DiscardRounds)
+                return null;
 
             // [XX 2. XX] NOT USED Convert non-X charge count to fallback ThingDefs - no partially spent rounds allowed
 
@@ -293,7 +289,7 @@ namespace CombatExtended
                 return thing;
             else
             {
-                var spentThing = ThingMaker.MakeThing((user.CurrentAdder.def as AmmoDef)?.spentThingDef) ?? null;
+                var spentThing = ThingMaker.MakeThing((thing.def as AmmoDef)?.spentThingDef) ?? null;
                 if (spentThing != null)
                     spentThing.stackCount = thing.stackCount;
                 return spentThing;

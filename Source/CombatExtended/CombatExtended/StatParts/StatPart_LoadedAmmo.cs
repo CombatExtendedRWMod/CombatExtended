@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using RimWorld;
+using System.Linq;
 using Verse;
 using UnityEngine;
 
@@ -9,10 +10,6 @@ namespace CombatExtended
 {
     public class StatPart_LoadedAmmo : StatPart
     {
-        float cartridges = 0f;
-        float spentCartridges = 0f;
-        float magazine = 0f;
-
         public override void TransformValue(StatRequest req, ref float val)
         {
             if (TryGetValue(req, out float num))
@@ -23,44 +20,47 @@ namespace CombatExtended
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            if (TryGetValue(req, out float _))
-            {
-                if (cartridges != 0f)
-                    stringBuilder.AppendLine("CE_StatsReport_LoadedAmmo".Translate() + ": " + parentStat.ValueToString(cartridges));
+            Recalculate(req.Thing, out var cartridges, out var spentCartridges, out var magazine);
 
-                if (spentCartridges != 0f)
-                    stringBuilder.AppendLine("CE_StatsReport_SpentAmmo".Translate() + ": " + parentStat.ValueToString(spentCartridges));
+            var cartridgeCount = req.Thing?.TryGetComp<CompAmmoUser>().adders?.Sum(x => x.stackCount) ?? 0;
+            var spentCartridgeCount = req.Thing?.TryGetComp<CompAmmoUser>().spentAdders?.Sum(x => x.stackCount) ?? 0;
+            
+            if (cartridgeCount > 0)
+                stringBuilder.AppendLine("CE_StatsReport_LoadedAmmo".Translate() 
+                    + (cartridgeCount > 1 ? (" (x"+cartridgeCount+"): ") : ": ")
+                    + parentStat.ValueToString(cartridges));
 
-                if (magazine != 0f)
-                    stringBuilder.AppendLine("CE_MagazineBulk".Translate() + ": " + parentStat.ValueToString(magazine));
+            if (spentCartridgeCount > 0)
+                stringBuilder.AppendLine("CE_StatsReport_SpentAmmo".Translate() 
+                    + (spentCartridgeCount > 1 ? (" (x"+spentCartridgeCount+"): ") : ": ")
+                    + parentStat.ValueToString(spentCartridges));
 
-                return stringBuilder.ToString().TrimEndNewlines();
-            }
+            if (magazine != 0f)
+                stringBuilder.AppendLine("CE_MagazineBulk".Translate() + ": " + parentStat.ValueToString(magazine));
 
-            return null;
+            return stringBuilder.ToString().TrimEndNewlines();
         }
 
-        public bool TryGetValue(StatRequest req, out float num)
+        public void Recalculate(Thing reqThing, out float cartridges, out float spentCartridges, out float magazine)
         {
             cartridges = 0f;
             spentCartridges = 0f;
             magazine = 0f;
-            
-            if (Controller.settings.EnableAmmoSystem && req.HasThing)
+
+            if (Controller.settings.EnableAmmoSystem && reqThing != null)
             {
                 // Consider the full contents of the AmmoUser
-                var ammoUser = req.Thing.TryGetComp<CompAmmoUser>();
+                var ammoUser = reqThing.TryGetComp<CompAmmoUser>();
                 if (ammoUser != null && ammoUser.CurrentAdder != null)
                 {
                     //Add currently loaded cartridge (more complex)
-                  //var isSpentAdder = ammoUser.CurrentLink.IsSpentAdder(ammoUser.CurrentAdder.def);
+                    //var isSpentAdder = ammoUser.CurrentLink.IsSpentAdder(ammoUser.CurrentAdder.def);
 
-                    for (int i = 0; i < ammoUser.adders.Count; i++)
+                    foreach (var adder in ammoUser.adders)
                     {
-                        cartridges += ammoUser.adders[i].GetStatValue(parentStat) *
-                            (float)(ammoUser.adders[i].stackCount);
+                        cartridges += adder.def.GetStatValueAbstract(parentStat) * (float)adder.stackCount;
                     }
-                    
+
                     //Magazine bulk and/or bulkFactor on the gun
                     if (parentStat == CE_StatDefOf.Bulk)
                     {
@@ -70,17 +70,20 @@ namespace CombatExtended
                             magazine = ammoUser.Props.magazineBulk;
                     }
 
-                    //Add all spent cartridges
-                    for (int i = 0; i < ammoUser.spentAdders.Count; i++)
+                    foreach (var adder in ammoUser.spentAdders)
                     {
-                        cartridges += ammoUser.spentAdders[i].GetStatValue(parentStat) *
-                            (float)(ammoUser.spentAdders[i].stackCount)
-                            * ((parentStat == StatDefOf.Mass && ammoUser.CurrentLink.IsSpentAdder(ammoUser.spentAdders[i].def))
-                                ? (ammoUser.spentAdders[i].def as AmmoDef)?.conservedMassFactorWhenFired ?? 1f
-                                : 1f);
+                        spentCartridges += adder.def.GetStatValueAbstract(parentStat) * (float)adder.stackCount
+                            * ((parentStat == StatDefOf.Mass && ammoUser.CurrentLink.IsSpentAdder(adder.def))
+                                ? (adder.def as AmmoDef)?.conservedMassFactorWhenFired ?? 1f : 1f);
                     }
                 }
             }
+        }
+
+        public bool TryGetValue(StatRequest req, out float num)
+        {
+            Recalculate(req.Thing, out var cartridges, out var spentCartridges, out var magazine);
+
             num = cartridges + spentCartridges + magazine;
             return num != 0f;
         }
