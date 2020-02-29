@@ -54,8 +54,8 @@ namespace CombatExtended
 			{
 				if (!comp.TryUnload()) return null; // unload the weapon or stop trying if there was a problem.
 
-                if (comp.UseAmmo && comp.CurrentLink != link)
-                    comp.SwitchLink(link);
+                if (comp.UseAmmo && comp.CurrentLink != link && !comp.SwitchLink(link, false))
+                    return null;
                 
 	            // Get the reload job from the comp.
 	            reloadJob = comp.TryMakeReloadJob();

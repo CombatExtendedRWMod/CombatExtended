@@ -14,7 +14,7 @@
 		<defName>AmmoSet_44Magnum</defName>
 		<label>.44 Magnum</label>
 		<ammoTypes>
-			<Ammo_44Magnum_FMJ>Bullet_44Magnum_FMJ</Ammo_44Magnum_FMJ>
+			<Ammo_44Magnum_FMJ AmmoCharge="2" ProjCharge="2">Bullet_44Magnum_FMJ</Ammo_44Magnum_FMJ>
 			<Ammo_44Magnum_AP>Bullet_44Magnum_AP</Ammo_44Magnum_AP>
 			<Ammo_44Magnum_HP>Bullet_44Magnum_HP</Ammo_44Magnum_HP>
 		</ammoTypes>

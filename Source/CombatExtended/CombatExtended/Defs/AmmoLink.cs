@@ -141,23 +141,40 @@ namespace CombatExtended
             return chargesPerUnit != -1;
         }
 
-        public virtual int AmountForDeficit(ThingDef def, int chargeDeficit, bool forLoading = false)
+        public virtual int AmountForDeficit(ThingDef def, int chargeDeficit, bool forLoading = false, bool forUnloading = false)
         {
             if (CanAdd(def, out int chargesPerUnit))
             {
+                var f = (float)chargeDeficit / (float)chargesPerUnit;
+
+                if ((forUnloading && !allowUnderflow)
+                    || (forLoading && !allowOverflow)
+                    || (!allowOverflow && !allowUnderflow))
+                    return Mathf.FloorToInt(f);
+
+                return Mathf.CeilToInt(f);
+
+                /*
                 //Consider maximum loaded and maximum provided
                 //3. Allow an overflow
+                if (forLoading || (!forUnloading && (allowOverflow || wastefulOverflow)))
+                    return Mathf.CeilToInt(f);
+
+                if (forUnloading || (!forLoading && allowUnderflow))
+                    return Mathf.FloorToInt(f);*/
+
+                /*
                 return (forLoading || allowOverflow || wastefulOverflow)
-                    ? Mathf.CeilToInt((float)chargeDeficit / (float)chargesPerUnit)
-                    : Mathf.FloorToInt((float)chargeDeficit / (float)chargesPerUnit);
+                    ? Mathf.CeilToInt(f)
+                    : Mathf.FloorToInt(f);*/
             }
 
             return 0;
         }
 
-        public virtual int AmountForDeficit(Thing thing, int chargeDeficit, bool forLoading = false)
+        public virtual int AmountForDeficit(Thing thing, int chargeDeficit, bool forLoading = false, bool forUnloading = false)
         {
-            var val = AmountForDeficit(thing.def, chargeDeficit, forLoading);
+            var val = AmountForDeficit(thing.def, chargeDeficit, forLoading, forUnloading);
             if (val > 0)
                 val = Math.Min(thing.stackCount, val);
 
@@ -274,8 +291,13 @@ namespace CombatExtended
             Log.Message("a");
 
             //For some reason isn't loadable.. just used to get charges per unit (cpu)
-            if (thing == null || thing.stackCount <= 0 || !CanAdd(thing.def, out int cpu))
+            if (thing == null || thing.stackCount <= 0)
                 return null;
+
+            Log.Message("a2");
+
+            if (!CanAdd(thing.def, out int cpu))
+                return thing;
 
             Log.Message("b");
 

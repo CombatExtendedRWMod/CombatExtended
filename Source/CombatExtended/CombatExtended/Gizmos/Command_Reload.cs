@@ -135,17 +135,19 @@ namespace CombatExtended
 
                             if (user.SelectedLink == link)
                             {
-                                del += delegate { user.SwitchLink(link); };
-
-                                if (Controller.settings.AutoReloadOnChangeAmmo && user.turret?.MannableComp == null && user.CurMagCount < user.Props.magazineSize)
-                                    del += other.action;
+                                del += delegate { if (user.SwitchLink(link, true)
+                                    && Controller.settings.AutoReloadOnChangeAmmo
+                                    && user.turret?.MannableComp == null
+                                    && (!user.LinksMatch || user.CurMagCount < user.Props.magazineSize))
+                                        action(); };
                             }
                             else
                             {
-                                del += delegate { user.SwitchLink(link); };
-
-                                if (Controller.settings.AutoReloadOnChangeAmmo && user.turret?.MannableComp == null)
-                                    del += other.action;
+                                del += delegate { if (user.SwitchLink(link, false)
+                                    && Controller.settings.AutoReloadOnChangeAmmo
+                                    && user.turret?.MannableComp == null
+                                    && (!user.LinksMatch || user.CurMagCount < user.Props.magazineSize))
+                                        action(); };
                             }
 
                             //Add to delegate or create delegate at ammoClass key
@@ -199,7 +201,7 @@ namespace CombatExtended
                     if (user.UseAmmo && user.CurMagCount > 0)
                     {
                         unload = true;
-                        unloadDel += delegate { user.TryUnload(true); };
+                        unloadDel += delegate { user.TryUnload(0, true); };
                     }
                 }
             }

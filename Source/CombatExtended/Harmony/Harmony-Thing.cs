@@ -17,7 +17,7 @@ namespace CombatExtended.Harmony
             //CurMagCount is appropriate -- loaded ammo
             if (ammoUser != null && (ammoUser.HasMagazine && ammoUser.CurMagCount > 0 && ammoUser.CurrentLink != null))
             {
-                if (ammoUser.TryUnload(out var list, true, true))
+                if (ammoUser.TryUnload(out var list, 0, true, true))
                     __result = __result.Concat(list);
             }
         }
