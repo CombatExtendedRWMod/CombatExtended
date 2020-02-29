@@ -177,7 +177,8 @@ namespace CombatExtended
             }
 
             // Add check for reload
-            if (Projectile == null || (IsAttacking && CompAmmo != null && !CompAmmo.CanBeFiredNow))
+            if ((Projectile == null || (IsAttacking && CompAmmo != null && !CompAmmo.CanBeFiredNow))
+                && CompAmmo.PreReload())
             {
                 CompAmmo?.TryStartReload();
                 return false;
@@ -582,7 +583,7 @@ namespace CombatExtended
             }
             pelletMechanicsOnly = false;
             numShotsFired++;
-            if (CompAmmo != null && !CompAmmo.CanBeFiredNow)
+            if (CompAmmo != null && !CompAmmo.CanBeFiredNow && CompAmmo.PreReload())
             {
                 CompAmmo?.TryStartReload();
             }

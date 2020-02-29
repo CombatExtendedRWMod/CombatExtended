@@ -291,7 +291,7 @@ namespace CombatExtended
             //Update inventory
             CompInventory?.UpdateInventory();
 
-            if (CurChargeCount < 0) TryStartReload();
+            if (CurChargeCount < 0 && PreReload()) TryStartReload();
             return;
         }
 
@@ -353,14 +353,17 @@ namespace CombatExtended
         #endregion
 
         #region Reloading
-        // really only used by pawns (JobDriver_Reload) at this point... TODO: Finish making sure this is only used by pawns and fix up the error checking.
-        /// <summary>
-        /// Overrides a Pawn's current activities to start reloading a gun or turret.  Has a code path to resume the interrupted job.
-        /// </summary>
-        public void TryStartReload()
+        // Verb_LaunchProjectileCE (Available, TryCastShot)
+        // Verb (TryStartCastOn)
+        // CompAmmo.PostFire, Verb.TryStartCastOn (harmony), Verb_LaunchProjectile.Available and .TryCastShot
+        // CompAmmo GizmoExtras: Started by player
+        // JobGiver_CheckReload (TryGiveJob)
+        /// <summary>Return whether a reload job should start</summary>
+        /// <returns></returns>
+        public bool PreReload(AmmoLink link = null)
         {
-            PrintDebug("TryStartReload-Pre");   //ASDF Remove
-
+            PrintDebug("PreReload-Pre");   //ASDF Remove
+            
             #region Checks
             if (!HasMagazine)
             {
@@ -368,42 +371,68 @@ namespace CombatExtended
                 {
                     DoOutOfAmmoAction();
                 }
-                return;
+                return false;
             }
 
             if (Wielder == null && turret == null)
-                return;
+                return false;
 
             // secondary branch for if we ended up being called up by a turret somehow...
             if (turret != null)
             {
                 turret.TryOrderReload();
-                return;
+                return false;
             }
 
             // R&G compatibility, prevents an initial attempt to reload while moving
             if (Wielder.stances.curStance.GetType() == rgStance)
-                return;
+                return false;
             #endregion
+
+            /*
+            if (comp.UseAmmo && !LinksMatch && !comp.SwitchLink(link, false))
+                return null;
+            */
 
             if (UseAmmo)
             {
-                TryUnload();
+                if (UnloadCanImproveMagazine())
+                    TryUnload(0);
+
+                //First, automatically unload if appropriate due to switched links
+                if (LinksMatch || !SwitchLink(link, false))
+                {
+                    //Second, see whether any magazine changes would be favourable
+                    if (UnloadCanImproveMagazine())
+                    {
+                        //ASDF: Add out-var int indicating amount of ammo to reload to
+                        TryUnload(0);
+                    }
+                }
 
                 // Check for ammo
                 if (Wielder != null && !HasAmmoForCurrentLink)
                 {
                     DoOutOfAmmoAction();
-                    return;
+                    return false;
                 }
             }
 
-            PrintDebug("TryStartReload-Post");   //ASDF Remove
+            PrintDebug("PreReload-Post");   //ASDF Remove
 
             //Because reloadOneAtATime weapons don't dump their mag at the start of a reload, have to stop the reloading process here if the mag was already full
             if (Props.reloadOneAtATime && UseAmmo && LinksMatch && CurMagCount == Props.magazineSize)
-                return;
+                return false;
 
+            return true;
+        }
+
+        // really only used by pawns (JobDriver_Reload) at this point... TODO: Finish making sure this is only used by pawns and fix up the error checking.
+        /// <summary>
+        /// Overrides a Pawn's current activities to start reloading a gun or turret.  Has a code path to resume the interrupted job.
+        /// </summary>
+        public void TryStartReload()
+        {
             // Issue reload job
             if (Wielder != null)
             {
@@ -413,6 +442,60 @@ namespace CombatExtended
                 reloadJob.playerForced = true;
                 Wielder.jobs.StartJob(reloadJob, JobCondition.InterruptForced, null, Wielder.CurJob?.def != reloadJob.def, true);
             }
+        }
+
+        bool UnloadCanImproveMagazine()
+        {
+            Log.Message("R");
+
+            if (!LinksMatch && SwitchLink(null, true))
+                return true;
+
+            Log.Message("S");
+
+            //Check for case X % MagSize != 0
+            //Check if any change in reloading could fix CurrentLink's magazine being partially filled
+
+            //Problem to solve: c1 * [0, .., X] + c2 * [0, .., Y] + c3 * [0, .., Z] + .. = m
+            var m = Props.magazineSize - CurMagCount;
+
+            if (m <= 0)
+                return false;
+
+            Log.Message("T");
+
+            // Find inventory ammo small enough to resolve deficit
+            var candidates = CompInventory?.ammoList?.Where(x => CurrentLink.CanAdd(x.def, out var cpu) && cpu <= m);
+
+            //1. If no array, or [c1, c2, .., cn] > m -- cannot fill
+            if (!candidates.Any())
+            {
+                //1.1. Test if unloading any n adders would help reach m ASDF TODO
+
+
+                return false;
+            }
+
+            Log.Message("U");
+
+            // Test using overflow/underflow logic
+            if (CurrentAdder != null)
+            {
+                var amountDepleted = CurrentLink.AmountForDeficit(CurrentAdder, Props.magazineSize - CurChargeCount, true);
+                if (amountDepleted <= 0)
+                    return false;
+            }
+
+            Log.Message("W");
+
+            return true;
+        }
+
+        void ImproveMagazine()
+        {
+            //1. If c1 * X + c2 * Y + c3 * Z + .. < m, load everything
+
+
         }
 
         /// <summary>
@@ -477,7 +560,9 @@ namespace CombatExtended
                 return false;
 
             // Try finding suitable ammoThing for currently set ammo first
-            ammoThing = SelectedLink.BestAdder(inventory.ammoList, this, out var _, largestStack);
+            ammoThing = SelectedLink.BestAdder(inventory.ammoList, this, out var charges, largestStack);
+
+            // Check whether the ammo actually fits
 
             if (ammoThing != null)
                 return true;
@@ -503,8 +588,7 @@ namespace CombatExtended
 
                     if (ammoThing != null)
                     {
-                        SwitchLink(Props.ammoSet.ammoTypes[i]);
-                        return true;
+                        return SwitchLink(Props.ammoSet.ammoTypes[i]);
                     }
                 }
             }
@@ -540,14 +624,14 @@ namespace CombatExtended
 
                 Log.Message("1c");
                 selectedLinkInt = indexOf;
-            }
-            Log.Message("2");
 
-            //If the links already match, no need to switch at all
-            if (LinksMatch)
-                return true;
+                //If the links already match, no need to switch at all
+                if (LinksMatch)
+                    return true;
+            }
 
             Log.Message("3");
+
             //If no charges are loaded, simple and guaranteed switch
             if ((CurChargeCount == 0 && currentAdderCharge == 0))
             {
@@ -592,7 +676,7 @@ namespace CombatExtended
             //TODO: Switch out the cartridges that cannot be loaded in the other link -- if possible
 
             //Otherwise... no simple conversion possible. Need to unload fully
-            if (forced && TryUnload(0))
+            if (!LinksMatch && forced && TryUnload(0))
             {
                 //Call this method again
 
@@ -609,6 +693,12 @@ namespace CombatExtended
             //if (!HasMagazine)
             //    currentLinkInt = selectedLinkInt;
 
+            if (forced)
+            {
+                Log.Error("Couldn't switch links even when forced, see state:");
+                PrintDebug("SwitchLink-ErrorState");
+            }
+
             return false;
         }
 
@@ -622,6 +712,11 @@ namespace CombatExtended
             {
                 //Add appropriate number of charges (and check for all limitations etc. set out by the ammoSetDef)
                 curMagCountInt += SelectedLink.LoadThing(inThing, this, out var count);
+
+                //ASDF: This part might cause issues too?
+                if (count <= 0)
+                    return;
+
                 thing = inThing.SplitOff(count);
             }
             else
@@ -774,7 +869,7 @@ namespace CombatExtended
             }
         }
         
-        // used by both turrets (JobDriver_ReloadTurret) and pawns (JobDriver_Reload).
+        // JobGiver_CheckReload (TryGiveJob part), CompAmmo (TryStartReload, SwitchLink), Command_Reload (Unload command)
         /// <summary>
         /// Used to unload the weapon.  Ammo will be dumped to the unloading Pawn's inventory or the ground if insufficient space.  Any ammo that can't be dropped
         /// on the ground is destroyed (with a warning).
@@ -788,6 +883,7 @@ namespace CombatExtended
             return TryUnload(out var _, toAmount, forceUnload, false);
         }
         
+        //JobDriver_ReloadTurret, Harmony-Thing (smeltProducts), JobGiver_CheckReload, CompAmmoUser (SwitchLink, TryStartReload), Command_Reload (Unload command)
         /// <summary>
         /// 
         /// </summary>
@@ -855,7 +951,7 @@ namespace CombatExtended
                 }
                 Log.Message("III");
 
-                var amountForDeficit = CurrentLink.AmountForDeficit(thing, toAmount, false, carefulUnload);
+                var amountForDeficit = CurrentLink.AmountForDeficit(thing, CurMagCount - toAmount, false, carefulUnload);
 
                 if (amountForDeficit <= 0)
                 {
@@ -1063,7 +1159,7 @@ namespace CombatExtended
             if ((Wielder != null && Wielder.Faction == Faction.OfPlayer) || (turret != null && turret.Faction == Faction.OfPlayer && (turret.MannableComp != null || UseAmmo)))
             {
                 Action action = null;
-                if (Wielder != null) action = TryStartReload;
+                if (Wielder != null) action = delegate { if (PreReload()) TryStartReload(); };
                 else if (turret?.MannableComp != null) action = turret.TryOrderReload;
 
                 // Check for teaching opportunities

@@ -18,22 +18,29 @@ namespace CombatExtended
 
         public override string ExplanationPart(StatRequest req)
         {
+            if (!Recalculate(req.Thing, out var cartridges, out var spentCartridges, out var magazine))
+                return null;
+
             StringBuilder stringBuilder = new StringBuilder();
 
-            Recalculate(req.Thing, out var cartridges, out var spentCartridges, out var magazine);
-
-            var cartridgeCount = req.Thing?.TryGetComp<CompAmmoUser>().adders?.Sum(x => x.stackCount) ?? 0;
-            var spentCartridgeCount = req.Thing?.TryGetComp<CompAmmoUser>().spentAdders?.Sum(x => x.stackCount) ?? 0;
             
             if (cartridges > 0)
-                stringBuilder.AppendLine("CE_StatsReport_LoadedAmmo".Translate() 
-                    + (cartridgeCount > 1 ? (" (x"+cartridgeCount+"): ") : ": ")
+            {
+                var cartridgeCount = req.Thing.TryGetComp<CompAmmoUser>().adders?.Sum(x => x.stackCount) ?? 0;
+
+                stringBuilder.AppendLine("CE_StatsReport_LoadedAmmo".Translate()
+                    + (cartridgeCount > 1 ? (" (x" + cartridgeCount + "): ") : ": ")
                     + parentStat.ValueToString(cartridges));
+            }
 
             if (spentCartridges > 0)
-                stringBuilder.AppendLine("CE_StatsReport_SpentAmmo".Translate() 
-                    + (spentCartridgeCount > 1 ? (" (x"+spentCartridgeCount+"): ") : ": ")
+            {
+                var spentCartridgeCount = req.Thing.TryGetComp<CompAmmoUser>().spentAdders?.Sum(x => x.stackCount) ?? 0;
+
+                stringBuilder.AppendLine("CE_StatsReport_SpentAmmo".Translate()
+                    + (spentCartridgeCount > 1 ? (" (x" + spentCartridgeCount + "): ") : ": ")
                     + parentStat.ValueToString(spentCartridges));
+            }
 
             if (magazine != 0f)
                 stringBuilder.AppendLine("CE_MagazineBulk".Translate() + ": " + parentStat.ValueToString(magazine));
@@ -41,7 +48,7 @@ namespace CombatExtended
             return stringBuilder.ToString().TrimEndNewlines();
         }
 
-        public void Recalculate(Thing reqThing, out float cartridges, out float spentCartridges, out float magazine)
+        public bool Recalculate(Thing reqThing, out float cartridges, out float spentCartridges, out float magazine)
         {
             cartridges = 0f;
             spentCartridges = 0f;
@@ -76,8 +83,11 @@ namespace CombatExtended
                             * ((parentStat == StatDefOf.Mass && ammoUser.CurrentLink.IsSpentAdder(adder.def))
                                 ? (adder.def as AmmoDef)?.conservedMassFactorWhenFired ?? 1f : 1f);
                     }
+
+                    return true;
                 }
             }
+            return false;
         }
 
         public bool TryGetValue(StatRequest req, out float num)

@@ -137,17 +137,16 @@ namespace CombatExtended
                             {
                                 del += delegate { if (user.SwitchLink(link, true)
                                     && Controller.settings.AutoReloadOnChangeAmmo
-                                    && user.turret?.MannableComp == null
-                                    && (!user.LinksMatch || user.CurMagCount < user.Props.magazineSize))
-                                        action(); };
+                                    && user.turret?.MannableComp == null)
+                                        other.action(); };
                             }
                             else
                             {
                                 del += delegate { if (user.SwitchLink(link, false)
                                     && Controller.settings.AutoReloadOnChangeAmmo
                                     && user.turret?.MannableComp == null
-                                    && (!user.LinksMatch || user.CurMagCount < user.Props.magazineSize))
-                                        action(); };
+                                    && user.HasAmmoForCurrentLink)  //Prevents reloading and "out-of-ammo" when no ammo of new ammo set is available
+                                        other.action(); };
                             }
 
                             //Add to delegate or create delegate at ammoClass key

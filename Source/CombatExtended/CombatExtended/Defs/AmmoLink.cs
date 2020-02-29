@@ -143,9 +143,12 @@ namespace CombatExtended
 
         public virtual int AmountForDeficit(ThingDef def, int chargeDeficit, bool forLoading = false, bool forUnloading = false)
         {
+            Log.Message(def.defName + " " + chargeDeficit + " " + forLoading + " " + forUnloading);
             if (CanAdd(def, out int chargesPerUnit))
             {
                 var f = (float)chargeDeficit / (float)chargesPerUnit;
+
+                Log.Message("f = " + f + ", cD = "+chargeDeficit+", cPU = "+chargesPerUnit);
 
                 if ((forUnloading && !allowUnderflow)
                     || (forLoading && !allowOverflow)
@@ -211,9 +214,8 @@ namespace CombatExtended
             }
         }*/
 
-        /// <summary>
-        /// 
-        /// </summary>
+        //CompAmmo (TryFindAmmoInInventory, twice)
+        /// <summary>Best adder in provided inventory, taking into account whether it an fit</summary>
         /// <param name="things">A collection of Things, e.g from the inventory</param>
         /// <param name="user"></param>
         /// <param name="chargeCount">The amount of charges added per instance of adder consumed</param>
@@ -223,12 +225,17 @@ namespace CombatExtended
         {
             var thing = things.FirstOrDefault(x => x.def == iconAdder);
 
+            chargeCount = 0;
+
             if (thing != null)
             {
                 chargeCount = adders.FirstOrDefault().count;
-                return thing;
+
+                //ASDF: TODO, add some more considerations?
+                if (user.CurrentLink != this    //Non-currentlink.. or,
+                    || chargeCount <= (user.Props.magazineSize - user.CurMagCount))     //currentlink, but (at least one) ammo fits
+                    return thing;
             }
-            chargeCount = 0;
             return null;
         }
         
@@ -427,6 +434,12 @@ namespace CombatExtended
 
                 if (xmlRoot.Attributes["ProjCharge"] != null)
                     _projCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["ProjCharge"].Value, typeof(int));
+
+                if (xmlRoot.Attributes["Overflow"] != null)
+                    allowOverflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Overflow"].Value, typeof(bool));
+
+                if (xmlRoot.Attributes["Underflow"] != null)
+                    allowUnderflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Underflow"].Value, typeof(bool));
             }
         }
 

@@ -50,13 +50,9 @@ namespace CombatExtended
 			Job reloadJob = null;
 
             // we relied on DoReloadCheck() to do error checking of many variables.
-            if (DoReloadCheck(pawn, out var comp, out var link))
+            if (DoReloadCheck(pawn, out var comp, out var link)
+                && comp.PreReload(link))
 			{
-				if (!comp.TryUnload()) return null; // unload the weapon or stop trying if there was a problem.
-
-                if (comp.UseAmmo && comp.CurrentLink != link && !comp.SwitchLink(link, false))
-                    return null;
-                
 	            // Get the reload job from the comp.
 	            reloadJob = comp.TryMakeReloadJob();
 			}
@@ -120,8 +116,7 @@ namespace CombatExtended
 
 			  //AmmoDef ammoType = tmpComp.CurrentAmmo;
                 
-                //ASDF: CurMagCount? This could ignore a fully unloaded adder
-				int deficitSize = Math.Max(tmpComp.Props.magazineSize, tmpComp.Props.magazineSize - tmpComp.CurMagCount);
+				int deficitSize = Math.Min(tmpComp.Props.magazineSize, tmpComp.Props.magazineSize - tmpComp.CurMagCount);
 
                 // Is the gun NOT loaded with ammo in a Loadout/HoldTracker?
                 if (tmpComp.UseAmmo && pawnHasLoadout
@@ -163,7 +158,8 @@ namespace CombatExtended
                         var countCharges = 0;
                         foreach (var defCount in tmpComp.CurrentLink.adders)
                         {
-                            countCharges += defCount.count * inventory.AmmoCountOfDef(defCount.thingDef as AmmoDef);
+                            if (defCount.count < deficitSize)
+                                countCharges += defCount.count * inventory.AmmoCountOfDef(defCount.thingDef as AmmoDef);
 
                             if (countCharges >= deficitSize)
                             {
