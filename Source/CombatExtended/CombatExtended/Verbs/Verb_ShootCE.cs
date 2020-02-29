@@ -176,30 +176,30 @@ namespace CombatExtended
 
         protected override bool TryCastShot()
         {
-            //Reduce ammunition
-            if (CompAmmo != null)
-            {
-                latestProjectileFired = false;
-                CompAmmo.latestUser = CompAmmo.CurrentUser;
-                if (!CompAmmo.TryFire())
-                {
-                    latestProjectileFired = true;
-                    return false;
-                }
-            }
+            //Check whether ammo reduction is possible
+            if (!CompAmmo?.PreFire() ?? false)
+                return false;
+
+            //Fire shot
             if (base.TryCastShot())
             {
+                // Code requiring previous CompAmmo.CurrentUser
+                // ------
+
+                //Drop casings
+                if (CompAmmo.CurrentLink.DiscardRounds(CompAmmo.CurrentAdder.def, CompAmmo, false))
+                    CE_Utility.ThrowEmptyCasing(caster.DrawPos, caster.Map, ThingDef.Named(projectilePropsCE.casingMoteDefname));
+
+                // HERE, CompAmmo.CurrentUser CHANGES -- thus, null (or incorrect) reference can be expected past this point
+                CompAmmo?.PostFire();
+
+                // Code NOT requiring previous CompAmmo.CurrentUser
+                // ------
+
                 //Required since Verb_Shoot does this but Verb_LaunchProjectileCE doesn't when calling base.TryCastShot() because Shoot isn't its base
                 if (ShooterPawn != null)
-                {
                     ShooterPawn.records.Increment(RecordDefOf.ShotsFired);
-                }
-                //Drop casings
-                if (VerbPropsCE.ejectsCasings && projectilePropsCE.dropsCasings
-                    && ((CompAmmo?.CurrentLink?.iconAdder as AmmoDef)?.conservedMassFactorWhenFired > 0f))
-                {
-                    CE_Utility.ThrowEmptyCasing(caster.DrawPos, caster.Map, ThingDef.Named(projectilePropsCE.casingMoteDefname));
-                }
+
                 // This needs to here for weapons without magazine to ensure their last shot plays sounds
                 if (CompAmmo != null && !CompAmmo.HasMagazine && CompAmmo.UseAmmo)
                 {
@@ -225,13 +225,10 @@ namespace CombatExtended
                             }
                         }
                     }
-                    latestProjectileFired = true;
                     return CompAmmo.Notify_PostShotFired();
                 }
-                latestProjectileFired = true;
                 return true;
             }
-            latestProjectileFired = true;
             return false;
         }
         #endregion

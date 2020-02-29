@@ -74,8 +74,11 @@ namespace CombatExtended
         #region Fields
         public bool allowMagsizeChange = true;
         public bool autogenerateFallbackUser = true;
+
+        /// <summary>Whether the index of the charge adder and that of the charge user it creates are the same - useful for e.g catapults</summary>
+        public bool directAdderUserLinkage = false;
         #endregion
-        
+
         #region Methods
         public bool SuggestMagSize(int currentMagSize, out int newMagSize)
         {
@@ -157,29 +160,43 @@ namespace CombatExtended
         
         public override ChargeUser BestUser(CompAmmoUser user)
         {
-            if (user.CurMagCount > 0)
+            // If no charge is remaining, do not return any best user
+            if (user.CurChargeCount <= 0)
+                return null;
+            
+            // If adders and users are strongly linked, only one return value is possible
+            if (directAdderUserLinkage && CanAdd(user.CurrentAdder.def))
             {
-                //1. Fire a shot as long as there's at least one charge remaining
-                var availableUsers = users.Where(x => x.chargesUsed <= user.CurMagCount);
-
-                if (availableUsers != null)
-                {
-                    return availableUsers.MaxByWithFallback(y => y.chargesUsed);
-                }
-
-                //4. Allow for an underflow of rounds, which has to be replenished with newly loaded ammo
-                if (allowUnderflow)
-                {
-                    return users.Where(x => x.chargesUsed > user.CurMagCount)?.MinBy(y => y.chargesUsed) ?? null;
-                }
-
-                //3. Somehow linearly decreasing projectile stats with lower ammo amounts, e.g cutting pelletCount or damage or AP, or speed.
-                //2. Having an option with the current X and different Y which does have X / Y integer as fallback, handling a tiered decrease in projectile properties.
+                var linkedUser = users[adders.FindIndex(x => x.thingDef == user.CurrentAdder.def)
+                    % users.Count];     //% users.Count handles incorrectly prepared XML (users.Count != adders.Count)
+                
+                return (allowUnderflow || user.CurChargeCount >= linkedUser.chargesUsed)
+                    ? linkedUser : null;
             }
+            
+            //1. Fire a shot as long as there's at least one charge remaining
+            var availableUsers = users.Where(x => x.chargesUsed <= user.CurChargeCount);
+            if (availableUsers != null)
+                return availableUsers.MaxByWithFallback(y => y.chargesUsed);
 
-            return null;
+            //3. Somehow linearly decreasing projectile stats with lower ammo amounts, e.g cutting pelletCount or damage or AP, or speed.
+            //2. Having an option with the current X and different Y which does have X / Y integer as fallback, handling a tiered decrease in projectile properties.
+
+            //4. Allow for an underflow of rounds, which has to be replenished with newly loaded ammo
+            return allowUnderflow
+                ? (users.Where(x => x.chargesUsed > user.CurChargeCount)?.MinBy(y => y.chargesUsed) ?? null)
+                : null;
         }
         #endregion
+
+        public override IEnumerable<string> ConfigErrors()
+        {
+            foreach (var err in base.ConfigErrors())
+                yield return err;
+
+            if (directAdderUserLinkage && adders.Count != users.Count)
+                yield return "has directAdderUserLinkage (requires adders.Count == users.Count), but adder and user list sizes aren't equal";
+        }
 
         /* From:
         <ammoTypes>

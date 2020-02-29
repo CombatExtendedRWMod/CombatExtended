@@ -169,6 +169,7 @@ namespace CombatExtended
                 return (mannableComp == null || !mannableComp.MannedNow)
                     && CompAmmo != null
                     && CompAmmo.HasMagazine
+                    //CurMagCount -- loading related
                     && (CompAmmo.CurMagCount < CompAmmo.Props.magazineSize || !CompAmmo.LinksMatch);
             }
         }
@@ -179,6 +180,7 @@ namespace CombatExtended
                 return (mannableComp == null || (!mannableComp.MannedNow && ticksUntilAutoReload == 0))     //suppress manned turret auto-reload for a short time after spawning
                     && CompAmmo != null
                     && CompAmmo.HasMagazine
+                    //CurMagCount -- loading related
                     && (ticksUntilAutoReload == 0 || CompAmmo.CurMagCount <= Mathf.CeilToInt(CompAmmo.Props.magazineSize / 6));
             }
         }
@@ -217,7 +219,8 @@ namespace CombatExtended
             {
                 this.burstCooldownTicksLeft = this.GunCompEq.PrimaryVerb.verbProps.defaultCooldownTime.SecondsToTicks();
             }
-            if (CompAmmo != null && CompAmmo.CurMagCount <= 0)
+            //CurChargeCount, due to firable charges being too low
+            if (CompAmmo != null && CompAmmo.CurChargeCount <= 0)
             {
                 TryOrderReload();
             }
@@ -441,7 +444,7 @@ namespace CombatExtended
         {
             base.Tick();
             if (ticksUntilAutoReload > 0) ticksUntilAutoReload--;   // Reduce time until we can auto-reload
-            if (CompAmmo?.CurMagCount == 0 && !isReloading && (MannableComp?.MannedNow ?? false)) TryOrderReload();
+            if (CompAmmo?.CurChargeCount <= 0 && !isReloading && (MannableComp?.MannedNow ?? false)) TryOrderReload();
             if (!CanSetForcedTarget && !isReloading && forcedTarget.IsValid && burstCooldownTicksLeft <= 0)
             {
                 ResetForcedTarget();
@@ -523,7 +526,7 @@ namespace CombatExtended
             if (!base.Spawned
                 || (this.holdFire && this.CanToggleHoldFire) 
                 || (Projectile.projectile.flyOverhead && base.Map.roofGrid.Roofed(base.Position))
-                || (CompAmmo != null && (isReloading || (mannableComp == null && CompAmmo.CurMagCount <= 0))))
+                || (CompAmmo != null && (isReloading || (mannableComp == null && CompAmmo.CurChargeCount <= 0))))
             {
                 this.ResetCurrentTarget();
                 return;
@@ -575,6 +578,7 @@ namespace CombatExtended
             }
             */
 
+            //CurMagCount because it concerns loaded ammo
             if ((!mannableComp?.MannedNow ?? true) || (CompAmmo.LinksMatch && CompAmmo.CurMagCount >= CompAmmo.Props.magazineSize)) return;
             Job reloadJob = null;
             if (CompAmmo.UseAmmo)
@@ -586,6 +590,7 @@ namespace CombatExtended
                     {
                         Thing droppedAmmo;
                         int chargeAmt = CompAmmo.Props.magazineSize;
+                        //CurMagCount, such that turret reloads are never "wasteful". Switching to CurChargeCount makes reloads wasteful
                         if (CompAmmo.LinksMatch) chargeAmt -= CompAmmo.CurMagCount;
 
                         if (!CompAmmo.SelectedLink.CanAdd(ammo.def, out var cpu))

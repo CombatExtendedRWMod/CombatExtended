@@ -53,9 +53,9 @@ namespace CombatExtended
             if (DoReloadCheck(pawn, out var comp, out var link))
 			{
 				if (!comp.TryUnload()) return null; // unload the weapon or stop trying if there was a problem.
-				
+
                 if (comp.UseAmmo && comp.CurrentLink != link)
-                    comp.SelectedLink = link;
+                    comp.SwitchLink(link);
                 
 	            // Get the reload job from the comp.
 	            reloadJob = comp.TryMakeReloadJob();
@@ -120,11 +120,12 @@ namespace CombatExtended
 
 			  //AmmoDef ammoType = tmpComp.CurrentAmmo;
                 
+                //ASDF: CurMagCount? This could ignore a fully unloaded adder
 				int deficitSize = Math.Max(tmpComp.Props.magazineSize, tmpComp.Props.magazineSize - tmpComp.CurMagCount);
 
                 // Is the gun NOT loaded with ammo in a Loadout/HoldTracker?
                 if (tmpComp.UseAmmo && pawnHasLoadout
-                    && tmpComp.adders.All(x => !TrackingSatisfied(pawn, x.def, tmpComp.CurrentLink.AmountToConsume(x, tmpComp, true))))
+                    && tmpComp.adders.All(x => !TrackingSatisfied(pawn, x.def, tmpComp.CurrentLink.AmountToLoadMagazine(x, tmpComp, true))))
 				{
                     foreach (var thing in inventory.ammoList)
                     {
@@ -147,7 +148,7 @@ namespace CombatExtended
                     }
 				}
 				
-				// Is the gun low on ammo?
+				// Is the gun low on ammo? -- CurMagCount appropriate because it concerns loaded ammo
 				if (tmpComp.CurMagCount < tmpComp.Props.magazineSize)
 				{
                     if (!tmpComp.UseAmmo)

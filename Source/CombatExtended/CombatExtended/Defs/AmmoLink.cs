@@ -100,8 +100,6 @@ namespace CombatExtended
         public bool allowOverflow = false;
         /// <summary>Whether overflow wastes charges</summary>
         public bool wastefulOverflow = false;
-        /// <summary>Whether the index of the charge adder and that of the charge user it creates are the same - useful for e.g catapults</summary>
-        public bool directAdderUserLinkage = false;
         
         public ThingDef iconAdder;
         public AmmoCategoryDef ammoClass;
@@ -130,7 +128,7 @@ namespace CombatExtended
 
         public virtual bool CanAdd(ThingDef def)
         {
-            return def == iconAdder;
+            return adders.Any(x => x.thingDef == def);
         }
 
         /// <summary>Can the item be added to this ammoLink, and how many charges does it add</summary>
@@ -166,11 +164,17 @@ namespace CombatExtended
             return val;
         }
 
-        public virtual int AmountToConsume(Thing thing, CompAmmoUser user, bool ignoreLoadedCharge = false)
+        /// <summary></summary>
+        /// <param name="thing"></param>
+        /// <param name="user"></param>
+        /// <param name="ignoreLoadedCharge"></param>
+        /// <returns></returns>
+        public virtual int AmountToLoadMagazine(Thing thing, CompAmmoUser user, bool ignoreLoadedCharge = false)
         {
             var magSize = Math.Max(1, user.Props.magazineSize);
             if (thing != null && user.CurMagCount < magSize)
             {
+                //ASDF: Consider whether CurMagCount or CurChargeCount is used
                 return AmountForDeficit(thing, (!ignoreLoadedCharge || user.CurMagCount < 0)
                     ? magSize - user.CurMagCount
                     : magSize);
@@ -213,9 +217,15 @@ namespace CombatExtended
         
         public virtual ChargeUser BestUser(CompAmmoUser user)
         {
-            return (!user.HasMagazine || user.CurMagCount > 0)
-                ? users.First()
-                : null;
+            if (user.CurChargeCount <= 0)
+                return null;
+
+            var bestUser = users.First();
+
+            if (allowUnderflow || user.CurChargeCount >= bestUser.chargesUsed)
+                return bestUser;
+
+            return null;
         }
 
         /*
@@ -234,7 +244,7 @@ namespace CombatExtended
 
         public virtual int LoadThing(Thing thing, CompAmmoUser user, out int amountUsed)
         {
-            amountUsed = AmountToConsume(thing, user);
+            amountUsed = AmountToLoadMagazine(thing, user);
 
             if (amountUsed > 0)
             {
@@ -244,7 +254,7 @@ namespace CombatExtended
                 var chargesAdded = amountUsed * adders.Find(x => x.thingDef == thing.def).count;
                 var magSize = Math.Max(1, user.Props.magazineSize);
 
-                //1. Allow a wasteful overflow
+                //1. Allow a wasteful overflow -- CurMagCount appropriate
                 if (wastefulOverflow && chargesAdded + user.CurMagCount > magSize)
                     chargesAdded = magSize;
 
@@ -254,41 +264,59 @@ namespace CombatExtended
             return 0;
         }
         
+        /// <summary>Returns null if thing should be destroyed</summary>
+        /// <param name="thing"></param>
+        /// <param name="user"></param>
+        /// <param name="isSpent"></param>
+        /// <returns></returns>
         public virtual Thing UnloadAdder(Thing thing, CompAmmoUser user, ref bool isSpent)
         {
-            if (thing == null || thing.stackCount <= 0)
+            Log.Message("a");
+
+            //For some reason isn't loadable.. just used to get charges per unit (cpu)
+            if (thing == null || thing.stackCount <= 0 || !CanAdd(thing.def, out int cpu))
                 return null;
+
+            Log.Message("b");
 
             if (!isSpent)
             {
-                //For some reason isn't loadable.. just used to get charges per unit (cpu)
-                if (!CanAdd(thing.def, out int cpu))
-                    return null;
-
+                Log.Message("c");
                 //4. Create a fallback ThingDef for X = 1 or appropriate value, which backlog charges are converted to
                 //TODO?
 
+                //ASDF: Consider whether cAC checks are accurate
+
                 //3. Give a chance to recover a full X cartridge depending on the discrepancy between X and charge
                 //5. If underflow is allowed, use that
-                if (user.currentAdderCharge >= 0
+                if (user.currentAdderCharge >= 0    //Adder is not depleted or is overflowing
                     || allowUnderflow
-                    || (chanceToRecoverBacklog && Rand.Value < (float)(cpu + user.currentAdderCharge) / (float)cpu))
+                    || (chanceToRecoverBacklog      //Chance to return backlog proportional to charges remaining in adder
+                    && Rand.Value < (float)(cpu + user.currentAdderCharge) / (float)cpu))
                 {
+                    Log.Message("d");
                     return thing;
                 }
+                Log.Message("e");
             }
 
+            Log.Message("f");
             isSpent = true;
 
-            if (user.DiscardRounds)
+            if (DiscardRounds(thing.def, user))
                 return null;
 
+            Log.Message("g");
             // [XX 2. XX] NOT USED Convert non-X charge count to fallback ThingDefs - no partially spent rounds allowed
 
             if (IsSpentAdder(thing.def))
+            {
+                Log.Message("h");
                 return thing;
+            }
             else
             {
+                Log.Message("k");
                 var spentThing = ThingMaker.MakeThing((thing.def as AmmoDef)?.spentThingDef) ?? null;
                 if (spentThing != null)
                     spentThing.stackCount = thing.stackCount;
@@ -296,9 +324,24 @@ namespace CombatExtended
             }
         }
 
+        /// <summary>Answers question (allMassAllowed = true): are spent cartridges discarded from the gun? (false): should shell motes appear?</summary>
+        /// <param name="def"></param>
+        /// <param name="user"></param>
+        /// <param name="allMassAllowed">If true, checks whether conservedMassFactorWhenFired is positive (should spawn shell mote?)</param>
+        /// <returns></returns>
+        public virtual bool DiscardRounds(ThingDef def, CompAmmoUser user, bool allMassAllowed = true)
+        {
+            if (def == null)
+                def = user.CurrentAdder.def;
+
+            return user.ejectsCasings && CanAdd(def)
+                && ((users.First()?.projectiles?.First()?.thingDef?.projectile as ProjectilePropertiesCE)?.dropsCasings ?? false)
+                && (allMassAllowed || (def as AmmoDef)?.conservedMassFactorWhenFired > 0f);
+        }
+
         public virtual bool CountFirstAdder(CompAmmoUser user)
         {
-            return user.currentAdderCharge == adders.First(x => x.thingDef == user.CurrentAdder.def).count;
+            return user.currentAdderCharge >= 0;
         }
 
         /// <summary>
@@ -316,6 +359,7 @@ namespace CombatExtended
 
         public virtual int UnloadNext(CompAmmoUser user, out ThingDefCount defCount)
         {
+            //CurMagCount appropriate, all loading related
             if (user.CurMagCount > 0)
             {
                 var availableAdders = adders.Where(x => x.count <= user.CurMagCount);

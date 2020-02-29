@@ -72,11 +72,11 @@ namespace CombatExtended
             // Update selected ammo if necessary
             var newLink = turret.CompAmmo.Props.ammoSet.Containing(ammo.def);
             if (newLink != turret.CompAmmo.SelectedLink)
-                turret.CompAmmo.SelectedLink = newLink;
+                turret.CompAmmo.SwitchLink(newLink);
 
             // Create the actual job
             int amountNeeded = turret.CompAmmo.Props.magazineSize;
-            if (turret.CompAmmo.LinksMatch) amountNeeded -= turret.CompAmmo.CurMagCount;
+            if (turret.CompAmmo.LinksMatch) amountNeeded -= turret.CompAmmo.CurMagCount;    //Correct, can't load more than curMagCount
             return new Job(DefDatabase<JobDef>.GetNamed("ReloadTurret"), t, ammo) { count = Mathf.Min(amountNeeded, ammo.stackCount) };
         }
     }

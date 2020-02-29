@@ -205,7 +205,7 @@ namespace CombatExtended
                     if ((pawn.skills.GetSkill(SkillDefOf.Shooting).Level >= pawn.skills.GetSkill(SkillDefOf.Melee).Level
                          || pawn.skills.GetSkill(SkillDefOf.Shooting).Level >= 6))
                     {
-                        ThingWithComps InvListGun3 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine);
+                        ThingWithComps InvListGun3 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>()?.HasAnyAmmoOrMagazine ?? false);
                         if (InvListGun3 != null)
                         {
                             inventory.TrySwitchToWeapon(InvListGun3);
@@ -220,7 +220,7 @@ namespace CombatExtended
                     if ((pawn.skills.GetSkill(SkillDefOf.Shooting).Level >= pawn.skills.GetSkill(SkillDefOf.Melee).Level
                          || pawn.skills.GetSkill(SkillDefOf.Shooting).Level >= 6) && !brawler)
                     {
-                        ThingWithComps InvListGun3 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine);
+                        ThingWithComps InvListGun3 = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>()?.HasAnyAmmoOrMagazine ?? false);
                         if (InvListGun3 != null)
                         {
                             inventory.TrySwitchToWeapon(InvListGun3);
@@ -243,7 +243,7 @@ namespace CombatExtended
                 if (!pawn.Faction.IsPlayer && primaryAmmoUser != null && priority == WorkPriority.Unloading && inventory.rangedWeaponList.Count >= 1)
                 {
                     Thing ListGun = inventory.rangedWeaponList.Find(thing => thing.TryGetComp<CompAmmoUser>() != null && thing.def != pawn.equipment.Primary.def);
-                    if (ListGun != null && !ListGun.TryGetComp<CompAmmoUser>().HasAmmoOrMagazine)
+                    if (ListGun != null && !ListGun.TryGetComp<CompAmmoUser>().HasAnyAmmoOrMagazine)
                     {
                         Thing droppedWeapon;
                         if (inventory.container.TryDrop(ListGun, pawn.Position, pawn.Map, ThingPlaceMode.Near, ListGun.stackCount, out droppedWeapon))

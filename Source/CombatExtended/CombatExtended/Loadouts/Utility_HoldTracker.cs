@@ -294,7 +294,7 @@ namespace CombatExtended
                 {
                     for (int i = 0; i < gun.adders.Count; i++)
                     {
-                        var count = gun.adders[i].stackCount - (i == 1 && gun.CurrentLink.CountFirstAdder(gun) ? 1 : 0);
+                        var count = gun.adders[i].stackCount - (i == 1 && gun.CurrentLink.CountFirstAdder(gun) ? 0 : 1);
                         storage.Add(gun.adders[i].def, new Integer(count));
                     }
                     
@@ -319,7 +319,7 @@ namespace CombatExtended
                 {
                     for (int i = 0; i < gun.adders.Count; i++)
                     {
-                        var count = gun.adders[i].stackCount - (i == 1 && gun.CurrentLink.CountFirstAdder(gun) ? 1 : 0);
+                        var count = gun.adders[i].stackCount - (i == 1 && gun.CurrentLink.CountFirstAdder(gun) ? 0 : 1);
                         if (storage.ContainsKey(gun.adders[i].def))
                             storage[gun.adders[i].def].value += count;
                         else

@@ -14,6 +14,7 @@ namespace CombatExtended.Harmony
         {
             var ammoUser = (__instance as ThingWithComps)?.TryGetComp<CompAmmoUser>();
 
+            //CurMagCount is appropriate -- loaded ammo
             if (ammoUser != null && (ammoUser.HasMagazine && ammoUser.CurMagCount > 0 && ammoUser.CurrentLink != null))
             {
                 if (ammoUser.TryUnload(out var list, true, true))

@@ -209,7 +209,7 @@ namespace CombatExtended
         {
             CompAmmoUser comp = gun.TryGetComp<CompAmmoUser>();
             if (comp == null) return true;
-            return !comp.UseAmmo || comp.CurMagCount > 0 || comp.HasAmmo;
+            return !comp.UseAmmo || comp.CurChargeCount > 0 || comp.HasAmmoForCurrentLink;
         }
 
         public static bool CanBeStabilized(this Hediff diff)

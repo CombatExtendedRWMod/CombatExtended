@@ -14,6 +14,7 @@ namespace CombatExtended
     {
 
         #region Fields
+        /// <summary>Charges added as a result of Things in the adders list; IGNORES currentAdderCharge</summary>
         private int curMagCountInt = 0;
 
         private Thing ammoToBeDeleted;
@@ -22,6 +23,7 @@ namespace CombatExtended
         public List<Thing> spentAdders = new List<Thing>();
 
         public Thing CurrentAdder => adders.FirstOrDefault();
+        /// <summary>Excess (&gt;0) or deficit (&lt;0) of charges added by the CurrentAdder. If &lt;= -CurrentAdder's charges added, destroy CurrentAdder</summary>
         public int currentAdderCharge = 0;
         
         public Building_TurretGunCE turret;         // Cross-linked from CE turret
@@ -40,24 +42,24 @@ namespace CombatExtended
         }
 
         /// <summary>Cached whether gun ejects cases for faster SpentRounds calculation</summary>
-        bool ejectsCasings = false;
+        public bool ejectsCasings = false;
         public bool DiscardRounds => ejectsCasings
             && ((MainProjectile.projectile as ProjectilePropertiesCE)?.dropsCasings ?? false);
         
+        /// <summary>Sum of charges of all adders and the deficit in the CurrentAdder -- concerns "firable charges", properly treats partially spent rounds</summary>
+        public int CurChargeCount
+        {
+            get
+            {
+                return curMagCountInt + currentAdderCharge;
+            }
+        }
+        /// <summary>Sum of charges of all adders -- concerns "loaded" rounds, counts partially spent rounds as "loaded"</summary>
         public int CurMagCount
         {
             get
             {
                 return curMagCountInt;
-            }
-            set
-            {
-                if (curMagCountInt != value && value >= 0)
-                {
-                    curMagCountInt = value;
-
-                    if (CompInventory != null) CompInventory.UpdateInventory();     //Must be positioned after curMagCountInt is updated, because it relies on that value
-                }
             }
         }
         public CompEquippable CompEquippable
@@ -92,37 +94,25 @@ namespace CombatExtended
                 return Controller.settings.EnableAmmoSystem && Props.ammoSet != null;
             }
         }
-        public bool HasAndUsesAmmoOrMagazine
-        {
-            get
-            {
-                return !UseAmmo || HasAmmoOrMagazine;
-            }
-        }
-        public bool HasAmmoOrMagazine
-        {
-            get
-            {
-                return (HasMagazine && CurMagCount > 0) || HasAmmo;
-            }
-        }
+        //JobDriver_Hunt (CurrentLink) CompInventory (AnyLink)
+        public bool HasAndUsesCurrentAmmoOrMagazine => !UseAmmo || HasCurrentAmmoOrMagazine;
+        public bool HasAndUsesAnyAmmoOrMagazine => !UseAmmo || HasAnyAmmoOrMagazine;
+        //Used for bows (CurrentLink), TakeAndEquip (wrongly; AmmoSet), HasAndUsesAmmoOrMagazine.
+        public bool HasCurrentAmmoOrMagazine => (HasMagazine && CurChargeCount > 0) || HasAmmoForCurrentLink;
+        public bool HasAnyAmmoOrMagazine => (HasMagazine && CurChargeCount > 0) || HasAmmoForAmmoSet;
         public bool CanBeFiredNow
         {
             get
             {
-                return (HasMagazine && CurMagCount > 0) || (!HasMagazine && (HasAmmo || !UseAmmo));
+                return HasMagazine
+                    ? CurrentUser != null   //CurrentUser takes from BestUser, which checks whether CurChargeCount is sufficient to fire the projectile
+                    : !UseAmmo || HasAmmoForCurrentLink;  //HasAmmo checks whether inventory has anything that could charge any AmmoLink
             }
         }
-        //TODO: Split into HasAmmo(for current link) and HasAmmo(for any link)
-        public bool HasAmmo => CompInventory?.ammoList.Any(x => Props.ammoSet.MaxCharge(x.def) > 0) ?? false;
+        //ASDF: Decide which methods call which version!
+        public bool HasAmmoForAmmoSet => CompInventory?.ammoList.Any(x => Props.ammoSet.MaxCharge(x.def) > 0) ?? false;
+        public bool HasAmmoForCurrentLink => CompInventory?.ammoList.Any(x => CurrentLink.CanAdd(x.def)) ?? false;
         public bool HasMagazine { get { return Props.magazineSize > 0; } }
-      /*public AmmoDef CurrentAmmo
-        {
-            get
-            {
-                return UseAmmo ? currentAmmoInt : null;
-            }
-        }*/
 
         int currentLinkInt;
         public AmmoLink CurrentLink => Props.ammoSet.ammoTypes[currentLinkInt];
@@ -132,13 +122,6 @@ namespace CombatExtended
             get
             {
                 return Props.ammoSet.ammoTypes[selectedLinkInt];
-            }
-            set
-            {
-                selectedLinkInt = Props.ammoSet.ammoTypes.IndexOf(value);
-
-                if (!HasMagazine && !LinksMatch)
-                    currentLinkInt = selectedLinkInt;
             }
         }
         public bool LinksMatch => selectedLinkInt == currentLinkInt;
@@ -235,7 +218,7 @@ namespace CombatExtended
         {
             base.PostExposeData();
             Scribe_Values.Look(ref curMagCountInt, "count", 0);
-            Scribe_Values.Look(ref currentAdderCharge, "deficit", 0);
+            Scribe_Values.Look(ref currentAdderCharge, "currentAdderCharge", 0);
 
             Scribe_Values.Look<int>(ref currentLinkInt, "currentLinkInt", 0);
             Scribe_Values.Look<int>(ref selectedLinkInt, "selectedLinkInt", currentLinkInt);
@@ -260,6 +243,15 @@ namespace CombatExtended
             }
         }
 
+        void PrintDebug(string tag)
+        {
+            Log.Message(tag
+                + " Adder: " + string.Join(",", adders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
+                + " Spent: " + string.Join(",", spentAdders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
+                + " cMC: " + curMagCountInt
+                + " cAC: " + currentAdderCharge);
+        }
+
         #region Firing
         #region Bows
         //Of relevance to ammousers without mag (bows)
@@ -270,7 +262,7 @@ namespace CombatExtended
                 ammoToBeDeleted.Destroy();
                 ammoToBeDeleted = null;
                 CompInventory.UpdateInventory();
-                if (!HasAmmoOrMagazine)
+                if (!HasCurrentAmmoOrMagazine)
                 {
                     return false;
                 }
@@ -281,7 +273,7 @@ namespace CombatExtended
         //Of relevance to ammousers without mag (bows)
         public bool Notify_PostShotFired()
         {
-            if (!HasAmmoOrMagazine)
+            if (!HasCurrentAmmoOrMagazine)
             {
                 DoOutOfAmmoAction();
                 return false;
@@ -290,72 +282,106 @@ namespace CombatExtended
         }
         #endregion
 
-        /// <summary>
-        /// Reduces ammo count and updates inventory if necessary, call this whenever ammo is consumed by the gun (e.g. firing a shot, clearing a jam).
-        /// </summary>
-        public bool TryFire()
+        /// <summary>Check whether gun can fire</summary>
+        /// <returns></returns>
+        public bool PreFire()
         {
-            Log.Message("TryFire"
-                + " Adder: " + string.Join(",", adders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " Spent: " + string.Join(",", spentAdders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " cMC: " + curMagCountInt
-                + " cAC: " + currentAdderCharge);
+            PrintDebug("TryFire"); //ASDF remove
 
             if (Wielder == null && turret == null)
                 Log.Error(parent.ToString() + " tried reducing its ammo count without a wielder");
-            
-            var chargesUsed = CurrentUser?.chargesUsed ?? 1;
 
             // If magazine is empty, return false
-            if (CurMagCount <= 0)
+            if (CurChargeCount <= 0)
             {
-                CurMagCount = 0;
+                //if (!CurrentLink.allowUnderflow && curMagCountInt != 0)
+                //    curMagCountInt = 0;
+
+                //CurMagCount = 0;    //ASDF: Consider whether is accurate
                 return false;
             }
-
-            // Reduce ammo count
-            curMagCountInt -= chargesUsed;
-
+            
+            var chargesUsed = CurrentUser?.chargesUsed ?? 1;    //Fallback to 1 on guns without ammo.. but still a CompAmmoUser..?
+            
             // Mag-less weapons feed directly from inventory
-            if (!HasMagazine && CurMagCount <= 0)
+            if (!HasMagazine && (CurChargeCount - chargesUsed <= 0 && !CurrentLink.allowUnderflow))
                 return LoadAmmo();
 
-            if (HasMagazine)
-            {
-                //Decrease currentAdder's charges
-                currentAdderCharge -= chargesUsed;
+            return CanBeFiredNow;
+        }
+        
+        /// <summary>
+        /// Reduces ammo count and updates inventory if necessary, call this whenever ammo is consumed by the gun (e.g. firing a shot, clearing a jam).
+        /// </summary>
+        public void PostFire()
+        {
+            // --------
+            // Past the possiblity of return false; Can now make changes
+            // --------
 
-                if (!TryFeed())
-                {
-                    TryStartReload();
-                    return true;
-                }
+            //The amount of charges used by the just-fired projectile
+            var chargesUsed = CurrentUser?.chargesUsed ?? 1;    //Fallback to 1 on guns without ammo.. but still a CompAmmoUser..?
+            
+            // Reduce ammo count
+            currentAdderCharge -= chargesUsed;
+
+            //Deletes cA when appropriate
+            if (HasMagazine && !TryFeed())
+            {
+                TryStartReload();
+                return;
             }
 
             //Update inventory
-            CurMagCount = curMagCountInt;
+            CompInventory?.UpdateInventory();
 
-            if (curMagCountInt < 0) TryStartReload();
-            return true;
+            if (CurChargeCount < 0) TryStartReload();
+            return;
         }
 
+        /// <summary>True: Reload succesful or unnecessary; False: Reload failed, not reloadable in some way</summary>
+        /// <returns></returns>
         public bool TryFeed()
         {
+            //Get current adder's charges added
+            if (!CurrentLink.CanAdd(CurrentAdder.def, out var charge))
+                return false;
+
+            //Only feed when the current adder is fully depleted (deficit >= full charge)
+            if (currentAdderCharge > -charge)
+                return true;
+
             //Replenish currentAdder's charges with next adder
             while (currentAdderCharge < 0)
             {
                 //Find new currentAdder
-                if (CurrentLink.CanAdd(CurrentAdder.def, out var newChargeCount))
+                if (CurrentAdder != null && CurrentLink.CanAdd(CurrentAdder.def, out var newChargeCount))
                 {
-                    //Has issue
+                    //ASDF: "Has issue" -- sometimes returns amountDepleted = 0
                     var amountDepleted = CurrentLink.AmountForDeficit(CurrentAdder, -currentAdderCharge, true);
 
-                    //Add count from currentAdder
+                    //Move count from currentAdder
                     currentAdderCharge += amountDepleted * newChargeCount;
+                    curMagCountInt -= amountDepleted * newChargeCount;
 
-                    //Runs perfectly
+                    //Remove count from adders -- either here or in UnloadAdder
                     if (amountDepleted > 0)
-                        UnloadAdder(CurrentAdder.SplitOff(amountDepleted), true);
+                    {
+                        // Since SplitOff carries over the current Thing if the whole stack is split off,
+                        // we need to keep a cache of the Get-value that's split off of. Without the cache,
+                        // CurrentAdder.SplitOff() will remain within adders and there are two instances of
+                        // the ammo found, introducing all sorts of issues
+
+                        //Make cache of get-value
+                        var currentAdder = CurrentAdder;
+
+                        //Remove get-value source from list
+                        if (amountDepleted == currentAdder.stackCount)
+                            adders.RemoveAt(0);
+                        
+                        //Use cache for splitting off
+                        UnloadAdder(currentAdder.SplitOff(amountDepleted), true);
+                    }
                     else
                         return false;
                 }
@@ -395,7 +421,7 @@ namespace CombatExtended
             }
 
             if (updateInventory)
-                CurMagCount = curMagCountInt;
+                CompInventory?.UpdateInventory();
 
             //TODO: Handle inThing? Destroy it?
         }
@@ -406,11 +432,8 @@ namespace CombatExtended
         /// </summary>
         public void TryStartReload()
         {
-            Log.Message("TryStartReload-Pre"
-                + " Adder: " + string.Join(",", adders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " Spent: " + string.Join(",", spentAdders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " cMC: " + curMagCountInt
-                + " cAC: " + currentAdderCharge);
+            PrintDebug("TryStartReload-Pre");   //ASDF Remove
+
             #region Checks
             if (!HasMagazine)
             {
@@ -420,6 +443,7 @@ namespace CombatExtended
                 }
                 return;
             }
+
             if (Wielder == null && turret == null)
                 return;
 
@@ -440,18 +464,14 @@ namespace CombatExtended
                 TryUnload();
 
                 // Check for ammo
-                if (Wielder != null && !HasAmmo)
+                if (Wielder != null && !HasAmmoForCurrentLink)
                 {
                     DoOutOfAmmoAction();
                     return;
                 }
             }
 
-            Log.Message("TryStartReload-Post"
-                + " Adder: " + string.Join(",", adders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " Spent: " + string.Join(",", spentAdders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " cMC: " + curMagCountInt
-                + " cAC: " + currentAdderCharge);
+            PrintDebug("TryStartReload-Post");   //ASDF Remove
 
             //Because reloadOneAtATime weapons don't dump their mag at the start of a reload, have to stop the reloading process here if the mag was already full
             if (Props.reloadOneAtATime && UseAmmo && LinksMatch && CurMagCount == Props.magazineSize)
@@ -496,20 +516,26 @@ namespace CombatExtended
             {
                 if (ammo == null)
                 {
-                    if (!TryFindAmmoInInventory(CompInventory, out ammo, largestStack))
+                    //If ammo is null, allow any change to selectedLink. Otherwise, code isn't run anyways
+                    if (!TryFindAmmoInInventory(CompInventory, out ammo, largestStack, true))
                     {
                         DoOutOfAmmoAction();
                         return false;
                     }
                 }
-
-                //Sets CurMagCount
-                AddAdder(ammo);
+                
+                //Ammo can still be null at this point
+                if (ammo != null)
+                    AddAdder(ammo);
             }
             else
             {
-                CurMagCount = (Props.reloadOneAtATime) ? (curMagCountInt + 1) : Props.magazineSize;
+                //ASDF: Instead, increase curMagCountInt by a value found in the CurrentLink or some other part of the AmmoSetDef.. or default to 1
+                curMagCountInt = (Props.reloadOneAtATime) ? (curMagCountInt + 1) : Props.magazineSize;
             }
+
+            CompInventory?.UpdateInventory();
+
             if (turret != null) turret.isReloading = false;
             if (parent.def.soundInteract != null) parent.def.soundInteract.PlayOneShot(new TargetInfo(Position, Find.CurrentMap, false));
 
@@ -520,17 +546,16 @@ namespace CombatExtended
         {
             ammoThing = null;
 
-            if (inventory == null)
+            if (inventory == null || inventory.ammoList.NullOrEmpty())
                 return false;
 
             // Try finding suitable ammoThing for currently set ammo first
-            ammoThing = SelectedLink.BestAdder(inventory.ammoList ?? null, this, out var _, largestStack);
+            ammoThing = SelectedLink.BestAdder(inventory.ammoList, this, out var _, largestStack);
 
             if (ammoThing != null)
                 return true;
 
-            //TODO: Store currently loaded
-
+            //CurMagCount appropriate -- loaded ammo
             if (Props.reloadOneAtATime && CurMagCount > 0)
             {
                 //Current mag already has a few rounds in, and the inventory doesn't have any more of that type.
@@ -540,50 +565,128 @@ namespace CombatExtended
             }
 
             // Try finding ammo from different type
-            foreach (AmmoLink link in Props.ammoSet.ammoTypes)
+            if (setSelectedLink)
             {
-                if (link == SelectedLink)
-                    continue;
-
-                ammoThing = link.BestAdder(CompInventory.ammoList, this, out var _, largestStack);
-                
-                if (ammoThing != null)
+                for (int i = 0; i < Props.ammoSet.ammoTypes.Count; i++)
                 {
-                    if (setSelectedLink)
-                        SelectedLink = link;
+                    if (i == selectedLinkInt)
+                        continue;
+                    
+                    ammoThing = Props.ammoSet.ammoTypes[i].BestAdder(CompInventory.ammoList, this, out var _, largestStack);
 
-                    return true;
+                    if (ammoThing != null)
+                    {
+                        SwitchLink(Props.ammoSet.ammoTypes[i]);
+                        return true;
+                    }
                 }
             }
             return false;
         }
         #endregion
 
-        #region Unloading
-      /*bool FindNewBestAdder(out int newChargeCount)
+        #region Switching ammo
+        public bool SwitchLink(AmmoLink newLink, bool forced = false)
         {
-            var bestThing = CurrentLink.BestAdder(adders, this, out newChargeCount, false);
+            Log.Message("1");
+            //If a new link is supplied, try setting it (if possible)
+            if (newLink != null)
+            { 
+                if (!Props.ammoSet.ammoTypes.Contains(newLink))
+                    return false;
+            
+                var indexOf = Props.ammoSet.ammoTypes.IndexOf(newLink);
 
-            if (bestThing == null)
+                if (indexOf == selectedLinkInt && !forced)
+                    return false;
+
+                selectedLinkInt = indexOf;
+            }
+            Log.Message("2");
+
+            if (LinksMatch)
                 return false;
 
-            //Order newThing to front of list
-            var indexOf = adders.IndexOf(bestThing);
-            if (indexOf != 0)
+            Log.Message("3");
+            //If no charges are loaded, simple and guaranteed switch
+            if ((CurChargeCount == 0 && currentAdderCharge == 0))
             {
-                for (int i = indexOf; i > 0; i--)
-                    adders[i] = adders[i - 1];
-
-                adders[0] = bestThing;
+                //Allow for switching links
+                currentLinkInt = selectedLinkInt;
+                return true;
             }
 
-            //Order spent thing to front of list
-            
-            return true;
-        }*/
-        
+            Log.Message("4");
+            //Check whether all currently loaded charges fit in the other link ..
+            int magDifference = 0;
+            bool canMatch = true;
+            foreach (var adder in adders)
+            {
+                if (SelectedLink.CanAdd(adder.def, out var cpuNew) && CurrentLink.CanAdd(adder.def, out var cpuCur))
+                    magDifference += adder.stackCount * (cpuNew - cpuCur);
+                else
+                {
+                    canMatch = false;
+                    break;
+                }
+            }
+
+            Log.Message("5");
+            //.. and whether the difference in charges loaded by the adders in both links is acceptable
+            if (canMatch && curMagCountInt + magDifference <= Props.magazineSize)
+            {
+                currentLinkInt = selectedLinkInt;
+                return true;
+            }
+            Log.Message("6");
+
+            //Otherwise... no simple conversion possible. Need to unload and reload.
+            if (forced && TryUnload())
+            {
+                //Call this method again
+
+                currentLinkInt = selectedLinkInt;
+                return true;
+            }
+
+            //ASDF --> Convert to non-instant ammo change when any adders are present in magazine, when cAC is negative or positive..
+            //ASDF TODO: Forced parameter
+            //Try and reload and such
+
+            //if (!HasMagazine)
+            //    currentLinkInt = selectedLinkInt;
+
+            return false;
+        }
+        #endregion
+
+        #region Unloading
+        /*bool FindNewBestAdder(out int newChargeCount)
+          {
+              var bestThing = CurrentLink.BestAdder(adders, this, out newChargeCount, false);
+
+              if (bestThing == null)
+                  return false;
+
+              //Order newThing to front of list
+              var indexOf = adders.IndexOf(bestThing);
+              if (indexOf != 0)
+              {
+                  for (int i = indexOf; i > 0; i--)
+                      adders[i] = adders[i - 1];
+
+                  adders[0] = bestThing;
+              }
+
+              //Order spent thing to front of list
+
+              return true;
+          }*/
+
         void UnloadAdder(Thing thing = null, bool isSpent = false)
         {
+            PrintDebug("UnloadAdder-Pre");   //ASDF Remove
+
             bool isCurrentAdder = false;
             if (thing == null)
             {
@@ -595,40 +698,70 @@ namespace CombatExtended
                 }
             }
 
-            if (thing == null)
+            if (thing == null || thing.stackCount < 1)
                 return;
 
-            //Handle currently-used adder
+            //Handle currently-used adder ----> This is checked for SelectedLink instead...
             var spentThing = CurrentLink.UnloadAdder(thing, this, ref isSpent);
 
-          //if (isCurrentAdder && currentAdderCharge > 0)
-          //    currentAdderCharge = 0;
+            //spentThing is any of:
+            // - thing
+            // - thing, but isSpent == true
+            // - null
+            // - a spent thing w/ stackCount = thing.stackCount
 
-            if (spentThing == null)
+            //Cannot be null, since thing != null
+            if (spentThing == thing)
             {
-                if (isCurrentAdder)
-                    thing = CurrentAdder.SplitOff(1);
+                //Return to where it came from (adders)
+                if (!isSpent)
+                    return;
 
-                adders.Remove(thing);
-                thing.Destroy();
+                //Split off one and add to spentAdders
+                if (isCurrentAdder && thing.stackCount > 1)
+                {
+                    spentThing = thing.SplitOff(1);
+                }
+                else
+                    adders.Remove(spentThing);
+
+                //Adds spentThing to spentAdders
+                AddAdder(spentThing, true);
+
+                PrintDebug("UnloadAdder-Same");   //ASDF Remove
+
                 return;
             }
 
-            //Handles CurMagCount changes
-            if (!isCurrentAdder)
-                AddAdder(spentThing, !isCurrentAdder && isSpent);
+            //Must destroy thing entirely or in part
+            if (spentThing == null)
+            {
+                if (isCurrentAdder && thing.stackCount > 1)
+                    spentThing = thing.SplitOff(1);
+                else
+                    spentThing = thing;
+
+                adders.Remove(spentThing);
+                spentThing.Destroy();
+
+                PrintDebug("UnloadAdder-Null");   //ASDF Remove
+
+                return;
+            }
 
             //If the current thing has to be destroyed
-            if (spentThing.def != thing.def)
+            if (spentThing != thing)
             {
-                if (isCurrentAdder)
-                    thing = CurrentAdder.SplitOff(1);
+                if (isCurrentAdder && thing.stackCount > 1)
+                    spentThing.stackCount = 1;
 
                 adders.Remove(thing);
-                spentAdders.Remove(thing);
                 thing.Destroy();
-              //if (isCurrentAdder)
-              //    FindNewBestAdder(out var _);
+                AddAdder(spentThing, true);
+
+                PrintDebug("UnloadAdder-Different");   //ASDF Remove
+
+                return;
             }
         }
         
@@ -655,7 +788,7 @@ namespace CombatExtended
         /// <returns>Whether we're in "a bad state", e.g unloading failed</returns>
         public bool TryUnload(out List<Thing> droppedAmmo, bool forceUnload = false, bool convertAllToThingList = false)
         {
-            droppedAmmo = new List<Thing>();
+            droppedAmmo = null;
 
                 if (!HasMagazine || (Holder == null && turret == null && !convertAllToThingList))
                     return false; // nothing to do as we are in a bad state;
@@ -670,16 +803,16 @@ namespace CombatExtended
 
             //-- -- Add remaining ammo back in the inventory -- --
             //Returns current adder to adders or to spentAdders
+            
+            //ASDF: Should be used for the CURRENT LINK. Errors happen due to SELECTED LINK being used
             UnloadAdder();
 
-            Log.Message("TryUnload-Pre"
-                + " Adder: " + string.Join(",", adders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " Spent: " + string.Join(",", spentAdders.Select((x, y) => "[" + y + "]" + x.def.defName + "=" + x.stackCount).ToArray())
-                + " cMC: " + curMagCountInt
-                + " cAC: " + currentAdderCharge);
+            PrintDebug("TryUnload-Pre");   //ASDF Remove
+
+            droppedAmmo = new List<Thing>();
 
             //Clear adders
-            if (curMagCountInt != 0)
+            if (CurMagCount > 0)
             {
                 //Unload adders
                 for (int i = adders.Count - 1; i > -1; i--)
@@ -688,7 +821,9 @@ namespace CombatExtended
 
                     //Handle remaining magcount from current adders
                     if (CurrentLink.CanAdd(thing.def, out var cpu))
+                    {
                         curMagCountInt -= cpu * thing.stackCount;
+                    }
 
                     if (convertAllToThingList)
                     {
@@ -800,9 +935,18 @@ namespace CombatExtended
             if (UseAmmo)
             {
                 //Remove all stored charge information
-                adders.All(x => { adders.Remove(x); x.Destroy(); return true; });
-                spentAdders.All(x => { spentAdders.Remove(x); x.Destroy(); return true; });
-                currentAdderCharge = 0;
+                for (int i = adders.Count - 1; i > -1; i--)
+                {
+                    adders[i].Destroy();
+                    adders.RemoveAt(i);
+                }
+                for (int i = spentAdders.Count - 1; i > -1; i--)
+                {
+                    spentAdders[i].Destroy();
+                    spentAdders.RemoveAt(i);
+                }
+                
+                currentAdderCharge = 0; //ASDF: Correct assignment
                 curMagCountInt = 0;
 
                 if (newAdderDef == null)
@@ -817,13 +961,17 @@ namespace CombatExtended
                     var count = Math.Min(newAdderDef.stackLimit, stackToAccountFor);
                     toLoadMag.stackCount = count;
                     stackToAccountFor -= count;
+
+                    //Handles curMagCountInt increase
                     AddAdder(toLoadMag, false, true);
                 }
             }
             else
+            {
                 curMagCountInt = Props.magazineSize;
+            }
 
-            CurMagCount = curMagCountInt;
+            CompInventory?.UpdateInventory();
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()

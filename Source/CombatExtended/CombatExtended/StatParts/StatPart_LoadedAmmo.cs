@@ -25,12 +25,12 @@ namespace CombatExtended
             var cartridgeCount = req.Thing?.TryGetComp<CompAmmoUser>().adders?.Sum(x => x.stackCount) ?? 0;
             var spentCartridgeCount = req.Thing?.TryGetComp<CompAmmoUser>().spentAdders?.Sum(x => x.stackCount) ?? 0;
             
-            if (cartridgeCount > 0)
+            if (cartridges > 0)
                 stringBuilder.AppendLine("CE_StatsReport_LoadedAmmo".Translate() 
                     + (cartridgeCount > 1 ? (" (x"+cartridgeCount+"): ") : ": ")
                     + parentStat.ValueToString(cartridges));
 
-            if (spentCartridgeCount > 0)
+            if (spentCartridges > 0)
                 stringBuilder.AppendLine("CE_StatsReport_SpentAmmo".Translate() 
                     + (spentCartridgeCount > 1 ? (" (x"+spentCartridgeCount+"): ") : ": ")
                     + parentStat.ValueToString(spentCartridges));
@@ -66,7 +66,7 @@ namespace CombatExtended
                     {
                         cartridges *= ammoUser.Props.loadedAmmoBulkFactor;
 
-                        if (ammoUser.HasMagazine && ammoUser.CurMagCount > 0)
+                        if (ammoUser.HasMagazine && ammoUser.CurChargeCount > 0)
                             magazine = ammoUser.Props.magazineBulk;
                     }
 

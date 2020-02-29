@@ -53,6 +53,7 @@ namespace CombatExtended
                     Find.WindowStack.Add(MakeAmmoMenu());
                 }
             }
+            //CurMagCount -- loaded ammo
             else if (!compAmmo.LinksMatch || compAmmo.CurMagCount < compAmmo.Props.magazineSize)
             {
                 base.ProcessInput(ev);
@@ -111,13 +112,15 @@ namespace CombatExtended
                 {
                     var user = other.compAmmo;
 
-                    foreach (AmmoLink link in user.Props.ammoSet.ammoTypes)
+                    for (int i = 0; i < user.Props.ammoSet.ammoTypes.Count; i++)
                     {
+                        AmmoLink link = user.Props.ammoSet.ammoTypes[i];
+
                         var ammoClass = link.ammoClass;
 
                         // If we have no inventory available (e.g. manned turret), add all possible ammo types to the selection
                         // Otherwise, iterate through all suitable ammo types and check if they're in our inventory
-                        if (user.HasAmmo)
+                        if (user.HasAmmoForAmmoSet)
                         {
                             if (!ammoClassAmounts.ContainsKey(ammoClass))
                                 ammoClassAmounts.Add(ammoClass, new int[2]);
@@ -132,12 +135,14 @@ namespace CombatExtended
 
                             if (user.SelectedLink == link)
                             {
+                                del += delegate { user.SwitchLink(link); };
+
                                 if (Controller.settings.AutoReloadOnChangeAmmo && user.turret?.MannableComp == null && user.CurMagCount < user.Props.magazineSize)
                                     del += other.action;
                             }
                             else
                             {
-                                del += delegate { user.SelectedLink = link; };
+                                del += delegate { user.SwitchLink(link); };
 
                                 if (Controller.settings.AutoReloadOnChangeAmmo && user.turret?.MannableComp == null)
                                     del += other.action;
@@ -190,6 +195,7 @@ namespace CombatExtended
                     reload = true;
                     reloadDel += other.action;
 
+                    //CurMagCount because it concerns loaded charges (unloading)
                     if (user.UseAmmo && user.CurMagCount > 0)
                     {
                         unload = true;

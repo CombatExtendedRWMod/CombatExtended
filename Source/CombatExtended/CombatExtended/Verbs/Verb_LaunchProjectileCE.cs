@@ -113,19 +113,15 @@ namespace CombatExtended
                 return compAmmo;
             }
         }
-        public bool latestProjectileFired = true;
+      //public bool latestProjectileFired = true;
         public ThingDef Projectile
         {
             get
             {
                 //latestProjectileFired check needed, because CurrentUser is sometimes incorrect after CurrentAdder is consumed
-                if (CompAmmo != null && (latestProjectileFired
-                    ? CompAmmo.CurrentUser != null
-                    : CompAmmo.latestUser != null))
+                if (CompAmmo != null && CompAmmo.CurrentUser != null)
                 {
-                    return (latestProjectileFired
-                        ? CompAmmo.MainProjectile
-                        : CompAmmo.latestUser.projectiles.First().thingDef);
+                    return CompAmmo.MainProjectile;
                 }
                 if (CompChangeable != null && CompChangeable.Loaded)
                 {
@@ -241,7 +237,8 @@ namespace CombatExtended
                 // ----------------------------------- STEP 1: Actual location + Shift for visibility
 
                 //FIXME : GetRandCircularVec may be causing recoil to be unnoticeable - each next shot in the burst has a new random circular vector around the target.
-                newTargetLoc += report.GetRandCircularVec();
+                if (numShotsFired == 0)
+                    newTargetLoc += report.GetRandCircularVec();
 
                 // ----------------------------------- STEP 2: Estimated shot to hit location
 
@@ -358,7 +355,7 @@ namespace CombatExtended
             {
                 report.weatherShift = 1 - caster.Map.weatherManager.CurWeatherAccuracyMultiplier;
             }
-            report.shotSpeed = ShotSpeed;
+            report.shotSpeed = ShotSpeed;   //Calculate shotSpeed according to the main projectile
             report.swayDegrees = SwayAmplitude;
             var spreadmult = projectilePropsCE != null ? projectilePropsCE.spreadMult : 0f;
             report.spreadDegrees = EquipmentSource.GetStatValue(StatDef.Named("ShotSpread")) * spreadmult;
@@ -542,10 +539,14 @@ namespace CombatExtended
             ShiftVecReport report = ShiftVecReportFor(currentTarget);
             bool pelletMechanicsOnly = false;
 
+            //ASDF instead iterate CurrentUser, and do not change CurrentUser until after shot
             var iteratedList = CompAmmo?.latestUser?.projectiles;
-
+            
             if (iteratedList.NullOrEmpty())
+            {
+                iteratedList = new List<ThingDefCountClass>();
                 iteratedList.Add(new ThingDefCount(Projectile, 1));
+            }
 
             foreach (var proj in iteratedList)
             {
@@ -571,7 +572,9 @@ namespace CombatExtended
                         shotAngle,
                         shotRotation,
                         ShotHeight,
-                        ShotSpeed,
+                        //Take latest projectile in iteratedList rather than Projectile (only first of iteratedList)
+                        (proj.thingDef.projectile?.speed > 0 ? proj.thingDef.projectile?.speed : ShotSpeed)
+                            ?? ShotSpeed,   //Default to unknown (or mortar-based) speed
                         EquipmentSource
                     );
                     pelletMechanicsOnly = true;

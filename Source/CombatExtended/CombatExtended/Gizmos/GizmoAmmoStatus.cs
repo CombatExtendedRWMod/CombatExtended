@@ -46,11 +46,11 @@ namespace CombatExtended
             {
                 Rect barRect = inRect;
                 barRect.yMin = overRect.y + overRect.height / 2f;
-                float ePct = (float)compAmmo.CurMagCount / compAmmo.Props.magazineSize;
+                float ePct = (float)compAmmo.CurChargeCount / compAmmo.Props.magazineSize;
                 Widgets.FillableBar(barRect, ePct);
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(barRect, compAmmo.CurMagCount + " / " + compAmmo.Props.magazineSize);
+                Widgets.Label(barRect, compAmmo.CurChargeCount + " / " + compAmmo.Props.magazineSize);
                 Text.Anchor = TextAnchor.UpperLeft;
             }
 

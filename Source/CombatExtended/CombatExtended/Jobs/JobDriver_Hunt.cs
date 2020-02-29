@@ -85,7 +85,7 @@ namespace CombatExtended
                     {
                         if (Find.TickManager.TicksGame <= jobStartTick + MaxHuntTicks)
                         {
-                            if (comp == null || comp.HasAndUsesAmmoOrMagazine)
+                            if (comp == null || comp.HasAndUsesAnyAmmoOrMagazine)
                             {
                                 return false;
                             }

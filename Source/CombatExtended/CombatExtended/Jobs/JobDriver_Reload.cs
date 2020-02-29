@@ -80,7 +80,7 @@ namespace CombatExtended
             //return comp != null && !comp.hasAndUsesAmmoOrMagazine;
             // expecting true ends the job.  if comp == null then will return false from the first part and not test the second.  Job will continue (bad).
 
-            return compReloader == null || !compReloader.HasAndUsesAmmoOrMagazine;
+            return compReloader == null || !compReloader.HasAndUsesAnyAmmoOrMagazine;
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace CombatExtended
             // choose ammo to be loaded and set failstate for no ammo in inventory
             if (compReloader.UseAmmo)
             {
-                this.FailOn(() => !compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo));
+                this.FailOn(() => !compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo, true, true));
             }
 
             // setup fail states, if something goes wrong with the pawn performing the reload, the weapon, or something else that we want to fail on.
@@ -162,7 +162,7 @@ namespace CombatExtended
             // If reloading one shot at a time and if possible to reload, jump back to do-nothing toil
             System.Func<bool> jumpCondition =
                 () => compReloader.Props.reloadOneAtATime &&
-                      compReloader.CurMagCount < compReloader.Props.magazineSize &&
+                      compReloader.CurChargeCount < compReloader.Props.magazineSize &&
                       (!compReloader.UseAmmo || compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo));
             Toil jumpToil = Toils_Jump.JumpIf(waitToil, jumpCondition);
             yield return jumpToil;

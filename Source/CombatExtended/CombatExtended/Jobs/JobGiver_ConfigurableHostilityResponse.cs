@@ -74,7 +74,7 @@ namespace CombatExtended
                 CompAmmoUser compAmmo = pawn.equipment.Primary.TryGetComp<CompAmmoUser>();
                 if (compAmmo != null && !compAmmo.CanBeFiredNow)
                 {
-            		if (compAmmo.HasAmmo)
+            		if (compAmmo.HasAmmoForCurrentLink)
             		{
                         Job job = new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary);
                         if (job != null)

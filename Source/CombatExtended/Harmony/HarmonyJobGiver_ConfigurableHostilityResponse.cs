@@ -16,10 +16,10 @@ namespace CombatExtended.Harmony
                 var ammoComp = pawn.equipment.Primary?.TryGetComp<CompAmmoUser>();
                 if (ammoComp == null)
                     return;
-
+                
                 if (!ammoComp.CanBeFiredNow)
                 {
-                    __result = ammoComp.HasAmmo ? new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary) : new Job(JobDefOf.AttackMelee, __result.targetA);
+                    __result = ammoComp.HasAmmoForCurrentLink ? new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary) : new Job(JobDefOf.AttackMelee, __result.targetA);
                 }
             }
         }
