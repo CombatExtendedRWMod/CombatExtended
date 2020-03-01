@@ -132,7 +132,8 @@ namespace CombatExtended
             // choose ammo to be loaded and set failstate for no ammo in inventory
             if (compReloader.UseAmmo)
             {
-                this.FailOn(() => !compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo, true, true));
+                //Just check if there's _any_ ammo in the inventory
+                this.FailOn(() => !compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out var _, false, false));
             }
 
             // setup fail states, if something goes wrong with the pawn performing the reload, the weapon, or something else that we want to fail on.
@@ -156,14 +157,15 @@ namespace CombatExtended
 
             //Actual reloader
             Toil reloadToil = new Toil();
-            reloadToil.AddFinishAction(() => compReloader.LoadAmmo(initAmmo));
+            //LoadAmmo handles which ammo to actually pick upon loading -- no need to store initAmmo at all
+            reloadToil.AddFinishAction(() => compReloader.LoadAmmo());
             yield return reloadToil;
 
             // If reloading one shot at a time and if possible to reload, jump back to do-nothing toil
             System.Func<bool> jumpCondition =
                 () => compReloader.Props.reloadOneAtATime &&
-                      compReloader.CurChargeCount < compReloader.Props.magazineSize &&
-                      (!compReloader.UseAmmo || compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out initAmmo));
+                      compReloader.CurMagCount < compReloader.Props.magazineSize &&
+                      (!compReloader.UseAmmo || compReloader.TryFindAmmoInInventory(compReloader.CompInventory, out var _));
             Toil jumpToil = Toils_Jump.JumpIf(waitToil, jumpCondition);
             yield return jumpToil;
 

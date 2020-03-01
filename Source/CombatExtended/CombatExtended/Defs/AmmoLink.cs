@@ -215,16 +215,16 @@ namespace CombatExtended
         }*/
 
         //CompAmmo (TryFindAmmoInInventory, twice)
-        /// <summary>Best adder in provided inventory, taking into account whether it an fit</summary>
+        /// <summary>Best adder in provided inventory, taking into account whether it can fit for CurrentAdder</summary>
         /// <param name="things">A collection of Things, e.g from the inventory</param>
         /// <param name="user"></param>
         /// <param name="chargeCount">The amount of charges added per instance of adder consumed</param>
         /// <param name="defCount">The amount of charges associated with the returned Thing</param>
         /// <returns></returns>
-        public virtual Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false)
+        public virtual Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false, bool canFit = true)
         {
-            var thing = things.FirstOrDefault(x => x.def == iconAdder);
-
+            var thing = things.Where(x => x.def == iconAdder).MaxByWithFallback(x => x.stackCount);
+            
             chargeCount = 0;
 
             if (thing != null)
@@ -233,7 +233,7 @@ namespace CombatExtended
 
                 //ASDF: TODO, add some more considerations?
                 if (user.CurrentLink != this    //Non-currentlink.. or,
-                    || chargeCount <= (user.Props.magazineSize - user.CurMagCount))     //currentlink, but (at least one) ammo fits
+                    || (!canFit || allowOverflow || chargeCount <= (user.Props.magazineSize - user.CurMagCount)))     //currentlink, but (at least one) ammo fits
                     return thing;
             }
             return null;
@@ -293,7 +293,7 @@ namespace CombatExtended
         /// <param name="user"></param>
         /// <param name="isSpent"></param>
         /// <returns></returns>
-        public virtual Thing UnloadAdder(Thing thing, CompAmmoUser user, ref bool isSpent)
+        public virtual Thing UnloadAdder(Thing thing, CompAmmoUser user, ref bool isSpent, bool forUnloading = false)
         {
             Log.Message("a");
 
@@ -318,7 +318,7 @@ namespace CombatExtended
 
                 //3. Give a chance to recover a full X cartridge depending on the discrepancy between X and charge
                 //5. If underflow is allowed, use that
-                if (user.currentAdderCharge >= 0    //Adder is not depleted or is overflowing
+                if (user.currentAdderCharge > (forUnloading ? -cpu : -1)    //Adder is not depleted or is overflowing
                     || allowUnderflow
                     || (chanceToRecoverBacklog      //Chance to return backlog proportional to charges remaining in adder
                     && Rand.Value < (float)(cpu + user.currentAdderCharge) / (float)cpu))
@@ -353,19 +353,16 @@ namespace CombatExtended
             }
         }
 
-        /// <summary>Answers question (allMassAllowed = true): are spent cartridges discarded from the gun? (false): should shell motes appear?</summary>
+        /// <summary>Answers question are spent cartridges discarded from the gun?</summary>
         /// <param name="def"></param>
         /// <param name="user"></param>
         /// <param name="allMassAllowed">If true, checks whether conservedMassFactorWhenFired is positive (should spawn shell mote?)</param>
         /// <returns></returns>
         public virtual bool DiscardRounds(ThingDef def, CompAmmoUser user, bool allMassAllowed = true)
         {
-            if (def == null)
-                def = user.CurrentAdder.def;
-
             return user.ejectsCasings && CanAdd(def)
                 && ((users.First()?.projectiles?.First()?.thingDef?.projectile as ProjectilePropertiesCE)?.dropsCasings ?? false)
-                && (allMassAllowed || (def as AmmoDef)?.conservedMassFactorWhenFired > 0f);
+                && (def as AmmoDef)?.conservedMassFactorWhenFired > 0f;
         }
 
         public virtual bool CountFirstAdder(CompAmmoUser user)
@@ -440,6 +437,9 @@ namespace CombatExtended
 
                 if (xmlRoot.Attributes["Underflow"] != null)
                     allowUnderflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Underflow"].Value, typeof(bool));
+
+                if (xmlRoot.Attributes["RandBacklog"] != null)
+                    chanceToRecoverBacklog = (bool)ParseHelper.FromString(xmlRoot.Attributes["RandBacklog"].Value, typeof(bool));
             }
         }
 

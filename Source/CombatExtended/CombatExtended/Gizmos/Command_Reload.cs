@@ -135,17 +135,17 @@ namespace CombatExtended
 
                             if (user.SelectedLink == link)
                             {
-                                del += delegate { if (user.SwitchLink(link, true)
+                                del += delegate { if (user.SwitchLink(link, true, true) //desired
                                     && Controller.settings.AutoReloadOnChangeAmmo
                                     && user.turret?.MannableComp == null)
                                         other.action(); };
                             }
                             else
                             {
-                                del += delegate { if (user.SwitchLink(link, false)
+                                del += delegate { if (user.SwitchLink(link, false, true) //desired
                                     && Controller.settings.AutoReloadOnChangeAmmo
                                     && user.turret?.MannableComp == null
-                                    && user.HasAmmoForCurrentLink)  //Prevents reloading and "out-of-ammo" when no ammo of new ammo set is available
+                                    && user.HasAmmoForLink(user.CurrentLink))  //Prevents reloading and "out-of-ammo" when no ammo of new ammo set is available
                                         other.action(); };
                             }
 
@@ -200,7 +200,7 @@ namespace CombatExtended
                     if (user.UseAmmo && user.CurMagCount > 0)
                     {
                         unload = true;
-                        unloadDel += delegate { user.TryUnload(0, true); };
+                        unloadDel += delegate { user.TryUnload(0, true, true); };
                     }
                 }
             }

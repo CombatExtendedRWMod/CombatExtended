@@ -108,7 +108,7 @@ namespace CombatExtended
                 waitToil.actor.pather.StopDead();
                 if (compReloader.ShouldThrowMote)
                     MoteMaker.ThrowText(turret.Position.ToVector3Shifted(), turret.Map, string.Format("CE_ReloadingTurretMote".Translate(), TargetThingA.LabelCapNoCount));
-                compReloader.TryUnload(out var newAmmo);
+                compReloader.TryUnload(out var newAmmo, 0, false, false, true);
                 for (int i = 0; i < newAmmo.Count; i++)
                 {
                     if (newAmmo[i]?.CanStackWith(ammo) ?? false)

@@ -157,7 +157,23 @@ namespace CombatExtended
 
         private bool IsAttacking => ShooterPawn?.CurJobDef == JobDefOf.AttackStatic || ShooterPawn?.stances?.curStance is Stance_Warmup;
 
-
+        public void ThrowRoundMotes()
+        {
+            if (caster == null                                      //Caster position unknown
+                || (!VerbPropsCE?.ejectsCasings ?? false)           //Gun doesn't eject casings (default: does eject)
+                || projectilePropsCE == null
+                    || projectilePropsCE.dropsCasings)              //Projectile doesn't have casing (default: doesn't have)
+                return;
+            
+            if (CompAmmo == null || CompAmmo.CurrentAdder == null
+                || (CompAmmo.CurrentAdder.def as AmmoDef)?.conservedMassFactorWhenFired > 0f)
+            {
+                CE_Utility.ThrowEmptyCasing(
+                    caster.DrawPos,
+                    caster.Map,
+                    ThingDef.Named(projectilePropsCE?.casingMoteDefname ?? "Mote_EmptyCasing"));
+            }
+        }
         #endregion
 
         #region Methods
@@ -541,7 +557,7 @@ namespace CombatExtended
             bool pelletMechanicsOnly = false;
 
             //ASDF instead iterate CurrentUser, and do not change CurrentUser until after shot
-            var iteratedList = CompAmmo?.latestUser?.projectiles;
+            var iteratedList = CompAmmo?.CurrentUser?.projectiles;
             
             if (iteratedList.NullOrEmpty())
             {
@@ -549,6 +565,7 @@ namespace CombatExtended
                 iteratedList.Add(new ThingDefCount(Projectile, 1));
             }
 
+            // Fire many projectiles this tick
             foreach (var proj in iteratedList)
             {
                 for (int i = 0; i < ((proj.thingDef.projectile as ProjectilePropertiesCE)?.pelletCount ?? 1) * proj.count; i++)
@@ -582,11 +599,11 @@ namespace CombatExtended
                 }
             }
             pelletMechanicsOnly = false;
+
+            //Throw motes
+            ThrowRoundMotes();
+
             numShotsFired++;
-            if (CompAmmo != null && !CompAmmo.CanBeFiredNow && CompAmmo.PreReload())
-            {
-                CompAmmo?.TryStartReload();
-            }
             return true;
         }
 

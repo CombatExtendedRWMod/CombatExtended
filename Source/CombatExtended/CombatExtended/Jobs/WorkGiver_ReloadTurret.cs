@@ -46,9 +46,7 @@ namespace CombatExtended
             if (turret == null || turret.CompAmmo == null) return null;
 
             if (!turret.CompAmmo.UseAmmo)
-            {
                 return new Job(CE_JobDefOf.ReloadTurret, t, null);
-            }
 
             // Iterate through all possible ammo types for NPC's to find whichever is available, starting with currently selected
             Thing ammo = null;
@@ -72,7 +70,7 @@ namespace CombatExtended
             // Update selected ammo if necessary
             var newLink = turret.CompAmmo.Props.ammoSet.Containing(ammo.def);
             if (newLink != turret.CompAmmo.SelectedLink)
-                turret.CompAmmo.SwitchLink(newLink);
+                turret.CompAmmo.SwitchLink(newLink, true, turret.CompAmmo.forcedLinkSelect); //turret-related
 
             // Create the actual job
             int amountNeeded = turret.CompAmmo.Props.magazineSize;

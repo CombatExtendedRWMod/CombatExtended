@@ -138,7 +138,7 @@ namespace CombatExtended
         /// <param name="user"></param>
         /// <param name="defCount">The amount of charges associated with the returned Thing</param>
         /// <returns></returns>
-        public override Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false)
+        public override Thing BestAdder(IEnumerable<Thing> things, CompAmmoUser user, out int chargeCount, bool maxStackSize = false, bool canFit = true)
         {
             // From the largest to the smallest possible adder ..
             foreach (var dc in allowOverflow

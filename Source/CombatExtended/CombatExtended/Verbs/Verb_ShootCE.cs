@@ -183,12 +183,9 @@ namespace CombatExtended
             //Fire shot
             if (base.TryCastShot())
             {
-                // Code requiring previous CompAmmo.CurrentUser
-                // ------
-
-                //Drop casings
-                if (CompAmmo.CurrentLink.DiscardRounds(CompAmmo.CurrentAdder.def, CompAmmo, false))
-                    CE_Utility.ThrowEmptyCasing(caster.DrawPos, caster.Map, ThingDef.Named(projectilePropsCE.casingMoteDefname));
+                //Required since Verb_Shoot does this but Verb_LaunchProjectileCE doesn't when calling base.TryCastShot() because Shoot isn't its base
+                if (ShooterPawn != null)
+                    ShooterPawn.records.Increment(RecordDefOf.ShotsFired);
 
                 // HERE, CompAmmo.CurrentUser CHANGES -- thus, null (or incorrect) reference can be expected past this point
                 CompAmmo?.PostFire();
@@ -196,11 +193,7 @@ namespace CombatExtended
                 // Code NOT requiring previous CompAmmo.CurrentUser
                 // ------
 
-                //Required since Verb_Shoot does this but Verb_LaunchProjectileCE doesn't when calling base.TryCastShot() because Shoot isn't its base
-                if (ShooterPawn != null)
-                    ShooterPawn.records.Increment(RecordDefOf.ShotsFired);
-
-                // This needs to here for weapons without magazine to ensure their last shot plays sounds
+                // This needs to here for BOWS to ensure their last shot plays sounds
                 if (CompAmmo != null && !CompAmmo.HasMagazine && CompAmmo.UseAmmo)
                 {
                     if (!CompAmmo.Notify_ShotFired())

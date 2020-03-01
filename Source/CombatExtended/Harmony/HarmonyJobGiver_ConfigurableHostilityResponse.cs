@@ -17,9 +17,11 @@ namespace CombatExtended.Harmony
                 if (ammoComp == null)
                     return;
                 
+                //ASDF: Should most likely refer to ammoComp.PreReload() as well
+
                 if (!ammoComp.CanBeFiredNow)
                 {
-                    __result = ammoComp.HasAmmoForCurrentLink ? new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary) : new Job(JobDefOf.AttackMelee, __result.targetA);
+                    __result = ammoComp.HasAmmoForLink(ammoComp.CurrentLink) ? new Job(CE_JobDefOf.ReloadWeapon, pawn, pawn.equipment.Primary) : new Job(JobDefOf.AttackMelee, __result.targetA);
                 }
             }
         }

@@ -51,7 +51,7 @@ namespace CombatExtended
 
             // we relied on DoReloadCheck() to do error checking of many variables.
             if (DoReloadCheck(pawn, out var comp, out var link)
-                && comp.PreReload(link))
+                && comp.PreReload(link))    //sets link
 			{
 	            // Get the reload job from the comp.
 	            reloadJob = comp.TryMakeReloadJob();
@@ -145,7 +145,8 @@ namespace CombatExtended
 				
 				// Is the gun low on ammo? -- CurMagCount appropriate because it concerns loaded ammo
 				if (tmpComp.CurMagCount < tmpComp.Props.magazineSize)
-				{
+                {
+                    // Is the gun loaded with ammo other than PlayerForced ammo, and is that ammo available?
                     if (!tmpComp.UseAmmo)
                     {
                         reloadUser = tmpComp;
