@@ -19,7 +19,7 @@ namespace CombatExtended
             if (!maxChargeAdded.ContainsKey(def) || maxChargeAdded[def] == -2)
             {
                 var ammo = ammoTypes.SelectMany(x => x.adders)?.Where(x => x.thingDef == def) ?? null;
-                maxChargeAdded.Add(def, ammo?.MaxBy(x => x.count).count ?? -1);
+                maxChargeAdded.Add(def, ammo?.MaxByWithFallback(x => x.count)?.count ?? -1);
             }
 
             return maxChargeAdded[def];
@@ -43,15 +43,6 @@ namespace CombatExtended
 
                 //Assign short-hand XML constructs appropriately before checking adders etc.
                 x.ResolveReferences();
-
-                if (x.iconAdder == null)        x.iconAdder = x.adders.MaxBy(y => y.count).thingDef;
-                if (x.defaultAmmoCount == -1)   x.defaultAmmoCount = ((x.iconAdder as AmmoDef)?.defaultAmmoCount ?? 1);
-                if (x.ammoClass == null)        x.ammoClass = (x.iconAdder as AmmoDef).ammoClass;
-                if (x.labelCap.NullOrEmpty() && x.labelCapShort.NullOrEmpty())
-                {
-                    x.labelCap = x.ammoClass.LabelCap;
-                    x.labelCapShort = x.ammoClass.LabelCapShort;
-                }
                 
                 couldBeMultiUser = couldBeMultiUser
                     && (x.adders.Count == 1 && x.users.Count == 1);

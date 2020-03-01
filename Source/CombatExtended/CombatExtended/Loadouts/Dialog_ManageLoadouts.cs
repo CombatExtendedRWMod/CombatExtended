@@ -516,7 +516,7 @@ namespace CombatExtended
                         {
                             options.Add(new FloatMenuOption(link.labelCap, delegate
                             {
-		                        CurrentLoadout.AddSlot(new LoadoutSlot(link.iconAdder, (magazineSize <= 1 ? ((link.iconAdder as AmmoDef)?.defaultAmmoCount ?? 1) : magazineSize)));
+		                        CurrentLoadout.AddSlot(new LoadoutSlot(link.iconAdder, (magazineSize <= 1 ? link.defaultAmmoCount : magazineSize)));
                             }));
                         }
                         // Add in the generic for this gun.

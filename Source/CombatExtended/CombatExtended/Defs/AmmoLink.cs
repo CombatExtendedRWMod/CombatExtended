@@ -89,8 +89,8 @@ namespace CombatExtended
 
         #region Fields
         //Index of lists is the amount of charges added or used?
-        public List<ThingDefCountClass> adders;
-        public List<ChargeUser> users;
+        public List<ThingDefCountClass> adders = new List<ThingDefCountClass>();
+        public List<ChargeUser> users = new List<ChargeUser>();
 
         /// <summary>Whether there is a adder.ammo.count / CurMagCount chance (0f to 1f) chance to recover the smallest available adder on backlog</summary>
         public bool chanceToRecoverBacklog = true;
@@ -101,16 +101,18 @@ namespace CombatExtended
         /// <summary>Whether overflow wastes charges</summary>
         public bool wastefulOverflow = false;
         
+        /// <summary>For AmmoLink: the only adder is the iconAdder by default</summary>
         public ThingDef iconAdder;
+        /// <summary>Command_Reload-displayed ammoClass, defaults to iconAdder's ammoClass</summary>
         public AmmoCategoryDef ammoClass;
+        /// <summary>Amount of ammo added per click in loadouts if magazineSize is small</summary>
         public int defaultAmmoCount = -1;
+        /// <summary>Name of ammoset, by default the ammoClass LabelCap</summary>
         public string labelCap;
+        /// <summary>Name of ammoset in short, displayed in StatWorker_Caliber, by default the ammoClass LabelCapShort</summary>
         public string labelCapShort;
         #endregion
-
-      //AmmoDef _ammo;
-      //ThingDef _projectile;
-      
+        
         #region Methods
         /*
         public AmmoLink() { }
@@ -123,7 +125,8 @@ namespace CombatExtended
 
         public virtual IEnumerable<ThingDef> AllAdders()
         {
-            yield return iconAdder;
+            foreach (var adder in adders)
+                yield return adder.thingDef;
         }
 
         public virtual bool CanAdd(ThingDef def)
@@ -411,10 +414,12 @@ namespace CombatExtended
         #endregion
 
         #region XML-related
+        #region Temporary variables
         ThingDef _ammo;
         ThingDef _projectile;
         int _ammoCharge = 1;
         int _projCharge = 1;
+        #endregion
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
@@ -440,24 +445,47 @@ namespace CombatExtended
 
                 if (xmlRoot.Attributes["RandBacklog"] != null)
                     chanceToRecoverBacklog = (bool)ParseHelper.FromString(xmlRoot.Attributes["RandBacklog"].Value, typeof(bool));
+
+                if (xmlRoot.Attributes["DefaultAmmoCount"] != null)
+                    defaultAmmoCount = (int)ParseHelper.FromString(xmlRoot.Attributes["DefaultAmmoCount"].Value, typeof(int));
             }
         }
 
+        /// <summary>Sets adders, iconAdder and users</summary>
         public virtual void ResolveReferences()
         {
             if (_ammo != null && adders.NullOrEmpty())
             {
-                adders = new List<ThingDefCountClass>();
                 adders.Add(new ThingDefCountClass(_ammo, _ammoCharge));
+
+                _ammo = null;
+            }
+
+            if (iconAdder == null)
+                iconAdder = adders.FirstOrDefault()?.thingDef;
+
+            if (defaultAmmoCount == -1)
+                defaultAmmoCount = (iconAdder as AmmoDef)?.defaultAmmoCount ?? 1;
+            
+            if (ammoClass == null)
+                ammoClass = (iconAdder as AmmoDef)?.ammoClass ?? null;
+            
+            if (labelCap.NullOrEmpty() && labelCapShort.NullOrEmpty())
+            {
+                labelCap = ammoClass?.LabelCap ?? "Undefined";
+                labelCapShort = ammoClass?.LabelCapShort ?? "Undef.";
             }
 
             if (_projectile != null && users.NullOrEmpty())
             {
                 var projList = new List<ThingDefCountClass>();
-                projList.Add(new ThingDefCount(_projectile, 1));
+                {
+                    new ThingDefCount(_projectile, 1);
+                }
 
-                users = new List<ChargeUser>();
                 users.Add(new ChargeUser() { chargesUsed = _projCharge, projectiles = projList });
+
+                _projectile = null;
             }
         }
 

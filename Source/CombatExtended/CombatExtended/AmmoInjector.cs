@@ -94,7 +94,7 @@ namespace CombatExtended
                 CompProperties_AmmoUser props = weaponDef.GetCompProperties<CompProperties_AmmoUser>();
                 if (props != null && props.ammoSet != null && !props.ammoSet.ammoTypes.NullOrEmpty())
                 {
-                    ammoDefs.UnionWith(props.ammoSet.ammoTypes.SelectMany<AmmoLink, ThingDef>(x => x.AllAdders()));
+                    ammoDefs.AddRange(props.ammoSet.ammoTypes.SelectMany(x => x.AllAdders()).ToList());
                 }
             }
 
