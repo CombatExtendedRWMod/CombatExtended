@@ -14,29 +14,9 @@
 		<defName>AmmoSet_44Magnum</defName>
 		<label>.44 Magnum</label>
 		<ammoTypes>
-			<Ammo_44Magnum_AP AmmoCharge="4" ProjCharge="1" RandBacklog="True">Bullet_44Magnum_AP</Ammo_44Magnum_AP>
-			<Ammo_44Magnum_HP AmmoCharge="1" ProjCharge="4" Underflow="True">Bullet_44Magnum_HP</Ammo_44Magnum_HP>
-			<li>
-				<labelCap>Fire everything</labelCap>
-				<labelCapShort>LUL</labelCapShort>
-				<iconAdder>Ammo_44Magnum_FMJ</iconAdder>
-				<adders>
-					<li>
-						<thingDef>Ammo_44Magnum_FMJ</thingDef>
-						<count>1</count>
-					</li>
-				</adders>
-				<users>
-					<li>
-						<chargesUsed>1</chargesUsed>
-						<projectiles>
-							<Bullet_44Magnum_FMJ>1</Bullet_44Magnum_FMJ>
-							<Bullet_44Magnum_AP>1</Bullet_44Magnum_AP>
-							<Bullet_44Magnum_HP>1</Bullet_44Magnum_HP>
-						</projectiles>
-					</li>
-				</users>
-			</li>
+			<Ammo_44Magnum_FMJ>Bullet_44Magnum_FMJ</Ammo_44Magnum_FMJ>
+			<Ammo_44Magnum_AP>Bullet_44Magnum_AP</Ammo_44Magnum_AP>
+			<Ammo_44Magnum_HP>Bullet_44Magnum_HP</Ammo_44Magnum_HP>
 		</ammoTypes>
 	</CombatExtended.AmmoSetDef>
 

@@ -13,8 +13,8 @@ namespace CombatExtended
     public class ChargeUser
     {
         //Same format as explosive comp fragments -- ALTHOUGH THINGDEFCOUNT IS ENOUGH?
-        public List<ThingDefCountClass> projectiles;
-        public int chargesUsed;
+        public List<ThingDefCountClass> projectiles = new List<ThingDefCountClass>();
+        public int chargesUsed = 1;
 
         //Normally:
         //<chargesUsed>chargesUsed</chargesUsed>
@@ -216,7 +216,7 @@ namespace CombatExtended
 
             }
         }*/
-
+        
         //CompAmmo (TryFindAmmoInInventory, twice)
         /// <summary>Best adder in provided inventory, taking into account whether it can fit for CurrentAdder</summary>
         /// <param name="things">A collection of Things, e.g from the inventory</param>
@@ -423,32 +423,68 @@ namespace CombatExtended
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            if (xmlRoot.ChildNodes.Count == 1)
+            DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("_ammo", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Name);
+
+            if (xmlRoot.Attributes["IconDef"] != null)
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("iconAdder", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Attributes["IconDef"].Value);
+
+            if (xmlRoot.Attributes["AmmoClass"] != null)
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("ammoClass", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Attributes["AmmoClass"].Value);
+
+            if (xmlRoot.Attributes["LabelCap"] != null)
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("labelCap", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Attributes["LabelCap"].Value);
+
+            if (xmlRoot.Attributes["LabelCapShort"] != null)
+                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("labelCapShort", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Attributes["LabelCapShort"].Value);
+
+            if (xmlRoot.FirstChild.NodeType == XmlNodeType.Text)
             {
-                DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("_ammo", BindingFlags.NonPublic | BindingFlags.Instance), xmlRoot.Name);
+                //<xmlRoot>
+                //  xmlRoot.FirstChild.Value
+                //</xmlRoot>
+
                 DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, GetType().GetField("_projectile", BindingFlags.NonPublic | BindingFlags.Instance), (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
-
-                //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("adders"), xmlRoot.Name);
-                //DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, this.GetType().GetField("users"), (string)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(string)));
-
-                if (xmlRoot.Attributes["AmmoCharge"] != null)
-                    _ammoCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["AmmoCharge"].Value, typeof(int));
-
-                if (xmlRoot.Attributes["ProjCharge"] != null)
-                    _projCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["ProjCharge"].Value, typeof(int));
-
-                if (xmlRoot.Attributes["Overflow"] != null)
-                    allowOverflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Overflow"].Value, typeof(bool));
-
-                if (xmlRoot.Attributes["Underflow"] != null)
-                    allowUnderflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Underflow"].Value, typeof(bool));
-
-                if (xmlRoot.Attributes["RandBacklog"] != null)
-                    chanceToRecoverBacklog = (bool)ParseHelper.FromString(xmlRoot.Attributes["RandBacklog"].Value, typeof(bool));
-
-                if (xmlRoot.Attributes["DefaultAmmoCount"] != null)
-                    defaultAmmoCount = (int)ParseHelper.FromString(xmlRoot.Attributes["DefaultAmmoCount"].Value, typeof(int));
             }
+            else    //It must be a list of projectiles of type ThingDefCountClass
+            {
+                var cUser = new ChargeUser();
+
+                //<xmlRoot>
+                //  <xmlRoot.ChildNodes()[0]> .. </xmlRoot.ChildNodes()[0]>
+                //  <xmlRoot.ChildNodes()[1]> .. </xmlRoot.ChildNodes()[1]>
+                //  <xmlRoot.ChildNodes()[2]> .. </xmlRoot.ChildNodes()[2]>
+                //</xmlRoot>
+
+                for (int i = 0; i < xmlRoot.ChildNodes.Count; i++)
+                {
+                    cUser.projectiles.Add(DirectXmlToObject.ObjectFromXml<ThingDefCountClass>(xmlRoot.ChildNodes[i], true));
+                }
+
+                users.Add(cUser);
+            }
+
+            //<xmlRoot xmlRoot.Attributes["OfName"]="xmlRoot.Attributes["OfName"].Value">
+
+            if (xmlRoot.Attributes["AmmoCharge"] != null)
+                _ammoCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["AmmoCharge"].Value, typeof(int));
+
+            if (xmlRoot.Attributes["ProjCharge"] != null)
+                _projCharge = (int)ParseHelper.FromString(xmlRoot.Attributes["ProjCharge"].Value, typeof(int));
+
+            if (xmlRoot.Attributes["Overflow"] != null)
+                allowOverflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Overflow"].Value, typeof(bool));
+
+            if (xmlRoot.Attributes["WastefulOverflow"] != null)
+                wastefulOverflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["WastefulOverflow"].Value, typeof(bool));
+
+            if (xmlRoot.Attributes["Underflow"] != null)
+                allowUnderflow = (bool)ParseHelper.FromString(xmlRoot.Attributes["Underflow"].Value, typeof(bool));
+
+            if (xmlRoot.Attributes["RandBacklog"] != null)
+                chanceToRecoverBacklog = (bool)ParseHelper.FromString(xmlRoot.Attributes["RandBacklog"].Value, typeof(bool));
+
+            if (xmlRoot.Attributes["DefaultAmmoCount"] != null)
+                defaultAmmoCount = (int)ParseHelper.FromString(xmlRoot.Attributes["DefaultAmmoCount"].Value, typeof(int));
         }
 
         /// <summary>Sets adders, iconAdder and users</summary>
@@ -470,23 +506,25 @@ namespace CombatExtended
             if (ammoClass == null)
                 ammoClass = (iconAdder as AmmoDef)?.ammoClass ?? null;
             
-            if (labelCap.NullOrEmpty() && labelCapShort.NullOrEmpty())
-            {
+            if (labelCap.NullOrEmpty())
                 labelCap = ammoClass?.LabelCap ?? "Undefined";
-                labelCapShort = ammoClass?.LabelCapShort ?? "Undef.";
-            }
 
-            if (_projectile != null && users.NullOrEmpty())
+            if (labelCapShort.NullOrEmpty())
+                labelCapShort = ammoClass?.LabelCapShort ?? ammoClass?.LabelCap ?? "Undef.";
+            
+            if (_projectile != null)
             {
                 var projList = new List<ThingDefCountClass>();
                 {
                     new ThingDefCount(_projectile, 1);
                 }
 
-                users.Add(new ChargeUser() { chargesUsed = _projCharge, projectiles = projList });
+                users.Add(new ChargeUser() { chargesUsed = _projCharge, projectiles = new List<ThingDefCountClass>() { new ThingDefCount(_projectile, 1) } });
 
                 _projectile = null;
             }
+
+            users[0].chargesUsed = _projCharge;
         }
 
         public virtual IEnumerable<string> ConfigErrors()

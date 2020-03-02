@@ -162,7 +162,7 @@ namespace CombatExtended
             if (caster == null                                      //Caster position unknown
                 || (!VerbPropsCE?.ejectsCasings ?? false)           //Gun doesn't eject casings (default: does eject)
                 || projectilePropsCE == null
-                    || projectilePropsCE.dropsCasings)              //Projectile doesn't have casing (default: doesn't have)
+                    || !projectilePropsCE.dropsCasings)              //Projectile doesn't have casing (default: doesn't have)
                 return;
             
             if (CompAmmo == null || CompAmmo.CurrentAdder == null

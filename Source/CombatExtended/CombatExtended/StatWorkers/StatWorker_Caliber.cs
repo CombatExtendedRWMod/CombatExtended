@@ -46,7 +46,7 @@ namespace CombatExtended
                     stringBuilder.AppendLine(ammoSet.LabelCap + "\n");
                     foreach (var cur in ammoSet.ammoTypes)
                     {
-                        string label = cur.labelCapShort;
+                        string label = cur.labelCapShort ?? cur.labelCap;
                         foreach (var proj in cur.users)
                         {
                             stringBuilder.AppendLine(label + ":\n" + proj.projectiles.First().thingDef.GetProjectileReadout(Gun(req)));   //Is fine handling req.Thing == null, then it sets mult = 1

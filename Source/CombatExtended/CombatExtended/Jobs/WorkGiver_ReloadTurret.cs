@@ -32,7 +32,7 @@ namespace CombatExtended
             }
             if (!turret.CompAmmo.UseAmmo) return true;
             Thing ammo = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
-                            ThingRequest.ForDef(turret.CompAmmo.CurrentAdder.def),
+                            ThingRequest.ForDef(turret.CompAmmo.CurrentAdder?.def ?? turret.CompAmmo.SelectedLink.iconAdder),
                             PathEndMode.ClosestTouch,
                             TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn),
                             80,
