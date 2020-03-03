@@ -22,7 +22,6 @@ namespace CombatExtended
                 return null;
 
             StringBuilder stringBuilder = new StringBuilder();
-
             
             if (cartridges > 0)
             {
@@ -58,11 +57,8 @@ namespace CombatExtended
             {
                 // Consider the full contents of the AmmoUser
                 var ammoUser = reqThing.TryGetComp<CompAmmoUser>();
-                if (ammoUser != null && ammoUser.CurrentAdder != null)
+                if (ammoUser != null && ammoUser.HasMagazine)
                 {
-                    //Add currently loaded cartridge (more complex)
-                    //var isSpentAdder = ammoUser.CurrentLink.IsSpentAdder(ammoUser.CurrentAdder.def);
-
                     foreach (var adder in ammoUser.adders)
                     {
                         cartridges += adder.def.GetStatValueAbstract(parentStat) * (float)adder.stackCount;
@@ -73,7 +69,7 @@ namespace CombatExtended
                     {
                         cartridges *= ammoUser.Props.loadedAmmoBulkFactor;
 
-                        if (ammoUser.HasMagazine && ammoUser.CurChargeCount > 0)
+                        if (ammoUser.CurMagCount > 0)
                             magazine = ammoUser.Props.magazineBulk;
                     }
 

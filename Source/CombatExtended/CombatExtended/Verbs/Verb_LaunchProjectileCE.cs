@@ -193,10 +193,10 @@ namespace CombatExtended
             }
 
             // Add check for reload
-            if ((Projectile == null || (IsAttacking && CompAmmo != null && !CompAmmo.CanBeFiredNow))
+            if (CompAmmo != null && (Projectile == null || (IsAttacking && !CompAmmo.CanBeFiredNow))
                 && CompAmmo.PreReload())
             {
-                CompAmmo?.TryStartReload();
+                CompAmmo.TryStartReload();
                 return false;
             }
             return true;

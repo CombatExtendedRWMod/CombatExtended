@@ -196,7 +196,7 @@ namespace CombatExtended
                 // This needs to here for BOWS to ensure their last shot plays sounds
                 if (CompAmmo != null && !CompAmmo.HasMagazine && CompAmmo.UseAmmo)
                 {
-                    if (!CompAmmo.Notify_ShotFired())
+                    if (!CompAmmo.HasCurrentAmmoOrMagazine)
                     {
                         if (VerbPropsCE.muzzleFlashScale > 0.01f)
                         {
