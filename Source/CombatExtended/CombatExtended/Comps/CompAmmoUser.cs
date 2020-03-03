@@ -250,13 +250,13 @@ namespace CombatExtended
         /// <returns></returns>
         public bool PreFire()
         {
-            PrintDebug("TryFire"); //ASDF remove
+            PrintDebug("PreFire"); //ASDF remove
 
             if (Wielder == null && turret == null)
                 Log.Error(parent.ToString() + " tried reducing its ammo count without a wielder");
 
             // If magazine is empty, return false
-            if (CurChargeCount <= 0)
+            if (HasMagazine && CurChargeCount <= 0)
             {
                 //if (!CurrentLink.allowUnderflow && curMagCountInt != 0)
                 //    curMagCountInt = 0;
@@ -268,7 +268,7 @@ namespace CombatExtended
             var chargesUsed = CurrentUser?.chargesUsed ?? 1;    //Fallback to 1 on guns without ammo.. but still a CompAmmoUser..?
             
             // Mag-less weapons feed directly from inventory
-            if (!HasMagazine && (CurChargeCount - chargesUsed <= 0 && !CurrentLink.allowUnderflow))
+            if (!HasMagazine && (CurrentLink.allowUnderflow || CurChargeCount - chargesUsed <= 0))
                 return LoadAmmo();
 
             return CanBeFiredNow;
@@ -350,7 +350,9 @@ namespace CombatExtended
 
             if (CurrentAdder == null)
             {
-                Log.Error("CombatExtended :: CurrentAdder is NULL within TryFeed, this should not happen (did PostFire already destroy CurrentAdder?)");
+                if (!HasMagazine)
+                    Log.Error("CombatExtended :: CurrentAdder is NULL within TryFeed, this should not happen (did PostFire already destroy CurrentAdder?)");
+
                 return false;
             }
 
@@ -436,8 +438,8 @@ namespace CombatExtended
             {
                 if (!CanBeFiredNow)     //E.g UseAmmo (bow) && !HasAmmoForCurrentLink 
                     DoOutOfAmmoAction();
-
-                return false;
+                
+                return true;
             }
 
             if (Wielder == null && turret == null)
@@ -500,6 +502,13 @@ namespace CombatExtended
         /// </summary>
         public void TryStartReload()
         {
+            //Bows
+            if (!HasMagazine && !LoadAmmo())
+            {
+                Log.Error("CombatExtended :: LoadAmmo failed on ammoUser without magazine ("+this.parent.LabelCap+")");
+                return;
+            }
+
             // Issue reload job
             if (Wielder != null)
             {
@@ -579,11 +588,14 @@ namespace CombatExtended
             return new Job(CE_JobDefOf.ReloadWeapon, Holder, parent);
         }
 
+        //JobDriver_ReloadTurret (), CompAmmoUser (TryStartReload, PreFire)
         /// <summary>Load a specified ammo Thing</summary>
         /// <param name="ammo">Specified ammo</param>
         /// <param name="largestStack">Whether to maximize stack size if called without specified ammo (somehow)</param>
         public bool LoadAmmo(Thing ammo = null, bool largestStack = false)
         {
+            this.PrintDebug("LoadAmmo");
+
             if (Holder == null && turret == null)
             {
                 Log.Error(parent.ToString() + " tried loading ammo with no owner");
@@ -602,9 +614,13 @@ namespace CombatExtended
                     }
                 }
                 
+                //Called often by !HasMagazine
+
                 //Ammo can still be null at this point
                 if (ammo != null)
-                    AddAdder(ammo);
+                {
+                    AddAdder(ammo);     //adds ammo
+                }
             }
             else
             {
@@ -787,9 +803,14 @@ namespace CombatExtended
             if (inThing == null)
                 return;
 
+            if (!HasMagazine && toSpentAdders)
+                return;
+
             Thing thing = null;
-            if (!toSpentAdders)
+            if (!toSpentAdders && HasMagazine)
             {
+                //ASDF: Shouldnt this be CurrentLink instead of SelectedLink
+
                 //Add appropriate number of charges (and check for all limitations etc. set out by the ammoSetDef)
                 curMagCountInt += SelectedLink.LoadThing(inThing, this, out var count);
 
@@ -801,15 +822,17 @@ namespace CombatExtended
             }
             else
                 thing = inThing;
+            
+            var destination = (toSpentAdders ? spentAdders : adders);   //adding to adders
 
-            if (thing != null)
+            if (thing != null && !destination.Contains(thing))
             {
-                var existingAdder = (toSpentAdders ? spentAdders : adders).Find(x => x.def == thing.def);
+                var existingAdder = destination.Find(x => x.def == thing.def);
 
                 if (existingAdder == null || !existingAdder.TryAbsorbStack(thing, true))
-                    (toSpentAdders ? spentAdders : adders).Add(thing);
+                    destination.Add(thing);
             }
-
+            
             if (updateInventory)
                 CompInventory?.UpdateInventory();
 
@@ -911,7 +934,7 @@ namespace CombatExtended
                     curMagCountInt -= cpu;
 
                 //Adds spentThing to spentAdders
-                AddAdder(spentThing, true);
+                AddAdder(spentThing, true);     //spent only
 
                 PrintDebug("UnloadAdder-Same");   //ASDF Remove
 
@@ -942,7 +965,7 @@ namespace CombatExtended
 
                 adders.Remove(thing);
                 thing.Destroy();
-                AddAdder(spentThing, true);
+                AddAdder(spentThing, true);     //spent only
 
                 PrintDebug("UnloadAdder-Different");   //ASDF Remove
 
@@ -1236,7 +1259,7 @@ namespace CombatExtended
                     stackToAccountFor -= count;
 
                     //Handles curMagCountInt increase
-                    AddAdder(toLoadMag, false, true);
+                    AddAdder(toLoadMag, false, true);   //initiate
                 }
             }
             else

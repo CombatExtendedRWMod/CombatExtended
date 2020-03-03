@@ -137,6 +137,7 @@ namespace CombatExtended
                             {
                                 del += delegate { if (user.SwitchLink(link, true, true) //desired
                                     && Controller.settings.AutoReloadOnChangeAmmo
+                                    && user.HasMagazine
                                     && user.turret?.MannableComp == null)
                                         other.action(); };
                             }
@@ -144,6 +145,7 @@ namespace CombatExtended
                             {
                                 del += delegate { if (user.SwitchLink(link, false, true) //desired
                                     && Controller.settings.AutoReloadOnChangeAmmo
+                                    && user.HasMagazine
                                     && user.turret?.MannableComp == null
                                     && user.HasAmmoForLink(user.CurrentLink))  //Prevents reloading and "out-of-ammo" when no ammo of new ammo set is available
                                         other.action(); };
