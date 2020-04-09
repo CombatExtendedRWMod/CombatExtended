@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Patch>
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Forsakens</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<operations>
+
+				<li Class="PatchOperationAdd">
+					<xpath>Defs</xpath>
+					<value>
+					
+						<!-- There is only one type of Mastiff shell, no subcategory for variants required -->
+
+						<!--==================== AmmoSet ========================== -->
+
+						<CombatExtended.AmmoSetDef>
+							<defName>AmmoSet_ForsakensArrows</defName>
+							<label>forsakens arrows</label>
+							<ammoTypes>
+								<Ammo_ForsakensArrows>Projectile_ForsakensArrows</Ammo_ForsakensArrows>
+							</ammoTypes>
+						</CombatExtended.AmmoSetDef>
+
+						<!--==================== Ammo ========================== -->
+
+						<ThingDef Class="CombatExtended.AmmoDef" Name="ForsakensArrowsBase" ParentName="NeolithicAmmoBase" Abstract="True">
+							<description>Heavy arrow designed to be fired from a forsaken bow.</description>
+							<statBases>
+								<Mass>0.115</Mass>
+								<Bulk>0.43</Bulk>
+								<Flammability>0</Flammability>
+							</statBases>
+							<thingCategories>
+								<li>AmmoNeolithic</li>
+							</thingCategories>
+							<stackLimit>1000</stackLimit>
+							<tradeTags>
+								<li>CE_AutoEnableTrade</li>
+								<li>CE_AutoEnableCrafting_FueledSmithy</li>
+								<li>CE_AutoEnableCrafting_ElectricSmithy</li>
+							</tradeTags>
+						</ThingDef>
+
+						<ThingDef Class="CombatExtended.AmmoDef" ParentName="ForsakensArrowsBase">
+							<defName>Ammo_ForsakensArrows</defName>
+							<label>forsakens arrow</label>
+							<graphicData>
+								<texPath>ThirdParty/Forsakens/FAmmoArrow</texPath>
+								<graphicClass>Graphic_StackCount</graphicClass>
+							</graphicData>
+							<statBases>
+								<MarketValue>0.66</MarketValue>
+							</statBases>
+							<ammoClass>ForsakenArrow</ammoClass>
+						</ThingDef>
+
+						<!-- ================== Projectiles ================== -->
+
+						<!-- Workaround for conditionally-patched projectiles: use an existing abstract class from the generic ammo library (In this case, BaseGreatArrowProjectile) -->
+
+						<ThingDef Class="CombatExtended.AmmoDef" ParentName="BaseGreatArrowProjectile">
+							<defName>Projectile_ForsakensArrows</defName>
+							<label>forsakens arrow</label>
+							<graphicData>
+								<texPath>Weapons/FArrow</texPath>
+								<graphicClass>Graphic_Single</graphicClass>
+							</graphicData>
+							<projectile Class="CombatExtended.ProjectilePropertiesCE">
+								<damageAmountBase>7</damageAmountBase>
+								<armorPenetrationBlunt>2.340</armorPenetrationBlunt>
+								<armorPenetrationSharp>2</armorPenetrationSharp>
+								<preExplosionSpawnChance>0.6</preExplosionSpawnChance>
+								<!-- 25 arrows per resource -->
+								<preExplosionSpawnThingDef>Ammo_ForsakensArrows</preExplosionSpawnThingDef>
+							</projectile>
+						</ThingDef>
+
+						<!-- ==================== Recipes ========================== -->
+
+						<RecipeDef ParentName="AmmoRecipeNeolithicBase">
+							<defName>MakeAmmo_ForsakensArrows</defName>
+							<label>make forsakens arrows x10</label>
+							<description>Craft 10 forsakens arrows.</description>
+							<jobString>Making forsaken arrows.</jobString>
+							<workAmount>400</workAmount>
+							<ingredients>
+								<!-- Stats manually specified due to alien nature of ammo -->
+								<li>
+									<filter>
+										<thingDefs>
+											<li>Steel</li>
+										</thingDefs>
+									</filter>
+									<count>4</count>
+								</li>
+							</ingredients>
+							<fixedIngredientFilter>
+								<thingDefs>
+									<li>Steel</li>
+								</thingDefs>
+							</fixedIngredientFilter>
+							<products>
+								<Ammo_ForsakensArrows>10</Ammo_ForsakensArrows>
+							</products>
+						</RecipeDef>
+
+					</value>
+				</li>
+
+			</operations>
+		</match>
+	</Operation>
+</Patch>
