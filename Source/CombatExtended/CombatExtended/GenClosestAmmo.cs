@@ -13,7 +13,7 @@ namespace CombatExtended
     public static class GenClosestAmmo
     {
         public const int pawnsPerTurret = 10;
-        public const float ammoSearchRadius = 40f;
+        public const float ammoSearchRadius = 100f;
         public static Dictionary<ThingDef, int> latestAmmoUpdate = new Dictionary<ThingDef, int>();
 
         //Check for any AmmoThing having SPAWNED (not for AmmoThing having been destroyed, as this cannot resolve issues)

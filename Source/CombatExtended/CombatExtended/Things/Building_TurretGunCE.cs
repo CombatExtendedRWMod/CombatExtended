@@ -662,32 +662,37 @@ namespace CombatExtended
         public Thing nearestViableAmmo;
         public void UpdateNearbyAmmo(bool forceCheck = false)
         {
-            if (lastSurroundingAmmoCheck + TicksBetweenAmmoChecks >= Find.TickManager.TicksGame)
-                return;
+            try
+            {
+                if (lastSurroundingAmmoCheck + TicksBetweenAmmoChecks >= Find.TickManager.TicksGame)
+                    return;
 
-            if (!CompAmmo.Props.ammoSet.ammoTypes.Any(x => GenClosestAmmo.latestAmmoUpdate[x.ammo] > lastSurroundingAmmoCheck))
-                return;
+                if (!CompAmmo.Props.ammoSet.ammoTypes.Any(x => GenClosestAmmo.latestAmmoUpdate[x.ammo] > lastSurroundingAmmoCheck))
+                    return;
 
-            //If ammo remained viable, don't bother unless forced
-            if (nearestViableAmmo != null
-                && !forceCheck
-                && nearestViableAmmo.Spawned
-                && !nearestViableAmmo.IsForbidden(Faction)
-                && nearestViableAmmo.ParentHolder == null
-                && !Map.physicalInteractionReservationManager.IsReserved(nearestViableAmmo))
-                return;
+                //If ammo remained viable, don't bother unless forced
+                if (nearestViableAmmo != null
+                    && !forceCheck
+                    && nearestViableAmmo.Spawned
+                    && !nearestViableAmmo.IsForbidden(Faction)
+                    && nearestViableAmmo.ParentHolder == null
+                    && !Map.physicalInteractionReservationManager.IsReserved(nearestViableAmmo))
+                    return;
 
-          //var prevIsSlow = isSlow;
-            var prevViableAmmo = nearestViableAmmo;
-            nearestViableAmmo = GenClosestAmmo.ClosestAmmoReachable(Position, Map, CompAmmo,
-                TraverseParms.For(TraverseMode.NoPassClosedDoors, Danger.Deadly), PathEndMode.ClosestTouch, GenClosestAmmo.ammoSearchRadius,
-                x => !x.IsForbidden(Faction) && !Map.physicalInteractionReservationManager.IsReserved(x));
+                //var prevIsSlow = isSlow;
+                var prevViableAmmo = nearestViableAmmo;
+                nearestViableAmmo = GenClosestAmmo.ClosestAmmoReachable(Position, Map, CompAmmo,
+                    TraverseParms.For(TraverseMode.NoPassClosedDoors, Danger.Deadly), PathEndMode.ClosestTouch, GenClosestAmmo.ammoSearchRadius,
+                    x => !x.IsForbidden(Faction) && !Map.physicalInteractionReservationManager.IsReserved(x));
 
-            isSlow = (nearestViableAmmo == null || nearestViableAmmo == prevViableAmmo);
+                isSlow = (nearestViableAmmo == null || nearestViableAmmo == prevViableAmmo);
 
-          //Log.Message("Updated " + ThingID + " (slow = "+prevIsSlow+" -> "+isSlow+") to " + nearestViableAmmo?.ThingID);
-            
-            lastSurroundingAmmoCheck = Find.TickManager.TicksGame;
+                //Log.Message("Updated " + ThingID + " (slow = "+prevIsSlow+" -> "+isSlow+") to " + nearestViableAmmo?.ThingID);
+            }
+            finally
+            {
+                lastSurroundingAmmoCheck = Find.TickManager.TicksGame;
+            }
         }
 
         public void TryForceReload()
