@@ -25,33 +25,18 @@
 
 						<!--==================== Ammo ========================== -->
 
-						<ThingDef Class="CombatExtended.AmmoDef" Name="ForsakensArrowsBase" ParentName="NeolithicAmmoBase" Abstract="True">
-							<description>Heavy arrow designed to be fired from a forsaken bow.</description>
-							<statBases>
-								<Mass>0.115</Mass>
-								<Bulk>0.43</Bulk>
-								<Flammability>0</Flammability>
-							</statBases>
-							<thingCategories>
-								<li>AmmoNeolithic</li>
-							</thingCategories>
-							<stackLimit>1000</stackLimit>
-							<tradeTags>
-								<li>CE_AutoEnableTrade</li>
-								<li>CE_AutoEnableCrafting_FueledSmithy</li>
-								<li>CE_AutoEnableCrafting_ElectricSmithy</li>
-							</tradeTags>
-						</ThingDef>
-
-						<ThingDef Class="CombatExtended.AmmoDef" ParentName="ForsakensArrowsBase">
+						<ThingDef Class="CombatExtended.AmmoDef" ParentName="AmmoGreatArrowBase">
 							<defName>Ammo_ForsakensArrows</defName>
 							<label>forsakens arrow</label>
+							<description>Heavy arrow designed to be fired from a forsaken bow.</description>
 							<graphicData>
 								<texPath>ThirdParty/Forsakens/FAmmoArrow</texPath>
 								<graphicClass>Graphic_StackCount</graphicClass>
 							</graphicData>
 							<statBases>
+								<Mass>0.115</Mass>
 								<MarketValue>0.66</MarketValue>
+								<Flammability>0</Flammability>
 							</statBases>
 							<ammoClass>ForsakenArrow</ammoClass>
 						</ThingDef>
