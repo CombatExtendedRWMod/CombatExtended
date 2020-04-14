@@ -10,7 +10,7 @@
 				<!-- NOTE: Black Hydra is currently disabled for CE, as the original mod incorrectly uses a thingDef rather than ThingDef, which is incompatible with CE patching -->
 				
 				<li Class="PatchOperationRemove">
-					<xpath>Defs/ThingDef[defName="ForsakenHydra"]</xpath>
+					<xpath>Defs/thingDef[defName="ForsakenHydra"]</xpath>
 				</li>
 
 				<!-- ========== Forsaken Black Hydra ========== -->
